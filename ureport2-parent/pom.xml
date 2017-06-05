@@ -23,9 +23,9 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>git@github.com:jacky6024/ureport2.git</connection>
-		<developerConnection>git@github.com:jacky6024/ureport2.git</developerConnection>
-		<url>https://github.com/jacky6024/ureport2</url>
+		<connection>https://github.com/youseries/ureport.git</connection>
+		<developerConnection>https://github.com/youseries/ureport.git</developerConnection>
+		<url>https://github.com/youseries/ureport</url>
 	</scm>
 	<organization>
 		<name>Bstek</name>
@@ -176,7 +176,7 @@
 	</distributionManagement>
 
 	<name>UReport2 Parent Project</name>
-	<url>https://github.com/jacky6024/ureport2/tree/master/ureport2-parent</url>
+	<url>https://github.com/youseries/ureport/tree/master/ureport2-parent</url>
 	<issueManagement>
 		<url>${jira.browse.url}/VELOCITY</url>
 	</issueManagement>
