@@ -1,0 +1,142 @@
+
+@font-face {font-family: "ureport";
+  src: url('iconfont.eot'); /* IE9*/
+  src: url('iconfont.ttf') format('truetype');
+}
+
+.ureport {
+  font-family:"ureport" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ureport-setting:before { content: "\e603"; }
+
+.ureport-plus:before { content: "\e608"; }
+
+.ureport-shareconnection:before { content: "\e660"; }
+
+.ureport-bar:before { content: "\e66b"; }
+
+.ureport-bgcolor:before { content: "\e76c"; }
+
+.ureport-crosstab:before { content: "\e60b"; }
+
+.ureport-barcode:before { content: "\e6f8"; }
+
+.ureport-underline:before { content: "\e8ab"; }
+
+.ureport-sqlds:before { content: "\e6b6"; }
+
+.ureport-qrcode:before { content: "\e72c"; }
+
+.ureport-fontsize:before { content: "\e63f"; }
+
+.ureport-fontfamily:before { content: "\e618"; }
+
+.ureport-italic:before { content: "\eb31"; }
+
+.ureport-bold:before { content: "\e61f"; }
+
+.ureport-minus:before { content: "\e60c"; }
+
+.ureport-methodds:before { content: "\e69c"; }
+
+.ureport-print1:before { content: "\e62a"; }
+
+.ureport-database:before { content: "\e693"; }
+
+.ureport-bubble:before { content: "\e6b0"; }
+
+.ureport-x-xlsx:before { content: "\e690"; }
+
+.ureport-pie:before { content: "\e602"; }
+
+.ureport-save:before { content: "\e86f"; }
+
+.ureport-open:before { content: "\e624"; }
+
+.ureport-deletecolumn:before { content: "\e6f3"; }
+
+.ureport-deleterow:before { content: "\e6f4"; }
+
+.ureport-insertrow:before { content: "\e754"; }
+
+.ureport-property:before { content: "\e675"; }
+
+.ureport-aligntop:before { content: "\e623"; }
+
+.ureport-alignbottom:before { content: "\e625"; }
+
+.ureport-alignmiddle:before { content: "\e627"; }
+
+.ureport-clean:before { content: "\e628"; }
+
+.ureport-footer-repeat:before { content: "\e62b"; }
+
+.ureport-pdf:before { content: "\e68f"; }
+
+.ureport-print:before { content: "\e633"; }
+
+.ureport-first:before { content: "\e629"; }
+
+.ureport-alignleft:before { content: "\e634"; }
+
+.ureport-alignright:before { content: "\e639"; }
+
+.ureport-merge:before { content: "\e63d"; }
+
+.ureport-redo:before { content: "\e61c"; }
+
+.ureport-radar:before { content: "\e7f6"; }
+
+.ureport-import:before { content: "\e609"; }
+
+.ureport-clean-content:before { content: "\e604"; }
+
+.ureport-undo:before { content: "\e74a"; }
+
+.ureport-no-border:before { content: "\e600"; }
+
+.ureport-aligncenter:before { content: "\e888"; }
+
+.ureport-word:before { content: "\e605"; }
+
+.ureport-preview:before { content: "\e60f"; }
+
+.ureport-clean-style:before { content: "\e64b"; }
+
+.ureport-line:before { content: "\e695"; }
+
+.ureport-leaf:before { content: "\e6bb"; }
+
+.ureport-21print:before { content: "\e644"; }
+
+.ureport-image:before { content: "\e626"; }
+
+.ureport-bottom-border:before { content: "\e61e"; }
+
+.ureport-top-border:before { content: "\e61d"; }
+
+.ureport-full-border:before { content: "\e620"; }
+
+.ureport-left-border:before { content: "\e621"; }
+
+.ureport-right-border:before { content: "\e622"; }
+
+.ureport-next:before { content: "\e60d"; }
+
+.ureport-prev:before { content: "\e606"; }
+
+.ureport-pdf-printer:before { content: "\e607"; }
+
+.ureport-forecolor:before { content: "\e601"; }
+
+.ureport-end:before { content: "\e60a"; }
+
+.ureport-insert-column:before { content: "\e619"; }
+
+.ureport-header-repeat:before { content: "\e696"; }
+

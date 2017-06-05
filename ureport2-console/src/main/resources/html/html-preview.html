@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>UReport2报表预览</title>
+<style type="text/css" id="_ureport_table_style">
+	${style}
+</style>
+ 	<script type="text/javascript" src="${contextPath}/ureport/res/asserts/venderjs/jquery.min.js"></script>
+ 	<script type="text/javascript" src="${contextPath}/ureport/res/asserts/venderjs/bootstrap.min.js"></script>
+ 	<script type="text/javascript" src="${contextPath}/ureport/res/asserts/js/preview.bundle.js"></script>
+</head>
+<body style="margin:5px">
+<div style="border:solid 1px #ddd;border-radius:5px;height:35px;width:100%;margin-bottom:5px;background:#f8f8f8">
+	#if($tools.print)
+	<button type="button" class="btn btn-default ureport-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="在线打印">
+		<img src='${contextPath}/ureport/res/asserts/icons/print.svg' width="20px">
+	</button>
+	#end
+	#if($tools.pdfPrint)
+	<button type="button" class="btn btn-default ureport-pdf-direct-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线打印">
+		<img src='${contextPath}/ureport/res/asserts/icons/pdf-direct-print.svg' width="20px">
+	</button>
+	#end
+	#if($tools.pdfPreviewPrint)
+	<button type="button" class="btn btn-default ureport-pdf-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线预览打印">
+		<img src='${contextPath}/ureport/res/asserts/icons/pdf-print.svg' width="20px">
+	</button>
+	#end
+	#if($tools.pdf)
+	<button type="button" class="btn btn-default ureport-export-pdf" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出PDF">
+		<img src='${contextPath}/ureport/res/asserts/icons/pdf.svg' width="20px">
+	</button>
+	#end
+	#if($tools.word)
+	<button type="button" class="btn btn-default ureport-export-word" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出WORD">
+		<img src='${contextPath}/ureport/res/asserts/icons/word.svg' width="20px">
+	</button>
+	#end
+	#if($tools.excel)
+	<button type="button" class="btn btn-default ureport-export-excel" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出EXCEL">
+		<img src='${contextPath}/ureport/res/asserts/icons/excel.svg' width="20px">
+	</button>
+	#end
+	#if($tools.pagingExcel)
+	<button type="button" class="btn btn-default ureport-export-excel-paging" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页导出EXCEL">
+		<img src='${contextPath}/ureport/res/asserts/icons/excel-paging.svg' width="20px">
+	</button>
+	#end
+	#if($tools.sheetPagingExcel)
+	<button type="button" class="btn btn-default ureport-export-excel-paging-sheet" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页分Sheet导出EXCEL">
+		<img src='${contextPath}/ureport/res/asserts/icons/excel-with-paging-sheet.svg' width="20px">
+	</button>
+	#end
+	#if($tools.paging)
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background:#f8f8f8;border:none;color:#337ab7">
+			#if($totalPage>0)
+				分页预览
+			#else
+				预览
+			#end
+			 <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			#if($hasTools)
+			<li><a href="${contextPath}/ureport/preview?_u=${file}&_t=${_t}" style="color:#337ab7">预览</a></li>
+			#else
+			<li><a href="${contextPath}/ureport/preview?_u=${file}" style="color:#337ab7">预览</a></li>
+			#end
+			#if($hasTools)
+			<li><a href="${contextPath}/ureport/preview?_u=${file}&_i=1&_t=${_t}" style="color:#337ab7">分页预览</a></li>
+			#else
+			<li><a href="${contextPath}/ureport/preview?_u=${file}&_i=1" style="color:#337ab7">分页预览</a></li>
+			#end
+		</ul>
+	</div>
+	#end 
+	#if($totalPage>0) 
+	<span style="font-size:14px;margin-left:1px;color:#337ab7">
+		共${totalPage}页
+		<select id="pageSelector" class="form-control" style="display:inline-block;width:inherit;font-size:13px;height:28px;margin-top:2px">
+			#foreach($index in [1..$totalPage])
+			<option>${index}</option>
+			#end
+		</select>
+	</span>
+	#end
+</div>
+<div id="_ureport_table">
+	${content}
+</div>
+<iframe name="_print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+<iframe name="_print_pdf_frame" width="0" height="0" frameborder="1" src="about:blank"></iframe>
+<script type="text/javascript">
+	#if($totalPage>0)
+		$(document).ready(function(){
+			$('#pageSelector').change(function(){
+				#if($hasTools)
+					window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val()+'&_t=${_t}','_self');
+				#else
+					window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val(),'_self');
+				#end
+			});
+			$('#pageSelector').val('${pageIndex}');
+		});
+	#end
+	window._server="${contextPath}/ureport";
+
+</script>
+</body>
+</html>

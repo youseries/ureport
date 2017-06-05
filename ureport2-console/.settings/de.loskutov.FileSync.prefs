@@ -1,0 +1,7 @@
+WARNING=DO NOT MODIFY THIS FILE IF YOU DON'T UNDERSTAND
+defaultDestination=@src/main/resources/asserts/js
+defaultVariables=
+eclipse.preferences.version=1
+includeTeamPrivateFiles=false
+map|0=src/main/resources/asserts/js|,|,|,|,
+useCurrentDateForDestinationFiles=false

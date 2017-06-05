@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ureport xmlns="http://www.example.org/ureport2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/ureport2 http://www.example.org/ureport2 ">
+	<cell expand="None" name="A1" row="1" col="1" col-span="5">
+		<simple-value>
+		<![CDATA[
+			我的报表
+		]]>
+		</simple-value>
+	</cell>
+	<cell expand="Down" name="A2" col="1" row="2">
+		<dataset-value aggregate="group" property="dept_id" dataset-name="employee" order="asc">
+		</dataset-value>
+	</cell>
+	<cell expand="Down" name="B2" col="2" row="2">
+		<dataset-value aggregate="group" property="degree" dataset-name="employee" order="asc"></dataset-value>
+	</cell>
+	<cell expand="Down" name="C2" col="3" row="2">
+		<dataset-value aggregate="select" property="employee_name" dataset-name="employee" order="asc"></dataset-value>
+	</cell>
+	<cell expand="Down" name="D2" col="4" row="2">
+		<dataset-value aggregate="select" property="salary" dataset-name="employee"></dataset-value>
+	</cell>
+	<cell expand="Down" name="E2" col="5" row="2">
+		<expression-value>
+			<![CDATA[list(1 to 20)]]>
+		</expression-value>
+	</cell>
+	<cell expand="None" name="A3" col="1" row="3" col-span="3">
+		<simple-value>
+		<![CDATA[
+			总计：
+		]]>
+		</simple-value>
+	</cell>
+	<cell expand="None" name="D3" col="4" row="3">
+		<expression-value>
+			<![CDATA[sum(D2)]]>
+		</expression-value>
+	</cell>
+	<cell expand="None" name="E3" col="5" row="3">
+		<expression-value>
+			<![CDATA[
+				100>151 ? "小计："+(sum(E2) * (2 - 1)) : "gaojie"
+			]]>
+		</expression-value>
+	</cell>
+
+	<row row-number="1" height="30"/>
+	<row row-number="2" height="30"/>
+	<row row-number="3" height="30"/>
+	
+	<column col-number="1" width="80"/>
+	<column col-number="2" width="80"/>
+	<column col-number="3" width="80"/>
+	<column col-number="4" width="80"/>
+	<column col-number="5" width="80"/>
+	
+	<paper type="A4" orientation="portrait"></paper>
+	
+	<datasource name="mysql" type="jdbc" driver="com.mysql.jdbc.Driver" 
+			username="root" password="qwertyuioplm" url="jdbc:mysql://localhost:3306/doradosample?useUnicode=true&amp;characterEncoding=UTF-8">
+		<dataset name="employee" type="sql">
+			<sql>
+				<![CDATA[
+					select * from employee
+				]]>
+			</sql>
+			<field name="employee_id"/>
+			<field name="dept_id"/>
+			<field name="employee_name"/>
+			<field name="sex"/>
+			<field name="birthday"/>
+			<field name="married"/>
+			<field name="salary"/>
+			<field name="degree"/>
+			<field name="email"/>
+			<field name="web"/>
+			<field name="category"/>
+		</dataset>
+	</datasource>
+</ureport>

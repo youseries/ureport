@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>ureport2-font</artifactId>
+  <parent>
+  	<groupId>com.bstek.ureport</groupId>
+  	<artifactId>ureport2-parent</artifactId>
+  	<version>2.0.0</version>
+  </parent>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.bstek.ureport</groupId>
+  		<artifactId>ureport2-core</artifactId>
+  		<version>2.0.0</version>
+  	</dependency>
+  </dependencies>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Gaojie</name>
+			<email>jacky.gao@bstek.com</email>
+			<organization>Bstek</organization>
+			<organizationUrl>http://www.bstek.com</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>git@github.com:jacky6024/ureport2.git</connection>
+		<developerConnection>git@github.com:jacky6024/ureport2.git</developerConnection>
+		<url>https://github.com/jacky6024/ureport2</url>
+	</scm>
+	<organization>
+		<name>Bstek</name>
+		<url>http://www.bstek.com</url>
+	</organization>
+	<name>UReport2 Font Project</name>
+	<url>https://github.com/jacky6024/ureport2/tree/master/ureport2-font</url>
+	<version>2.0.0</version>
+</project>

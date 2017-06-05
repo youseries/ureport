@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	">
+	
+	<bean id="ureport.props" class="com.bstek.ureport.UReportPropertyPlaceholderConfigurer" abstract="true"></bean>
+	
+	<bean id="ureport.propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:ureport.properties"></property>
+	</bean>
+	
+	<bean id="ureport.exportManager" class="com.bstek.ureport.export.ExportManagerImpl">
+		<property name="reportRender" ref="ureport.reportRender"></property>
+	</bean>
+	
+	<bean id="ureport.reportRender" class="com.bstek.ureport.export.ReportRender">
+		<property name="reportParser" ref="ureport.reportParser"></property>
+		<property name="reportBuilder" ref="ureport.reportBuilder"></property>
+	</bean>
+	
+	<bean id="ureport.defaultImageProvider" class="com.bstek.ureport.provider.image.DefaultImageProvider"></bean>
+	
+	<bean id="ureport.fileReportProvider" class="com.bstek.ureport.provider.report.file.FileReportProvider">
+		<property name="fileStoreDir" value="${ureport.fileStoreDir}"></property>
+		<property name="disabled" value="${ureport.disableFileProvider}"></property>
+	</bean>
+	
+	<bean id="ureport.reportBuilder" class="com.bstek.ureport.build.ReportBuilder"></bean>
+	
+	<bean id="ureport.reportParser" class="com.bstek.ureport.parser.ReportParser"></bean>
+	
+	<bean id="ureport.classpathReportProvider" class="com.bstek.ureport.provider.report.classpath.ClasspathReportProvider"></bean>
+	
+	<bean id="ureport.fontBuilder" class="com.bstek.ureport.export.pdf.font.FontBuilder"></bean>
+	
+	<bean id="ureport.expressionUtils" class="com.bstek.ureport.expression.ExpressionUtils"></bean>
+	<bean id="ureport.utils" class="com.bstek.ureport.Utils"></bean>
+	<bean id="ureport.cacheUtils" class="com.bstek.ureport.cache.CacheUtils"></bean>
+	
+	<bean id="ureport.countFunction" class="com.bstek.ureport.expression.function.CountFunction"></bean>
+	<bean id="ureport.sumFunction" class="com.bstek.ureport.expression.function.SumFunction"></bean>
+	<bean id="ureport.maxFunction" class="com.bstek.ureport.expression.function.MaxFunction"></bean>
+	<bean id="ureport.minFunction" class="com.bstek.ureport.expression.function.MinFunction"></bean>
+	<bean id="ureport.listFunction" class="com.bstek.ureport.expression.function.ListFunction"></bean>
+	<bean id="ureport.avgFunction" class="com.bstek.ureport.expression.function.AvgFunction"></bean>
+	<bean id="ureport.orderFunction" class="com.bstek.ureport.expression.function.OrderFunction"></bean>
+	<bean id="ureport.WeekFunction" class="com.bstek.ureport.expression.function.date.WeekFunction"></bean>
+	<bean id="ureport.dayFunction" class="com.bstek.ureport.expression.function.date.DayFunction"></bean>
+	<bean id="ureport.monthFunction" class="com.bstek.ureport.expression.function.date.MonthFunction"></bean>
+	<bean id="ureport.yearFunction" class="com.bstek.ureport.expression.function.date.YearFunction"></bean>
+	<bean id="ureport.dateFunction" class="com.bstek.ureport.expression.function.date.DateFunction"></bean>
+	<bean id="ureport.formatNumberFunction" class="com.bstek.ureport.expression.function.FormatNumberFunction"></bean>
+	<bean id="ureport.formatDateFunction" class="com.bstek.ureport.expression.function.FormatDateFunction"></bean>
+	
+	<bean id="ureport.absFunction" class="com.bstek.ureport.expression.function.math.AbsFunction"></bean>
+	<bean id="ureport.ceilFunction" class="com.bstek.ureport.expression.function.math.CeilFunction"></bean>
+	<bean id="ureport.ChnFunction" class="com.bstek.ureport.expression.function.math.ChnFunction"></bean>
+	<bean id="ureport.CosFunction" class="com.bstek.ureport.expression.function.math.CosFunction"></bean>
+	<bean id="ureport.ExpFunction" class="com.bstek.ureport.expression.function.math.ExpFunction"></bean>
+	<bean id="ureport.floorFunction" class="com.bstek.ureport.expression.function.math.FloorFunction"></bean>
+	<bean id="ureport.log10Function" class="com.bstek.ureport.expression.function.math.Log10Function"></bean>
+	<bean id="ureport.logFunction" class="com.bstek.ureport.expression.function.math.LogFunction"></bean>
+	<bean id="ureport.powFunction" class="com.bstek.ureport.expression.function.math.PowFunction"></bean>
+	<bean id="ureport.randomFunction" class="com.bstek.ureport.expression.function.math.RandomFunction"></bean>
+	<bean id="ureport.roundFunction" class="com.bstek.ureport.expression.function.math.RoundFunction"></bean>
+	<bean id="ureport.sinFunction" class="com.bstek.ureport.expression.function.math.SinFunction"></bean>
+	<bean id="ureport.sqrtFunction" class="com.bstek.ureport.expression.function.math.SqrtFunction"></bean>
+	<bean id="ureport.tanFunction" class="com.bstek.ureport.expression.function.math.TanFunction"></bean>
+	<bean id="ureport.stdevpFunction" class="com.bstek.ureport.expression.function.math.StdevpFunction"></bean>
+	<bean id="ureport.varaFunction" class="com.bstek.ureport.expression.function.math.VaraFunction"></bean>
+	<bean id="ureport.modeFunction" class="com.bstek.ureport.expression.function.math.ModeFunction"></bean>
+	<bean id="ureport.medianFunction" class="com.bstek.ureport.expression.function.math.MedianFunction"></bean>
+	
+	
+	<bean id="ureport.lengthFunction" class="com.bstek.ureport.expression.function.string.LengthFunction"></bean>
+	<bean id="ureport.lowerFunction" class="com.bstek.ureport.expression.function.string.LowerFunction"></bean>
+	<bean id="ureport.IndexOfFunction" class="com.bstek.ureport.expression.function.string.IndexOfFunction"></bean>
+	<bean id="ureport.replaceFunction" class="com.bstek.ureport.expression.function.string.ReplaceFunction"></bean>
+	<bean id="ureport.substringFunction" class="com.bstek.ureport.expression.function.string.SubstringFunction"></bean>
+	<bean id="ureport.trimFunction" class="com.bstek.ureport.expression.function.string.TrimFunction"></bean>
+	<bean id="ureport.upperFunction" class="com.bstek.ureport.expression.function.string.UpperFunction"></bean>
+	
+	<bean id="ureport.pageTotalFunction" class="com.bstek.ureport.expression.function.page.PageTotalFunction"></bean>
+	<bean id="ureport.pageNumberFunction" class="com.bstek.ureport.expression.function.page.PageNumberFunction"></bean>
+	<bean id="ureport.pageAvgFunction" class="com.bstek.ureport.expression.function.page.PageAvgFunction"></bean>
+	<bean id="ureport.pageCountFunction" class="com.bstek.ureport.expression.function.page.PageCountFunction"></bean>
+	<bean id="ureport.pageMaxFunction" class="com.bstek.ureport.expression.function.page.PageMaxFunction"></bean>
+	<bean id="ureport.pageMinFunction" class="com.bstek.ureport.expression.function.page.PageMinFunction"></bean>
+	<bean id="ureport.pageRowsFunction" class="com.bstek.ureport.expression.function.page.PageRowsFunction"></bean>
+	<bean id="ureport.pageSumFunction" class="com.bstek.ureport.expression.function.page.PageSumFunction"></bean>
+	
+	<bean id="ureport.parameterFunction" class="com.bstek.ureport.expression.function.ParameterFunction"></bean>
+	
+	<bean id="ureport.rowFunction" class="com.bstek.ureport.expression.function.RowFunction"></bean>
+	<bean id="ureport.columnFunction" class="com.bstek.ureport.expression.function.ColumnFunction"></bean>
+</beans>

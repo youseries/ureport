@@ -1,0 +1,15 @@
+.ud-toolbar{
+    width: 100%;
+    background: #f8f8f8;
+}
+.ud-property-panel{
+    width: 400px;
+    border: solid 1px #999;
+    border-radius: 5px;
+    top: 35px;
+    left: 710px;
+    z-index: 105;
+    position: absolute;
+    background: #ffffff;
+    box-shadow: 5px 5px 5px #888888;
+}

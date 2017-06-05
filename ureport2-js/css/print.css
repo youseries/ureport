@@ -1,0 +1,24 @@
+@media print {
+    .page-break{display: block; page-break-before: always; }
+}
+@page right {
+    @bottom-left {
+        margin: 10pt 0 30pt 0;
+        border-top: .25pt solid #666;
+        content: "我的报表";
+        font-size: 9pt;
+        color: #333;
+    }
+    @bottom-right {
+        margin: 10pt 0 30pt 0;
+        border-top: .25pt solid #666;
+        content: "我的内容";
+        font-size: 9pt;
+    }
+    @top-right {
+        content:  "测试报表";
+        margin: 30pt 0 10pt 0;
+        font-size: 9pt;
+        color: #333;
+    }
+}

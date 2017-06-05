@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/ureport2" xmlns:tns="http://www.example.org/ureport2" elementFormDefault="qualified">
+	<element name="ureport">
+		<complexType>
+			<sequence>
+				<element name="cell" type="tns:cell" minOccurs="1" maxOccurs="unbounded"></element>
+				<element name="row" type="tns:row" minOccurs="1" maxOccurs="unbounded"></element>
+				<element name="column" type="tns:column" minOccurs="1" maxOccurs="unbounded"></element>
+				<element name="header" type="tns:header-footer" minOccurs="0" maxOccurs="1"></element>
+				<element name="footer" type="tns:header-footer" minOccurs="0" maxOccurs="1"></element>
+				<element name="paper" type="tns:paper" minOccurs="1" maxOccurs="1"></element>
+				<element name="datasource" type="tns:datasource" minOccurs="0" maxOccurs="unbounded"></element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="header-footer">
+		<sequence>
+			<element name="left" type="tns:content" minOccurs="0" maxOccurs="1"></element>
+			<element name="center" type="tns:content" minOccurs="0" maxOccurs="1"></element>
+			<element name="right" type="tns:content" minOccurs="0" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="font-family" type="string"></attribute>
+		<attribute name="font-size" type="int"></attribute>
+		<attribute name="forecolor" type="string"></attribute>
+		<attribute name="bgcolor" type="string"></attribute>
+		<attribute name="bold" type="boolean"></attribute>
+		<attribute name="italic" type="boolean"></attribute>
+		<attribute name="underline" type="boolean"></attribute>
+	</complexType>
+	
+	<complexType name="content" mixed="true"></complexType>
+
+	<complexType name="paper">
+		<attribute name="type" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="A0"></enumeration>
+					<enumeration value="A1"></enumeration>
+					<enumeration value="A2"></enumeration>
+					<enumeration value="A3"></enumeration>
+					<enumeration value="A4"></enumeration>
+					<enumeration value="A5"></enumeration>
+					<enumeration value="A6"></enumeration>
+					<enumeration value="A7"></enumeration>
+					<enumeration value="A8"></enumeration>
+					<enumeration value="A9"></enumeration>
+					<enumeration value="A10"></enumeration>
+					<enumeration value="B0"></enumeration>
+					<enumeration value="B1"></enumeration>
+					<enumeration value="B2"></enumeration>
+					<enumeration value="B3"></enumeration>
+					<enumeration value="B4"></enumeration>
+					<enumeration value="B5"></enumeration>
+					<enumeration value="B6"></enumeration>
+					<enumeration value="B7"></enumeration>
+					<enumeration value="B8"></enumeration>
+					<enumeration value="B9"></enumeration>
+					<enumeration value="B10"></enumeration>
+					<enumeration value="CUSTOM"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="orientation" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="portrait"></enumeration>
+					<enumeration value="landscape"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		
+		<attribute name="width" type="int"></attribute>
+		<attribute name="height" type="int"></attribute>
+		<attribute name="width-mm" type="int"></attribute>
+		<attribute name="height-mm" type="int"></attribute>
+		
+		<attribute name="left-margin" type="int"></attribute>
+		<attribute name="left-margin-mm" type="int"></attribute>
+		<attribute name="right-margin" type="int"></attribute>
+		<attribute name="right-margin-mm" type="int"></attribute>
+		<attribute name="top-margin" type="int"></attribute>
+		<attribute name="top-margin-mm" type="int"></attribute>
+		<attribute name="bottom-margin" type="int"></attribute>
+		<attribute name="bottom-margin-mm" type="int"></attribute>
+		
+		<attribute name="paging-mode">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="fitpage"></enumeration>
+					<enumeration value="fixrows"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="fixrows" type="int"></attribute>
+		
+		<attribute name="column-enabled" type="boolean"></attribute>
+		<attribute name="column-count" type="int"></attribute>
+		<attribute name="column-margin" type="int"></attribute>
+	</complexType>	
+	
+	<complexType name="row">
+		<attribute name="row-number" type="int" use="required"></attribute>
+		<attribute name="height" type="int" use="required"></attribute>
+		<attribute name="band">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="headerrepeat"></enumeration>
+					<enumeration value="footerrepeat"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	<complexType name="column">
+		<attribute name="col-number" type="int" use="required"></attribute>
+		<attribute name="width" type="int" use="required"></attribute>
+		<attribute name="hide" type="boolean"></attribute>
+	</complexType>
+	<complexType name="cell">
+		<sequence>
+			<element name="simple-value" type="tns:simple-value" minOccurs="0" maxOccurs="1"></element>
+			<element name="image-value" type="tns:image-value" minOccurs="0" maxOccurs="1"></element>
+			<element name="zxing-value" type="tns:zxing-value" minOccurs="0" maxOccurs="1"></element>
+			<element name="expression-value" type="tns:expression-value" minOccurs="0" maxOccurs="1"></element>
+			<element name="dataset-value" type="tns:dataset-value" minOccurs="0" maxOccurs="1"></element>
+			<element name="cell-style" type="tns:cell-style" minOccurs="0" maxOccurs="1"></element>
+			<element name="condition-property-item" type="tns:condition-property-item" maxOccurs="1" minOccurs="0"></element>
+			<element name="link-parameter" type="tns:link-parameter" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="row" type="int"></attribute>
+		<attribute name="col" type="int"></attribute>
+		<attribute name="left-cell" type="string"></attribute>
+		<attribute name="top-cell" type="string"></attribute>
+		<attribute name="col-span" type="int"></attribute>
+		<attribute name="row-span" type="int"></attribute>
+		<attribute name="expand" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="None"></enumeration>
+					<enumeration value="Right"></enumeration>
+					<enumeration value="Down"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		
+		<attribute name="link-url" type="string" use="optional"></attribute>
+		<attribute name="link-target-window" use="optional">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="_blank"></enumeration>
+					<enumeration value="_self"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="condition-property-item">
+		<sequence>
+			<element name="condition" type="tns:condition" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="link-parameter" type="tns:link-parameter" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="cell-style" type="tns:cell-style" maxOccurs="1" minOccurs="0"></element>
+			<element name="expr" type="tns:text" minOccurs="0" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="row-height" type="int" use="optional"></attribute>
+		<attribute name="col-width" type="int" use="optional"></attribute>
+		<attribute name="new-value" type="string" use="optional"></attribute>
+		<attribute name="link-url" type="string" use="optional"></attribute>
+		<attribute name="link-target-window" use="optional">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="_blank"></enumeration>
+					<enumeration value="_self"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="type" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="normal"></enumeration>
+					<enumeration value="expr"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="cell-style">
+		<sequence>
+			<element name="left-border" type="tns:border" minOccurs="0" maxOccurs="1"></element>
+			<element name="right-border" type="tns:border" minOccurs="0" maxOccurs="1"></element>
+			<element name="top-border" type="tns:border" minOccurs="0" maxOccurs="1"></element>
+			<element name="bottom-border" type="tns:border" minOccurs="0" maxOccurs="1"></element>		
+		</sequence>
+		<attribute name="font-family" type="string"></attribute>
+		<attribute name="font-size" type="int"></attribute>
+		<attribute name="forecolor" type="string"></attribute>
+		<attribute name="bgcolor" type="string"></attribute>
+		<attribute name="format" type="string"></attribute>
+		<attribute name="bold" type="boolean"></attribute>
+		<attribute name="italic" type="boolean"></attribute>
+		<attribute name="underline" type="boolean"></attribute>
+		<attribute name="wrap-compute" type="boolean"></attribute>
+		<attribute name="align" default="left">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="left"></enumeration>
+					<enumeration value="center"></enumeration>
+					<enumeration value="right"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="valign">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="top"></enumeration>
+					<enumeration value="middle"></enumeration>
+					<enumeration value="bottom"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="border">
+		<attribute name="width" type="int"></attribute>
+		<attribute name="color" type="string"></attribute>
+		<attribute name="style" default="solid">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="solid"></enumeration>
+					<enumeration value="dashed"></enumeration>
+					<enumeration value="dotted"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>	
+	
+	<complexType name="simple-value" mixed="true"></complexType>
+	
+	<complexType name="image-value">
+		<sequence>
+			<element name="text" type="tns:text" minOccurs="0" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="source" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="text"></enumeration>
+					<enumeration value="expression"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="zxing-value">
+		<sequence>
+			<element name="text" type="tns:text" minOccurs="0" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="source" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="text"></enumeration>
+					<enumeration value="expression"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="category" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="barcode"></enumeration>
+					<enumeration value="qrcode"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="format" use="optional"></attribute>
+		<attribute name="code-display" use="optional"></attribute>
+	</complexType>
+	
+	<complexType name="slash-value">
+		<sequence>
+			<element name="slash" type="tns:slash" maxOccurs="unbounded" minOccurs="1"/>
+			<element name="base64-data" type="tns:text" maxOccurs="1" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+	<complexType name="slash">
+		<attribute name="text" type="string" use="required"></attribute>
+		<attribute name="x" type="int" use="required"></attribute>
+		<attribute name="y" type="int" use="required"></attribute>
+		<attribute name="degree" type="int" use="required"></attribute>
+	</complexType>
+	
+	<complexType name="text" mixed="true"></complexType>
+	
+	<complexType name="expression-value" mixed="true"></complexType>
+	
+	<complexType name="dataset-value">
+		<sequence>
+			<element name="condition" type="tns:condition" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="group-item" type="tns:group-item" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+		<attribute name="dataset-name" type="string" use="required"></attribute>
+		<attribute name="aggregate" type="string" use="required"></attribute>
+		<attribute name="property" type="string" use="required"></attribute>
+		<attribute name="order">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="desc"></enumeration>
+					<enumeration value="asc"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="link-parameter">
+		<sequence>
+			<element name="value" type="tns:link-parameter-value" maxOccurs="1" minOccurs="1"></element>
+		</sequence>
+		<attribute name="name" type="string" use="required"></attribute>
+	</complexType>
+	
+	<complexType name="link-parameter-value" mixed="true"></complexType>
+	
+	<complexType name="group-item">
+		<sequence>
+			<element name="condition" type="tns:condition" minOccurs="1" maxOccurs="unbounded"></element>
+		</sequence>
+		<attribute name="name" type="string" use="required"></attribute>
+	</complexType>
+	
+	<complexType name="condition">
+		<sequence>
+			<element name="value" type="tns:condition-value" minOccurs="1" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="property" use="required"></attribute>
+		<attribute name="op" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="GreatThen"></enumeration>
+					<enumeration value="EqualsGreatThen"></enumeration>
+					<enumeration value="LessThen"></enumeration>
+					<enumeration value="EqualsLessThen"></enumeration>
+					<enumeration value="Equals"></enumeration>
+					<enumeration value="NotEquals"></enumeration>
+					<enumeration value="In"></enumeration>
+					<enumeration value="Like"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	<complexType name="condition-value" mixed="true"></complexType>
+	
+	<complexType name="datasource">
+		<sequence>
+			<element name="dataset" type="tns:dataset" minOccurs="1" maxOccurs="unbounded"></element>
+		</sequence>
+		<attribute name="name" type="string" use="required"></attribute>
+		
+		<attribute name="driver" type="string" use="optional"></attribute>
+		<attribute name="url" type="string" use="optional"></attribute>
+		<attribute name="username" type="string" use="optional"></attribute>
+		<attribute name="password" type="string" use="optional"></attribute>
+		
+		<attribute name="bean" type="string" use="optional"></attribute>
+		
+		<attribute name="type" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="jdbc"></enumeration>
+					<enumeration value="spring"></enumeration>
+					<enumeration value="buildin"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	
+	<complexType name="dataset">
+		<sequence>
+			<element name="sql" type="tns:sql" minOccurs="0" maxOccurs="1"></element>
+			<element name="parameter" type="tns:parameter" minOccurs="0" maxOccurs="unbounded"></element>
+			<element name="field" type="tns:field" minOccurs="1" maxOccurs="unbounded"></element>
+		</sequence>
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="method" type="string"></attribute>
+		<attribute name="type" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="sql"></enumeration>
+					<enumeration value="bean"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="sql" mixed="true"></complexType>
+	
+	<complexType name="parameter">
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="type" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="Integer"></enumeration>
+					<enumeration value="Float"></enumeration>
+					<enumeration value="Boolean"></enumeration>
+					<enumeration value="String"></enumeration>
+					<enumeration value="Date"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="default-value" type="string" use="optional"></attribute>
+	</complexType>
+	<complexType name="field">
+		<attribute name="name" type="string" use="required"></attribute>
+	</complexType>
+</schema>
