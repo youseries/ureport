@@ -83,7 +83,7 @@ public class ExportWordServletAction extends BaseServletAction {
 			}
 			wordProducer.produce(report, outputStream);
 		}else{
-			ExportConfigure configure=new ExportConfigureImpl(file, outputStream);
+			ExportConfigure configure=new ExportConfigureImpl(file,parameters,outputStream);
 			exportManager.exportPdf(configure);
 		}
 		outputStream.flush();

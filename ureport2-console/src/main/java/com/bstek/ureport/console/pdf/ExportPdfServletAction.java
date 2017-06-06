@@ -94,7 +94,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 			}
 			pdfProducer.produce(report, outputStream);
 		}else{
-			ExportConfigure configure=new ExportConfigureImpl(file, outputStream);
+			ExportConfigure configure=new ExportConfigureImpl(file,parameters,outputStream);
 			exportManager.exportPdf(configure);
 		}
 		outputStream.flush();

@@ -96,7 +96,7 @@ public class ExportExcelServletAction extends BaseServletAction {
 				excelProducer.produce(report, outputStream);				
 			}
 		}else{
-			ExportConfigure configure=new ExportConfigureImpl(file, outputStream);
+			ExportConfigure configure=new ExportConfigureImpl(file,parameters,outputStream);
 			if(withPage){
 				exportManager.exportExcelWithPaging(configure);
 			}else if(withSheet){
