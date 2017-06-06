@@ -32,6 +32,9 @@ public class DefaultMemoryReportDefinitionCache implements ReportDefinitionCache
 	}
 	@Override
 	public void cacheReportDefinition(String file,ReportDefinition reportDefinition) {
+		if(reportMap.containsKey(file)){
+			reportMap.remove(file);
+		}
 		reportMap.put(file, reportDefinition);
 	}
 }

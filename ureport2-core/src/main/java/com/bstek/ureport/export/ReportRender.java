@@ -26,8 +26,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import com.bstek.ureport.build.ReportBuilder;
-import com.bstek.ureport.cache.DefaultMemoryReportDefinitionCache;
-import com.bstek.ureport.cache.ReportDefinitionCache;
+import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.definition.CellDefinition;
 import com.bstek.ureport.definition.Expand;
 import com.bstek.ureport.definition.ReportDefinition;
@@ -45,7 +44,6 @@ import com.bstek.ureport.provider.report.ReportProvider;
  */
 public class ReportRender implements ApplicationContextAware{
 	private ReportParser reportParser;
-	private ReportDefinitionCache reportDefinitionCache;
 	private ReportBuilder reportBuilder;
 	private Collection<ReportProvider> reportProviders;
 	private DownCellbuilder downCellParentbuilder=new DownCellbuilder();
@@ -60,11 +58,11 @@ public class ReportRender implements ApplicationContextAware{
 	}
 	
 	public ReportDefinition getReportDefinition(String file){
-		ReportDefinition reportDefinition=reportDefinitionCache.getReportDefinition(file);
+		ReportDefinition reportDefinition=CacheUtils.getReportDefinition(file);
 		if(reportDefinition==null){
 			reportDefinition=parseReport(file);
 			rebuildReportDefinition(reportDefinition);
-			reportDefinitionCache.cacheReportDefinition(file, reportDefinition);
+			CacheUtils.cacheReportDefinition(file, reportDefinition);
 		}
 		return reportDefinition;
 	}
@@ -143,11 +141,5 @@ public class ReportRender implements ApplicationContextAware{
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		reportProviders=applicationContext.getBeansOfType(ReportProvider.class).values();
-		Collection<ReportDefinitionCache> reportCaches=applicationContext.getBeansOfType(ReportDefinitionCache.class).values();
-		if(reportCaches.size()==0){
-			reportDefinitionCache=new DefaultMemoryReportDefinitionCache();
-		}else{
-			reportDefinitionCache=reportCaches.iterator().next();
-		}
 	}
 }

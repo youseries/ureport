@@ -17,6 +17,7 @@
 	<bean id="ureport.htmlPreviewServletAction" class="com.bstek.ureport.console.html.HtmlPreviewServletAction">
 		<property name="exportManager" ref="ureport.exportManager"></property>
 		<property name="reportBuilder" ref="ureport.reportBuilder"></property>
+		<property name="reportRender" ref="ureport.reportRender"></property>
 	</bean>
 	<bean id="ureport.exportWordServletAction" class="com.bstek.ureport.console.word.ExportWordServletAction">
 		<property name="exportManager" ref="ureport.exportManager"></property>

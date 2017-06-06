@@ -42,6 +42,7 @@ public class ExportManagerImpl implements ExportManager {
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 		Report report=reportRender.render(reportDefinition, parameters);
+		CacheUtils.storeReport(file, report);
 		HtmlReport htmlReport=new HtmlReport();
 		String content=htmlProducer.produce(report);
 		htmlReport.setContent(content);

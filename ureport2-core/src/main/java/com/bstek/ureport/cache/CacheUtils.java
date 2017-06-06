@@ -21,6 +21,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.bstek.ureport.definition.ReportDefinition;
 import com.bstek.ureport.model.Report;
 
 /**
@@ -29,6 +30,7 @@ import com.bstek.ureport.model.Report;
  */
 public class CacheUtils implements ApplicationContextAware{
 	private static ReportCache reportCache;
+	private static ReportDefinitionCache reportDefinitionCache;
 	
 	public static Report getReport(String file){
 		if(reportCache!=null){
@@ -42,12 +44,24 @@ public class CacheUtils implements ApplicationContextAware{
 		}
 	}
 	
+	public static ReportDefinition getReportDefinition(String file){
+		return reportDefinitionCache.getReportDefinition(file);
+	}
+	public static void cacheReportDefinition(String file,ReportDefinition reportDefinition){
+		reportDefinitionCache.cacheReportDefinition(file, reportDefinition);
+	}
+	
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-			throws BeansException {
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		Collection<ReportCache> coll=applicationContext.getBeansOfType(ReportCache.class).values();
 		if(coll.size()>0){
 			reportCache=coll.iterator().next();
+		}
+		Collection<ReportDefinitionCache> reportCaches=applicationContext.getBeansOfType(ReportDefinitionCache.class).values();
+		if(reportCaches.size()==0){
+			reportDefinitionCache=new DefaultMemoryReportDefinitionCache();
+		}else{
+			reportDefinitionCache=reportCaches.iterator().next();
 		}
 	}
 }

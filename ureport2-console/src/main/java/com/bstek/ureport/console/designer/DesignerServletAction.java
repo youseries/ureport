@@ -37,8 +37,7 @@ import org.apache.velocity.VelocityContext;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
-import com.bstek.ureport.cache.DefaultMemoryReportDefinitionCache;
-import com.bstek.ureport.cache.ReportDefinitionCache;
+import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.console.RenderPageServletAction;
 import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.ReportDefinition;
@@ -58,7 +57,6 @@ import com.bstek.ureport.provider.report.ReportProvider;
 public class DesignerServletAction extends RenderPageServletAction {
 	private ReportRender reportRender;
 	private ReportParser reportParser;
-	private ReportDefinitionCache reportDefinitionCache;
 	private List<ReportProvider> reportProviders=new ArrayList<ReportProvider>();
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -181,7 +179,8 @@ public class DesignerServletAction extends RenderPageServletAction {
 		targetReportProvider.saveReport(file, content);
 		InputStream inputStream=IOUtils.toInputStream(content,"utf-8");
 		ReportDefinition reportDef=reportParser.parse(inputStream, file);
-		reportDefinitionCache.cacheReportDefinition(file, reportDef);
+		reportRender.rebuildReportDefinition(reportDef);
+		CacheUtils.cacheReportDefinition(file, reportDef);
 		IOUtils.closeQuietly(inputStream);
 	}
 	
@@ -206,12 +205,6 @@ public class DesignerServletAction extends RenderPageServletAction {
 				continue;
 			}
 			reportProviders.add(provider);
-		}
-		Collection<ReportDefinitionCache> reportCaches=applicationContext.getBeansOfType(ReportDefinitionCache.class).values();
-		if(reportCaches.size()==0){
-			reportDefinitionCache=new DefaultMemoryReportDefinitionCache();
-		}else{
-			reportDefinitionCache=reportCaches.iterator().next();
 		}
 	}
 
