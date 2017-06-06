@@ -51,6 +51,9 @@ public class ParameterFunction  implements Function{
 			throw new ReportComputeException("Function [param] need one parameter.");
 		}
 		Map<String,Object> map=context.getParameters();
+		if(map==null){
+			return null;
+		}
 		return map.get(obj.toString());
 	}
 	@Override

@@ -26,10 +26,6 @@ public class ExportConfigureImpl implements ExportConfigure{
 	private String file;
 	private OutputStream outputStream;
 	private Map<String,Object> parameters;
-	public ExportConfigureImpl(String file,OutputStream outputStream) {
-		this.file=file;
-		this.outputStream=outputStream;
-	}
 	public ExportConfigureImpl(String file,Map<String,Object> parameters,OutputStream outputStream) {
 		this.file=file;
 		this.parameters=parameters;
