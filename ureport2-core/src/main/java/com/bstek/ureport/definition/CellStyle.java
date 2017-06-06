@@ -26,7 +26,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 public class CellStyle {
 	private String bgcolor;
-	private String forecolor;
+	private String forecolor="0,0,0";
 	private int fontSize=10;
 	private String fontFamily="宋体";
 	private String format;

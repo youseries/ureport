@@ -82,7 +82,10 @@ public class CellStyleParser implements Parser<CellStyle> {
 			style=new CellStyle();
 		}
 		style.setBgcolor(element.attributeValue("bgcolor"));
-		style.setForecolor(element.attributeValue("forecolor"));
+		String forecolor=element.attributeValue("forecolor");
+		if(StringUtils.isNotBlank(forecolor)){
+			style.setForecolor(forecolor);			
+		}
 		String fontFamily=element.attributeValue("font-family");
 		if(StringUtils.isNotBlank(fontFamily)){			
 			style.setFontFamily(fontFamily);			
