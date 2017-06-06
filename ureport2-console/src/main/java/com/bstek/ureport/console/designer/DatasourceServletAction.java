@@ -18,7 +18,6 @@ package com.bstek.ureport.console.designer;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -93,16 +92,13 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		Method[] methods=clazz.getMethods();
 		List<String> result=new ArrayList<String>();
 		for(Method method:methods){
-			Parameter[] parameters=method.getParameters();
-			if(parameters.length!=3){
+			Class<?>[] types=method.getParameterTypes();
+			if(types.length!=3){
 				continue;
 			}
-			Parameter p1=parameters[0];
-			Parameter p2=parameters[1];
-			Parameter p3=parameters[2];
-			Class<?> typeClass1=p1.getType();
-			Class<?> typeClass2=p2.getType();
-			Class<?> typeClass3=p3.getType();
+			Class<?> typeClass1=types[0];
+			Class<?> typeClass2=types[1];
+			Class<?> typeClass3=types[2];
 			if(!String.class.isAssignableFrom(typeClass1)){
 				continue;
 			}
