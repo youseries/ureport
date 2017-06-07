@@ -17,6 +17,7 @@ package com.bstek.ureport.expression.function;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +54,7 @@ public class OrderFunction implements Function {
 		if(firstData instanceof ObjectListExpressionData){
 			ObjectListExpressionData data=(ObjectListExpressionData)firstData;
 			List<?> list=data.getData();
-			list.sort(new Comparator<Object>(){
+			Collections.sort(list, new Comparator<Object>(){
 				@Override
 				public int compare(Object data1, Object data2) {
 					return doOrder(data1, data2, order);
@@ -70,7 +71,7 @@ public class OrderFunction implements Function {
 					ls.add(obj);					
 				}
 			}
-			ls.sort(new Comparator<Object>(){
+			Collections.sort(ls,new Comparator<Object>(){
 				@Override
 				public int compare(Object data1, Object data2) {
 					return doOrder(data1, data2, order);
