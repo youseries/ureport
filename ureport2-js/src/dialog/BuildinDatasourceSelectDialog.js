@@ -29,7 +29,7 @@ export default class BuildinDatasourceSelectDialog{
     }
     initBody(body,footer){
         const table=$(`<table class="table table-bordered">
-            <thead><tr style="background: #f4f4f4"><td>数据源名称</td><td>选择</td></tr></thead>
+            <thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">数据源名称</td><td style="vertical-align: middle">选择</td></tr></thead>
         </table>`);
         this.tbody=$(`<tbody></tbody>`);
         table.append(this.tbody);
@@ -43,8 +43,8 @@ export default class BuildinDatasourceSelectDialog{
             url:window._server+"/datasource/loadBuildinDatasources",
             success:function(result){
                 for(let name of result){
-                    const tr=$(`<tr><td>${name}</td></tr>`);
-                    const selectTD=$(`<td></td>`);
+                    const tr=$(`<tr style="height: 35px;"><td style="vertical-align: middle">${name}</td></tr>`);
+                    const selectTD=$(`<td style="vertical-align: middle"></td>`);
                     tr.append(selectTD);
                     const selector=$(`<a href="###"><i class="glyphicon glyphicon-hand-up" style="font-size: 13pt"></i></a>`);
                     selector.click(function(){

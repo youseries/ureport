@@ -26,7 +26,7 @@ export default class MethodSelectDialog{
     }
     initBody(body,footer){
         const table=$(`<table class="table table-bordered">
-            <thead><tr style="background: #f4f4f4"><td>方法名</td><td>选择</td></tr></thead>
+            <thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">方法名</td><td style="vertical-align: middle">选择</td></tr></thead>
         </table>`);
         this.tbody=$(`<tbody></tbody>`);
         table.append(this.tbody);
@@ -41,8 +41,8 @@ export default class MethodSelectDialog{
             data:{beanId},
             success:function(result){
                 for(let method of result){
-                    const tr=$(`<tr><td>${method}</td></tr>`);
-                    const selectTD=$(`<td></td>`);
+                    const tr=$(`<tr style="height: 35px;"><td style="vertical-align: middle">${method}</td></tr>`);
+                    const selectTD=$(`<td style="vertical-align: middle"></td>`);
                     tr.append(selectTD);
                     const selector=$(`<a href="###"><i class="glyphicon glyphicon-hand-up" style="font-size: 13pt"></i></a>`);
                     selector.click(function(){

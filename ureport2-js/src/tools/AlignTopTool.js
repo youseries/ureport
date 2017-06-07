@@ -11,11 +11,37 @@ export default class AlignTopTool extends Tool{
 
     buildButton(){
         const _this=this;
+        this.align="middle";
         const group=$(`<div class="btn-group"></div>`);
+        const nameButton=$(`<button type="button" class="btn btn-default"
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;font-size: 12pt;" title="上下对齐">
+            <i class="ureport ureport-alignmiddle" id="valign_button" style="color: #0e90d2;"></i>
+            </button>`);
+        group.append(nameButton);
         const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px" data-toggle="dropdown" title="上下对齐">
-            <i class="ureport ureport-aligntop" style="color: #0e90d2;"></i>
             <span class="caret"></span>
+            <span class="sr-only">切换下拉菜单</span>
         </button>`);
+        nameButton.click(function(){
+            const selectedCells=_this.context.hot.getSelected();
+            if(!selectedCells || selectedCells.length===0){
+                alert("请先选择单元格！");
+                return;
+            }
+            const align=_this.align;
+            let oldAligns=_this._buildCellAlign(_this.context,_this.align);
+            undoManager.add({
+                undo:function(){
+                    oldAligns=_this._buildCellAlign(_this.context,null,oldAligns);
+                    setDirty();
+                },
+                redo:function(){
+                    oldAligns=_this._buildCellAlign(_this.context,align);
+                    setDirty();
+                }
+            });
+            setDirty();
+        });
         const ul=$(`<ul class="dropdown-menu" role="menu"></ul>`);
         const top=$(`<li>
                 <a href="###">
@@ -97,6 +123,33 @@ export default class AlignTopTool extends Tool{
         return group;
     }
 
+    refresh(startRow,startCol,endRow,endCol){
+        let tmp=endRow;
+        if(startRow>endRow){
+            endRow=startRow;
+            startRow=tmp;
+        }
+        tmp=endCol;
+        if(startCol>endCol){
+            endCol=startCol;
+            startCol=tmp;
+        }
+        for(let i=startRow;i<=endRow;i++) {
+            for (let j = startCol; j <= endCol; j++) {
+                let cellDef = this.context.getCell(i, j);
+                if (!cellDef) {
+                    continue;
+                }
+                let cellStyle=cellDef.cellStyle;
+                const valign=cellStyle.valign || "top";
+                $("#valign_button").removeClass().addClass("ureport ureport-align"+valign);
+                this.align=valign;
+                break;
+            }
+            break;
+        }
+    }
+
     _buildCellAlign(context,align,prevAligns){
         const oldAligns={},selected=context.hot.getSelected();
         let startRow=selected[0],startCol=selected[1],endRow=selected[2],endCol=selected[3];
@@ -124,6 +177,8 @@ export default class AlignTopTool extends Tool{
                 }
                 $(td).css("vertical-align",align);
                 cellStyle.valign=align;
+                $("#valign_button").removeClass().addClass("ureport ureport-align"+align);
+                this.align=align;
             }
         }
         return oldAligns;

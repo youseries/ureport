@@ -9,10 +9,14 @@ export default class FontSizeTool extends Tool{
     }
     buildButton(){
         const _this=this;
+        this.fontSize=10;
         const group=$(`<div class="btn-group"></div>`);
+        this.nameButton=$(`<button type="button" class="btn btn-default"
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;font-size: 12pt;" title="字体尺寸">10</button>`);
+        group.append(this.nameButton);
         const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="字体尺寸">
-            <i class="ureport ureport-fontsize" style="color: #0e90d2;"></i>
             <span class="caret"></span>
+            <span class="sr-only">切换下拉菜单</span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;"></ul>`);
         for(let i=1;i<=100;i++){
@@ -22,18 +26,50 @@ export default class FontSizeTool extends Tool{
                 if(!_this.checkSelection()){
                     return;
                 }
-                triggerFontSize.call(this,_this.context,size);
+                triggerFontSize.call(this,_this.context,size.attr("data"),_this.nameButton,_this);
             });
         }
+        this.nameButton.click(function(){
+            if(!_this.checkSelection()){
+                return;
+            }
+            triggerFontSize.call(this,_this.context,this.fontSize,_this.nameButton,_this);
+        });
         group.append(mainBtn);
         group.append(ul);
         return group;
     }
+
+    refresh(startRow,startCol,endRow,endCol){
+        let tmp=endRow;
+        if(startRow>endRow){
+            endRow=startRow;
+            startRow=tmp;
+        }
+        tmp=endCol;
+        if(startCol>endCol){
+            endCol=startCol;
+            startCol=tmp;
+        }
+        for(let i=startRow;i<=endRow;i++) {
+            for (let j = startCol; j <= endCol; j++) {
+                let cellDef = this.context.getCell(i, j);
+                if (!cellDef) {
+                    continue;
+                }
+                let cellStyle=cellDef.cellStyle;
+                const fontSize=cellStyle.fontSize || 10;
+                this.nameButton.html(fontSize);
+                this.fontSize=fontSize;
+                break;
+            }
+            break;
+        }
+    }
 }
 
-function triggerFontSize(context,li){
+function triggerFontSize(context,fontsize,nameButton,_this){
     let hot=context.hot;
-    let fontsize=li.attr("data");
     let selected=hot.getSelected();
     let startRow=selected[0],startCol=selected[1],endRow=selected[2],endCol=selected[3];
     let tmp=endRow;
@@ -46,10 +82,10 @@ function triggerFontSize(context,li){
         endCol=startCol;
         startCol=tmp;
     }
-    let oldFontSize=updateFontSize(context,startRow,startCol,endRow,endCol,fontsize);
+    let oldFontSize=updateFontSize(context,startRow,startCol,endRow,endCol,fontsize,nameButton,_this);
     undoManager.add({
         redo:function(){
-            oldFontSize=updateFontSize(context,startRow,startCol,endRow,endCol,fontsize);
+            oldFontSize=updateFontSize(context,startRow,startCol,endRow,endCol,fontsize,nameButton,_this);
             setDirty();
         },
         undo:function(){
@@ -61,6 +97,8 @@ function triggerFontSize(context,li){
                     }
                     let cellStyle=cellDef.cellStyle;
                     cellStyle.fontSize=oldFontSize[i+','+j];
+                    nameButton.html(cellStyle.fontSize);
+                    _this.fontSize=cellStyle.fontSize;
                 }
             }
             hot.render();
@@ -70,7 +108,7 @@ function triggerFontSize(context,li){
     setDirty();
 }
 
-function updateFontSize(context,startRow,startCol,endRow,endCol,size){
+function updateFontSize(context,startRow,startCol,endRow,endCol,size,nameButton,_this){
     let hot=context.hot;
     const oldFontSize={};
     for(let i=startRow;i<=endRow;i++) {
@@ -82,6 +120,8 @@ function updateFontSize(context,startRow,startCol,endRow,endCol,size){
             let cellStyle=cellDef.cellStyle;
             oldFontSize[i+','+j]=cellStyle.fontSize;
             cellStyle.fontSize=size;
+            nameButton.html(size);
+            _this.fontSize=size;
         }
     }
     hot.render();

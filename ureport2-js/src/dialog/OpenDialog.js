@@ -34,7 +34,11 @@ export default class OpenDialog{
         body.append(providerGroup);
         const tableContainer=$(`<div style="height:350px;overflow: auto"></div>`);
         body.append(tableContainer);
-        const fileTable=$(`<table class="table table-bordered"><thead><tr style="background: #f4f4f4"><td>文件名</td><td style="width: 150px">修改日期</td><td style="width:50px">打开</td><td style="width:50px">删除</td></tr></thead></table>`);
+        const fileTable=$(`<table class="table table-bordered"><thead><tr style="background: #f4f4f4;height: 30px;">
+            <td style="vertical-align: middle">文件名</td>
+            <td style="width: 150px;vertical-align: middle">修改日期</td>
+            <td style="width:50px;vertical-align: middle">打开</td>
+            <td style="width:50px;vertical-align: middle">删除</td></tr></thead></table>`);
         this.fileTableBody=$(`<tbody></tbody>`);
         fileTable.append(this.fileTableBody);
         tableContainer.append(fileTable);
@@ -50,12 +54,12 @@ export default class OpenDialog{
                 return;
             }
             for(let file of reportFiles){
-                let tr=$(`<tr></tr>`);
+                let tr=$(`<tr style="height: 35px;"></tr>`);
                 _this.fileTableBody.append(tr);
-                tr.append(`<td>${file.name}</td>`);
-                tr.append(`<td>${formatDate(file.updateDate)}</td>`);
+                tr.append(`<td style="vertical-align: middle;">${file.name}</td>`);
+                tr.append(`<td style="vertical-align: middle;">${formatDate(file.updateDate)}</td>`);
 
-                let openCol=$(`<td></td>`);
+                let openCol=$(`<td style="vertical-align: middle;"></td>`);
                 tr.append(openCol);
                 let openIcon=$(`<a href="###"><i class="glyphicon glyphicon-folder-open" style="color: #008ed3;font-size: 14pt"></i></a>`);
                 openCol.append(openIcon);
@@ -67,7 +71,7 @@ export default class OpenDialog{
                     });
                 });
 
-                let deleteCol=$(`<td></td>`);
+                let deleteCol=$(`<td style="vertical-align: middle;"></td>`);
                 tr.append(deleteCol);
                 let deleteIcon=$(`<a href="###"><i class="glyphicon glyphicon-trash" style="color: red;font-size: 14pt"></i></a>`);
                 deleteCol.append(deleteIcon);

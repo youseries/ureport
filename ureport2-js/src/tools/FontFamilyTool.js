@@ -9,10 +9,16 @@ export default class FontFamilyTool extends Tool{
     }
     buildButton(){
         const _this=this;
+        this.fontFamily="宋体";
         const group=$(`<div class="btn-group"></div>`);
-        const mainBtn=$(`<button type="button" class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="字体">
-            <i class="ureport ureport-fontfamily" style="color: #0e90d2;"></i>
-            <span class="caret dropdown-toggle"></span>
+        this.nameButton=$(`<button type="button" class="btn btn-default"
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;" title="字体">
+        宋体
+        </button>`);
+        group.append(this.nameButton);
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" title="字体">
+            <span class="caret"></span>
+            <span class="sr-only">切换下拉菜单</span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;"></ul>`);
         const fonts=[];
@@ -34,20 +40,52 @@ export default class FontFamilyTool extends Tool{
                 if(!_this.checkSelection()){
                     return;
                 }
-                triggerFontFamily.call(this,_this.context,family);
+                triggerFontFamily.call(_this,_this.context,family.attr("data"),_this.nameButton);
                 setDirty();
             });
         }
+        this.nameButton.click(function(){
+            if(!_this.checkSelection()){
+                return;
+            }
+            triggerFontFamily.call(_this,_this.context,_this.fontFamily,_this.nameButton);
+            setDirty();
+        });
         group.append(mainBtn);
         group.append(ul);
         return group;
     }
+    refresh(startRow,startCol,endRow,endCol){
+        let tmp=endRow;
+        if(startRow>endRow){
+            endRow=startRow;
+            startRow=tmp;
+        }
+        tmp=endCol;
+        if(startCol>endCol){
+            endCol=startCol;
+            startCol=tmp;
+        }
+        for(let i=startRow;i<=endRow;i++) {
+            for (let j = startCol; j <= endCol; j++) {
+                let cellDef = this.context.getCell(i, j);
+                if (!cellDef) {
+                    continue;
+                }
+                let cellStyle=cellDef.cellStyle;
+                const fontFamily=cellStyle.fontFamily || "宋体";
+                this.nameButton.html(fontFamily);
+                this.fontFamily=fontFamily;
+                break;
+            }
+            break;
+        }
+    }
 }
 
 
-function triggerFontFamily(context,li){
+function triggerFontFamily(context,fontfamily,nameButton){
     let hot=context.hot;
-    let fontfamily=li.attr("data");
     let selected=hot.getSelected();
     let startRow=selected[0],startCol=selected[1],endRow=selected[2],endCol=selected[3];
     let tmp=endRow;
@@ -60,10 +98,11 @@ function triggerFontFamily(context,li){
         endCol=startCol;
         startCol=tmp;
     }
-    let oldFontFamily=updateFontFamily(context,startRow,startCol,endRow,endCol,fontfamily);
+    const _this=this;
+    let oldFontFamily=updateFontFamily(context,startRow,startCol,endRow,endCol,fontfamily,nameButton,_this);
     undoManager.add({
         redo:function(){
-            oldFontFamily=updateFontFamily(context,startRow,startCol,endRow,endCol,fontfamily);
+            oldFontFamily=updateFontFamily(context,startRow,startCol,endRow,endCol,fontfamily,nameButton,_this);
             setDirty();
         },
         undo:function(){
@@ -75,6 +114,8 @@ function triggerFontFamily(context,li){
                     }
                     let cellStyle=cellDef.cellStyle;
                     cellStyle.fontFamily=oldFontFamily[i+','+j];
+                    nameButton.html(cellStyle.fontFamily);
+                    _this.fontFamily=cellStyle.fontFamily;
                 }
             }
             hot.render();
@@ -84,7 +125,7 @@ function triggerFontFamily(context,li){
     setDirty();
 }
 
-function updateFontFamily(context,startRow,startCol,endRow,endCol,fontfamily){
+function updateFontFamily(context,startRow,startCol,endRow,endCol,fontFamily,nameButton,_this){
     let hot=context.hot;
     const oldFontFamily={};
     for(let i=startRow;i<=endRow;i++) {
@@ -95,7 +136,9 @@ function updateFontFamily(context,startRow,startCol,endRow,endCol,fontfamily){
             }
             let cellStyle=cellDef.cellStyle;
             oldFontFamily[i+','+j]=cellStyle.fontFamily;
-            cellStyle.fontFamily=fontfamily;
+            cellStyle.fontFamily=fontFamily;
+            nameButton.html(fontFamily);
+            _this.fontFamily=fontFamily;
         }
     }
     hot.render();

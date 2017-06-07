@@ -11,7 +11,7 @@ export default class ParameterTable{
         const _this=this;
         const table=$(`<table class="table table-bordered">
             <thead>
-                <tr style="background: #f4f4f4"><td>参数名</td><td>数据类型</td><td>默认值</td><td>删除</td></tr>
+                <tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">参数名</td><td style="vertical-align: middle">数据类型</td><td style="vertical-align: middle">默认值</td><td style="vertical-align: middle">删除</td></tr>
             </thead>
         </table>`);
         this.body=$(`<tbody></tbody>`);
@@ -23,8 +23,8 @@ export default class ParameterTable{
             parameterDialog.show(function(name,type,defaultValue){
                 const obj={name,type,defaultValue};
                 data.push(obj);
-                const newTr=$(`<tr><td>${name}</td><td>${type}</td><td>${defaultValue}</td></tr>`);
-                const removeTd=$(`<td></td>`);
+                const newTr=$(`<tr style="height: 35px;"><td style="vertical-align: middle">${name}</td><td style="vertical-align: middle">${type}</td><td style="vertical-align: middle">${defaultValue}</td></tr>`);
+                const removeTd=$(`<td style="vertical-align: middle"></td>`);
                 const removeSpan=$(`<span><a href="###"><i class="glyphicon glyphicon-trash" style="font-size: 12pt;color: #d30a16;"></a></span>`);
                 removeTd.append(removeSpan);
                 newTr.append(removeTd);

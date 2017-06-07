@@ -50,6 +50,11 @@ export default class UReportDesigner{
             _this.buildPropertyPanel();
             this.bindSelectionEvent(function(rowIndex, colIndex, row2Index, col2Index){
                 _this.propertyPanel.refresh(rowIndex,colIndex,row2Index,col2Index);
+                for(let tool of _this.tools){
+                    if(tool.refresh){
+                        tool.refresh(rowIndex,colIndex,row2Index,col2Index);
+                    }
+                }
             });
             _this.printLine=new PrintLine(_this.context);
             const rows=_this.context.reportDef.rows;
@@ -112,30 +117,30 @@ export default class UReportDesigner{
     buildTools(context){
         const toolbar=$(`<div class="btn-group ud-toolbar"></div>`);
         this.container.prepend(toolbar);
-        const tools=[];
-        tools.push(new PreviewTool(context));
-        tools.push(new SaveTool(context));
-        tools.push(new OpenTool(context));
-        tools.push(new ImportTool(context));
-        tools.push(new RedoTool(context));
-        tools.push(new UndoTool(context));
-        tools.push(new MergeTool(context));
-        tools.push(new AlignLeftTool(context));
-        tools.push(new AlignTopTool(context));
-        tools.push(new BorderTool(context));
-        tools.push(new FontFamilyTool(context));
-        tools.push(new FontSizeTool(context));
-        tools.push(new BoldTool(context));
-        tools.push(new ItalicTool(context));
-        tools.push(new UnderlineTool(context));
-        tools.push(new BgcolorTool(context));
-        tools.push(new ForecolorTool(context));
-        tools.push(new CrosstabTool(context));
-        tools.push(new ImageTool(context));
-        tools.push(new ZxingTool(context));
-        //tools.push(new ChartTool(context));
-        tools.push(new SettingsTool(context));
-        for(const tool of tools){
+        this.tools=[];
+        this.tools.push(new PreviewTool(context));
+        this.tools.push(new SaveTool(context));
+        this.tools.push(new OpenTool(context));
+        this.tools.push(new ImportTool(context));
+        this.tools.push(new RedoTool(context));
+        this.tools.push(new UndoTool(context));
+        this.tools.push(new MergeTool(context));
+        this.tools.push(new AlignLeftTool(context));
+        this.tools.push(new AlignTopTool(context));
+        this.tools.push(new BorderTool(context));
+        this.tools.push(new FontFamilyTool(context));
+        this.tools.push(new FontSizeTool(context));
+        this.tools.push(new BoldTool(context));
+        this.tools.push(new ItalicTool(context));
+        this.tools.push(new UnderlineTool(context));
+        this.tools.push(new BgcolorTool(context));
+        this.tools.push(new ForecolorTool(context));
+        this.tools.push(new CrosstabTool(context));
+        this.tools.push(new ImageTool(context));
+        this.tools.push(new ZxingTool(context));
+        //this.tools.push(new ChartTool(context));
+        this.tools.push(new SettingsTool(context));
+        for(const tool of this.tools){
             toolbar.append(tool.buildButton());
         }
     }

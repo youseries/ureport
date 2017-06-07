@@ -38,7 +38,7 @@ export default class SaveDialog{
         body.append(providerGroup);
         const tableContainer=$(`<div style="height:350px;overflow: auto"></div>`);
         body.append(tableContainer);
-        const fileTable=$(`<table class="table table-bordered"><thead><tr style="background: #f4f4f4"><td>文件名</td><td style="width: 150px">修改日期</td><td style="width:50px">删除</td></tr></thead></table>`);
+        const fileTable=$(`<table class="table table-bordered"><thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">文件名</td><td style="width: 150px;vertical-align: middle">修改日期</td><td style="width:50px;vertical-align: middle">删除</td></tr></thead></table>`);
         this.fileTableBody=$(`<tbody></tbody>`);
         fileTable.append(this.fileTableBody);
         tableContainer.append(fileTable);
@@ -54,11 +54,11 @@ export default class SaveDialog{
                 return;
             }
             for(let file of reportFiles){
-                let tr=$(`<tr></tr>`);
+                let tr=$(`<tr style="height: 35px;"></tr>`);
                 _this.fileTableBody.append(tr);
-                tr.append(`<td>${file.name}</td>`);
-                tr.append(`<td>${formatDate(file.updateDate)}</td>`);
-                let deleteCol=$(`<td></td>`);
+                tr.append(`<td style="vertical-align: middle">${file.name}</td>`);
+                tr.append(`<td style="vertical-align: middle">${formatDate(file.updateDate)}</td>`);
+                let deleteCol=$(`<td style="vertical-align: middle"></td>`);
                 tr.append(deleteCol);
                 let deleteIcon=$(`<a href="###"><i class="glyphicon glyphicon-trash" style="color: red;font-size: 14pt"></i></a>`);
                 deleteCol.append(deleteIcon);
