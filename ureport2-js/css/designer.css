@@ -13,3 +13,15 @@
     background: #ffffff;
     box-shadow: 5px 5px 5px #888888;
 }
+.ud-select-color{
+    background: #000000;
+    width: 14px;
+    height: 4px;
+    display: block;
+}
+.ud-select-bgcolor{
+    background: #fff;
+    width: 14px;
+    height: 4px;
+    display: block;
+}

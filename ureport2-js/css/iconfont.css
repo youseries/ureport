@@ -20,7 +20,7 @@
 
 .ureport-bar:before { content: "\e66b"; }
 
-.ureport-bgcolor:before { content: "\e76c"; }
+.ureport-bgcolor2:before { content: "\e76c"; }
 
 .ureport-crosstab:before { content: "\e60b"; }
 
@@ -28,13 +28,21 @@
 
 .ureport-underline:before { content: "\e8ab"; }
 
+.ureport-horizontal-bar:before { content: "\e62d"; }
+
+.ureport-scatter:before { content: "\e632"; }
+
 .ureport-sqlds:before { content: "\e6b6"; }
 
 .ureport-qrcode:before { content: "\e72c"; }
 
+.ureport-bgcolor:before { content: "\e62c"; }
+
 .ureport-fontsize:before { content: "\e63f"; }
 
 .ureport-fontfamily:before { content: "\e618"; }
+
+.ureport-area:before { content: "\e9d7"; }
 
 .ureport-italic:before { content: "\eb31"; }
 
@@ -74,6 +82,8 @@
 
 .ureport-clean:before { content: "\e628"; }
 
+.ureport-forecolor:before { content: "\e670"; }
+
 .ureport-footer-repeat:before { content: "\e62b"; }
 
 .ureport-pdf:before { content: "\e68f"; }
@@ -89,8 +99,6 @@
 .ureport-merge:before { content: "\e63d"; }
 
 .ureport-redo:before { content: "\e61c"; }
-
-.ureport-radar:before { content: "\e7f6"; }
 
 .ureport-import:before { content: "\e609"; }
 
@@ -114,6 +122,8 @@
 
 .ureport-21print:before { content: "\e644"; }
 
+.ureport-radar:before { content: "\e671"; }
+
 .ureport-image:before { content: "\e626"; }
 
 .ureport-bottom-border:before { content: "\e61e"; }
@@ -132,11 +142,13 @@
 
 .ureport-pdf-printer:before { content: "\e607"; }
 
-.ureport-forecolor:before { content: "\e601"; }
+.ureport-forecolor1:before { content: "\e601"; }
 
 .ureport-end:before { content: "\e60a"; }
 
 .ureport-insert-column:before { content: "\e619"; }
+
+.ureport-polar:before { content: "\e60e"; }
 
 .ureport-header-repeat:before { content: "\e696"; }
 

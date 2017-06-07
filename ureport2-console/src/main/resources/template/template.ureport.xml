@@ -3,53 +3,53 @@
 	xsi:schemaLocation="http://www.example.org/ureport2 http://www.example.org/ureport2 ">
 	<cell expand="None" name="A1" col="1" row="1">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="B1" col="2" row="1">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="C1" col="3" row="1">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="D1" col="4" row="1">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	
 	<cell expand="None" name="A2" col="1" row="2">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="B2" col="2" row="2">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="C2" col="3" row="2">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="D2" col="4" row="2">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	
 	<cell expand="None" name="A3" col="1" row="3">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="B3" col="2" row="3">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="C3" col="3" row="3">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 	<cell expand="None" name="D3" col="4" row="3">
 		<simple-value><![CDATA[]]></simple-value>
-		<cell-style font-size="9" align="center" valign="middle"></cell-style>
+		<cell-style font-size="10" align="center" valign="middle"></cell-style>
 	</cell>
 
 	<row row-number="1" height="18"/>
