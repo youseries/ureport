@@ -174,7 +174,7 @@ public class ReportDefinition {
 			if(border!=null){
 				sb.append("border-top:"+border.getStyle().name()+" "+border.getWidth()+"px rgb("+border.getColor()+");");				
 			}
-			border=cellStyle.getLeftBorder();
+			border=cellStyle.getBottomBorder();
 			if(border!=null){
 				sb.append("border-bottom:"+border.getStyle().name()+" "+border.getWidth()+"px rgb("+border.getColor()+");");				
 			}
