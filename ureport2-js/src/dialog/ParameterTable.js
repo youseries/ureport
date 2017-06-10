@@ -18,11 +18,11 @@ export default class ParameterTable{
         table.append(this.body);
         this._buildParameters();
         container.append(table);
-        const parameterDialog=new ParameterDialog(data);
+        this.parameterDialog=new ParameterDialog(this.data);
         addButton.click(function(){
-            parameterDialog.show(function(name,type,defaultValue){
+            _this.parameterDialog.show(function(name,type,defaultValue){
                 const obj={name,type,defaultValue};
-                data.push(obj);
+                _this.data.push(obj);
                 const newTr=$(`<tr style="height: 35px;"><td style="vertical-align: middle">${name}</td><td style="vertical-align: middle">${type}</td><td style="vertical-align: middle">${defaultValue}</td></tr>`);
                 const removeTd=$(`<td style="vertical-align: middle"></td>`);
                 const removeSpan=$(`<span><a href="###"><i class="glyphicon glyphicon-trash" style="font-size: 12pt;color: #d30a16;"></a></span>`);
@@ -30,15 +30,16 @@ export default class ParameterTable{
                 newTr.append(removeTd);
                 _this.body.append(newTr);
                 removeSpan.click(function(){
-                    let index=data.indexOf(obj);
-                    data.splice(index,1);
+                    let index=_this.data.indexOf(obj);
+                    _this.data.splice(index,1);
                     newTr.remove();
-                })
+                });
             })
         });
     }
     refreshData(){
         this.body.empty();
+        this.parameterDialog.data=this.data;
         this._buildParameters();
     }
     _buildParameters(){

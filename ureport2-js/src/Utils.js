@@ -143,6 +143,20 @@ export function tableToXml(context){
                 }
             }
             if(value.type==='dataset'){
+                let msg=null;
+                if(!value.datasetName){
+                    msg=`${cellName}单元格数据集属性不能为空！`;
+                }
+                if(!msg && !value.property){
+                    msg=`${cellName}单元格属性不能为空！`;
+                }
+                if(!msg && !value.aggregate){
+                    msg=`${cellName}单元格聚合方式属性不能为空！`;
+                }
+                if(msg){
+                    alert(msg);
+                    throw msg;
+                }
                 cellXml+=`<dataset-value dataset-name="${encode(value.datasetName)}" aggregate="${value.aggregate}" property="${value.property}" order="${value.order}">`;
                 cellXml+=buildConditions(value.conditions);
                 if(value.aggregate==='customgroup'){

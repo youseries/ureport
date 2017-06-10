@@ -57,7 +57,7 @@ export default class DatabaseTree extends BaseTree{
                         _this.datasets.push(dataset);
                         const fieldsUL=_this.addDataset(dataset);
                         _this.buildFileds(dataset,fieldsUL);
-                    });
+                    },{parameters:[]});
                 }else if(key==='delete'){
                     confirm("真的要删除当前数据源["+_this.name+"]？",function(){
                         let index=-1;

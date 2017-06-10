@@ -112,8 +112,12 @@ export default class SqlDatasetDialog{
         });
     }
 
-    show(onSave){
+    show(onSave,parameters){
         this.onSave=onSave;
+        if(parameters){
+            this.data=parameters;
+            this.parameterTable.data=this.data.parameters;
+        }
         this.dialog.modal('show');
         this.oldName=this.data.name;
         this.nameEditor.val(this.data.name);

@@ -52,7 +52,7 @@ export default class BuildinTree extends BaseTree{
                         _this.datasets.push(dataset);
                         const fieldsUL=_this.addDataset(dataset);
                         _this.buildFileds(dataset,fieldsUL);
-                    });
+                    },{parameters:[]});
                 }else if(key==='delete'){
                     confirm("真的要删除当前数据源["+_this.name+"]？",function(){
                         let index=-1;
@@ -157,6 +157,7 @@ export default class BuildinTree extends BaseTree{
         }
         $.ajax({
             url:window._server+"/datasource/buildFields",
+            type:'POST',
             data: {
                 sql: dataset.sql,
                 parameters: JSON.stringify(dataset.parameters),
