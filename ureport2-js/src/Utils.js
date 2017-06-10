@@ -514,19 +514,19 @@ function buildCellStyle(cellStyle,condition){
     }
     cellXml+='>';
     let leftBorder=cellStyle.leftBorder;
-    if(leftBorder){
+    if(leftBorder && leftBorder.style!=="none"){
         cellXml+=`<left-border width="${leftBorder.width}" style="${leftBorder.style}" color="${leftBorder.color}"/>`;
     }
     let rightBorder=cellStyle.rightBorder;
-    if(rightBorder){
+    if(rightBorder && rightBorder.style!=="none"){
         cellXml+=`<right-border width="${rightBorder.width}" style="${rightBorder.style}" color="${rightBorder.color}"/>`;
     }
     let topBorder=cellStyle.topBorder;
-    if(topBorder){
+    if(topBorder && topBorder.style!=="none"){
         cellXml+=`<top-border width="${topBorder.width}" style="${topBorder.style}" color="${topBorder.color}"/>`;
     }
     let bottomBorder=cellStyle.bottomBorder;
-    if(bottomBorder){
+    if(bottomBorder && bottomBorder.style!=="none"){
         cellXml+=`<bottom-border width="${bottomBorder.width}" style="${bottomBorder.style}" color="${bottomBorder.color}"/>`;
     }
     cellXml+='</cell-style>';

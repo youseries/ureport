@@ -106,7 +106,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
 
     const leftBorder=cellStyle.leftBorder;
     if(leftBorder){
-        if(leftBorder===''){
+        if(leftBorder==='' || leftBorder.style==="none"){
             $td.css({
                 'border-left':''
             });
@@ -131,7 +131,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
 
     const rightBorder=cellStyle.rightBorder;
     if(rightBorder){
-        if(rightBorder===''){
+        if(rightBorder==='' || rightBorder.style==="none"){
             $td.css({
                 'border-right':''
             });
@@ -144,7 +144,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
     }
     const topBorder=cellStyle.topBorder;
     if(topBorder){
-        if(topBorder===''){
+        if(topBorder==='' || topBorder.style==="none"){
             $td.css({
                 'border-top':''
             });
@@ -168,7 +168,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
     }
     const bottomBorder=cellStyle.bottomBorder;
     if(bottomBorder){
-        if(bottomBorder===''){
+        if(bottomBorder==='' || bottomBorder.style==="none"){
             $td.css({
                 'border-bottom':''
             });

@@ -376,14 +376,24 @@ function updateCustomBorderStyle(context,startRow,startCol,endRow,endCol,leftBor
                 topBorder:cellStyle.topBorder,
                 bottomBorder:cellStyle.bottomBorder
             };
-            cellStyle.leftBorder=left;
-            cellStyle.rightBorder=right;
-            cellStyle.topBorder=top;
-            cellStyle.bottomBorder=bottom;
+            cellStyle.leftBorder=cloneBorder(left);
+            cellStyle.rightBorder=cloneBorder(right);
+            cellStyle.topBorder=cloneBorder(top);
+            cellStyle.bottomBorder=cloneBorder(bottom);
         }
     }
     hot.render();
     return oldBorderStyle;
+}
+
+function cloneBorder(border){
+    if(border && border!==""){
+        const text=JSON.stringify(border);
+        const newJson=JSON.parse(text);
+        return newJson;
+    }else{
+        return border;
+    }
 }
 
 function buildBorderStyleContent(borderConfig,borderStyle){
@@ -398,7 +408,8 @@ function buildBorderStyleContent(borderConfig,borderStyle){
             `);
     borderLineContainer.append(borderLineList);
     borderLineList.change(function(){
-        borderStyle.style=$(this).val();
+        const value=$(this).val();
+        borderStyle.style=value;
     });
 
     const borderSizeContainer=$(`<div style="margin: 20px 0 10px 0;"><span>尺寸：</span></div>`);
