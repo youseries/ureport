@@ -13,28 +13,36 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.definition.value;
+package com.bstek.ureport.build.compute;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.bstek.ureport.build.BindData;
+import com.bstek.ureport.build.Context;
 import com.bstek.ureport.chart.Chart;
+import com.bstek.ureport.definition.value.ChartValue;
+import com.bstek.ureport.definition.value.ValueType;
+import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
  * @since 2017年6月9日
  */
-public class ChartValue implements Value {
-	private Chart chart;
+public class ChartValueCompute implements ValueCompute {
+
 	@Override
-	public String getValue() {
-		return null;
+	public List<BindData> compute(Cell cell, Context context) {
+		ChartValue chartValue=(ChartValue)cell.getValue();
+		Chart chart=chartValue.getChart();
+		String data=chart.doCompute(cell, context);
+		List<BindData> list=new ArrayList<BindData>();
+		list.add(new BindData(data));
+		return list;
 	}
+
 	@Override
-	public ValueType getType() {
+	public ValueType type() {
 		return ValueType.chart;
-	}
-	public void setChart(Chart chart) {
-		this.chart = chart;
-	}
-	public Chart getChart() {
-		return chart;
 	}
 }

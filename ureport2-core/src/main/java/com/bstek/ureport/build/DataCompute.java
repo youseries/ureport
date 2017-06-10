@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bstek.ureport.build.compute.ChartValueCompute;
 import com.bstek.ureport.build.compute.DatasetValueCompute;
 import com.bstek.ureport.build.compute.ExpressionValueCompute;
 import com.bstek.ureport.build.compute.ImageValueCompute;
@@ -50,6 +51,8 @@ public class DataCompute {
 		valueComputesMap.put(slashValueCompute.type().name(), slashValueCompute);
 		ZxingValueCompute zxingValueCompute=new ZxingValueCompute();
 		valueComputesMap.put(zxingValueCompute.type().name(), zxingValueCompute);
+		ChartValueCompute chartValueCompute=new ChartValueCompute();
+		valueComputesMap.put(chartValueCompute.type().name(), chartValueCompute);
 		
 	}
 

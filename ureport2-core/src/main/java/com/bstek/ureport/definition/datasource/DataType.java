@@ -73,11 +73,11 @@ public enum DataType {
 				return (Date)obj;
 			}else{
 				Date date=null;
-				SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				try{
 					date=sd.parse(obj.toString());
 				}catch(ParseException e){
-					sd=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					sd=new SimpleDateFormat("yyyy-MM-dd");
 					try{
 						date=sd.parse(obj.toString());						
 					}catch(ParseException ex){
