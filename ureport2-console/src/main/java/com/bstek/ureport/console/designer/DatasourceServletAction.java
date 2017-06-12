@@ -150,7 +150,20 @@ public class DatasourceServletAction extends RenderPageServletAction {
 			stmt=conn.prepareStatement(sqlToUse);
 			for(int i=0;i<params.length;i++){
 				Object obj=params[i];
-				stmt.setObject(i+1, obj);
+				if(obj!=null){
+					if(obj instanceof Date){
+						Date d=(Date)obj;
+						java.sql.Date sqlDate=new java.sql.Date(d.getTime());
+						stmt.setDate(i+1, sqlDate);
+					}else if(obj instanceof Boolean){
+						Boolean b=(Boolean)obj;
+						stmt.setBoolean(i+1, b);
+					}else{
+						stmt.setObject(i+1, obj);
+					}
+				}else{
+					stmt.setObject(i+1, obj);					
+				}
 			}
 			rs=stmt.executeQuery();
 			ResultSetMetaData metadata=rs.getMetaData();
