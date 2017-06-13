@@ -53,11 +53,7 @@ public class ExportManagerImpl implements ExportManager {
 	@Override
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters, int pageIndex) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=CacheUtils.getReport(file);
-		if(report==null){
-			report=reportRender.render(reportDefinition, parameters);
-			CacheUtils.storeReport(file, report);
-		}
+		Report report=reportRender.render(reportDefinition, parameters);
 		SinglePageData pageData=PageBuilder.buildSinglePageData(pageIndex, report);
 		List<Page> pages=pageData.getPages();
 		String content=null;
@@ -77,33 +73,21 @@ public class ExportManagerImpl implements ExportManager {
 	public void exportPdf(ExportConfigure config) {
 		String file=config.getFile();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=CacheUtils.getReport(file);
-		if(report==null){
-			report=reportRender.render(reportDefinition, config.getParameters());
-			CacheUtils.storeReport(file, report);
-		}
+		Report report=reportRender.render(reportDefinition, config.getParameters());
 		pdfProducer.produce(report, config.getOutputStream());
 	}
 	@Override
 	public void exportWord(ExportConfigure config) {
 		String file=config.getFile();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=CacheUtils.getReport(file);
-		if(report==null){
-			report=reportRender.render(reportDefinition, config.getParameters());
-			CacheUtils.storeReport(file, report);
-		}
+		Report report=reportRender.render(reportDefinition, config.getParameters());
 		wordProducer.produce(report, config.getOutputStream());
 	}
 	@Override
 	public void exportExcel(ExportConfigure config) {
 		String file=config.getFile();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=CacheUtils.getReport(file);
-		if(report==null){
-			report=reportRender.render(reportDefinition, config.getParameters());
-			CacheUtils.storeReport(file, report);
-		}
+		Report report=reportRender.render(reportDefinition, config.getParameters());
 		excelProducer.produce(report, config.getOutputStream());
 	}
 	
@@ -111,11 +95,7 @@ public class ExportManagerImpl implements ExportManager {
 	public void exportExcelWithPaging(ExportConfigure config) {
 		String file=config.getFile();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=CacheUtils.getReport(file);
-		if(report==null){
-			report=reportRender.render(reportDefinition, config.getParameters());
-			CacheUtils.storeReport(file, report);
-		}
+		Report report=reportRender.render(reportDefinition, config.getParameters());
 		excelProducer.produceWithPaging(report, config.getOutputStream());
 	}
 	
@@ -123,11 +103,7 @@ public class ExportManagerImpl implements ExportManager {
 	public void exportExcelWithPagingSheet(ExportConfigure config) {
 		String file=config.getFile();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=CacheUtils.getReport(file);
-		if(report==null){
-			report=reportRender.render(reportDefinition, config.getParameters());
-			CacheUtils.storeReport(file, report);
-		}
+		Report report=reportRender.render(reportDefinition, config.getParameters());
 		excelProducer.produceWithSheet(report, config.getOutputStream());
 	}
 	

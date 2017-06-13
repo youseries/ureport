@@ -193,8 +193,8 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}
 			htmlReport=new HtmlReport();
 			String html=null;
-			Context context=report.getContext();
 			if(StringUtils.isNotBlank(pageIndex)){
+				Context context=report.getContext();
 				int index=Integer.valueOf(pageIndex);
 				SinglePageData pageData=PageBuilder.buildSinglePageData(index, report);
 				List<Page> pages=pageData.getPages();
