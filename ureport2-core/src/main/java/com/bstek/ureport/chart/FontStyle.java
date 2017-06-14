@@ -13,12 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.chart.option;
+package com.bstek.ureport.chart;
 
 /**
  * @author Jacky.gao
  * @since 2017年6月8日
  */
-public interface Option {
-	String buildOptionJson();
+public enum FontStyle {
+	normal,italic,bold;
 }

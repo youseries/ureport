@@ -27,6 +27,7 @@ import com.bstek.ureport.definition.value.GroupItem;
 import com.bstek.ureport.expression.model.Condition;
 import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
 import com.bstek.ureport.model.Cell;
+import com.bstek.ureport.utils.DataUtils;
 
 /**
  * @author Jacky.gao
@@ -36,7 +37,7 @@ public class CustomGroupAggregate extends Aggregate {
 
 	@Override
 	public List<BindData> aggregate(DatasetExpression expr, Cell cell,Context context) {
-		List<?> objList=fetchData(cell, context, expr.getDatasetName());
+		List<?> objList=DataUtils.fetchData(cell, context, expr.getDatasetName());
 		List<BindData> list = doAggregate(expr, cell, context, objList);
 		return list;
 	}

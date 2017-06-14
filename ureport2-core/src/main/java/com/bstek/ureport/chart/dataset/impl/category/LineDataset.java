@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright 2017 Bstek
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy
+ * of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ ******************************************************************************/
 package com.bstek.ureport.chart.dataset.impl.category;
 
 import com.bstek.ureport.build.Context;
@@ -10,12 +25,6 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年6月8日
  */
 public class LineDataset extends CategoryDataset{
-	private double[] data;
-	private String label;
-	private String backgroundColor;
-	private String borderColor;
-	private int borderWidth;
-	private boolean fill;
 	private double lineTension=0.2;
 	private String pointBackgroundColor;
 	private String pointBorderColor;
@@ -28,19 +37,13 @@ public class LineDataset extends CategoryDataset{
 	private int pointHoverBorderWidth;
 	private int pointHoverRadius;
 	@Override
-	public String buildConfiguration(Context context,Cell cell) {
+	public String buildDataJson(Context context,Cell cell) {
+		String datasetJson=buildDatasetJson(context, cell);
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
-		if(label!=null){
-			sb.append("label:\""+label+"\"");
-		}
-		sb.append("");
-		sb.append("");
-		sb.append("");
-		sb.append("");
-		sb.append("");
-		sb.append("");
-		sb.append("");
+		String labels=getLabels();
+		sb.append("labels:"+labels+",");
+		sb.append("datasets:"+datasetJson+"");
 		sb.append("}");
 		return sb.toString();
 	}
@@ -52,44 +55,7 @@ public class LineDataset extends CategoryDataset{
 	public String type() {
 		return "line";
 	}
-	
-	public double[] getData() {
-		return data;
-	}
-	public void setData(double[] data) {
-		this.data = data;
-	}
-	
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	public String getBackgroundColor() {
-		return backgroundColor;
-	}
-	public void setBackgroundColor(String backgroundColor) {
-		this.backgroundColor = backgroundColor;
-	}
-	public String getBorderColor() {
-		return borderColor;
-	}
-	public void setBorderColor(String borderColor) {
-		this.borderColor = borderColor;
-	}
-	public int getBorderWidth() {
-		return borderWidth;
-	}
-	public void setBorderWidth(int borderWidth) {
-		this.borderWidth = borderWidth;
-	}
-	public boolean isFill() {
-		return fill;
-	}
-	public void setFill(boolean fill) {
-		this.fill = fill;
-	}
+
 	public double getLineTension() {
 		return lineTension;
 	}

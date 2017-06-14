@@ -1,6 +1,21 @@
+/*******************************************************************************
+ * Copyright 2017 Bstek
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy
+ * of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ ******************************************************************************/
 package com.bstek.ureport.chart.option.impl;
 
-import com.bstek.ureport.chart.option.FontStyle;
+import com.bstek.ureport.chart.FontStyle;
 import com.bstek.ureport.chart.option.Option;
 import com.bstek.ureport.chart.option.Position;
 
@@ -12,14 +27,24 @@ public class TitleOption implements Option {
 	private boolean display;
 	private Position position=Position.top;
 	private int fontSize=12;
-	private String fontFamily="'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
 	private String fontColor="#666";
 	private FontStyle fontStyle=FontStyle.bold;
 	private int padding=10;
 	private String text;
 	@Override
-	public String getConfiguration() {
-		return null;
+	public String buildOptionJson() {
+		StringBuilder sb=new StringBuilder();
+		sb.append("title:{");
+		sb.append("display:"+display+",");
+		sb.append("text:\""+text+"\",");
+		sb.append("position:\""+position+"\"");
+		sb.append("fontSize:"+fontSize+",");
+		sb.append("fontColor:\""+fontColor+"\",");
+		sb.append("fontStyle:\""+fontStyle+"\",");
+		sb.append("padding:\""+padding+"\",");
+		sb.append("text:\""+text+"\"");
+		sb.append("}");
+		return sb.toString();
 	}
 	public boolean isDisplay() {
 		return display;
@@ -38,12 +63,6 @@ public class TitleOption implements Option {
 	}
 	public void setFontSize(int fontSize) {
 		this.fontSize = fontSize;
-	}
-	public String getFontFamily() {
-		return fontFamily;
-	}
-	public void setFontFamily(String fontFamily) {
-		this.fontFamily = fontFamily;
 	}
 	public String getFontColor() {
 		return fontColor;

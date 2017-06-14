@@ -1,6 +1,21 @@
+/*******************************************************************************
+ * Copyright 2017 Bstek
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy
+ * of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ ******************************************************************************/
 package com.bstek.ureport.chart.option.impl;
 
-import com.bstek.ureport.chart.option.FontStyle;
+import com.bstek.ureport.chart.FontStyle;
 import com.bstek.ureport.chart.option.Option;
 
 /**
@@ -9,18 +24,26 @@ import com.bstek.ureport.chart.option.Option;
  */
 public class TooltipOption implements Option {
 	private boolean enabled=true;
-	private String titleFontFamily="'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
 	private int titleFontSize=12;
 	private FontStyle titleFontStyle=FontStyle.bold;
 	private String titleFontColor="#fff";
-	private String bodyFontFamily="'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
 	private int bodyFontSize=12;
 	private FontStyle bodyFontStyle=FontStyle.normal;
 	private String bodyFontColor="#fff";
 	
 	@Override
-	public String getConfiguration() {
-		return null;
+	public String buildOptionJson() {
+		StringBuilder sb=new StringBuilder();
+		sb.append("tooltips:{");
+		sb.append("enabled:"+enabled+",");
+		sb.append("titleFontSize:"+titleFontSize+",");
+		sb.append("titleFontStyle:\""+titleFontStyle+"\",");
+		sb.append("titleFontColor:\""+titleFontColor+"\",");
+		sb.append("bodyFontSize:"+bodyFontSize+",");
+		sb.append("bodyFontStyle:\""+bodyFontStyle+"\",");
+		sb.append("bodyFontColor:\""+bodyFontColor+"\",");
+		sb.append("}");
+		return sb.toString();
 	}
 
 	public boolean isEnabled() {
@@ -29,14 +52,6 @@ public class TooltipOption implements Option {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	public String getTitleFontFamily() {
-		return titleFontFamily;
-	}
-
-	public void setTitleFontFamily(String titleFontFamily) {
-		this.titleFontFamily = titleFontFamily;
 	}
 
 	public int getTitleFontSize() {
@@ -61,14 +76,6 @@ public class TooltipOption implements Option {
 
 	public void setTitleFontColor(String titleFontColor) {
 		this.titleFontColor = titleFontColor;
-	}
-
-	public String getBodyFontFamily() {
-		return bodyFontFamily;
-	}
-
-	public void setBodyFontFamily(String bodyFontFamily) {
-		this.bodyFontFamily = bodyFontFamily;
 	}
 
 	public int getBodyFontSize() {

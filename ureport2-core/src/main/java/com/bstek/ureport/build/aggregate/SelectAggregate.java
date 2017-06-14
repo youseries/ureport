@@ -26,6 +26,7 @@ import com.bstek.ureport.build.Context;
 import com.bstek.ureport.definition.Order;
 import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
 import com.bstek.ureport.model.Cell;
+import com.bstek.ureport.utils.DataUtils;
 
 /**
  * @author Jacky.gao
@@ -34,7 +35,7 @@ import com.bstek.ureport.model.Cell;
 public class SelectAggregate extends Aggregate {
 	@Override
 	public List<BindData> aggregate(DatasetExpression expr,Cell cell, Context context) {
-		List<?> objList=fetchData(cell, context, expr.getDatasetName());
+		List<?> objList=DataUtils.fetchData(cell, context, expr.getDatasetName());
 		return doAggregate(expr, cell, context, objList);
 	}
 

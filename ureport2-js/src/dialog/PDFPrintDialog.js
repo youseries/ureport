@@ -176,8 +176,9 @@ export default class PDFPrintDialog{
             _this.paper.bottomMargin=mmToPoint(value);
         });
         const file=getParameter('_u');
+        const urlParameters=window.location.search;
         const h=$(window).height();
-        const url=window._server+"/pdf/show?_u="+file+"&_p=1";
+        const url=window._server+"/pdf/show"+urlParameters+"&_p=1";
         const iFrame=$(`<iframe name="_iframe_for_pdf_print" style="width: 100%;height:${h}px;margin-top: 5px;border:solid 1px #c2c2c2" frameborder="0" src="${url}"></iframe>`);
         this.body.append(iFrame);
         iFrame.on('load',function(){
@@ -191,10 +192,10 @@ export default class PDFPrintDialog{
             const paperData=JSON.stringify(_this.paper);
             $.ajax({
                 type:'POST',
-                data:{paper:paperData},
-                url:window._server+'/pdf/newPaging?_u='+file,
+                data:{_paper:paperData},
+                url:window._server+'/pdf/newPaging'+urlParameters,
                 success:function(){
-                    const newUrl=window._server+'/pdf/show?_u='+file+'&_r='+(index++);
+                    const newUrl=window._server+'/pdf/show'+urlParameters+'&_r='+(index++);
                     iFrame.prop('src',newUrl);
                 },
                 error:function(){

@@ -42,7 +42,8 @@ public class ExportManagerImpl implements ExportManager {
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 		Report report=reportRender.render(reportDefinition, parameters);
-		CacheUtils.storeReport(file, report);
+		String fullName=file+parameters.toString();
+		CacheUtils.storeReport(fullName, report);
 		HtmlReport htmlReport=new HtmlReport();
 		String content=htmlProducer.produce(report);
 		htmlReport.setContent(content);
@@ -53,7 +54,12 @@ public class ExportManagerImpl implements ExportManager {
 	@Override
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters, int pageIndex) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		String fullName=file+parameters.toString();
+		Report report=CacheUtils.getReport(fullName);
+		if (report == null) {
+			report = reportRender.render(reportDefinition, parameters);
+			CacheUtils.storeReport(fullName, report);
+		}
 		SinglePageData pageData=PageBuilder.buildSinglePageData(pageIndex, report);
 		List<Page> pages=pageData.getPages();
 		String content=null;
@@ -72,38 +78,68 @@ public class ExportManagerImpl implements ExportManager {
 	@Override
 	public void exportPdf(ExportConfigure config) {
 		String file=config.getFile();
-		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, config.getParameters());
+		Map<String, Object> parameters=config.getParameters();
+		String fullName=file+parameters.toString();
+		Report report=CacheUtils.getReport(fullName);
+		if (report == null) {
+			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+			report = reportRender.render(reportDefinition, parameters);
+			CacheUtils.storeReport(fullName, report);
+		}
 		pdfProducer.produce(report, config.getOutputStream());
 	}
 	@Override
 	public void exportWord(ExportConfigure config) {
 		String file=config.getFile();
-		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, config.getParameters());
+		Map<String, Object> parameters=config.getParameters();
+		String fullName=file+parameters.toString();
+		Report report=CacheUtils.getReport(fullName);
+		if (report == null) {
+			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+			report = reportRender.render(reportDefinition, parameters);
+			CacheUtils.storeReport(fullName, report);
+		}
 		wordProducer.produce(report, config.getOutputStream());
 	}
 	@Override
 	public void exportExcel(ExportConfigure config) {
 		String file=config.getFile();
-		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, config.getParameters());
+		Map<String, Object> parameters=config.getParameters();
+		String fullName=file+parameters.toString();
+		Report report=CacheUtils.getReport(fullName);
+		if (report == null) {
+			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+			report = reportRender.render(reportDefinition, parameters);
+			CacheUtils.storeReport(fullName, report);
+		}
 		excelProducer.produce(report, config.getOutputStream());
 	}
 	
 	@Override
 	public void exportExcelWithPaging(ExportConfigure config) {
 		String file=config.getFile();
-		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, config.getParameters());
+		Map<String, Object> parameters=config.getParameters();
+		String fullName=file+parameters.toString();
+		Report report=CacheUtils.getReport(fullName);
+		if (report == null) {
+			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+			report = reportRender.render(reportDefinition, parameters);
+			CacheUtils.storeReport(fullName, report);
+		}
 		excelProducer.produceWithPaging(report, config.getOutputStream());
 	}
 	
 	@Override
 	public void exportExcelWithPagingSheet(ExportConfigure config) {
 		String file=config.getFile();
-		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, config.getParameters());
+		Map<String, Object> parameters=config.getParameters();
+		String fullName=file+parameters.toString();
+		Report report=CacheUtils.getReport(fullName);
+		if (report == null) {
+			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+			report = reportRender.render(reportDefinition, parameters);
+			CacheUtils.storeReport(fullName, report);
+		}
 		excelProducer.produceWithSheet(report, config.getOutputStream());
 	}
 	

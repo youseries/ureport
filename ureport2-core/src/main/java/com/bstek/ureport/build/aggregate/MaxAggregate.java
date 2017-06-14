@@ -27,6 +27,7 @@ import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.expression.model.Condition;
 import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
 import com.bstek.ureport.model.Cell;
+import com.bstek.ureport.utils.DataUtils;
 
 /**
  * @author Jacky.gao
@@ -37,8 +38,8 @@ public class MaxAggregate extends Aggregate {
 	public List<BindData> aggregate(DatasetExpression expr, Cell cell,Context context) {
 		String datasetName=expr.getDatasetName();
 		String property=expr.getProperty();
-		Cell leftCell=fetchLeftCell(cell, context, datasetName);
-		Cell topCell=fetchTopCell(cell, context, datasetName);
+		Cell leftCell=DataUtils.fetchLeftCell(cell, context, datasetName);
+		Cell topCell=DataUtils.fetchTopCell(cell, context, datasetName);
 		List<Object> leftList=null,topList=null;
 		if(leftCell!=null){
 			leftList=leftCell.getBindData();
@@ -62,7 +63,7 @@ public class MaxAggregate extends Aggregate {
 				list=topList;
 				data=leftCell.getData();
 				Value value=leftCell.getValue();
-				DatasetExpression de=fetchDatasetExpression(value);
+				DatasetExpression de=DataUtils.fetchDatasetExpression(value);
 				if(de==null){
 					throw new ReportComputeException("Unsupport value : "+value);
 				}
@@ -71,7 +72,7 @@ public class MaxAggregate extends Aggregate {
 				list=leftList;
 				data=topCell.getData();
 				Value value=topCell.getValue();
-				DatasetExpression de=fetchDatasetExpression(value);
+				DatasetExpression de=DataUtils.fetchDatasetExpression(value);
 				if(de==null){
 					throw new ReportComputeException("Unsupport value : "+value);
 				}

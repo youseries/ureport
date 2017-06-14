@@ -145,7 +145,7 @@ public class Report {
 		paper.setColumnEnabled(this.paper.isColumnEnabled());
 		paper.setFixRows(this.paper.getFixRows());
 		paper.setPagingMode(this.paper.getPagingMode());
-		this.paper=paper;
+		setPaper(paper);
 		pages=PagingBuilder.buildPages(this);
 	}
 	

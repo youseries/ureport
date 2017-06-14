@@ -7,15 +7,15 @@ import {alert} from './MsgBox.js';
 import PDFPrintDialog from './dialog/PDFPrintDialog.js';
 
 $(document).ready(function(){
-    const file=getParameter('_u');
+    const urlParameters=window.location.search;
     $('.ureport-print').click(function(){
-        const url=window._server+'/preview/loadPrintPages?_u='+file;
+        const url=window._server+'/preview/loadPrintPages'+urlParameters;
         showLoading();
         $.ajax({
             url,
             type:'POST',
             success:function(result){
-                $.get(window._server+'/preview/loadPagePaper?_u='+file,function(paper){
+                $.get(window._server+'/preview/loadPagePaper'+urlParameters,function(paper){
                     const html=result.html;
                     const iFrame=window.frames['_print_frame'];
                     let styles=`<style type="text/css">`;
@@ -38,7 +38,7 @@ $(document).ready(function(){
     const pdfPrintDialog=new PDFPrintDialog();
     let load=false;
     $(`.ureport-pdf-print`).click(function(){
-        $.get(window._server+'/preview/loadPagePaper?_u='+file,function(paper){
+        $.get(window._server+'/preview/loadPagePaper'+urlParameters,function(paper){
             pdfPrintDialog.show(paper);
             if(!load){
                 showLoading();
@@ -48,7 +48,7 @@ $(document).ready(function(){
     });
     $(`.ureport-pdf-direct-print`).click(function(){
         showLoading();
-        const url=window._server+'/pdf/show?_u='+file+`&_i=${index++}`;
+        const url=window._server+'/pdf/show'+urlParameters+`&_i=${index++}`;
         const iframe=window.frames['_print_pdf_frame'];
         if(!directPrintPdf){
             directPrintPdf=true;
@@ -62,23 +62,23 @@ $(document).ready(function(){
         iframe.location.href=url;
     });
     $(`.ureport-export-pdf`).click(function(){
-        const url=window._server+'/pdf?_u='+file;
+        const url=window._server+'/pdf'+urlParameters;
         window.open(url,'_blank');
     });
     $(`.ureport-export-word`).click(function(){
-        const url=window._server+'/word?_u='+file;
+        const url=window._server+'/word'+urlParameters;
         window.open(url,'_blank');
     });
     $(`.ureport-export-excel`).click(function(){
-        const url=window._server+'/excel?_u='+file;
+        const url=window._server+'/excel'+urlParameters;
         window.open(url,'_blank');
     });
     $(`.ureport-export-excel-paging`).click(function(){
-        const url=window._server+'/excel/paging?_u='+file;
+        const url=window._server+'/excel/paging'+urlParameters;
         window.open(url,'_blank');
     });
     $(`.ureport-export-excel-paging-sheet`).click(function(){
-        const url=window._server+'/excel/sheet?_u='+file;
+        const url=window._server+'/excel/sheet'+urlParameters;
         window.open(url,'_blank');
     });
 });

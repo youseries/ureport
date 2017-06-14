@@ -24,6 +24,9 @@
                     if(className && (className==='form-control' || className==='presentation' || iscm)){
                         return;
                     }
+                    if(className.indexOf("ureport")>-1 || className.indexOf("ds_name")>-1 || className.indexOf("dataset_name")>-1 || target.tagName==="A"){
+                        return;
+                    }
                     if(target && $(target).attr('role')==='presentation'){
                         return;
                     }
