@@ -114,7 +114,9 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
-		Report report=CacheUtils.getReport(file);
+		Map<String, Object> parameters = buildParameters(req);
+		String fullName=file+parameters.toString();
+		Report report=CacheUtils.getReport(fullName);
 		if(report==null){
 			throw new ReportException("Report preview data has expired,can not do load pages for print.");
 		}
@@ -173,6 +175,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		Map<String, Object> parameters = buildParameters(req);
 		HtmlReport htmlReport=null;
 		String file=req.getParameter("_u");
+		String fullName=file+parameters.toString();
 		String pageIndex=req.getParameter("_i");
 		String reload=req.getParameter("_r");
 		if(StringUtils.isBlank(file)){
@@ -181,7 +184,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		if(file.equals(PREVIEW_KEY)){
 			Report report=null;
 			if(StringUtils.isNotBlank(pageIndex) && StringUtils.isBlank(reload)){
-				report=CacheUtils.getReport(file);
+				report=CacheUtils.getReport(fullName);
 			}
 			ReportDefinition reportDefinition=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);
 			if(report==null){
@@ -189,7 +192,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 					throw new ReportDesignException("Report data has expired,can not do preview.");
 				}
 				report=reportBuilder.buildReport(reportDefinition, parameters);	
-				CacheUtils.storeReport(file, report);
+				CacheUtils.storeReport(fullName, report);
 			}
 			htmlReport=new HtmlReport();
 			String html=null;

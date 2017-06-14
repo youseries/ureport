@@ -91,22 +91,21 @@
 	${content}
 </div>
 <iframe name="_print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
-<iframe name="_print_pdf_frame" width="0" height="0" frameborder="1" src="about:blank"></iframe>
+<iframe name="_print_pdf_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 <script type="text/javascript">
-	#if($totalPage>0)
-		$(document).ready(function(){
-			$('#pageSelector').change(function(){
-				#if($hasTools)
-					window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val()+'&_t=${_t}','_self');
-				#else
-					window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val(),'_self');
-				#end
-			});
-			$('#pageSelector').val('${pageIndex}');
+#if($totalPage>0)
+	$(document).ready(function(){
+		$('#pageSelector').change(function(){
+			#if($hasTools)
+				window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val()+'&_t=${_t}','_self');
+			#else
+				window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val(),'_self');
+			#end
 		});
-	#end
-	window._server="${contextPath}/ureport";
-
+		$('#pageSelector').val('${pageIndex}');
+	});
+#end
+window._server="${contextPath}/ureport";
 </script>
 </body>
 </html>

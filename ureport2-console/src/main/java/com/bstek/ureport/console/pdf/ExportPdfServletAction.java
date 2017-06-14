@@ -81,16 +81,17 @@ public class ExportPdfServletAction extends BaseServletAction{
 			resp.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
 		}
 		Map<String, Object> parameters = buildParameters(req);
+		String fullName=file+parameters.toString();
 		OutputStream outputStream=resp.getOutputStream();
 		if(file.equals(PREVIEW_KEY)){
-			Report report=CacheUtils.getReport(file);
-			ReportDefinition reportDefinition=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);
+			Report report=CacheUtils.getReport(fullName);
 			if(report==null){
+				ReportDefinition reportDefinition=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);
 				if(reportDefinition==null){
 					throw new ReportDesignException("Report data has expired,can not do export pdf.");
 				}
 				report=reportBuilder.buildReport(reportDefinition, parameters);	
-				CacheUtils.storeReport(file, report);
+				CacheUtils.storeReport(fullName, report);
 			}
 			pdfProducer.produce(report, outputStream);
 		}else{
@@ -108,25 +109,26 @@ public class ExportPdfServletAction extends BaseServletAction{
 		}
 		Report report=null;
 		Map<String, Object> parameters = buildParameters(req);
+		String fullName=file+parameters.toString();
 		if(file.equals(PREVIEW_KEY)){
-			report=CacheUtils.getReport(file);
+			report=CacheUtils.getReport(fullName);
 			ReportDefinition reportDefinition=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);
 			if(report==null){
 				if(reportDefinition==null){
 					throw new ReportDesignException("Report data has expired,can not do export pdf.");
 				}
 				report=reportBuilder.buildReport(reportDefinition, parameters);	
-				CacheUtils.storeReport(file, report);
+				CacheUtils.storeReport(fullName, report);
 			}
 		}else{
-			report=CacheUtils.getReport(file);
+			report=CacheUtils.getReport(fullName);
 			if(report==null){
 				ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 				report=reportRender.render(reportDefinition, parameters);
-				CacheUtils.storeReport(file, report);
+				CacheUtils.storeReport(fullName, report);
 			}
 		}
-		String paper=req.getParameter("paper");
+		String paper=req.getParameter("_paper");
 		ObjectMapper mapper=new ObjectMapper();
 		Paper newPaper=mapper.readValue(paper, Paper.class);
 		report.rePaging(newPaper);

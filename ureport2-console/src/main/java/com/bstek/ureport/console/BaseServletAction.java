@@ -25,8 +25,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.bstek.ureport.exception.ReportComputeException;
 
 
@@ -46,24 +44,20 @@ public abstract class BaseServletAction implements ServletAction {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected Map<String, Object> buildParameters(HttpServletRequest req) {
 		Map<String,Object> parameters=new HashMap<String,Object>();
-		Enumeration<String> names=req.getParameterNames();
-		while(names.hasMoreElements()){
-			String name=names.nextElement();
+		Enumeration<?> enumeration=req.getParameterNames();
+		while(enumeration.hasMoreElements()){
+			Object obj=enumeration.nextElement();
+			if(obj==null){
+				continue;
+			}
+			String name=obj.toString();
 			String value=req.getParameter(name);
-			if(StringUtils.isNotBlank(value)){
-				parameters.put(name, value);				
+			if(name==null || value==null || name.startsWith("_")){
+				continue;
 			}
-		}
-		names=req.getAttributeNames();
-		while(names.hasMoreElements()){
-			String name=names.nextElement();
-			Object value=req.getAttribute(name);
-			if(value!=null){
-				parameters.put(name, value);				
-			}
+			parameters.put(name, decode(value));
 		}
 		return parameters;
 	}

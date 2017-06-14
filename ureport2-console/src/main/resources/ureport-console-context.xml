@@ -27,6 +27,7 @@
 	<bean id="ureport.exportPdfServletAction" class="com.bstek.ureport.console.pdf.ExportPdfServletAction">
 		<property name="exportManager" ref="ureport.exportManager"></property>
 		<property name="reportBuilder" ref="ureport.reportBuilder"></property>
+		<property name="reportRender" ref="ureport.reportRender"></property>
 	</bean>
 	
 	<bean id="ureport.exportExcelServletAction" class="com.bstek.ureport.console.excel.ExportExcelServletAction">
