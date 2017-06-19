@@ -15,76 +15,117 @@
  ******************************************************************************/
 package com.bstek.ureport.chart.dataset.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
-import com.bstek.ureport.chart.dataset.Dataset;
-import com.bstek.ureport.chart.dataset.DatasetType;
-import com.bstek.ureport.chart.dataset.PointStyle;
+import com.bstek.ureport.chart.dataset.BaseDataset;
 import com.bstek.ureport.chart.dataset.ScatterData;
 import com.bstek.ureport.model.Cell;
+import com.bstek.ureport.utils.DataUtils;
 
 /**
  * @author Jacky.gao
  * @since 2017年6月8日
  */
-public class ScatterDataset implements Dataset {
-	private ScatterData data;
-	private String label;
-	private String backgroundColor;
-	private String borderColor;
-	private int borderWidth;
+public class ScatterDataset extends BaseDataset {
+	private String datasetName;
+	private String categoryProperty;
+	private String xProperty;
+	private String yProperty;
+	
 	private boolean fill;
 	private double lineTension=0.2;
-	private String pointBackgroundColor;
-	private String pointBorderColor;
-	private int pointBorderWidth;
-	private int pointRadius;
-	private PointStyle pointStyle;
-	private int pointHitRadius;
-	private String pointHoverBackgroundColor;
-	private String pointHoverBorderColor;
-	private int pointHoverBorderWidth;
-	private int pointHoverRadius;
+	
 	@Override
 	public String buildDataJson(Context context,Cell cell) {
-		return null;
+		List<?> dataList=DataUtils.fetchData(cell, context, datasetName);
+		Map<Object,List<ScatterData>> map=new HashMap<Object,List<ScatterData>>();
+		for(Object obj:dataList){
+			Object category=Utils.getProperty(obj, categoryProperty);
+			if(category==null){
+				continue;
+			}
+			Object xValue=Utils.getProperty(obj, xProperty);
+			Object yValue=Utils.getProperty(obj, yProperty);
+			if(xValue==null || yValue==null){
+				continue;
+			}
+			double x=Utils.toBigDecimal(xValue).doubleValue();
+			double y=Utils.toBigDecimal(yValue).doubleValue();
+			List<ScatterData> list=null;
+			if(map.containsKey(category)){
+				list=map.get(category);
+			}else{
+				list=new ArrayList<ScatterData>();
+				map.put(category, list);
+			}
+			list.add(new ScatterData(x,y));
+		}
+		StringBuilder sb=new StringBuilder();
+		sb.append("[");
+		int index=0;
+		for(Object obj:map.keySet()){
+			if(index>0){
+				sb.append(",");
+			}
+			index++;
+			sb.append("{");
+			sb.append("label:\""+obj+"\",");
+			sb.append("fill:"+fill+",");
+			sb.append("lineTension:"+lineTension+",");
+			sb.append("borderColor:\"rgb("+getRgbColor(index)+")\",");
+			sb.append("backgroundColor:\"rgba("+getRgbColor(index)+",0.5)\",");
+			sb.append("data:[");
+			List<ScatterData> list=map.get(obj);
+			int i=0;
+			for(ScatterData data:list){
+				if(i>0){
+					sb.append(",");
+				}
+				i++;
+				sb.append("{");				
+				sb.append("x:"+data.getX()+",");				
+				sb.append("y:"+data.getY()+"");				
+				sb.append("}");				
+			}
+			sb.append("]");
+			sb.append("}");
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 	@Override
-	public DatasetType getDatasetType() {
-		return DatasetType.Scatter;
-	}
-	@Override
-	public String type() {
+	public String getType() {
 		return "scatter";
 	}
-	public ScatterData getData() {
-		return data;
+	
+	public String getDatasetName() {
+		return datasetName;
 	}
-	public void setData(ScatterData data) {
-		this.data = data;
+	public void setDatasetName(String datasetName) {
+		this.datasetName = datasetName;
 	}
-	public String getLabel() {
-		return label;
+	public String getCategoryProperty() {
+		return categoryProperty;
 	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setCategoryProperty(String categoryProperty) {
+		this.categoryProperty = categoryProperty;
 	}
-	public String getBackgroundColor() {
-		return backgroundColor;
+	public String getxProperty() {
+		return xProperty;
 	}
-	public void setBackgroundColor(String backgroundColor) {
-		this.backgroundColor = backgroundColor;
+	public void setxProperty(String xProperty) {
+		this.xProperty = xProperty;
 	}
-	public String getBorderColor() {
-		return borderColor;
+	public String getyProperty() {
+		return yProperty;
 	}
-	public void setBorderColor(String borderColor) {
-		this.borderColor = borderColor;
-	}
-	public int getBorderWidth() {
-		return borderWidth;
-	}
-	public void setBorderWidth(int borderWidth) {
-		this.borderWidth = borderWidth;
+	public void setyProperty(String yProperty) {
+		this.yProperty = yProperty;
 	}
 	public boolean isFill() {
 		return fill;
@@ -97,65 +138,5 @@ public class ScatterDataset implements Dataset {
 	}
 	public void setLineTension(double lineTension) {
 		this.lineTension = lineTension;
-	}
-	public String getPointBackgroundColor() {
-		return pointBackgroundColor;
-	}
-	public void setPointBackgroundColor(String pointBackgroundColor) {
-		this.pointBackgroundColor = pointBackgroundColor;
-	}
-	public String getPointBorderColor() {
-		return pointBorderColor;
-	}
-	public void setPointBorderColor(String pointBorderColor) {
-		this.pointBorderColor = pointBorderColor;
-	}
-	public int getPointBorderWidth() {
-		return pointBorderWidth;
-	}
-	public void setPointBorderWidth(int pointBorderWidth) {
-		this.pointBorderWidth = pointBorderWidth;
-	}
-	public int getPointRadius() {
-		return pointRadius;
-	}
-	public void setPointRadius(int pointRadius) {
-		this.pointRadius = pointRadius;
-	}
-	public PointStyle getPointStyle() {
-		return pointStyle;
-	}
-	public void setPointStyle(PointStyle pointStyle) {
-		this.pointStyle = pointStyle;
-	}
-	public int getPointHitRadius() {
-		return pointHitRadius;
-	}
-	public void setPointHitRadius(int pointHitRadius) {
-		this.pointHitRadius = pointHitRadius;
-	}
-	public String getPointHoverBackgroundColor() {
-		return pointHoverBackgroundColor;
-	}
-	public void setPointHoverBackgroundColor(String pointHoverBackgroundColor) {
-		this.pointHoverBackgroundColor = pointHoverBackgroundColor;
-	}
-	public String getPointHoverBorderColor() {
-		return pointHoverBorderColor;
-	}
-	public void setPointHoverBorderColor(String pointHoverBorderColor) {
-		this.pointHoverBorderColor = pointHoverBorderColor;
-	}
-	public int getPointHoverBorderWidth() {
-		return pointHoverBorderWidth;
-	}
-	public void setPointHoverBorderWidth(int pointHoverBorderWidth) {
-		this.pointHoverBorderWidth = pointHoverBorderWidth;
-	}
-	public int getPointHoverRadius() {
-		return pointHoverRadius;
-	}
-	public void setPointHoverRadius(int pointHoverRadius) {
-		this.pointHoverRadius = pointHoverRadius;
 	}
 }

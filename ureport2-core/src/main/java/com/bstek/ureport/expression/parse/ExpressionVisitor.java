@@ -23,8 +23,10 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import com.bstek.ureport.dsl.ReportParserBaseVisitor;
 import com.bstek.ureport.dsl.ReportParserParser.CaseExprContext;
 import com.bstek.ureport.dsl.ReportParserParser.CasePartContext;
+import com.bstek.ureport.dsl.ReportParserParser.ComplexExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.ElseIfPartContext;
 import com.bstek.ureport.dsl.ReportParserParser.ElsePartContext;
+import com.bstek.ureport.dsl.ReportParserParser.ExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.ExprContext;
 import com.bstek.ureport.dsl.ReportParserParser.ExpressionContext;
 import com.bstek.ureport.dsl.ReportParserParser.IfConditionContext;
@@ -32,9 +34,12 @@ import com.bstek.ureport.dsl.ReportParserParser.IfExprContext;
 import com.bstek.ureport.dsl.ReportParserParser.IfPartContext;
 import com.bstek.ureport.dsl.ReportParserParser.ItemContext;
 import com.bstek.ureport.dsl.ReportParserParser.JoinContext;
+import com.bstek.ureport.dsl.ReportParserParser.ParenExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.ParenJoinContext;
 import com.bstek.ureport.dsl.ReportParserParser.SimpleJoinContext;
+import com.bstek.ureport.dsl.ReportParserParser.SingleExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.SingleParenJoinContext;
+import com.bstek.ureport.dsl.ReportParserParser.TernaryExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.TernaryExprContext;
 import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
 import com.bstek.ureport.exception.ReportParseException;
@@ -63,12 +68,11 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 	}
 	@Override
 	public Expression visitExpression(ExpressionContext ctx) {
-		ExprContext exprContext=ctx.expr();
+		ExprCompositeContext exprCompositeContext=ctx.exprComposite();
 		IfExprContext ifExprContext=ctx.ifExpr();
 		CaseExprContext caseExprContext=ctx.caseExpr();
-		TernaryExprContext ternaryExprContext=ctx.ternaryExpr();
-		if(exprContext!=null){
-			return parseExpr(exprContext);
+		if(exprCompositeContext!=null){
+			return parseExprComposite(exprCompositeContext);
 		}else if(ifExprContext!=null){
 			IfExpression expr=new IfExpression();
 			expr.setExpr(ctx.getText());
@@ -122,7 +126,22 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 				elseIfExpressionList.add(elseIfExpr);
 			}
 			return expr;
-		}else if(ternaryExprContext!=null){
+		}else{
+			throw new ReportParseException("Expression ["+ctx.getText()+"] is invalid.");
+		}
+	}
+	private Expression parseExprComposite(ExprCompositeContext exprCompositeContext) {
+		if(exprCompositeContext instanceof SingleExprCompositeContext){
+			SingleExprCompositeContext singleExprCompositeContext=(SingleExprCompositeContext)exprCompositeContext;
+			ExprContext exprContext=singleExprCompositeContext.expr();
+			return parseExpr(exprContext);
+		}else if(exprCompositeContext instanceof ParenExprCompositeContext){
+			ParenExprCompositeContext parenExprCompositeContext=(ParenExprCompositeContext)exprCompositeContext;
+			ExprCompositeContext childExprCompositeContext=parenExprCompositeContext.exprComposite();
+			return parseExprComposite(childExprCompositeContext);
+		}else if(exprCompositeContext instanceof TernaryExprCompositeContext){
+			TernaryExprCompositeContext ternaryExprCompositeContext=(TernaryExprCompositeContext)exprCompositeContext;
+			TernaryExprContext ternaryExprContext=ternaryExprCompositeContext.ternaryExpr();
 			List<IfConditionContext> ifConditionContexts=ternaryExprContext.ifCondition();
 			IfExpression expr=new IfExpression();
 			expr.setConditionList(parseCondtionList(ifConditionContexts, ternaryExprContext.join()));
@@ -133,10 +152,27 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 			elseExpr.setExpression(parseExpr(secondExprContext));
 			expr.setElseExpression(elseExpr);
 			return expr;
+		}else if(exprCompositeContext instanceof ComplexExprCompositeContext){
+			ComplexExprCompositeContext complexExprCompositeContext=(ComplexExprCompositeContext)exprCompositeContext;
+			ExprCompositeContext leftExprCompositeContext=complexExprCompositeContext.exprComposite(0);
+			Expression leftExpression=parseExprComposite(leftExprCompositeContext);
+			ExprCompositeContext rightExprCompositeContext=complexExprCompositeContext.exprComposite(1);
+			Expression rightExpression=parseExprComposite(rightExprCompositeContext);
+			String op=complexExprCompositeContext.Operator().getText();
+			Operator operator=Operator.parse(op);
+			List<BaseExpression> expressions=new ArrayList<BaseExpression>();
+			expressions.add((BaseExpression)leftExpression);
+			expressions.add((BaseExpression)rightExpression);
+			List<Operator> operators=new ArrayList<Operator>();
+			operators.add(operator);
+			ParenExpression expression=new ParenExpression(operators, expressions);
+			expression.setExpr(complexExprCompositeContext.getText());
+			return expression;
 		}else{
-			throw new ReportParseException("Expression ["+ctx.getText()+"] is invalid.");
+			throw new ReportParseException("Unknow context :"+exprCompositeContext);
 		}
 	}
+	
 	private Expression parseExpr(ExprContext exprContext) {
 		List<BaseExpression> expressions=new ArrayList<BaseExpression>();
 		List<Operator> operators=new ArrayList<Operator>();

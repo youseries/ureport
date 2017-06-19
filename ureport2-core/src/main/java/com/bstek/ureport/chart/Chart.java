@@ -33,10 +33,10 @@ public class Chart {
 	private Dataset dataset;
 	private XAxes xaxes;
 	private YAxes yaxes;
-	public String doCompute(Cell cell, Context context){
+	public ChartData doCompute(Cell cell, Context context){
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
-		sb.append("type:\""+dataset.type()+"\",");
+		sb.append("type:\""+dataset.getType()+"\",");
 		sb.append("data:"+dataset.buildDataJson(context, cell)+",");
 		sb.append("options:{");
 		if(options!=null && options.size()>0){
@@ -61,7 +61,8 @@ public class Chart {
 		}
 		sb.append("}");
 		sb.append("}");
-		return sb.toString();
+		ChartData chartData=new ChartData(sb.toString());
+		return chartData;
 	}
 
 	public List<Option> getOptions() {

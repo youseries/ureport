@@ -30,7 +30,6 @@ import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.chart.dataset.BaseDataset;
 import com.bstek.ureport.chart.dataset.CollectType;
-import com.bstek.ureport.chart.dataset.Source;
 import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.utils.DataUtils;
@@ -41,7 +40,6 @@ import com.bstek.ureport.utils.DataUtils;
  * @since 2017年6月9日
  */
 public abstract class CategoryDataset extends BaseDataset {
-	private Source source=Source.dataset;
 	private CollectType collectType=CollectType.select;
 	
 	private String datasetName;
@@ -49,17 +47,13 @@ public abstract class CategoryDataset extends BaseDataset {
 	private String seriesProperty;
 	private String valueProperty;
 	
-	private String categoryExpression;
-	private String seriesExpression;
-	private String valueExpression;
-	
 	private String labels;
 	private String format;
 	
-	protected String buildDatasetJson(Context context,Cell cell){
+	protected String buildDatasetJson(Context context,Cell cell,String props){
 		List<?> dataList=DataUtils.fetchData(cell, context, datasetName);
 		List<Object> categoryList=new ArrayList<Object>();
-		Map<Object,Map<Object,List<Double>>> seriesDataMap=new HashMap<Object,Map<Object,List<Double>>>();
+		Map<Object,Map<Object,List<Object>>> seriesDataMap=new HashMap<Object,Map<Object,List<Object>>>();
 		for(Object obj:dataList){
 			Object category=Utils.getProperty(obj, categoryProperty);
 			if(category==null){
@@ -74,36 +68,36 @@ public abstract class CategoryDataset extends BaseDataset {
 				continue;
 			}
 			Object value=Utils.getProperty(obj, valueProperty);
-			double data=0;
-			if(value!=null && StringUtils.isNotBlank(value.toString())){
-				data=Utils.toBigDecimal(value).doubleValue();
+			if(value==null){
+				continue;
 			}
 			if(seriesDataMap.containsKey(series)){
-				Map<Object,List<Double>> categoryMap=seriesDataMap.get(series);
-				List<Double> valueList=null;
+				Map<Object,List<Object>> categoryMap=seriesDataMap.get(series);
+				List<Object> valueList=null;
 				if(categoryMap.containsKey(category)){
 					valueList=categoryMap.get(category);
 				}else{
-					valueList=new ArrayList<Double>();
+					valueList=new ArrayList<Object>();
 					categoryMap.put(category, valueList);
 				}
-				valueList.add(data);
+				valueList.add(value);
 			}else{
-				Map<Object,List<Double>> categoryMap=new HashMap<Object,List<Double>>();
+				Map<Object,List<Object>> categoryMap=new HashMap<Object,List<Object>>();
 				for(Object cg:categoryList){
-					categoryMap.put(cg, new ArrayList<Double>());
+					categoryMap.put(cg, new ArrayList<Object>());
 				}
-				List<Double> valueList=categoryMap.get(category);
-				valueList.add(data);
+				List<Object> valueList=categoryMap.get(category);
+				valueList.add(value);
 			}
 		}
 		setLabels(toLabel(categoryList));
-		return buildDatasets(seriesDataMap);
+		return buildDatasets(seriesDataMap,props);
 	}
 	
-	private String buildDatasets(Map<Object,Map<Object,List<Double>>> map){
+	
+	private String buildDatasets(Map<Object,Map<Object,List<Object>>> map,String props){
 		StringBuilder sb=new StringBuilder();
-		sb.append("[");
+		sb.append("");
 		int i=0; 
 		for(Object series:map.keySet()){
 			if(i>0){
@@ -129,17 +123,20 @@ public abstract class CategoryDataset extends BaseDataset {
 					sb.append("fill:false");									
 				}
 			}
+			if(props!=null){
+				sb.append(props);
+			}
 			sb.append("}");
 		}
-		sb.append("]");
+		sb.append("");
 		return sb.toString();
 	}
 	
-	private String buildData(Map<Object,List<Double>> categoryMap){
+	private String buildData(Map<Object,List<Object>> categoryMap){
 		StringBuilder sb=new StringBuilder();
 		sb.append("[");
 		for(Object category:categoryMap.keySet()){
-			List<Double> list=categoryMap.get(category);
+			List<Object> list=categoryMap.get(category);
 			double data=collectData(list);
 			if(sb.length()>1){
 				sb.append(",");
@@ -150,16 +147,16 @@ public abstract class CategoryDataset extends BaseDataset {
 		return sb.toString();
 	}
 	
-	private double collectData(List<Double> list){
+	private double collectData(List<Object> list){
 		double result=0;
 		switch(collectType){
 		case select:
-			result = list.get(0);
+			result = Utils.toBigDecimal(list.get(0)).doubleValue();
 			break;
 		case avg:
 			double total=0;
-			for(double data:list){
-				total+=data;
+			for(Object data:list){
+				total+=Utils.toBigDecimal(data).doubleValue();
 			}
 			result=Utils.toBigDecimal(total).divide(Utils.toBigDecimal(list.size()),8,BigDecimal.ROUND_HALF_UP).doubleValue();
 			break;
@@ -168,29 +165,32 @@ public abstract class CategoryDataset extends BaseDataset {
 			break;
 		case max:
 			Double max=null;
-			for(double data:list){
+			for(Object data:list){
+				double value=Utils.toBigDecimal(data).doubleValue();
 				if(max==null){
-					max=data;
-				}else if(max<data){
-					max=data;
+					max=value;
+				}else if(max<value){
+					max=value;
 				}
 			}
 			result=max;
 			break;
 		case min:
 			Double min=null;
-			for(double data:list){
+			for(Object data:list){
+				double value=Utils.toBigDecimal(data).doubleValue();
 				if(min==null){
-					min=data;
-				}else if(min>data){
-					min=data;
+					min=value;
+				}else if(min>value){
+					min=value;
 				}
 			}
 			result=min;
 			break;
 		case sum:
-			for(double data:list){
-				result+=data;
+			for(Object data:list){
+				double value=Utils.toBigDecimal(data).doubleValue();
+				result+=value;
 			}
 			break;
 		}
@@ -236,12 +236,6 @@ public abstract class CategoryDataset extends BaseDataset {
 		this.collectType = collectType;
 	}
 
-	public Source getSource() {
-		return source;
-	}
-	public void setSource(Source source) {
-		this.source = source;
-	}
 	public String getDatasetName() {
 		return datasetName;
 	}
@@ -266,25 +260,7 @@ public abstract class CategoryDataset extends BaseDataset {
 	public void setValueProperty(String valueProperty) {
 		this.valueProperty = valueProperty;
 	}
-	public String getCategoryExpression() {
-		return categoryExpression;
-	}
-	public void setCategoryExpression(String categoryExpression) {
-		this.categoryExpression = categoryExpression;
-	}
-	public String getSeriesExpression() {
-		return seriesExpression;
-	}
-	public void setSeriesExpression(String seriesExpression) {
-		this.seriesExpression = seriesExpression;
-	}
-	public String getValueExpression() {
-		return valueExpression;
-	}
-	public void setValueExpression(String valueExpression) {
-		this.valueExpression = valueExpression;
-	}
-
+	
 	public void setLabels(String labels) {
 		this.labels = labels;
 	}

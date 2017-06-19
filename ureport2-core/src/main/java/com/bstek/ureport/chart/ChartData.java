@@ -13,15 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.chart.dataset.impl;
+package com.bstek.ureport.chart;
 
 /**
  * @author Jacky.gao
- * @since 2017年6月9日
+ * @since 2017年6月16日
  */
-public class DoughnutDataset extends PieDataset {
-	@Override
-	public String type() {
-		return "doughnut";
+public class ChartData {
+	private String json;
+	public ChartData(String json) {
+		this.json=json;
+	}
+	public String buildJavascript(String canvasId){
+		StringBuilder sb=new StringBuilder();
+		sb.append("<script>");
+		sb.append("$(document).ready(function(){");
+		sb.append("_buildChart(\""+canvasId+"\","+json+");");
+		sb.append(" });");
+		sb.append("</script>");
+		return sb.toString();
 	}
 }

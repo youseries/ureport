@@ -16,7 +16,6 @@
 package com.bstek.ureport.chart.dataset.impl.category;
 
 import com.bstek.ureport.build.Context;
-import com.bstek.ureport.chart.dataset.DatasetType;
 import com.bstek.ureport.model.Cell;
 
 /**
@@ -24,38 +23,25 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年6月8日
  */
 public class BarDataset extends CategoryDataset{
-	private String hoverBackgroundColor;
-	private String hoverBorderColor;
-	private String hoverBorderWidth;
-
 	@Override
 	public String buildDataJson(Context context,Cell cell) {
-		return null;
+		String datasetJson=buildDatasetJson(context, cell,null);
+		StringBuilder sb=new StringBuilder();
+		sb.append("{");
+		String labels=getLabels();
+		sb.append("labels:"+labels+",");
+		sb.append("datasets:["+datasetJson+"]");
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	public String toMixJson(Context context,Cell cell,int index){
+		String props="type:\"bar\"";
+		String datasetJson=buildDatasetJson(context, cell,props);
+		return datasetJson;
 	}
 	@Override
-	public DatasetType getDatasetType() {
-		return DatasetType.Bar;
-	}
-	@Override
-	public String type() {
+	public String getType() {
 		return "bar";
-	}
-	public String getHoverBackgroundColor() {
-		return hoverBackgroundColor;
-	}
-	public void setHoverBackgroundColor(String hoverBackgroundColor) {
-		this.hoverBackgroundColor = hoverBackgroundColor;
-	}
-	public String getHoverBorderColor() {
-		return hoverBorderColor;
-	}
-	public void setHoverBorderColor(String hoverBorderColor) {
-		this.hoverBorderColor = hoverBorderColor;
-	}
-	public String getHoverBorderWidth() {
-		return hoverBorderWidth;
-	}
-	public void setHoverBorderWidth(String hoverBorderWidth) {
-		this.hoverBorderWidth = hoverBorderWidth;
 	}
 }

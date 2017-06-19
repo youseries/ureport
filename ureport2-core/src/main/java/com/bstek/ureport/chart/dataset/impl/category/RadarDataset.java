@@ -22,10 +22,14 @@ import com.bstek.ureport.model.Cell;
  * @author Jacky.gao
  * @since 2017年6月8日
  */
-public class AreaDataset extends LineDataset {
+public class RadarDataset extends CategoryDataset {
+	private boolean fill;
+	private double lineTension=0.1;
+	
 	@Override
 	public String buildDataJson(Context context,Cell cell) {
-		String datasetJson=buildDatasetJson(context, cell,null);
+		String props="fill:"+fill+",lineTension:"+lineTension;
+		String datasetJson=buildDatasetJson(context, cell,props);
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
 		String labels=getLabels();
@@ -33,5 +37,26 @@ public class AreaDataset extends LineDataset {
 		sb.append("datasets:["+datasetJson+"]");
 		sb.append("}");
 		return sb.toString();
+	}
+	
+	@Override
+	public String getType() {
+		return "radar";
+	}
+
+	public boolean isFill() {
+		return fill;
+	}
+
+	public void setFill(boolean fill) {
+		this.fill = fill;
+	}
+
+	public double getLineTension() {
+		return lineTension;
+	}
+
+	public void setLineTension(double lineTension) {
+		this.lineTension = lineTension;
 	}
 }

@@ -17,6 +17,34 @@ public interface ReportParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpression(ReportParserParser.ExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code complexExprComposite}
+	 * labeled alternative in {@link ReportParserParser#exprComposite}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComplexExprComposite(ReportParserParser.ComplexExprCompositeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code singleExprComposite}
+	 * labeled alternative in {@link ReportParserParser#exprComposite}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingleExprComposite(ReportParserParser.SingleExprCompositeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parenExprComposite}
+	 * labeled alternative in {@link ReportParserParser#exprComposite}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenExprComposite(ReportParserParser.ParenExprCompositeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ternaryExprComposite}
+	 * labeled alternative in {@link ReportParserParser#exprComposite}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTernaryExprComposite(ReportParserParser.TernaryExprCompositeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ReportParserParser#ternaryExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

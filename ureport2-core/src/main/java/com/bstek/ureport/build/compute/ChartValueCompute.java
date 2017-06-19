@@ -21,6 +21,7 @@ import java.util.List;
 import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.chart.Chart;
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.definition.value.ChartValue;
 import com.bstek.ureport.definition.value.ValueType;
 import com.bstek.ureport.model.Cell;
@@ -35,7 +36,7 @@ public class ChartValueCompute implements ValueCompute {
 	public List<BindData> compute(Cell cell, Context context) {
 		ChartValue chartValue=(ChartValue)cell.getValue();
 		Chart chart=chartValue.getChart();
-		String data=chart.doCompute(cell, context);
+		ChartData data=chart.doCompute(cell, context);
 		List<BindData> list=new ArrayList<BindData>();
 		list.add(new BindData(data));
 		return list;

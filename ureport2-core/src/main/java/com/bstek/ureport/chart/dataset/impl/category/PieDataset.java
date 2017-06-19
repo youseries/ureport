@@ -13,44 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.chart.dataset;
+package com.bstek.ureport.chart.dataset.impl.category;
+
+import com.bstek.ureport.build.Context;
+import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
  * @since 2017年6月8日
  */
-public class BubbleData {
-	private double x;
-	private double y;
-	private double r;
+public class PieDataset extends CategoryDataset {
+	@Override
+	public String buildDataJson(Context context,Cell cell) {
+		String datasetJson=buildDatasetJson(context, cell,null);
+		StringBuilder sb=new StringBuilder();
+		sb.append("{");
+		String labels=getLabels();
+		sb.append("labels:"+labels+",");
+		sb.append("datasets:["+datasetJson+"]");
+		sb.append("}");
+		return sb.toString();
+	}
 	
-	public BubbleData(double x, double y, double r) {
-		this.x = x;
-		this.y = y;
-		this.r = r;
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-
-	public double getR() {
-		return r;
-	}
-
-	public void setR(double r) {
-		this.r = r;
+	@Override
+	public String getType() {
+		return "pie";
 	}
 }

@@ -20,18 +20,23 @@ package com.bstek.ureport.chart.dataset;
  * @since 2017年6月8日
  */
 public class ScatterData {
-	private int x;
-	private int y;
-	public int getX() {
+	private double x;
+	private double y;
+	
+	public ScatterData(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+	public double getX() {
 		return x;
 	}
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
-	public int getY() {
+	public double getY() {
 		return y;
 	}
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 }

@@ -20,9 +20,9 @@ import java.util.List;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.chart.dataset.Dataset;
-import com.bstek.ureport.chart.dataset.DatasetType;
 import com.bstek.ureport.chart.dataset.impl.category.BarDataset;
 import com.bstek.ureport.chart.dataset.impl.category.LineDataset;
+import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.model.Cell;
 
 /**
@@ -35,16 +35,39 @@ public class MixDataset implements Dataset {
 	
 	@Override
 	public String buildDataJson(Context context,Cell cell) {
-		return null;
+		StringBuilder sb=new StringBuilder();
+		sb.append("{");
+		sb.append("datasets:[");
+		int index=0;
+		for(BarDataset ds:barDatasets){
+			if(index>0){				
+				sb.append(",");
+			}
+			sb.append(ds.toMixJson(context, cell, index));
+		}
+		for(LineDataset ds:lineDatasets){
+			if(index>0){				
+				sb.append(",");
+			}
+			sb.append(ds.toMixJson(context, cell, index));
+		}
+		sb.append("],");
+		String labels=null;
+		if(barDatasets.size()>0){
+			labels=barDatasets.get(0).getLabels();
+		}else if(lineDatasets.size()>0){
+			labels=lineDatasets.get(0).getLabels();
+		}else{
+			throw new ReportComputeException("Mix chart need one dataset at least.");
+		}
+		sb.append("labels:"+labels);
+		sb.append("}");
+		return sb.toString();
 	}
 
-	@Override
-	public DatasetType getDatasetType() {
-		return DatasetType.Mix;
-	}
 	
 	@Override
-	public String type() {
+	public String getType() {
 		return "bar";
 	}
 

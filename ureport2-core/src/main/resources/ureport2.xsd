@@ -251,6 +251,322 @@
 		</attribute>
 	</complexType>
 	
+	<complexType name="chart-value">
+		<sequence>
+			<element name="xaxes" type="tns:xaxes" minOccurs="0" maxOccurs="1"></element>
+			<element name="yaxes" type="tns:yaxes" minOccurs="0" maxOccurs="1"></element>
+			<element name="dataset" type="tns:chart-dataset" minOccurs="1" maxOccurs="1"></element>
+			<element name="animations-option" type="tns:animations-option" minOccurs="0" maxOccurs="1"></element>
+			<element name="title-option" type="tns:title-option" minOccurs="0" maxOccurs="1"></element>
+			<element name="legend-option" type="tns:legend-option" minOccurs="0" maxOccurs="1"></element>
+			<element name="tooltip-option" type="tns:tooltip-option" minOccurs="0" maxOccurs="1"></element>
+			<element name="layout-option" type="tns:layout-option" minOccurs="0" maxOccurs="1"></element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="title-option">
+		<attribute name="display" type="boolean"></attribute>
+		<attribute name="font-size" type="int"></attribute>
+		<attribute name="font-color" type="string"></attribute>
+		<attribute name="padding" type="int"></attribute>
+		<attribute name="text" type="string"></attribute>
+		<attribute name="font-style">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="normal"></enumeration>
+					<enumeration value="italic"></enumeration>
+					<enumeration value="bold"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="position">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="top"></enumeration>
+					<enumeration value="bottom"></enumeration>
+					<enumeration value="left"></enumeration>
+					<enumeration value="right"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="tooltip-option">
+		<attribute name="enabled" type="boolean"></attribute>
+		<attribute name="title-font-size" type="int"></attribute>
+		<attribute name="body-font-size" type="int"></attribute>
+		<attribute name="title-font-color" type="string"></attribute>
+		<attribute name="body-font-color" type="string"></attribute>
+		<attribute name="title-font-style">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="normal"></enumeration>
+					<enumeration value="italic"></enumeration>
+					<enumeration value="bold"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="body-font-style">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="normal"></enumeration>
+					<enumeration value="italic"></enumeration>
+					<enumeration value="bold"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="legend-option">
+		<sequence>
+			<element name="labels" type="tns:labels" minOccurs="1" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="display" type="boolean"></attribute>
+		<attribute name="position">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="left"></enumeration>
+					<enumeration value="right"></enumeration>
+					<enumeration value="top"></enumeration>
+					<enumeration value="bottom"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="labels">
+		<attribute name="box-width" type="int"></attribute>
+		<attribute name="font-size" type="int"></attribute>
+		<attribute name="padding" type="int"></attribute>
+		<attribute name="font-color" type="string"></attribute>
+		<attribute name="font-style">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="normal"></enumeration>
+					<enumeration value="italic"></enumeration>
+					<enumeration value="bold"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="layout-option">
+		<attribute name="padding" type="int"></attribute>
+	</complexType>
+	
+	<complexType name="animations-option">
+		<attribute name="duration" type="int"></attribute>
+		<attribute name="easing">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="linear"></enumeration>				
+					<enumeration value="easeInQuad"></enumeration>				
+					<enumeration value="easeOutQuad"></enumeration>				
+					<enumeration value="easeInOutQuad"></enumeration>				
+					<enumeration value="easeInCubic"></enumeration>				
+					<enumeration value="easeOutCubic"></enumeration>				
+					<enumeration value="easeInOutCubic"></enumeration>				
+					<enumeration value="easeInQuart"></enumeration>				
+					<enumeration value="easeOutQuart"></enumeration>				
+					<enumeration value="easeInOutQuart"></enumeration>				
+					<enumeration value="easeInQuint"></enumeration>				
+					<enumeration value="easeOutQuint"></enumeration>				
+					<enumeration value="easeInOutQuint"></enumeration>				
+					<enumeration value="easeInSine"></enumeration>				
+					<enumeration value="easeOutSine"></enumeration>				
+					<enumeration value="easeInOutSine"></enumeration>				
+					<enumeration value="easeInExpo"></enumeration>				
+					<enumeration value="easeOutExpo"></enumeration>				
+					<enumeration value="easeInOutExpo"></enumeration>				
+					<enumeration value="easeInCirc"></enumeration>				
+					<enumeration value="easeOutCirc"></enumeration>				
+					<enumeration value="easeInOutCirc"></enumeration>				
+					<enumeration value="easeInElastic"></enumeration>				
+					<enumeration value="easeOutElastic"></enumeration>				
+					<enumeration value="easeInOutElastic"></enumeration>				
+					<enumeration value="easeInBack"></enumeration>				
+					<enumeration value="easeOutBack"></enumeration>				
+					<enumeration value="easeInOutBack"></enumeration>				
+					<enumeration value="easeInBounce"></enumeration>				
+					<enumeration value="easeOutBounce"></enumeration>				
+					<enumeration value="easeInOutBounce"></enumeration>	
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="chart-dataset">
+		<choice>
+				<element name="area-dataset" type="tns:area-dataset"></element>
+				<element name="line-dataset" type="tns:line-dataset"></element>
+				<element name="bubble-dataset" type="tns:bubble-dataset"></element>
+				<element name="polar-dataset" type="tns:polar-dataset"></element>
+				<element name="bar-dataset" type="tns:bar-dataset"></element>
+				<element name="pie-dataset" type="tns:pie-dataset"></element>
+				<element name="scatter-dataset" type="tns:scatter-dataset"></element>
+				<element name="doughnut-dataset" type="tns:doughnut-dataset"></element>
+				<element name="radar-dataset" type="tns:radar-dataset"></element>
+				<element name="horizontal-bar-dataset" type="tns:horizontal-bar-dataset"></element>
+				<element name="mix-dataset" type="tns:mix-dataset"></element>
+			</choice>
+	</complexType>
+	
+	<complexType name="mix-dataset">
+		<sequence>
+			<element name="bar-dataset" type="tns:bar-dataset" minOccurs="0" maxOccurs="unbounded"></element>
+			<element name="line-dataset" type="tns:line-dataset" minOccurs="0" maxOccurs="unbounded"></element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="category-dataset">
+		<attribute name="dataset-name" type="string"></attribute>
+		<attribute name="category-property" type="string"></attribute>
+		<attribute name="series-property" type="string"></attribute>
+		<attribute name="value-property" type="string"></attribute>
+		<attribute name="format" type="string"></attribute>
+		<attribute name="collect-type">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="select"></enumeration>
+					<enumeration value="count"></enumeration>
+					<enumeration value="sum"></enumeration>
+					<enumeration value="avg"></enumeration>
+					<enumeration value="max"></enumeration>
+					<enumeration value="min"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="bubble-dataset">
+		<attribute name="dataset-name" type="string"></attribute>
+		<attribute name="x-property" type="string"></attribute>
+		<attribute name="y-property" type="string"></attribute>
+		<attribute name="category-property" type="string"></attribute>
+		<attribute name="line-tension" type="double"></attribute>
+		<attribute name="fill" type="boolean"></attribute>
+	</complexType>
+	
+	<complexType name="scatter-dataset">
+		<attribute name="dataset-name" type="string"></attribute>
+		<attribute name="x-property" type="string"></attribute>
+		<attribute name="y-property" type="string"></attribute>
+		<attribute name="r-property" type="string"></attribute>
+		<attribute name="category-property" type="string"></attribute>
+	</complexType>
+	
+	<complexType name="line-dataset">
+		<complexContent>
+			<extension base="tns:category-dataset">
+				<attribute name="line-tension" type="double"></attribute>
+			</extension>		
+		</complexContent>
+	</complexType>
+	
+	<complexType name="bar-dataset">
+		<complexContent>
+			<extension base="tns:category-dataset">
+			</extension>		
+		</complexContent>
+	</complexType>
+	
+	<complexType name="horizontal-bar-dataset">
+		<complexContent>
+			<extension base="tns:category-dataset">
+			</extension>		
+		</complexContent>
+	</complexType>
+	
+	<complexType name="area-dataset">
+		<complexContent>
+			<extension base="tns:category-dataset">
+			</extension>		
+		</complexContent>
+	</complexType>
+	
+	<complexType name="doughnut-dataset">
+		<complexContent>
+			<extension base="tns:category-dataset">
+			</extension>		
+		</complexContent>
+	</complexType>
+	
+	<complexType name="pie-dataset">
+		<complexContent>
+			<extension base="tns:category-dataset">
+			</extension>		
+		</complexContent>
+	</complexType>
+	
+	<complexType name="polar-dataset">
+		<complexContent>
+			<extension base="tns:category-dataset">
+			</extension>		
+		</complexContent>
+	</complexType>
+	
+	<complexType name="radar-dataset">
+		<complexContent>
+			<extension base="tns:category-dataset">
+				<attribute name="line-tension" type="double"></attribute>
+				<attribute name="fill" type="boolean"></attribute>
+			</extension>		
+		</complexContent>
+	</complexType>
+	
+	<complexType name="axes" abstract="true">
+		<sequence>
+			<element name="scale-label" type="tns:scale-label" minOccurs="0" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="rotation" type="int"></attribute>
+	</complexType>
+	
+	<complexType name="scale-label">
+		<attribute name="display" type="boolean"></attribute>
+		<attribute name="label-string" type="string"></attribute>
+		<attribute name="font-color" type="string"></attribute>
+		<attribute name="font-size" type="int"></attribute>
+		<attribute name="font-style">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="normal"></enumeration>
+					<enumeration value="italic"></enumeration>
+					<enumeration value="bold"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="xaxes">
+		<complexContent>
+			<extension base="tns:axes">
+				<attribute name="xposition">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="top"></enumeration>
+							<enumeration value="bottom"></enumeration>
+						</restriction>
+					</simpleType>
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="yaxes">
+		<complexContent>
+			<extension base="tns:axes">
+				<attribute name="xposition">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="left"></enumeration>
+							<enumeration value="right"></enumeration>
+						</restriction>
+					</simpleType>
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	
 	<complexType name="zxing-value">
 		<sequence>
 			<element name="text" type="tns:text" minOccurs="0" maxOccurs="1"></element>

@@ -24,6 +24,5 @@ import com.bstek.ureport.model.Cell;
  */
 public interface Dataset {
 	String buildDataJson(Context context,Cell cell);
-	DatasetType getDatasetType();
-	String type();
+	String getType();
 }

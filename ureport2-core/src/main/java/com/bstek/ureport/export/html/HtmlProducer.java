@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.paging.Page;
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.definition.Alignment;
 import com.bstek.ureport.definition.Border;
 import com.bstek.ureport.definition.CellStyle;
@@ -161,10 +162,16 @@ public class HtmlProducer{
 					}
 					sb.append("<img src=\"data:"+imageType+";base64,"+img.getBase64Data()+"\"");
 					sb.append(">");
+				}else if(obj instanceof ChartData){
+					String canvasId="_canvas_"+cell.getName()+i+"-"+j;
+					sb.append("<canvas id=\""+canvasId+"\"></canvas>");
+					ChartData chartData=(ChartData)obj;
+					sb.append(chartData.buildJavascript(canvasId));
 				}else{
 					String text=obj.toString();
 					text=text.replaceAll("\r\n", "<br>");
 					text=text.replaceAll("\n", "<br>");
+					text=text.replaceAll(" ", "&nbsp;");
 					sb.append(text);					
 				}
 				if(hasLink){

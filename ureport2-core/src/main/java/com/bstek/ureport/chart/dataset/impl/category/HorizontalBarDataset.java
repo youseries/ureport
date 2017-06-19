@@ -16,7 +16,6 @@
 package com.bstek.ureport.chart.dataset.impl.category;
 
 import com.bstek.ureport.build.Context;
-import com.bstek.ureport.chart.dataset.DatasetType;
 import com.bstek.ureport.model.Cell;
 
 /**
@@ -26,10 +25,17 @@ import com.bstek.ureport.model.Cell;
 public class HorizontalBarDataset extends BarDataset {
 	@Override
 	public String buildDataJson(Context context,Cell cell) {
-		return null;
+		String datasetJson=buildDatasetJson(context, cell,null);
+		StringBuilder sb=new StringBuilder();
+		sb.append("{");
+		String labels=getLabels();
+		sb.append("labels:"+labels+",");
+		sb.append("datasets:["+datasetJson+"]");
+		sb.append("}");
+		return sb.toString();
 	}
 	@Override
-	public DatasetType getDatasetType() {
-		return DatasetType.HorizontalBar;
-	}
+	public String getType() {
+		return "horizontalBar";
+	} 
 }

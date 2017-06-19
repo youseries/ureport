@@ -1,11 +1,16 @@
 grammar ReportParser;
 import ReportLexer;
 
-expression : expr 
-		   | ternaryExpr
+expression : exprComposite
 		   | ifExpr
 		   | caseExpr
 		   ;
+
+exprComposite : expr 										#singleExprComposite
+			  | ternaryExpr									#ternaryExprComposite
+			  | LeftParen exprComposite RightParen 			#parenExprComposite
+			  | exprComposite Operator exprComposite		#complexExprComposite
+			  ;
 
 ternaryExpr : ifCondition (join ifCondition)* '?' expr ':' expr ; 
 

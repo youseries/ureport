@@ -13,12 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.chart.dataset;
+package com.bstek.ureport.chart.dataset.impl.category;
+
 
 /**
  * @author Jacky.gao
  * @since 2017年6月9日
  */
-public enum Source {
-	dataset,expression;
+public class DoughnutDataset extends PieDataset {
+	@Override
+	public String getType() {
+		return "doughnut";
+	}
 }

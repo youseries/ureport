@@ -15,90 +15,124 @@
  ******************************************************************************/
 package com.bstek.ureport.chart.dataset.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
+import com.bstek.ureport.chart.dataset.BaseDataset;
 import com.bstek.ureport.chart.dataset.BubbleData;
-import com.bstek.ureport.chart.dataset.Dataset;
-import com.bstek.ureport.chart.dataset.DatasetType;
 import com.bstek.ureport.model.Cell;
+import com.bstek.ureport.utils.DataUtils;
 
 /**
  * @author Jacky.gao
  * @since 2017年6月8日
  */
-public class BubbleDataset implements Dataset {
-	private BubbleData data;
-	private String label;
-	private String backgroundColor;
-	private String borderColor;
-	private int borderWidth;
-	private String hoverBackgroundColor;
-	private String hoverBorderColor;
-	private int hoverBorderWidth;
-	private int hoverRadius;
+public class BubbleDataset extends BaseDataset {
+	private String datasetName;
+	private String xProperty;
+	private String yProperty;
+	private String rProperty;
+	private String categoryProperty;
+	
 	@Override
 	public String buildDataJson(Context context,Cell cell) {
-		return null;
+		Map<Object,List<BubbleData>> map=new HashMap<Object,List<BubbleData>>();
+		List<?> dataList=DataUtils.fetchData(cell, context, datasetName);
+		for(Object obj:dataList){
+			if(obj==null){
+				continue;
+			}
+			Object categoryValue=Utils.getProperty(obj, categoryProperty);
+			if(categoryValue==null){
+				continue;
+			}
+			Object xValue=Utils.getProperty(obj, xProperty);
+			Object yValue=Utils.getProperty(obj, yProperty);
+			Object rValue=Utils.getProperty(obj, rProperty);
+			if(xValue==null || yValue==null || rValue==null){
+				continue;
+			}
+			List<BubbleData> list=null; 
+			if(map.containsKey(categoryValue)){
+				list=map.get(categoryValue);
+			}else{
+				list=new ArrayList<BubbleData>();
+				map.put(categoryValue, list);
+			}
+			double x=Utils.toBigDecimal(xValue).doubleValue();
+			double y=Utils.toBigDecimal(yValue).doubleValue();
+			double r=Utils.toBigDecimal(rValue).doubleValue();
+			list.add(new BubbleData(x,y,r));
+		}
+		StringBuilder sb=new StringBuilder();
+		sb.append("[");
+		int index=0;
+		for(Object obj:map.keySet()){
+			if(index>0){
+				sb.append(",");
+			}
+			sb.append("{");
+			sb.append("label:\""+obj+"\",");
+			sb.append("data:[");
+			List<BubbleData> list=map.get(obj);
+			int i=0;
+			for(BubbleData data:list){
+				if(i>0){
+					sb.append(",");
+				}
+				i++;
+				sb.append("{");				
+				sb.append("x:"+data.getX()+",");				
+				sb.append("y:"+data.getY()+",");				
+				sb.append("r:"+data.getR());				
+				sb.append("}");				
+			}
+			sb.append("],");
+			sb.append("backgroundColor:\""+getRgbColor(index)+"\"");
+			sb.append("}");
+			index++;
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 	@Override
-	public DatasetType getDatasetType() {
-		return DatasetType.Bubble;
-	}
-	@Override
-	public String type() {
+	public String getType() {
 		return "bubble";
 	}
-	public BubbleData getData() {
-		return data;
+	public String getDatasetName() {
+		return datasetName;
 	}
-	public void setData(BubbleData data) {
-		this.data = data;
+	public void setDatasetName(String datasetName) {
+		this.datasetName = datasetName;
 	}
-	public String getLabel() {
-		return label;
+	
+	public String getCategoryProperty() {
+		return categoryProperty;
 	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setCategoryProperty(String categoryProperty) {
+		this.categoryProperty = categoryProperty;
 	}
-	public String getBackgroundColor() {
-		return backgroundColor;
+	
+	public String getxProperty() {
+		return xProperty;
 	}
-	public void setBackgroundColor(String backgroundColor) {
-		this.backgroundColor = backgroundColor;
+	public void setxProperty(String xProperty) {
+		this.xProperty = xProperty;
 	}
-	public String getBorderColor() {
-		return borderColor;
+	public String getyProperty() {
+		return yProperty;
 	}
-	public void setBorderColor(String borderColor) {
-		this.borderColor = borderColor;
+	public void setyProperty(String yProperty) {
+		this.yProperty = yProperty;
 	}
-	public int getBorderWidth() {
-		return borderWidth;
+	public String getrProperty() {
+		return rProperty;
 	}
-	public void setBorderWidth(int borderWidth) {
-		this.borderWidth = borderWidth;
-	}
-	public String getHoverBackgroundColor() {
-		return hoverBackgroundColor;
-	}
-	public void setHoverBackgroundColor(String hoverBackgroundColor) {
-		this.hoverBackgroundColor = hoverBackgroundColor;
-	}
-	public String getHoverBorderColor() {
-		return hoverBorderColor;
-	}
-	public void setHoverBorderColor(String hoverBorderColor) {
-		this.hoverBorderColor = hoverBorderColor;
-	}
-	public int getHoverBorderWidth() {
-		return hoverBorderWidth;
-	}
-	public void setHoverBorderWidth(int hoverBorderWidth) {
-		this.hoverBorderWidth = hoverBorderWidth;
-	}
-	public int getHoverRadius() {
-		return hoverRadius;
-	}
-	public void setHoverRadius(int hoverRadius) {
-		this.hoverRadius = hoverRadius;
+	public void setrProperty(String rProperty) {
+		this.rProperty = rProperty;
 	}
 }
