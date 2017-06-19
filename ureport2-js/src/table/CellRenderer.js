@@ -51,10 +51,11 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         if(text && text!==""){
             text=text.replace(new RegExp('\r\n','gm'),'<br>');
             text=text.replace(new RegExp('\n','gm'),'<br>');
+            text=text.replace(new RegExp(' ','gm'),'&nbsp;');
             $td.html(text);
         }
     }
-    $td.css({'word-break':'break-all','line-height':'normal','white-space':'nowrap'});
+    $td.css({'word-break':'break-all','line-height':'normal','white-space':'nowrap',padding:'0 1px'});
     if(cellDef.expand === 'Down'){
         let url=window._server+"/res/asserts/icons/expr-expand-down.svg";
         if(valueType==='dataset'){

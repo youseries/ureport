@@ -10,7 +10,7 @@ export default class SqlDatasetDialog{
         this.db=db;
         this.datasources=db.datasources;
         this.data=data;
-        this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 10000">
+        this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 10000;overflow: auto">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -91,6 +91,14 @@ export default class SqlDatasetDialog{
         footer.append(confirmButton);
         confirmButton.click(function(){
             const name=_this.nameEditor.val(),sql=_this.sqlEditor.val();
+            if(!name || name===""){
+                alert("数据集名称不能为空!");
+                return;
+            }
+            if(!sql || sql!==""){
+                alert("数据集SQL不能为空！");
+                return;
+            }
             let check=false;
             if(!_this.oldName || name!==_this.oldName){
                 check=true;

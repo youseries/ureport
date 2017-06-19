@@ -7,6 +7,7 @@ import {doInsertCol} from './operation/InsertColOperation.js';
 import {doDeleteRow} from './operation/DeleteRowOperation.js';
 import {doDeleteCol} from './operation/DeleteColOperation.js';
 import {renderRowHeader} from './HeaderUtils.js';
+import RowColWidthHeightDialog from '../dialog/RowColWidthHeightDialog.js';
 import Handsontable from 'handsontable';
 
 export const contextMenuConfigure={
@@ -87,6 +88,34 @@ export const contextMenuConfigure={
             }
             renderRowHeader(this,context);
             setDirty();
+        }else if(key==='row_height'){
+            const selected=this.getSelected();
+            const startRow=selected[0];
+            const rowHeight=this.getRowHeight(startRow);
+            const dialog=new RowColWidthHeightDialog();
+            dialog.show(function(newHeight){
+                const rowHeights=_this.getSettings().rowHeights;
+                rowHeights.splice(startRow,1,newHeight);
+                _this.updateSettings({
+                    rowHeights:rowHeights,
+                    manualRowResize:rowHeights
+                });
+            },rowHeight,false);
+            setDirty();
+        }else if(key==='col_width'){
+            const selected=this.getSelected();
+            const startCol=selected[1];
+            const colWidth=this.getColWidth(startCol);
+            const dialog=new RowColWidthHeightDialog();
+            dialog.show(function(newColWidth){
+                const colWidths=_this.getSettings().colWidths;
+                colWidths.splice(startCol,1,newColWidth);
+                _this.updateSettings({
+                    colWidths:colWidths,
+                    manualColumnResize:colWidths
+                });
+            },colWidth,true);
+            setDirty();
         }
     },
     items: {
@@ -108,6 +137,14 @@ export const contextMenuConfigure={
         },
         "del_col": {
             name: '<i class="ureport ureport-deletecolumn" style="color: #d30a16;font-size: 13px"></i>  删除列',
+            disabled:checkColDeleteOperationDisabled
+        },
+        "row_height": {
+            name: '<i class="ureport ureport-height" style="color: #d30a16;font-size: 13px;font-weight:bold"></i>  设置行高',
+            disabled:checkRowDeleteOperationDisabled
+        },
+        "col_width": {
+            name: '<i class="ureport ureport-width" style="color: #d30a16;font-size: 13px;font-weight:bold"></i>  设置列宽',
             disabled:checkColDeleteOperationDisabled
         },
         "repeat_row_header": {

@@ -1,4 +1,4 @@
-import {undoManager,setDirty} from '../Utils.js';
+import {undoManager,setDirty,buildNewCellDef} from '../Utils.js';
 import {alert} from '../MsgBox.js';
 
 /**
@@ -26,12 +26,13 @@ export default class MergeTool extends Tool{
             endCol=startCol;
             startCol=tmp;
         }
-        doMergeCells(startRow,startCol,endRow,endCol,table);
+        const _this=this;
+        doMergeCells(startRow,startCol,endRow,endCol,table,this.context);
         undoManager.add({
             redo:function(){
                 mergeCells=table.getSettings().mergeCells || [];
                 oldMergeCells=mergeCells.concat([]);
-                doMergeCells(startRow,startCol,endRow,endCol,table);
+                doMergeCells(startRow,startCol,endRow,endCol,table,_this.context);
                 setDirty();
             },
             undo:function(){
@@ -48,8 +49,9 @@ export default class MergeTool extends Tool{
         return `<i class="ureport ureport-merge" style="color: #0e90d2;"></i>`;
     }
 }
-function doMergeCells(startRow,startCol,endRow,endCol,table){
+function doMergeCells(startRow,startCol,endRow,endCol,table,context){
     let doMerge=true,doSplit=false;
+    const selectCell=context.getCell(startRow,startCol);
     const mergeCells=table.getSettings().mergeCells || [];
     for(let i=startRow;i<=endRow;i++){
         for(let j=startCol;j<=endCol;j++){
@@ -101,7 +103,17 @@ function doMergeCells(startRow,startCol,endRow,endCol,table){
         const newMergeItem={row:startRow,col:startCol,rowspan:rowSpan,colspan:colSpan};
         mergeCells.push(newMergeItem);
     }else{
-        if(!doSplit){
+        if(doSplit){
+            for(let i=startRow;i<=endRow;i++) {
+                for (let j = startCol; j <= endCol; j++) {
+                    let cellDef=context.getCell(i,j);
+                    if(!cellDef){
+                        cellDef=buildNewCellDef(i+1,j+1);
+                        context.addCell(cellDef);
+                    }
+                }
+            }
+        }else{
             alert("请选择多个单元格后再进行此操作！");
         }
     }

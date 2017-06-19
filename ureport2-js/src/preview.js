@@ -1,6 +1,7 @@
 /**
  * Created by Jacky.Gao on 2017-03-17.
  */
+import Chart from "chart.js";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {getParameter,pointToMM,showLoading,hideLoading} from './Utils.js';
 import {alert} from './MsgBox.js';
@@ -109,4 +110,9 @@ function buildPrintStyle(paper){
         }
     `;
     return style;
+};
+
+function _buildChart(canvasId,chartJson){
+    const ctx=document.getElementById(canvasId);
+    const chart=new Chart(ctx,chartJson);
 };

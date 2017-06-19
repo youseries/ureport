@@ -9,9 +9,9 @@ export default class ParameterTable{
         const addButton=$(`<button type="button" class="btn btn-info">添加参数</button>`);
         container.append(addButton);
         const _this=this;
-        const table=$(`<table class="table table-bordered">
+        const table=$(`<table class="table table-bordered" style="margin-bottom: 0">
             <thead>
-                <tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">参数名</td><td style="vertical-align: middle">数据类型</td><td style="vertical-align: middle">默认值</td><td style="vertical-align: middle">删除</td></tr>
+                <tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">参数名</td><td style="vertical-align: middle">数据类型</td><td style="vertical-align: middle">默认值</td><td style="vertical-align: middle;width: 80px;">操作</td></tr>
             </thead>
         </table>`);
         this.body=$(`<tbody></tbody>`);
@@ -23,18 +23,36 @@ export default class ParameterTable{
             _this.parameterDialog.show(function(name,type,defaultValue){
                 const obj={name,type,defaultValue};
                 _this.data.push(obj);
-                const newTr=$(`<tr style="height: 35px;"><td style="vertical-align: middle">${name}</td><td style="vertical-align: middle">${type}</td><td style="vertical-align: middle">${defaultValue}</td></tr>`);
-                const removeTd=$(`<td style="vertical-align: middle"></td>`);
-                const removeSpan=$(`<span><a href="###"><i class="glyphicon glyphicon-trash" style="font-size: 12pt;color: #d30a16;"></a></span>`);
-                removeTd.append(removeSpan);
-                newTr.append(removeTd);
+                const newTr=$(`<tr style="height: 35px;"></tr>`);
+                const nameTd=$(`<td style="vertical-align: middle">${name}</td>`);
+                const typeTd=$(`<td style="vertical-align: middle">${type}</td>`);
+                const defaultValueTd=$(`<td style="vertical-align: middle">${defaultValue}</td>`);
+                newTr.append(nameTd);
+                newTr.append(typeTd);
+                newTr.append(defaultValueTd);
+                const opTd=$(`<td style="vertical-align: middle"></td>`);
+                const removeSpan=$(`<span><a href="###"><i class="glyphicon glyphicon-trash" title="删除参数" style="font-size: 12pt;color: #d30a16;"></a></span>`);
+                opTd.append(removeSpan);
+                newTr.append(opTd);
                 _this.body.append(newTr);
                 removeSpan.click(function(){
                     let index=_this.data.indexOf(obj);
                     _this.data.splice(index,1);
                     newTr.remove();
                 });
-            })
+                const editSpan=$(`<span><a href="###"><i class="glyphicon glyphicon-edit" title="修改参数" style="font-size: 12pt;color: #005fd3;margin-left: 10px"></a></span>`);
+                opTd.append(editSpan);
+                editSpan.click(function(){
+                    _this.parameterDialog.show(function(name,type,defaultValue){
+                        obj.name=name;
+                        obj.type=type;
+                        obj.defaultValue=defaultValue;
+                        nameTd.html(name);
+                        typeTd.html(type);
+                        defaultValueTd.html(defaultValue);
+                    },obj);
+                });
+            },null)
         });
     }
     refreshData(){
@@ -45,17 +63,37 @@ export default class ParameterTable{
     _buildParameters(){
         const _this=this;
         for(let param of this.data){
-            const tr=$(`<tr><td>${param.name}</td><td>${param.type}</td><td>${param.defaultValue}</td></tr>`);
-            const deleteTd=$(`<td></td>`);
-            const deleteSpan=$(`<span><a href="###"><i class="glyphicon glyphicon-trash" style="font-size: 12pt;color: #d30a16;"></a></span>`);
-            deleteTd.append(deleteSpan);
-            tr.append(deleteTd);
+            const tr=$(`<tr style="height: 35px;"></tr>`);
+            const nameTd=$(`<td style="vertical-align: middle">${param.name}</td>`);
+            const typeTd=$(`<td style="vertical-align: middle">${param.type}</td>`);
+            const defaultValueTd=$(`<td style="vertical-align: middle">${param.defaultValue}</td>`);
+            tr.append(nameTd);
+            tr.append(typeTd);
+            tr.append(defaultValueTd);
+
+            const opTd=$(`<td style="vertical-align: middle"></td>`);
+            const deleteSpan=$(`<span><a href="###"><i class="glyphicon glyphicon-trash" title="删除参数" style="font-size: 12pt;color: #d30a16;"></a></span>`);
+            opTd.append(deleteSpan);
+            tr.append(opTd);
             deleteSpan.click(function(){
                 let index=_this.data.indexOf(param);
                 _this.data.splice(index,1);
                 tr.remove();
             });
             this.body.append(tr);
+
+            const editSpan=$(`<span><a href="###"><i class="glyphicon glyphicon-edit" title="修改参数" style="font-size: 12pt;color: #005fd3;margin-left: 10px"></a></span>`);
+            opTd.append(editSpan);
+            editSpan.click(function(){
+                _this.parameterDialog.show(function(name,type,defaultValue){
+                    param.name=name;
+                    param.type=type;
+                    param.defaultValue=defaultValue;
+                    nameTd.html(name);
+                    typeTd.html(type);
+                    defaultValueTd.html(defaultValue);
+                },param);
+            });
         }
     }
 }
