@@ -91,7 +91,6 @@ public class ExportPdfServletAction extends BaseServletAction{
 					throw new ReportDesignException("Report data has expired,can not do export pdf.");
 				}
 				report=reportBuilder.buildReport(reportDefinition, parameters);	
-				CacheUtils.storeReport(fullName, report);
 			}
 			pdfProducer.produce(report, outputStream);
 		}else{
@@ -118,14 +117,12 @@ public class ExportPdfServletAction extends BaseServletAction{
 					throw new ReportDesignException("Report data has expired,can not do export pdf.");
 				}
 				report=reportBuilder.buildReport(reportDefinition, parameters);	
-				CacheUtils.storeReport(fullName, report);
 			}
 		}else{
 			report=CacheUtils.getReport(fullName);
 			if(report==null){
 				ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 				report=reportRender.render(reportDefinition, parameters);
-				CacheUtils.storeReport(fullName, report);
 			}
 		}
 		String paper=req.getParameter("_paper");

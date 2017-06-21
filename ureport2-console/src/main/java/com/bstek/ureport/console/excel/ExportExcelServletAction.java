@@ -87,7 +87,6 @@ public class ExportExcelServletAction extends BaseServletAction {
 					throw new ReportDesignException("Report data has expired,can not do export excel.");
 				}
 				report=reportBuilder.buildReport(reportDefinition, parameters);	
-				CacheUtils.storeReport(fullName, report);
 			}
 			if(withPage){
 				excelProducer.produceWithPaging(report, outputStream);

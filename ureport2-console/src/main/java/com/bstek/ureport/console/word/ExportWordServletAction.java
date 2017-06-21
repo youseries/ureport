@@ -80,7 +80,6 @@ public class ExportWordServletAction extends BaseServletAction {
 					throw new ReportDesignException("Report data has expired,can not do export word.");
 				}
 				report=reportBuilder.buildReport(reportDefinition, parameters);	
-				CacheUtils.storeReport(fullName, report);
 			}
 			wordProducer.produce(report, outputStream);
 		}else{

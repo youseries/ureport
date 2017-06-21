@@ -58,7 +58,6 @@ public class ExportManagerImpl implements ExportManager {
 		Report report=CacheUtils.getReport(fullName);
 		if (report == null) {
 			report = reportRender.render(reportDefinition, parameters);
-			CacheUtils.storeReport(fullName, report);
 		}
 		SinglePageData pageData=PageBuilder.buildSinglePageData(pageIndex, report);
 		List<Page> pages=pageData.getPages();
@@ -84,7 +83,6 @@ public class ExportManagerImpl implements ExportManager {
 		if (report == null) {
 			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 			report = reportRender.render(reportDefinition, parameters);
-			CacheUtils.storeReport(fullName, report);
 		}
 		pdfProducer.produce(report, config.getOutputStream());
 	}
@@ -97,7 +95,6 @@ public class ExportManagerImpl implements ExportManager {
 		if (report == null) {
 			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 			report = reportRender.render(reportDefinition, parameters);
-			CacheUtils.storeReport(fullName, report);
 		}
 		wordProducer.produce(report, config.getOutputStream());
 	}
@@ -110,7 +107,6 @@ public class ExportManagerImpl implements ExportManager {
 		if (report == null) {
 			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 			report = reportRender.render(reportDefinition, parameters);
-			CacheUtils.storeReport(fullName, report);
 		}
 		excelProducer.produce(report, config.getOutputStream());
 	}
@@ -124,7 +120,6 @@ public class ExportManagerImpl implements ExportManager {
 		if (report == null) {
 			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 			report = reportRender.render(reportDefinition, parameters);
-			CacheUtils.storeReport(fullName, report);
 		}
 		excelProducer.produceWithPaging(report, config.getOutputStream());
 	}
@@ -138,7 +133,6 @@ public class ExportManagerImpl implements ExportManager {
 		if (report == null) {
 			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 			report = reportRender.render(reportDefinition, parameters);
-			CacheUtils.storeReport(fullName, report);
 		}
 		excelProducer.produceWithSheet(report, config.getOutputStream());
 	}
