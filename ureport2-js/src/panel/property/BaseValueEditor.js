@@ -5,6 +5,64 @@ import {setDirty} from '../../Utils.js';
 import PropertyConditionDialog from '../../dialog/PropertyConditionDialog.js';
 
 export default class BaseValueEditor{
+    _buildFillBlankRows(container){
+        this.fillGroup=$(`<div class="form-group" style="margin-bottom: 10px;height: 25px;"><label>补充空白行：</label></div>`);
+        this.enableFillRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__fill_blank_row_radio" value="default">打开</label>`);
+        this.fillGroup.append(this.enableFillRadio);
+        this.disableFillRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__fill_blank_row_radio" value="custom">关闭</label>`);
+        this.fillGroup.append(this.disableFillRadio);
+        if(container){
+            container.append(this.fillGroup);
+        }else{
+            this.container.append(this.fillGroup);
+        }
+        const _this=this;
+        this.enableFillRadio.children('input').click(function(){
+            _this._setFillBlankRows(true);
+            _this.multipleGroup.show();
+        });
+        this.disableFillRadio.children('input').click(function(){
+            _this._setFillBlankRows(false);
+            _this.multipleGroup.hide();
+        });
+        this.multipleGroup=$(`<span style="margin-left: 10px">数据行倍数：</span>`);
+        this.fillGroup.append(this.multipleGroup);
+        this.multipleEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 77px;height: 25px;padding: 3px;font-size: 12px">`);
+        this.multipleGroup.append(this.multipleEditor);
+        this.multipleEditor.change(function(){
+            const value=$(this).val();
+            for(let i=_this.rowIndex;i<=_this.row2Index;i++){
+                for(let j=_this.colIndex;j<=_this.col2Index;j++){
+                    const cellDef=_this.context.getCell(i,j);
+                    if(!cellDef){
+                        continue;
+                    }
+                    cellDef.multiple=value;
+                }
+            }
+            setDirty();
+        });
+    }
+
+    _setFillBlankRows(value){
+        if(this.initialized){
+            return;
+        }
+        for(let i=this.rowIndex;i<=this.row2Index;i++){
+            for(let j=this.colIndex;j<=this.col2Index;j++){
+                const cellDef=this.context.getCell(i,j);
+                if(!cellDef){
+                    continue;
+                }
+                cellDef.fillBlankRows=value;
+                if(!cellDef.multiple){
+                    cellDef.multiple=0;
+                }
+            }
+        }
+        setDirty();
+    }
+
     _buildWrapCompute(container){
         this.wrapGroup=$(`<div class="form-group" style="margin-bottom: 10px"><label>换行计算：</label></div>`);
         this.enableWrapComput=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__wrap_compute_radio" value="default" title="打开换行计算将耗费更多报表计算时间">打开</label>`);

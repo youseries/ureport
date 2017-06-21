@@ -109,6 +109,13 @@ export function tableToXml(context){
             if(cellDef.topParentCellName && cellDef.topParentCellName!==''){
                 cellXml+=` top-cell="${cellDef.topParentCellName}"`;
             }
+            if(cellDef.fillBlankRows){
+                cellXml+=` fill-blank-rows="${cellDef.fillBlankRows}"`;
+                if(cellDef.multiple){
+                    cellXml+=` multiple="${cellDef.multiple}"`;
+                }
+            }
+
             const span=getSpan(hot,i,j);
             let rowSpan=span.rowspan,colSpan=span.colspan;
             let startRow=i,endRow=i+rowSpan-1,startCol=j,endCol=j+colSpan-1;
@@ -246,7 +253,10 @@ export function tableToXml(context){
                     cellXml+=` link-target-window="${pc.linkTargetWindow}"`;
                 }
                 cellXml+=`>`;
-                cellXml+=``;
+                const paging=pc.paging;
+                if(paging){
+                    cellXml+=`<paging position="${paging.position}" line="${paging.line}"/>`;
+                }
                 if(pc.linkParameters && pc.linkParameters.length>0){
                     for(let param of pc.linkParameters){
                         cellXml+=`<link-parameter name="${param.name}">`;

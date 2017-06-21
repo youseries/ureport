@@ -163,6 +163,7 @@ export default class DatasetValueEditor extends BaseValueEditor{
 
         this._buildWrapCompute(dsContainer);
         this._buildFormat(dsContainer);
+        this._buildFillBlankRows(dsContainer);
         this._buildConditionProperty(dsContainer);
     }
 
@@ -489,6 +490,14 @@ export default class DatasetValueEditor extends BaseValueEditor{
             for(let dataset of datasets){
                 this.datasetSelect.append(`<option>${dataset.name}</option>`);
             }
+        }
+        if(cellDef.fillBlankRows){
+            this.enableFillRadio.trigger("click");
+            this.multipleEditor.val(cellDef.multiple);
+            this.multipleGroup.show();
+        }else{
+            this.disableFillRadio.trigger("click");
+            this.multipleGroup.hide();
         }
         const expand=cellDef.expand;
         if(expand==='None'){

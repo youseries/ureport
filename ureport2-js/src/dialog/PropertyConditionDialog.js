@@ -102,13 +102,13 @@ export default class PropertyConditionDialog{
                 setDirty();
             });
         });
-        this.itemSelect=$(`<select size="10" class="form-control" style="height: 475px;"></select>`);
+        this.itemSelect=$(`<select size="10" class="form-control" style="height: 500px;"></select>`);
         itemGroup.append(this.itemSelect);
-        const conditionGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;width: 325px;display: inline-block;height:550px;vertical-align: top;margin-left: 10px">
+        const conditionGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;width: 325px;display: inline-block;height:590px;vertical-align: top;margin-left: 10px">
         <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">条件配置</legend></fieldset>`);
         body.append(conditionGroup);
         this._initCondition(conditionGroup);
-        this.propGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;width: 455px;display: inline-block;height:550px;vertical-align: top;margin-left: 10px">
+        this.propGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;width: 455px;display: inline-block;height:590px;vertical-align: top;margin-left: 10px">
         <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">属性配置</legend></fieldset>`);
         body.append(this.propGroup);
         this._initProperty(this.propGroup);
@@ -152,7 +152,7 @@ export default class PropertyConditionDialog{
         group.append(conditionGroup);
         const addButton=$(`<button type="button" class="btn btn-default" title="添加条件"><i class="glyphicon glyphicon-plus-sign"></i></button>`);
         conditionGroup.append(addButton);
-        this.conditionList=$(`<select class="form-control" size="100" style="height: 475px;padding: 3px;"></select>`);
+        this.conditionList=$(`<select class="form-control" size="100" style="height: 500px;padding: 3px;"></select>`);
         addButton.click(function(){
             let fields=_this._buildFields();
             const option=_this.itemSelect.find('option:selected');
@@ -287,7 +287,7 @@ export default class PropertyConditionDialog{
         this.forceGroup=$(`<span></span>`);
         forceGroupContainer.append(this.forceGroup);
         this.forceColorEditor=$(`<div class="input-group colorpicker-component" style="width: 170px;height: 26px;display: inline-block;margin-left: 10px;vertical-align: bottom">
-            <input type="text" value="#00AABB" class="form-control" style="width: 120px;padding: 2px;height: 29px;"/>
+            <input type="text" value="#00AABB" class="form-control" style="width: 120px;padding: 2px;height: 29px;vertical-align: top"/>
             <span class="input-group-addon" style="width: 22px"><i></i></span>
         </div>`);
         this.forceColorEditor.colorpicker({
@@ -316,7 +316,7 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         const forceScopeGroup=$(`<span style="margin-left: 5px;">作用范围：</span>`);
-        this.forceScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.forceScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -350,7 +350,7 @@ export default class PropertyConditionDialog{
         bgcolorGroupContainer.append(this.bgcolorCheckbox);
         this.bgcolorGroup=$(`<span></span>`);
         this.bgColorEditor=$(`<div class="input-group colorpicker-component" style="width: 170px;height: 26px;display: inline-block;margin-left: 10px;vertical-align: bottom">
-            <input type="text" value="#00AABB" class="form-control" style="width: 120px;padding: 3px;height: 29px;"/>
+            <input type="text" value="#00AABB" class="form-control" style="width: 120px;padding: 3px;height: 29px;vertical-align: top"/>
             <span class="input-group-addon" style="width: 22px"><i></i></span>
         </div>`);
         this.bgColorEditor.colorpicker({
@@ -379,7 +379,7 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         const bgcolorScopeGroup=$(`<span style="margin-left: 5px;">作用范围：</span>`);
-        this.bgcolorScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.bgcolorScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -425,7 +425,7 @@ export default class PropertyConditionDialog{
         fonts.push("Comic Sans MS");
         fonts.push("Courier New");
         fonts.push("");
-        this.fontSelect=$(`<select class="form-control" style="height: 25px;display: inline-block;padding: 3px;width: inherit;"></select>`);
+        this.fontSelect=$(`<select class="form-control" style="height: 25px;display: inline-block;padding: 3px;width: inherit;vertical-align: top"></select>`);
         for(let font of fonts){
             this.fontSelect.append(`<option>${font}</option>`);
         }
@@ -451,7 +451,7 @@ export default class PropertyConditionDialog{
         });
         this.fontGroup.hide();
         const fontScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
-        this.fontScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.fontScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -469,7 +469,7 @@ export default class PropertyConditionDialog{
         this.fontSizeCheckbox=$(`<label><input type="checkbox">文字尺寸</label>`);
         fontSizeGroupContainer.append(this.fontSizeCheckbox);
         this.fontSizeGroup=$(`<span style="padding-left: 10px;;"></span>`);
-        this.fontSizeSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;"><option></option></select>`);
+        this.fontSizeSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top"><option></option></select>`);
         for(let i=1;i<=100;i++){
             this.fontSizeSelect.append(`<option>${i}</option>`);
         }
@@ -495,7 +495,7 @@ export default class PropertyConditionDialog{
         });
         this.fontSizeGroup.hide();
         const fontSizeScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
-        this.fontSizeScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.fontSizeScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -513,7 +513,7 @@ export default class PropertyConditionDialog{
         this.fontBoldCheckbox=$(`<label><input type="checkbox">文字加粗</label>`);
         fontBoldGroupContainer.append(this.fontBoldCheckbox);
         this.fontBoldGroup=$(`<span style="padding-left: 10px"></span>`);
-        this.fontBoldSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;">
+        this.fontBoldSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
             <option value="true">是</option>
             <option value="false">否</option>
@@ -540,7 +540,7 @@ export default class PropertyConditionDialog{
         });
         this.fontBoldGroup.hide();
         const fontBoldScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
-        this.fontBoldScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.fontBoldScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -558,7 +558,7 @@ export default class PropertyConditionDialog{
         this.fontItalicCheckbox=$(`<label><input type="checkbox">文字倾斜</label>`);
         fontItalicGroupContainer.append(this.fontItalicCheckbox);
         this.fontItalicGroup=$(`<span style="padding-left: 10px"></span>`);
-        this.fontItalicSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;">
+        this.fontItalicSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
             <option value="true">是</option>
             <option value="false">否</option>
@@ -585,7 +585,7 @@ export default class PropertyConditionDialog{
         });
         this.fontItalicGroup.hide();
         const fontItalicScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
-        this.fontItalicScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.fontItalicScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -603,7 +603,7 @@ export default class PropertyConditionDialog{
         this.fontUnderlineCheckbox=$(`<label><input type="checkbox">文字下划线</label>`);
         fontUnderlineGroupContainer.append(this.fontUnderlineCheckbox);
         this.fontUnderlineGroup=$(`<span style="padding-left: 10px"></span>`);
-        this.fontUnderlineSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;">
+        this.fontUnderlineSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
             <option value="true">是</option>
             <option value="false">否</option>
@@ -630,7 +630,7 @@ export default class PropertyConditionDialog{
         });
         this.fontUnderlineGroup.hide();
         const fontUnderlineScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
-        this.fontUnderlineScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.fontUnderlineScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -648,7 +648,7 @@ export default class PropertyConditionDialog{
         this.alignCheckbox=$(`<label><input type="checkbox">水平对齐</label>`);
         alignGroupContainer.append(this.alignCheckbox);
         this.alignGroup=$(`<span style="margin-left: 10px"></span>`);
-        this.alignSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;">
+        this.alignSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
             <option value="left">居左</option>
             <option value="center">居中</option>
@@ -676,7 +676,7 @@ export default class PropertyConditionDialog{
         });
         this.alignGroup.hide();
         const alignScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
-        this.alignScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.alignScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -694,7 +694,7 @@ export default class PropertyConditionDialog{
         this.valignCheckbox=$(`<label><input type="checkbox">竖直对齐</label>`);
         valignGroupContainer.append(this.valignCheckbox);
         this.valignGroup=$(`<span style="margin-left: 10px"></span>`);
-        this.valignSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;">
+        this.valignSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
             <option value="top">顶部对齐</option>
             <option value="middle">中部对齐</option>
@@ -722,7 +722,7 @@ export default class PropertyConditionDialog{
         });
         this.valignGroup.hide();
         const valignScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
-        this.valignScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block">
+        this.valignScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option value="cell">当前单元格</option>
             <option value="row">当前行</option>
             <option value="column">当前列</option>
@@ -892,7 +892,7 @@ export default class PropertyConditionDialog{
         this.colWidthEditor=$(`<input type="number" class="form-control" style="display: inline-block;height: 25px;padding: 3px;width: 88px;">`);
         this.colWidthGroup.append(this.colWidthEditor);
         this.colWidthEditor.change(function(){
-            _this.item.colWidth=$(this).val();
+            _this.item.position.line=$(this).val();
         });
         this.colWidthCheckbox.children('input').click(function(){
             const checked=$(this).prop('checked');
@@ -908,6 +908,42 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         this.colWidthGroup.hide();
+
+        const pagingBreakContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
+        container.append(pagingBreakContainer);
+        this.pagingBreakCheckbox=$(`<label><input type="checkbox">分页</label>`);
+        pagingBreakContainer.append(this.pagingBreakCheckbox);
+        this.pagingBreakGroup=$(`<span style="margin-left: 10px;"></span>`);
+        pagingBreakContainer.append(this.pagingBreakGroup);
+        this.pagingBreakSelect=$(`<select class="form-control" style="display: inline-block;height: 25px;padding: 1px;width: 90px;vertical-align: top">
+            <option value="before">当前行前</option>
+            <option value="after" selected>当前行后</option>
+        </select>`);
+        this.pagingBreakGroup.append(this.pagingBreakSelect);
+        this.pagingBreakSelect.change(function(){
+            _this.item.paging.position=$(this).val();
+        });
+        this.pagingLineEditor=$(`<input type="number" class="form-control" value="0" style="display: inline-block;height: 25px;padding: 3px;width: 60px;vertical-align: top;margin-left: 5px">`);
+        this.pagingBreakGroup.append(this.pagingLineEditor);
+        this.pagingLineEditor.hide();
+        this.pagingBreakGroup.append("<span style='margin-left: 5px'>分页</span>");
+        this.pagingLineEditor.change(function(){
+            _this.item.paging.line=$(this).val();
+        });
+        this.pagingBreakCheckbox.children('input').click(function(){
+            const checked=$(this).prop('checked');
+            if(checked){
+                _this.pagingBreakGroup.show();
+                _this.item.paging={position:"after",line:0};
+                _this.pagingLineEditor.val('0');
+            }else{
+                _this.pagingBreakGroup.hide();
+                _this.item.paging=null;
+                _this.pagingLineEditor.val('0');
+            }
+            setDirty();
+        });
+        this.pagingBreakGroup.hide();
 
         const linkGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(linkGroupContainer);
@@ -1015,6 +1051,17 @@ export default class PropertyConditionDialog{
             this.linkGroup.hide();
             this.linkCheckbox.children('input').prop('checked',false);
         }
+        const paging=item.paging;
+        if(paging){
+            this.pagingBreakGroup.show();
+            this.pagingBreakCheckbox.children('input').prop('checked',true);
+            this.pagingBreakSelect.val(paging.position);
+            this.pagingLineEditor.val(paging.line);
+        }else{
+            this.pagingBreakCheckbox.children('input').prop('checked',false);
+            this.pagingBreakGroup.hide();
+        }
+
         const cellStyle=item.cellStyle || {};
         const forecolor=cellStyle.forecolor;
         if(forecolor && forecolor!==''){

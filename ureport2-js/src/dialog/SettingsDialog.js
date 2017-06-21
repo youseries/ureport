@@ -235,6 +235,7 @@ export default class SettingsDialog{
         this.orientationSelect.change(function(){
             let value=$(this).val();
             _this.paper.orientation=value;
+            _this.context.printLine.refresh();
             setDirty();
         });
     }

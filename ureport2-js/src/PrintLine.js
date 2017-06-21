@@ -8,13 +8,18 @@ export default class PrintLine{
         context.printLine=this;
         this.context=context;
         const height=$(window).height()-90;
-        const hr=$(`<hr title="打印线" style="height: ${height}px;width:0px;border-left:dashed 1px #999999;position: absolute;left: 300pt;top: 35px;z-index: 10">`);
-        $(document.body).append(hr);
+        const rightHr=$(`<hr title="打印线" class="ureport-right-hr-for-print" style="height: ${height}px;width:0px;border-left:dashed 1px #999999;position: absolute;left: 300pt;top: 35px;z-index: 10">`);
+        $(document.body).append(rightHr);
         this.refresh();
     }
     refresh(){
         const paper=this.context.reportDef.paper;
-        let width=paper.width-paper.leftMargin-paper.rightMargin+38;
-        $('hr').css('left',width+"pt");
+        const orientation=paper.orientation;
+        let width=paper.width;
+        if(orientation==='landscape'){
+            width=paper.height;
+        }
+        width=width-paper.leftMargin-paper.rightMargin+38;
+        $('.ureport-right-hr-for-print').css('left',width+"pt");
     }
 };

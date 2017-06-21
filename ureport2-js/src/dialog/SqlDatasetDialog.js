@@ -95,7 +95,7 @@ export default class SqlDatasetDialog{
                 alert("数据集名称不能为空!");
                 return;
             }
-            if(!sql || sql!==""){
+            if(!sql || sql===""){
                 alert("数据集SQL不能为空！");
                 return;
             }
