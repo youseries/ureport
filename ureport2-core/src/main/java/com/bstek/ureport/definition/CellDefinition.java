@@ -44,6 +44,12 @@ public class CellDefinition {
 	private String linkTargetWindow;
 	private List<LinkParameter> linkParameters;
 	
+	private boolean fillBlankRows;
+	/**
+	 * 允许填充空白行时fillBlankRows=true，要求当前数据行数必须是multiple定义的行数的倍数，否则就补充空白行
+	 */
+	private int multiple;
+	
 	private Expand expand=Expand.None;
 	
 	@JsonIgnore
@@ -102,6 +108,8 @@ public class CellDefinition {
 		cell.setLinkTargetWindow(linkTargetWindow);
 		cell.setLinkUrl(linkUrl);
 		cell.setConditionPropertyItems(conditionPropertyItems);
+		cell.setFillBlankRows(fillBlankRows);
+		cell.setMultiple(multiple);
 		return cell;
 	}
 
@@ -197,6 +205,22 @@ public class CellDefinition {
 		return cellStyle;
 	}
 	
+	public boolean isFillBlankRows() {
+		return fillBlankRows;
+	}
+
+	public void setFillBlankRows(boolean fillBlankRows) {
+		this.fillBlankRows = fillBlankRows;
+	}
+
+	public int getMultiple() {
+		return multiple;
+	}
+
+	public void setMultiple(int multiple) {
+		this.multiple = multiple;
+	}
+
 	public Range getDuplicateRange() {
 		return duplicateRange;
 	}

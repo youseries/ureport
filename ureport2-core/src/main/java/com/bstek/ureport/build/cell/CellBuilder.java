@@ -26,5 +26,5 @@ import com.bstek.ureport.model.Cell;
  * @since 2016年11月1日
  */
 public interface CellBuilder {
-	void buildCell(List<BindData> dataList, Cell cell, Context context);
+	Cell buildCell(List<BindData> dataList, Cell cell, Context context);
 }

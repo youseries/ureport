@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.bstek.ureport.build.assertor;
 
+import java.util.List;
+
 
 /**
  * @author Jacky.gao
@@ -34,6 +36,13 @@ public class EqualsAssertor implements Assertor {
 			Number l=(Number)left;
 			Number r=(Number)right;
 			return l.doubleValue()==r.doubleValue();
+		}
+		if(right instanceof List){
+			List<?> rightList=(List<?>)right;
+			if(rightList.size()==1){
+				Object rightObj=rightList.get(0);
+				return left.equals(rightObj);
+			}
 		}
 		return left.equals(right);
 	}

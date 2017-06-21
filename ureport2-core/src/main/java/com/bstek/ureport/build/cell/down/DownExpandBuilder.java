@@ -34,7 +34,7 @@ import com.bstek.ureport.model.Row;
  */
 public class DownExpandBuilder extends ExpandBuilder {
 	@Override
-	public void buildCell(List<BindData> dataList, Cell cell, Context context) {
+	public Cell buildCell(List<BindData> dataList, Cell cell, Context context) {
 		Range duplicateRange=cell.getDuplicateRange();
 		int mainCellRowNumber=cell.getRow().getRowNumber();
 		Range rowRange = buildRowRange(mainCellRowNumber,duplicateRange);
@@ -44,7 +44,7 @@ public class DownExpandBuilder extends ExpandBuilder {
 		int rowSize=rowRange.getEnd()-rowRange.getStart()+1;
 		DownBlankCellApply downBlankCellApply=new DownBlankCellApply(rowSize,cell,context,downDuplocatorWrapper);
 		CellDownDuplicateUnit unit=new CellDownDuplicateUnit(context,downDuplocatorWrapper,cell,mainCellRowNumber,rowSize);
-		
+		Cell lastCell=cell;
 		int dataSize=dataList.size();
 		for (int i = 0; i < dataSize; i++) {
 			BindData bindData = dataList.get(i);
@@ -76,9 +76,11 @@ public class DownExpandBuilder extends ExpandBuilder {
 			if(topParentCell!=null){
 				topParentCell.addColumnChild(newCell);
 			}
-			unit.duplicate(newCell,i);					
+			unit.duplicate(newCell,i);
+			lastCell=newCell;
 		}
 		unit.complete();
+		return lastCell;
 	}
 	
 	private Range buildRowRange(int mainCellRowNumber,Range range){

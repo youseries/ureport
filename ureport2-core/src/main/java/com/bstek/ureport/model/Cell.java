@@ -41,9 +41,11 @@ import com.bstek.ureport.definition.BlankCellInfo;
 import com.bstek.ureport.definition.Border;
 import com.bstek.ureport.definition.CellStyle;
 import com.bstek.ureport.definition.ConditionCellStyle;
+import com.bstek.ureport.definition.ConditionPaging;
 import com.bstek.ureport.definition.ConditionPropertyItem;
 import com.bstek.ureport.definition.Expand;
 import com.bstek.ureport.definition.LinkParameter;
+import com.bstek.ureport.definition.PagingPosition;
 import com.bstek.ureport.definition.Scope;
 import com.bstek.ureport.definition.value.SimpleValue;
 import com.bstek.ureport.definition.value.Value;
@@ -94,6 +96,12 @@ public class Cell implements ReportCell {
 	private Map<String,String> linkParameterMap;
 	
 	private List<ConditionPropertyItem> conditionPropertyItems;
+	
+	private boolean fillBlankRows;
+	/**
+	 * 允许填充空白行时fillBlankRows=true，要求当前数据行数必须是multiple定义的行数的倍数，否则就补充空白行
+	 */
+	private int multiple;
 	
 	/**
 	 * 当前单元格左父格
@@ -180,6 +188,8 @@ public class Cell implements ReportCell {
 		cell.setLinkUrl(linkUrl);
 		cell.setPageRowSpan(pageRowSpan);
 		cell.setConditionPropertyItems(conditionPropertyItems);
+		cell.setFillBlankRows(fillBlankRows);
+		cell.setMultiple(multiple);
 		return cell;
 	}
 	
@@ -269,6 +279,28 @@ public class Cell implements ReportCell {
 			if(!condition.filter(this, this, obj, context)){
 				continue;
 			}
+			ConditionPaging paging=item.getPaging();
+			if(paging!=null){
+				PagingPosition position=paging.getPosition();
+				if(position!=null){
+					if(position.equals(PagingPosition.after)){						
+						int line=paging.getLine();
+						if(line==0){
+							row.setPageBreak(true);
+						}else{
+							int rowNumber=row.getRowNumber()+line;
+							Row targetRow=context.getRow(rowNumber);
+							targetRow.setPageBreak(true);
+						}
+						
+					}else{
+						int rowNumber=row.getRowNumber()-1;
+						Row targetRow=context.getRow(rowNumber);
+						targetRow.setPageBreak(true);
+					}
+				}
+			}
+			
 			int rowHeight=item.getRowHeight();
 			if(rowHeight>-1){
 				row.setRealHeight(rowHeight);
@@ -845,6 +877,22 @@ public class Cell implements ReportCell {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public boolean isFillBlankRows() {
+		return fillBlankRows;
+	}
+
+	public void setFillBlankRows(boolean fillBlankRows) {
+		this.fillBlankRows = fillBlankRows;
+	}
+
+	public int getMultiple() {
+		return multiple;
+	}
+
+	public void setMultiple(int multiple) {
+		this.multiple = multiple;
 	}
 
 	private String buildExpression(Context context, String name, Expression expr) {

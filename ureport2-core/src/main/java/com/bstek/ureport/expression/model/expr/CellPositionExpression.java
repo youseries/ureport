@@ -54,7 +54,7 @@ public class CellPositionExpression extends CellExpression {
 		int rowNumber=cell.getRow().getRowNumber(),colNumber=cell.getColumn().getColumnNumber();
 		for(int i=0;i<targetCells.size();i++){
 			Cell target=targetCells.get(i);
-			if(target.getRow()==cell.getRow() || target.getColumn()==cell.getColumn()){
+			if(target.getRow()==cell.getRow()){
 				index=i;
 				break;
 			}
@@ -66,6 +66,17 @@ public class CellPositionExpression extends CellExpression {
 					index=i;
 					break;
 				}
+			}
+		}
+		if(index>-1){
+			index++;
+			return new ObjectExpressionData(index);			
+		}
+		for(int i=0;i<targetCells.size();i++){
+			Cell target=targetCells.get(i);
+			if(target.getColumn()==cell.getColumn()){
+				index=i;
+				break;
 			}
 			int colSpan=target.getColSpan();
 			if(colSpan>0){

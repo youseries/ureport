@@ -47,6 +47,7 @@ public class Context {
 	private Map<String,Object> parameters;
 	private Map<String,List<Cell>> unprocessedCellsMap = new HashMap<String,List<Cell>>();
 	private Map<Row,Map<Column,Cell>> blankCellsMap=new HashMap<Row,Map<Column,Cell>>();
+	private Map<Row,Integer> fillBlankRowsMap=new HashMap<Row,Integer>(); 
 	
 	public Context(ReportBuilder reportBuilder,Report report,Map<String,Dataset> datasetMap,ApplicationContext applicationContext,Map<String,Object> parameters) {
 		this.reportBuilder=reportBuilder;
@@ -66,6 +67,14 @@ public class Context {
 		}
 		this.rootCell=new Cell();
 		this.rootCell.setName("ROOT");
+	}
+	
+	public void addFillBlankRow(Row row,int value){
+		fillBlankRowsMap.put(row, value);
+	}
+	
+	public Map<Row, Integer> getFillBlankRowsMap() {
+		return fillBlankRowsMap;
 	}
 	
 	public ReportBuilder getReportBuilder() {

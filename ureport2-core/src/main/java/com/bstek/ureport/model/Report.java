@@ -41,6 +41,9 @@ public class Report {
 	private List<Row> rows;
 	private List<Row> headerRepeatRows=new ArrayList<Row>();
 	private List<Row> footerRepeatRows=new ArrayList<Row>();
+	private List<Row> titleRows=new ArrayList<Row>();
+	private List<Row> summaryRows=new ArrayList<Row>();
+	private int repeatHeaderRowHeight=0,repeatFooterRowHeight=0,titleRowsHeight=0,summaryRowsHeight=0;
 	private List<Column> columns;
 	private List<Page> pages;
 	private String reportFullName;
@@ -53,11 +56,6 @@ public class Report {
 		Band band=row.getBand();
 		if(band==null){
 			return;
-		}
-		if(band.equals(Band.headerrepeat)){
-			headerRepeatRows.add(row);
-		}else if(band.equals(Band.footerrepeat)){
-			footerRepeatRows.add(row);
 		}
 	}
 	public void insertRows(int firstRowIndex,List<Row> insertRows){
@@ -117,7 +115,7 @@ public class Report {
 		return addLazyCell(cell);
 	}
 	
-	private  boolean addLazyCell(Cell cell){
+	public boolean addLazyCell(Cell cell){
 		List<ConditionPropertyItem> conditionPropertyItems=cell.getConditionPropertyItems();
 		if(conditionPropertyItems!=null && conditionPropertyItems.size()>0){
 			lazyComputeCells.add(cell);
@@ -197,6 +195,37 @@ public class Report {
 	}
 	public void setFooterRepeatRows(List<Row> footerRepeatRows) {
 		this.footerRepeatRows = footerRepeatRows;
+	}
+	public List<Row> getTitleRows() {
+		return titleRows;
+	}
+	public List<Row> getSummaryRows() {
+		return summaryRows;
+	}
+	
+	public int getRepeatHeaderRowHeight() {
+		return repeatHeaderRowHeight;
+	}
+	public void setRepeatHeaderRowHeight(int repeatHeaderRowHeight) {
+		this.repeatHeaderRowHeight = repeatHeaderRowHeight;
+	}
+	public int getRepeatFooterRowHeight() {
+		return repeatFooterRowHeight;
+	}
+	public void setRepeatFooterRowHeight(int repeatFooterRowHeight) {
+		this.repeatFooterRowHeight = repeatFooterRowHeight;
+	}
+	public int getTitleRowsHeight() {
+		return titleRowsHeight;
+	}
+	public void setTitleRowsHeight(int titleRowsHeight) {
+		this.titleRowsHeight = titleRowsHeight;
+	}
+	public int getSummaryRowsHeight() {
+		return summaryRowsHeight;
+	}
+	public void setSummaryRowsHeight(int summaryRowsHeight) {
+		this.summaryRowsHeight = summaryRowsHeight;
 	}
 	public HeaderFooterDefinition getHeader() {
 		return header;

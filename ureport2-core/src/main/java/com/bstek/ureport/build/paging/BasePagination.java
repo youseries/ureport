@@ -33,8 +33,16 @@ import com.bstek.ureport.model.Row;
  * @since 2017年1月17日
  */
 public abstract class BasePagination {
-	
-	protected Page buildPage(List<Row> rows,List<Row> headerRows,List<Row> footerRows,int pageIndex,Report report){
+	protected void buildSummaryRows(List<Row> summaryRows,List<Page> pages){
+		Page lastPage=pages.get(pages.size()-1);
+		List<Row> lastPageRows=lastPage.getRows();
+		int summaryRowSize=summaryRows.size()-1;
+		for(int i=summaryRowSize;i>-1;i--){
+			Row row=summaryRows.get(i);
+			lastPageRows.add(row);
+		}
+	}
+	protected Page buildPage(List<Row> rows,List<Row> headerRows,List<Row> footerRows,List<Row> titleRows,int pageIndex,Report report){
 		int rowSize=rows.size();
 		Row lastRow=rows.get(rowSize-1);
 		int lastRowNumber=lastRow.getRowNumber();
@@ -115,6 +123,24 @@ public abstract class BasePagination {
 					continue;
 				}
 				buildExistPageFunctionCell(context, cell);
+			}
+		}
+		if(pageIndex==1){
+			int titleRowSize=titleRows.size()-1;
+			for(int i=titleRowSize;i>-1;i--){
+				Row row=titleRows.get(i);
+				rows.add(0,row);
+				Map<Column,Cell> colMap=rowColCellsMap.get(row);
+				if(colMap==null){
+					continue;
+				}
+				for(Column col:columns){
+					Cell cell=colMap.get(col);
+					if(cell==null){
+						continue;
+					}
+					buildExistPageFunctionCell(context, cell);
+				}
 			}
 		}
 		for(Row row:footerRows){

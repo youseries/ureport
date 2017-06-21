@@ -144,6 +144,9 @@
 			</simpleType>
 		</attribute>
 		
+		<attribute name="fill-blank-rows" type="boolean" use="optional"></attribute>
+		<attribute name="multiple" type="int" use="optional"></attribute>
+		
 		<attribute name="link-url" type="string" use="optional"></attribute>
 		<attribute name="link-target-window" use="optional">
 			<simpleType>
@@ -161,6 +164,7 @@
 			<element name="link-parameter" type="tns:link-parameter" maxOccurs="unbounded" minOccurs="0"></element>
 			<element name="cell-style" type="tns:cell-style" maxOccurs="1" minOccurs="0"></element>
 			<element name="expr" type="tns:text" minOccurs="0" maxOccurs="1"></element>
+			<element name="paging" type="tns:condition-paging" maxOccurs="1" minOccurs="0"></element>
 		</sequence>
 		<attribute name="name" type="string" use="required"></attribute>
 		<attribute name="row-height" type="int" use="optional"></attribute>
@@ -180,6 +184,18 @@
 				<restriction base="string">
 					<enumeration value="normal"></enumeration>
 					<enumeration value="expr"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="condition-paging">
+		<attribute name="line" type="int"></attribute>
+		<attribute name="position">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="beofore"></enumeration>
+					<enumeration value="after"></enumeration>
 				</restriction>
 			</simpleType>
 		</attribute>

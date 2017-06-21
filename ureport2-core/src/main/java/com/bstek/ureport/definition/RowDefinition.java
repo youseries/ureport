@@ -31,6 +31,7 @@ public class RowDefinition implements Comparable<RowDefinition>{
 		Row row=new Row(rows);
 		row.setHeight(height);
 		row.setBand(band);
+		row.setRowKey("r"+rowNumber);
 		return row;
 	}
 	

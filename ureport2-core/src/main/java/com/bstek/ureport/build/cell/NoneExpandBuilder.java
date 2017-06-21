@@ -29,7 +29,7 @@ import com.bstek.ureport.model.Cell;
 public class NoneExpandBuilder implements CellBuilder {
 
 	@Override
-	public void buildCell(List<BindData> dataList, Cell cell, Context context) {
+	public Cell buildCell(List<BindData> dataList, Cell cell, Context context) {
 		Object obj=null;
 		List<Object> bindData=null;
 		for(BindData data:dataList){
@@ -49,5 +49,6 @@ public class NoneExpandBuilder implements CellBuilder {
 			cell.doFormat();
 			cell.doDataWrapCompute(context);
 		}
+		return cell;
 	}
 }

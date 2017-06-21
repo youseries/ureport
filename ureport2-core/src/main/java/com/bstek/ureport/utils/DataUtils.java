@@ -69,7 +69,7 @@ public class DataUtils {
 			}else{
 				list=leftList;
 				data=topCell.getData();
-				Value value=leftCell.getValue();
+				Value value=topCell.getValue();
 				DatasetExpression de=fetchDatasetExpression(value);
 				if(de==null){
 					throw new ReportComputeException("Unsupport value : "+value);
@@ -79,7 +79,11 @@ public class DataUtils {
 			List<Object> result=new ArrayList<Object>();
 			for(Object obj:list){
 				Object o=Utils.getProperty(obj, prop);
-				if(o==data){
+				if((o==null && data==null)){
+					result.add(obj);
+				}else if(o!=null && o.equals(data)){
+					result.add(obj);
+				}else if(data!=null && data.equals(o)){
 					result.add(obj);
 				}
 			}

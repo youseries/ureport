@@ -46,6 +46,8 @@ public class ConditionPropertyItem {
 	
 	private ConditionCellStyle cellStyle;
 	
+	private ConditionPaging paging;
+	
 	@JsonIgnore
 	private Expression expression;
 	
@@ -145,5 +147,13 @@ public class ConditionPropertyItem {
 
 	public void setColWidth(int colWidth) {
 		this.colWidth = colWidth;
+	}
+
+	public ConditionPaging getPaging() {
+		return paging;
+	}
+
+	public void setPaging(ConditionPaging paging) {
+		this.paging = paging;
 	}
 }

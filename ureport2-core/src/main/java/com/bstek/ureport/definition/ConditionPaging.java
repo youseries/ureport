@@ -13,43 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.build.paging;
-
-import java.util.List;
-
-import com.bstek.ureport.model.Column;
-import com.bstek.ureport.model.Row;
+package com.bstek.ureport.definition;
 
 /**
  * @author Jacky.gao
- * @since 2017年1月17日
+ * @since 2017年6月19日
  */
-public class Page {
-	private List<Row> rows;
-	private List<Column> columns;
-	private HeaderFooter header;
-	private HeaderFooter footer;
+public class ConditionPaging {
+	private PagingPosition position;
+	/**
+	 * 当position为after时，line用来指定当前行后多少行进行分页 
+	 */
+	private int line;
 	
-	public Page(List<Row> rows,List<Column> columns) {
-		this.rows = rows;
-		this.columns=columns;
+	public PagingPosition getPosition() {
+		return position;
 	}
-	public List<Row> getRows() {
-		return rows;
+	public void setPosition(PagingPosition position) {
+		this.position = position;
 	}
-	public List<Column> getColumns() {
-		return columns;
+	public int getLine() {
+		return line;
 	}
-	public HeaderFooter getHeader() {
-		return header;
-	}
-	public void setHeader(HeaderFooter header) {
-		this.header = header;
-	}
-	public HeaderFooter getFooter() {
-		return footer;
-	}
-	public void setFooter(HeaderFooter footer) {
-		this.footer = footer;
+	public void setLine(int line) {
+		this.line = line;
 	}
 }

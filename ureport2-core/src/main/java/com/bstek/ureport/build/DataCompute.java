@@ -60,7 +60,8 @@ public class DataCompute {
 		Value value = cell.getValue();
 		ValueCompute valueCompute=valueComputesMap.get(value.getType().name());
 		if(valueCompute!=null){
-			return valueCompute.compute(cell, context);
+			List<BindData> list= valueCompute.compute(cell, context);
+			return list;
 		}
 		throw new ReportException("Unsupport value: "+value);
 	}

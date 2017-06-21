@@ -70,12 +70,30 @@ export const contextMenuConfigure={
             }
             renderRowHeader(this,context);
             setDirty();
+        }else if(key==='title_row'){
+            const selected=this.getSelected();
+            const startRow=selected[0],endRow=selected[2];
+            const context=this.context;
+            for(let rowNumber=startRow;rowNumber<=endRow;rowNumber++){
+                context.addRowHeader(rowNumber,'title');
+            }
+            renderRowHeader(this,context);
+            setDirty();
         }else if(key==='repeat_row_footer'){
             const selected=this.getSelected();
             const startRow=selected[0],endRow=selected[2];
             const context=this.context;
             for(let rowNumber=startRow;rowNumber<=endRow;rowNumber++){
                 context.addRowHeader(rowNumber,'footerrepeat');
+            }
+            renderRowHeader(this,context);
+            setDirty();
+        }else if(key==='summary_row'){
+            const selected=this.getSelected();
+            const startRow=selected[0],endRow=selected[2];
+            const context=this.context;
+            for(let rowNumber=startRow;rowNumber<=endRow;rowNumber++){
+                context.addRowHeader(rowNumber,'summary');
             }
             renderRowHeader(this,context);
             setDirty();
@@ -147,6 +165,10 @@ export const contextMenuConfigure={
             name: '<i class="ureport ureport-width" style="color: #d30a16;font-size: 13px;font-weight:bold"></i>  设置列宽',
             disabled:checkColDeleteOperationDisabled
         },
+        "title_row": {
+            name: '<i class="ureport ureport-title" style="color: #9C27B0;font-size: 13px"></i>  标题行',
+            disabled:checkRowDeleteOperationDisabled
+        },
         "repeat_row_header": {
             name: '<i class="ureport ureport-header-repeat" style="color: #9C27B0;font-size: 13px"></i>  重复表头',
             disabled:checkRowDeleteOperationDisabled
@@ -155,8 +177,12 @@ export const contextMenuConfigure={
             name: '<i class="ureport ureport-footer-repeat" style="color: #9C27B0;font-size: 13px"></i>  重复表尾',
             disabled:checkRowDeleteOperationDisabled
         },
+        "summary_row": {
+            name: '<i class="ureport ureport-summary" style="color: #9C27B0;font-size: 13px"></i>  总结行',
+            disabled:checkRowDeleteOperationDisabled
+        },
         "repeat_cancel": {
-            name: '<i class="glyphicon glyphicon-remove-circle" style="color: #d30e00;font-size: 13px"></i>  取消重复',
+            name: '<i class="glyphicon glyphicon-remove-circle" style="color: #d30e00;font-size: 13px"></i>  取消行类型',
             disabled:checkRowDeleteOperationDisabled
         },
         "clean_content": {

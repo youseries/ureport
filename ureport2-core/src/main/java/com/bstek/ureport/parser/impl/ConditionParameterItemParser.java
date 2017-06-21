@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.ConditionCellStyle;
+import com.bstek.ureport.definition.ConditionPaging;
 import com.bstek.ureport.definition.ConditionPropertyItem;
 import com.bstek.ureport.definition.LinkParameter;
 import com.bstek.ureport.expression.ExpressionUtils;
@@ -45,6 +46,7 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 	public ConditionParameterItemParser() {
 		parsers.put("cell-style",new CellStyleParser());
 		parsers.put("link-parameter",new LinkParameterParser());
+		parsers.put("paging",new ConditionPagingParser());
 	}
 	@Override
 	public ConditionPropertyItem parse(Element element) {
@@ -93,6 +95,8 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 					parameters=new ArrayList<LinkParameter>();
 				}
 				parameters.add((LinkParameter)data);
+			}else if(data instanceof ConditionPaging){
+				item.setPaging((ConditionPaging)data);
 			}
 		}
 		item.setCondition(topCondition);

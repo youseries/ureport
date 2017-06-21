@@ -20,5 +20,5 @@ package com.bstek.ureport.definition;
  * @since 2017年1月16日
  */
 public enum Band {
-	headerrepeat,footerrepeat
+	headerrepeat,footerrepeat,title,summary
 }

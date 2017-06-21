@@ -57,11 +57,32 @@ public class ReportDefinition {
 		report.setRows(reportRows);
 		report.setColumns(reportColumns);
 		Map<Integer,Row> rowMap=new HashMap<Integer,Row>();
+		int headerRowsHeight=0,footerRowsHeight=0,titleRowsHeight=0,summaryRowsHeight=0;
 		for (RowDefinition rowDef : rows) {
 			Row newRow=rowDef.newRow(reportRows);
 			report.insertRow(newRow, rowDef.getRowNumber());
 			rowMap.put(rowDef.getRowNumber(), newRow);
+			Band band=rowDef.getBand();
+			if(band!=null){
+				if(band.equals(Band.headerrepeat)){
+					report.getHeaderRepeatRows().add(newRow);
+					headerRowsHeight+=newRow.getRealHeight();
+				}else if(band.equals(Band.footerrepeat)){
+					report.getFooterRepeatRows().add(newRow);
+					footerRowsHeight+=newRow.getRealHeight();
+				}else if(band.equals(Band.title)){
+					report.getTitleRows().add(newRow);
+					titleRowsHeight+=newRow.getRealHeight();
+				}else if(band.equals(Band.summary)){
+					report.getSummaryRows().add(newRow);
+					summaryRowsHeight+=newRow.getRealHeight();
+				}
+			}
 		}
+		report.setRepeatHeaderRowHeight(headerRowsHeight);
+		report.setRepeatFooterRowHeight(footerRowsHeight);
+		report.setTitleRowsHeight(titleRowsHeight);
+		report.setSummaryRowsHeight(summaryRowsHeight);
 		Map<Integer,Column> columnMap=new HashMap<Integer,Column>();
 		for (ColumnDefinition columnDef : columns) {
 			Column newColumn=columnDef.newColumn(reportColumns);

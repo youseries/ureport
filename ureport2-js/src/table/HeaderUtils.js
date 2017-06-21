@@ -14,6 +14,10 @@ export function renderRowHeader(hot,context){
                     type=`<span style='color:blue;font-size: 10px' title='分页时每页头部重复显示'>HR</span>`;
                 }else if(header.band==='footerrepeat'){
                     type=`<span style='color:#d30a16;font-size: 10px' title='分页时每页尾部重复显示'>FR</span>`;
+                }else if(header.band==='title'){
+                    type=`<span style='color:#d30a16;font-size: 10px' title='分页时每页尾部重复显示'>T</span>`;
+                }else if(header.band==='summary'){
+                    type=`<span style='color:#d30a16;font-size: 10px' title='分页时每页尾部重复显示'>S</span>`;
                 }
                 break;
             }

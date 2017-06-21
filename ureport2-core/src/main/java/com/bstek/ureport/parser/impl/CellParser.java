@@ -76,6 +76,14 @@ public class CellParser implements Parser<CellDefinition>{
 		if(StringUtils.isNotBlank(expand)){
 			cell.setExpand(Expand.valueOf(expand));			
 		}
+		String fillBlankRows=element.attributeValue("fill-blank-rows");
+		if(StringUtils.isNotBlank(fillBlankRows)){
+			cell.setFillBlankRows(Boolean.valueOf(fillBlankRows));
+			String multiple=element.attributeValue("multiple");
+			if(StringUtils.isNotBlank(multiple)){
+				cell.setMultiple(Integer.valueOf(multiple));
+			}
+		}
 		cell.setLinkTargetWindow(element.attributeValue("link-target-window"));
 		cell.setLinkUrl(element.attributeValue("link-url"));
 		List<LinkParameter> linkParameters=null;

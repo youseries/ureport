@@ -27,13 +27,15 @@ import com.bstek.ureport.definition.Band;
 public class Row extends Line{
 	private int height;
 	private int realHeight=-1;
-	
+	private String rowKey;
 	/**
 	 * 一个用来临时存放当前行号的属性，只在构建报表时创建新行时使用
 	 */
 	private int tempRowNumber;
 	private Band band;
 	private boolean forPaging;
+	private boolean pageBreak;
+	
 	private List<Row> rows;
 	
 	public Row(List<Row> rows) {
@@ -44,9 +46,19 @@ public class Row extends Line{
 		Row row=new Row(rows);
 		row.setHeight(height);
 		row.setRealHeight(realHeight);
+		row.setBand(band);
+		row.setRowKey(rowKey);
 		return row;
 	}
-	
+
+	public String getRowKey() {
+		return rowKey;
+	}
+
+	public void setRowKey(String rowKey) {
+		this.rowKey = rowKey;
+	}
+
 	public int getRowNumber() {
 		return rows.indexOf(this)+1;
 	}
@@ -69,6 +81,14 @@ public class Row extends Line{
 
 	public void setForPaging(boolean forPaging) {
 		this.forPaging = forPaging;
+	}
+
+	public boolean isPageBreak() {
+		return pageBreak;
+	}
+
+	public void setPageBreak(boolean pageBreak) {
+		this.pageBreak = pageBreak;
 	}
 
 	public int getTempRowNumber() {
