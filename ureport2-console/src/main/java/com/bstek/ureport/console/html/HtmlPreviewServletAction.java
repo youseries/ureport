@@ -17,6 +17,7 @@ package com.bstek.ureport.console.html;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,8 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				context.put("pageIndex", htmlReport.getPageIndex()); 
 				context.put("error", false);
 				context.put("file", req.getParameter("_u"));
+				String customParameters=buildCustomParameters(req);
+				context.put("customParameters", customParameters);
 				Tools tools=null;
 				String toolsInfo=req.getParameter("_t");
 				if(StringUtils.isNotBlank(toolsInfo)){
@@ -108,7 +111,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			writer.close();
 		}
 	}
-	
+
 	public void loadPrintPages(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("_u");
 		if(StringUtils.isBlank(file)){
@@ -223,6 +226,30 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}
 		}
 		return htmlReport;
+	}
+	
+	
+	private String buildCustomParameters(HttpServletRequest req){
+		StringBuilder sb=new StringBuilder();
+		Enumeration<?> enumeration=req.getParameterNames();
+		while(enumeration.hasMoreElements()){
+			Object obj=enumeration.nextElement();
+			if(obj==null){
+				continue;
+			}
+			String name=obj.toString();
+			String value=req.getParameter(name);
+			if(name==null || value==null || name.startsWith("_")){
+				continue;
+			}
+			if(sb.length()>0){
+				sb.append("&");
+			}
+			sb.append(name);
+			sb.append("=");
+			sb.append(value);
+		}
+		return sb.toString();
 	}
 
 	public void setExportManager(ExportManager exportManager) {

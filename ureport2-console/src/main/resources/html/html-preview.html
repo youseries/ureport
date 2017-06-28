@@ -6,50 +6,50 @@
 <style type="text/css" id="_ureport_table_style">
 	${style}
 </style>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/asserts/venderjs/jquery.min.js"></script>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/asserts/venderjs/bootstrap.min.js"></script>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/asserts/js/preview.bundle.js"></script>
+ 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/jquery.min.js"></script>
+ 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/bootstrap.min.js"></script>
+ 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/js/preview.bundle.js"></script>
 </head>
 <body style="margin:5px">
 <div style="border:solid 1px #ddd;border-radius:5px;height:35px;width:100%;margin-bottom:5px;background:#f8f8f8">
 	#if($tools.print)
 	<button type="button" class="btn btn-default ureport-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="在线打印">
-		<img src='${contextPath}/ureport/res/asserts/icons/print.svg' width="20px">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/print.svg' width="20px">
 	</button>
 	#end
 	#if($tools.pdfPrint)
 	<button type="button" class="btn btn-default ureport-pdf-direct-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线打印">
-		<img src='${contextPath}/ureport/res/asserts/icons/pdf-direct-print.svg' width="20px">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf-direct-print.svg' width="20px">
 	</button>
 	#end
 	#if($tools.pdfPreviewPrint)
 	<button type="button" class="btn btn-default ureport-pdf-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线预览打印">
-		<img src='${contextPath}/ureport/res/asserts/icons/pdf-print.svg' width="20px">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf-print.svg' width="20px">
 	</button>
 	#end
 	#if($tools.pdf)
 	<button type="button" class="btn btn-default ureport-export-pdf" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出PDF">
-		<img src='${contextPath}/ureport/res/asserts/icons/pdf.svg' width="20px">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf.svg' width="20px">
 	</button>
 	#end
 	#if($tools.word)
 	<button type="button" class="btn btn-default ureport-export-word" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出WORD">
-		<img src='${contextPath}/ureport/res/asserts/icons/word.svg' width="20px">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/word.svg' width="20px">
 	</button>
 	#end
 	#if($tools.excel)
 	<button type="button" class="btn btn-default ureport-export-excel" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出EXCEL">
-		<img src='${contextPath}/ureport/res/asserts/icons/excel.svg' width="20px">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel.svg' width="20px">
 	</button>
 	#end
 	#if($tools.pagingExcel)
 	<button type="button" class="btn btn-default ureport-export-excel-paging" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页导出EXCEL">
-		<img src='${contextPath}/ureport/res/asserts/icons/excel-paging.svg' width="20px">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-paging.svg' width="20px">
 	</button>
 	#end
 	#if($tools.sheetPagingExcel)
 	<button type="button" class="btn btn-default ureport-export-excel-paging-sheet" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页分Sheet导出EXCEL">
-		<img src='${contextPath}/ureport/res/asserts/icons/excel-with-paging-sheet.svg' width="20px">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-with-paging-sheet.svg' width="20px">
 	</button>
 	#end
 	#if($tools.paging)
@@ -64,14 +64,14 @@
 		</button>
 		<ul class="dropdown-menu" role="menu">
 			#if($hasTools)
-			<li><a href="${contextPath}/ureport/preview?_u=${file}&_t=${_t}" style="color:#337ab7">预览</a></li>
+			<li><a href="${contextPath}/ureport/preview?_u=${file}&_t=${_t}&${customParameters}" style="color:#337ab7">预览</a></li>
 			#else
-			<li><a href="${contextPath}/ureport/preview?_u=${file}" style="color:#337ab7">预览</a></li>
+			<li><a href="${contextPath}/ureport/preview?_u=${file}&${customParameters}" style="color:#337ab7">预览</a></li>
 			#end
 			#if($hasTools)
-			<li><a href="${contextPath}/ureport/preview?_u=${file}&_i=1&_t=${_t}" style="color:#337ab7">分页预览</a></li>
+			<li><a href="${contextPath}/ureport/preview?_u=${file}&_i=1&_t=${_t}&${customParameters}" style="color:#337ab7">分页预览</a></li>
 			#else
-			<li><a href="${contextPath}/ureport/preview?_u=${file}&_i=1" style="color:#337ab7">分页预览</a></li>
+			<li><a href="${contextPath}/ureport/preview?_u=${file}&_i=1&${customParameters}" style="color:#337ab7">分页预览</a></li>
 			#end
 		</ul>
 	</div>
@@ -97,9 +97,9 @@
 	$(document).ready(function(){
 		$('#pageSelector').change(function(){
 			#if($hasTools)
-				window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val()+'&_t=${_t}','_self');
+				window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val()+'&_t=${_t}&${customParameters}','_self');
 			#else
-				window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val(),'_self');
+				window.open('${contextPath}/ureport/preview?_u=${file}&_i='+$(this).val()+'&${customParameters}','_self');
 			#end
 		});
 		$('#pageSelector').val('${pageIndex}');
