@@ -110,7 +110,7 @@ public class LeftParentCellCreator {
 			}
 		}
 		int rowStart=mainCell.getRowNumber(),rowEnd=BuildUtils.buildRowNumberEnd(mainCell, rowStart);
-		if((start>=rowStart && start<=rowEnd) || (end>=rowStart && end<=rowEnd)){
+		if((start>=rowStart && start<=rowEnd) || (end>=rowStart && end<=rowEnd) || (start<=rowStart && end>=rowEnd)){
 			return false;
 		}
 		return true;

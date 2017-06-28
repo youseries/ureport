@@ -195,6 +195,8 @@ public abstract class BasePagination {
 			BindData bindData=dataList.get(0);
 			cell.setData(bindData.getValue());
 			cell.setBindData(bindData.getDataList());
+			cell.doFormat();
+			cell.doDataWrapCompute(context);
 		}
 	}
 	

@@ -260,7 +260,8 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				height=paper.getWidth()-paper.getBottomMargin()-paper.getTopMargin();
 			}
 			int repeatHeaderRowHeight=report.getRepeatHeaderRowHeight(),repeatFooterRowHeight=report.getRepeatFooterRowHeight();
-			int rowHeight=repeatHeaderRowHeight+repeatFooterRowHeight;
+			int titleRowHeight=report.getTitleRowsHeight();
+			int rowHeight=titleRowHeight+repeatHeaderRowHeight+repeatFooterRowHeight;
 			for(int i=0;i<rowSize;i++){
 				Row row=rows.get(i);
 				int rowRealHeight=row.getRealHeight();

@@ -21,4 +21,5 @@ package com.bstek.ureport.chart.option;
  */
 public interface Option {
 	String buildOptionJson();
+	String getType();
 }

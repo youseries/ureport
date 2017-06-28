@@ -38,6 +38,10 @@ public class LegendOption implements Option {
 		}
 		return sb.toString();
 	}
+	@Override
+	public String getType() {
+		return "legend";
+	}
 	public boolean isDisplay() {
 		return display;
 	}

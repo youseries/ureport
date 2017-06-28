@@ -46,6 +46,11 @@ public class TooltipOption implements Option {
 		return sb.toString();
 	}
 
+	@Override
+	public String getType() {
+		return "tooltips";
+	}
+	
 	public boolean isEnabled() {
 		return enabled;
 	}

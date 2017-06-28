@@ -32,6 +32,10 @@ public class LayoutOption implements Option {
 		sb.append("}");
 		return sb.toString();
 	}
+	@Override
+	public String getType() {
+		return "layout";
+	}
 	public Padding getPadding() {
 		return padding;
 	}

@@ -111,7 +111,7 @@ public class TopParentCellCreator {
 			}
 		}
 		int colStart=mainCell.getColumnNumber(),colEnd=BuildUtils.buildColNumberEnd(mainCell, colStart);
-		if((start>=colStart && start<=colEnd) || (end>=colStart && end<=colEnd)){
+		if((start>=colStart && start<=colEnd) || (end>=colStart && end<=colEnd) || (start<=colStart && end>=colEnd)){
 			return false;
 		}
 		return true;

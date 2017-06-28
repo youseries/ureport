@@ -123,6 +123,7 @@
 			<element name="zxing-value" type="tns:zxing-value" minOccurs="0" maxOccurs="1"></element>
 			<element name="expression-value" type="tns:expression-value" minOccurs="0" maxOccurs="1"></element>
 			<element name="dataset-value" type="tns:dataset-value" minOccurs="0" maxOccurs="1"></element>
+			<element name="chart-value" type="tns:chart-value" minOccurs="0" maxOccurs="1"></element>
 			<element name="cell-style" type="tns:cell-style" minOccurs="0" maxOccurs="1"></element>
 			<element name="condition-property-item" type="tns:condition-property-item" maxOccurs="1" minOccurs="0"></element>
 			<element name="link-parameter" type="tns:link-parameter" maxOccurs="unbounded" minOccurs="0"></element>

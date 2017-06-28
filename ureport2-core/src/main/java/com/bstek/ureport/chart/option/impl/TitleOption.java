@@ -46,6 +46,10 @@ public class TitleOption implements Option {
 		sb.append("}");
 		return sb.toString();
 	}
+	@Override
+	public String getType() {
+		return "title";
+	}
 	public boolean isDisplay() {
 		return display;
 	}

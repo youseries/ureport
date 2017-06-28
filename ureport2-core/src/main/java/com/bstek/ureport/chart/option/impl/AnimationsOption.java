@@ -34,6 +34,10 @@ public class AnimationsOption implements Option {
 		sb.append("}");
 		return sb.toString();
 	}
+	@Override
+	public String getType() {
+		return "animation";
+	}
 	public int getDuration() {
 		return duration;
 	}

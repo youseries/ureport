@@ -21,7 +21,6 @@ import java.util.List;
 import com.bstek.ureport.definition.Band;
 import com.bstek.ureport.definition.Orientation;
 import com.bstek.ureport.definition.Paper;
-import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.model.Report;
 import com.bstek.ureport.model.Row;
 
@@ -43,7 +42,8 @@ public class FitPagePagination extends BasePagination implements Pagination {
 		List<Row> titleRows=report.getTitleRows();
 		List<Row> summaryRows=report.getSummaryRows();
 		int repeatHeaderRowHeight=report.getRepeatHeaderRowHeight(),repeatFooterRowHeight=report.getRepeatFooterRowHeight();
-		int rowHeight=repeatHeaderRowHeight+repeatFooterRowHeight;
+		int titleRowHeight=report.getTitleRowsHeight();
+		int rowHeight=titleRowHeight+repeatHeaderRowHeight+repeatFooterRowHeight;
 		List<Page> pages=new ArrayList<Page>();
 		List<Row> pageRows=new ArrayList<Row>();
 		List<Row> pageRepeatHeaders=new ArrayList<Row>();
@@ -80,9 +80,6 @@ public class FitPagePagination extends BasePagination implements Pagination {
 					}
 					pageRepeatFooters.remove(index);
 					pageRepeatFooters.add(index,row);
-				}
-				if(index==-1){
-					throw new ReportComputeException("Invalid row["+band+"] with key "+rowKey+".");
 				}
 			}
 			if(rowRealHeight>1 && band==null){

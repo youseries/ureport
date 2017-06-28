@@ -29,6 +29,7 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.util.Units;
+import org.apache.poi.xwpf.usermodel.BreakType;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -94,8 +95,6 @@ public class WordProducer implements Producer{
 				pageSize.setW(BigInteger.valueOf(DxaUtils.points2dxa(paper.getWidth())));
 				pageSize.setH(BigInteger.valueOf(DxaUtils.points2dxa(paper.getHeight())));
 			}
-			
-			//buildHeaderFooter(document,sectpr,report);
 			int columnCount=paper.getColumnCount();
 			if(paper.isColumnEnabled() && columnCount>0){
 				CTColumns cols=CTColumns.Factory.newInstance();
@@ -114,6 +113,8 @@ public class WordProducer implements Producer{
 			int tableWidth=buildTablePCTWidth(columns);
 			List<Page> pages=report.getPages();
 			Map<Row,Map<Column,Cell>> cellMap=report.getRowColCellMap();
+			int totalPages=pages.size();
+			int pageIndex=1;
 			for(Page page:pages){
 				List<Row> rows=page.getRows();
 				XWPFTable table = document.createTable(rows.size(), totalColumn);
@@ -143,6 +144,13 @@ public class WordProducer implements Producer{
 						buildTableCellStyle(table,tableCell,cell,rowNumber,colNumber);
 					}
 				}
+				if(pageIndex<totalPages){					
+					XWPFParagraph paragraph = document.createParagraph();
+					XWPFRun run = paragraph.createRun();
+					run.setFontSize(0);
+					run.addBreak(BreakType.PAGE);
+				}
+				pageIndex++;
 			}
 			document.write(outputStream);			
 		}catch(Exception ex){
