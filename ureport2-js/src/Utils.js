@@ -5,7 +5,7 @@ import UndoManager from 'undo-manager';
 import {alert} from './MsgBox.js';
 
 export function showLoading(){
-    const url=window._server+'/res/asserts/icons/loading.svg';
+    const url=window._server+'/res/ureport-asserts/icons/loading.svg';
     const h=$(window).height()/2,w=$(window).width()/2;
     const cover=$(`<div class="ureport-loading-cover" style="position: absolute;left: 0px;top: 0px;width:${w*2}px;height:${h*2}px;z-index: 1199;background:rgba(222,222,222,.5)"></div>`);
     $(document.body).append(cover);
@@ -229,6 +229,92 @@ export function tableToXml(context){
                 cellXml+=`<![CDATA[${value.base64Data}]]>`;
                 cellXml+=`</base64-data>`;
                 cellXml+=`</slash-value>`;
+            }else if(value.type==='chart'){
+                cellXml+=`<chart-value>`;
+                const chart=value.chart;
+                const dataset=chart.dataset;
+                cellXml+=`<dataset dataset-name="${dataset.datasetName}" type="${dataset.type}"`;
+                if(dataset.categoryProperty){
+                    cellXml+=` category-property="${dataset.categoryProperty}"`;
+                }
+                if(dataset.seriesProperty){
+                    cellXml+=` series-property="${dataset.seriesProperty}"`;
+                }
+                if(dataset.valueProperty){
+                    cellXml+=` value-property="${dataset.valueProperty}"`;
+                }
+                if(dataset.rProperty){
+                    cellXml+=` r-property="${dataset.rProperty}"`;
+                }
+                if(dataset.xProperty){
+                    cellXm+=` x-property="${dataset.xProperty}"`;
+                }
+                if(dataset.yProperty){
+                    cellXml+=` y-property="${dataset.yProperty}"`;
+                }
+                if(dataset.collectType){
+                    cellXml+=` collect-type="${dataset.collectType}"`;
+                }
+                cellXml+=`/>`;
+                const xaxes=chart.xaxes;
+                if(xaxes){
+                    cellXml+=`<xaxes`;
+                    if(xaxes.rotation){
+                        cellXml+=` rotation="${xaxes.rotation}"`;
+                    }
+                    cellXml+=`>`;
+                    const scaleLabel=xaxes.scaleLabel;
+                    if(scaleLabel){
+                        cellXml+=`<scale-label display="${scaleLabel.display}"`;
+                        if(scaleLabel.labelString){
+                            cellXml+=` label-string="${scaleLabel.labelString}"`;
+                        }
+                        cellXml+=`/>`;
+                    }
+                    cellXml+=`</xaxes>`;
+                }
+                const yaxes=chart.yaxes;
+                if(yaxes){
+                    cellXml+=`<yaxes`;
+                    if(yaxes.rotation){
+                        cellXml+=` rotation="${yaxes.rotation}"`;
+                    }
+                    cellXml+=`>`;
+                    const scaleLabel=yaxes.scaleLabel;
+                    if(scaleLabel){
+                        cellXml+=`<scale-label display="${scaleLabel.display}"`;
+                        if(scaleLabel.labelString){
+                            cellXml+=` label-string="${scaleLabel.labelString}"`;
+                        }
+                        cellXml+=`/>`;
+                    }
+                    cellXml+=`</yaxes>`;
+                }
+                const options=chart.options;
+                if(options){
+                    for(let option of options){
+                        cellXml+=`<option type="${option.type}"`;
+                        if(option.position){
+                            cellXml+=` position="${option.position}"`;
+                        }
+                        if(option.display){
+                            cellXml+=`display="${option.display}"`;
+                        }
+                        if(option.duration){
+                            cellXml+=` duration="${option.duration}"`;
+                        }
+                        if(option.easing){
+                            cellXml+=` easing="${option.easing}"`;
+                        }
+                        if(option.text){
+                            cellXml+=` text="${option.text}"`;
+                        }
+                        cellXml+=`/>`;
+                    }
+                }
+                cellXml+=``;
+                cellXml+=``;
+                cellXml+=`</chart-value>`;
             }
             const propertyConditions=cellDef.conditionPropertyItems || [];
             for(let pc of propertyConditions){

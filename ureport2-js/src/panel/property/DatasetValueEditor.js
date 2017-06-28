@@ -384,13 +384,13 @@ export default class DatasetValueEditor extends BaseValueEditor{
                     datasetValue.mappingItems=[];
                 }
                 datasetValue.mappingItems.push(newItem);
-                const tr=$(`<tr></tr>`);
-                const valueTd=$(`<td>${newItem.value}</td>`);
-                const labelTd=$(`<td>${newItem.label}</td>`);
+                const tr=$(`<tr style="height: 30px"></tr>`);
+                const valueTd=$(`<td style="vertical-align: middle">${newItem.value}</td>`);
+                const labelTd=$(`<td style="vertical-align: middle">${newItem.label}</td>`);
                 tr.append(valueTd);
                 tr.append(labelTd);
                 _this.mappingTbody.append(tr);
-                const td=$(`<td></td>`);
+                const td=$(`<td style="vertical-align: middle"></td>`);
                 tr.append(td);
                 const delLink=$(`<a href="###"><i class="glyphicon glyphicon-trash" style="font-size: 16px;color: #d30e00;"></i></a>`);
                 td.append(delLink);
@@ -412,7 +412,7 @@ export default class DatasetValueEditor extends BaseValueEditor{
                 });
             },newItem,'add');
         });
-        const mappingTable=$(`<table class="table table-bordered"><thead><tr style="background-color: #f5f5f5"><td style="width: 130px">实际值</td><td style="width: 170px">显示值</td><td>操作</td></tr></thead></table>`);
+        const mappingTable=$(`<table class="table table-bordered"><thead><tr style="background-color: #f5f5f5;height: 30px;"><td style="width: 130px;vertical-align: middle">实际值</td><td style="width: 170px;vertical-align: middle">显示值</td><td style="vertical-align: middle">操作</td></tr></thead></table>`);
         this.mappingTbody=$(`<tbody style="font-size: 12px"></tbody>`);
         mappingTable.append(this.mappingTbody);
         this.mappingGroup.append(mappingTable);
@@ -542,13 +542,13 @@ export default class DatasetValueEditor extends BaseValueEditor{
         const mappingItems=datasetValue.mappingItems || [];
         const _this=this;
         for(let item of mappingItems){
-            const tr=$(`<tr></tr>`);
-            const valueTd=$(`<td>${item.value}</td>`);
-            const labelTd=$(`<td>${item.label}</td>`);
+            const tr=$(`<tr style="height: 30px"></tr>`);
+            const valueTd=$(`<td style="vertical-align: middle">${item.value}</td>`);
+            const labelTd=$(`<td style="vertical-align: middle">${item.label}</td>`);
             tr.append(valueTd);
             tr.append(labelTd);
             this.mappingTbody.append(tr);
-            const td=$(`<td></td>`);
+            const td=$(`<td style="vertical-align: middle"></td>`);
             tr.append(td);
             const delLink=$(`<a href="###"><i class="glyphicon glyphicon-trash" style="font-size: 16px;color: #d30e00;"></i></a>`);
             td.append(delLink);

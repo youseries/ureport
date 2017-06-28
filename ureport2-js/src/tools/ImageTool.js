@@ -3,6 +3,7 @@
  */
 import Tool from './Tool.js';
 import {buildNewCellDef,setDirty,undoManager} from '../Utils.js';
+import Handsontable from 'handsontable';
 
 export default class ImageTool extends Tool{
     execute(){

@@ -8,6 +8,16 @@ import ImageValueEditor from './property/ImageValueEditor.js';
 import SlashValueEditor from './property/SlashValueEditor.js';
 import ZxingValueEditor from './property/ZxingValueEditor.js';
 import URLParameterDialog from '../dialog/URLParameterDialog.js';
+import BarChartValueEditor from './property/chart/BarChartValueEditor.js';
+import LineChartValueEditor from './property/chart/LineChartValueEditor.js';
+import AreaChartValueEditor from './property/chart/AreaChartValueEditor.js';
+import HorizontalBarChartValueEditor from './property/chart/HorizontalBarChartValueEditor.js';
+import BubbleChartValueEditor from './property/chart/BubbleChartValueEditor.js';
+import DoughnutChartValueEditor from './property/chart/DoughnutChartValueEditor.js';
+import PieChartValueEditor from './property/chart/PieChartValueEditor.js';
+import PolarChartValueEditor from './property/chart/PolarChartValueEditor.js';
+import RadarChartValueEditor from './property/chart/RadarChartValueEditor.js';
+import ScatterChartValueEditor from './property/chart/ScatterChartValueEditor.js';
 import CrossTabWidget from '../widget/CrossTabWidget.js';
 import {setDirty} from '../Utils.js';
 import {alert} from '../MsgBox.js'
@@ -35,6 +45,19 @@ export default class PropertyPanel{
         this.editorMap.set('slash',slashValueEditor);
         const zxingValueEditor=new ZxingValueEditor(this.panel,this.context);
         this.editorMap.set('zxing',zxingValueEditor);
+
+        this.chartEditorMap=new Map();
+        this.chartEditorMap.set('bar',new BarChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('line',new LineChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('horizontalBar',new HorizontalBarChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('area',new AreaChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('radar',new RadarChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('polar',new PolarChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('scatter',new ScatterChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('bubble',new BubbleChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('doughnut',new DoughnutChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('pie',new PieChartValueEditor(this.panel,this.context));
+
         return this.panel;
     }
 
@@ -90,6 +113,7 @@ export default class PropertyPanel{
             <option value="slash">斜表头</option>
             <option value="qrcode">二维码</option>
             <option value="barcode">条码</option>
+            <option value="chart">图表</option>
         </select>`);
         this.typeGruop.append(this.typeSelect);
         this.panel.append(this.typeGruop);
@@ -149,6 +173,21 @@ export default class PropertyPanel{
                 cellDef.crossTabWidget=new CrossTabWidget(_this.context,_this.rowIndex,_this.colIndex);
                 cellDef.expand='None';
                 _this.editorMap.get('slash').show(_this.cellDef,_this.rowIndex,_this.colIndex,_this.row2Index,_this.col2Index);
+            }else if(value==='chart'){
+                const rowIndex=_this.rowIndex,colIndex=this.colIndex;
+                const td=_this.context.hot.getCell(rowIndex,colIndex);
+                const width=_this._buildWidth(colIndex,td.colSpan,_this.context.hot);
+                const height=_this._buildHeight(rowIndex,td.rowSpan,_this.context.hot);
+                cellDef.value={
+                    width,
+                    height,
+                    type:'chart',
+                    category:{
+                        dataset:{
+                            type:'pie'
+                        }
+                    }
+                };
             }
             _this.context.hot.setDataAtCell(_this.rowIndex,_this.colIndex,'');
             _this.context.hot.render();
@@ -467,7 +506,15 @@ export default class PropertyPanel{
         for(let editor of this.editorMap.values()){
             editor.hide();
         }
-        this.editorMap.get(type).show(cellDef,rowIndex,colIndex,row2Index,col2Index);
+        for(let editor of this.chartEditorMap.values()){
+            editor.hide();
+        }
+        if(type==='chart'){
+            const chartType=cellDef.value.chart.dataset.type;
+            this.chartEditorMap.get(chartType).show(cellDef,rowIndex,colIndex,row2Index,col2Index);
+        }else{
+            this.editorMap.get(type).show(cellDef,rowIndex,colIndex,row2Index,col2Index);
+        }
         this.initialized=false;
     }
 

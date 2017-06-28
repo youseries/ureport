@@ -5,6 +5,7 @@ import Tool from './Tool.js';
 import SaveDialog from '../dialog/SaveDialog.js';
 import {alert} from '../MsgBox.js';
 import {setDirty,tableToXml,undoManager} from '../Utils.js';
+import Handsontable from 'handsontable';
 
 export default class ZxingTool extends Tool{
     execute(){
@@ -26,6 +27,9 @@ export default class ZxingTool extends Tool{
         const saveDialog=new SaveDialog();
         const _this=this;
         qrcode.click(function(){
+            if(!_this.checkSelection()){
+                return;
+            }
             const hot=_this.context.hot;
             const selected=hot.getSelected();
             const startRow=selected[0],startCol=selected[1],endRow=selected[2],endCol=selected[3];
@@ -81,6 +85,9 @@ export default class ZxingTool extends Tool{
             </li>`);
         ul.append(barcode);
         barcode.click(function(){
+            if(!_this.checkSelection()){
+                return;
+            }
             const hot=_this.context.hot;
             const selected=hot.getSelected();
             const startRow=selected[0],startCol=selected[1],endRow=selected[2],endCol=selected[3];

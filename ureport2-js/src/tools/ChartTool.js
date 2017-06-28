@@ -1,15 +1,17 @@
 /**
  * Created by Jacky.Gao on 2017-01-25.
  */
-import undoManager from 'undo-manager';
+import {undoManager} from '../Utils.js';
 import Tool from './Tool.js';
 import {setDirty} from '../Utils.js';
+import Handsontable from 'handsontable';
 
 export default class ChartTool extends Tool{
     execute(){
 
     }
     buildButton(){
+        const _this=this;
         const group=$(`<div class="btn-group"></div>`);
         const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="图表">
             <i class="ureport ureport-pie" style="color: #0e90d2;"></i>
@@ -23,6 +25,7 @@ export default class ChartTool extends Tool{
             </li>`);
         ul.append(pie);
         pie.click(function(){
+            _this._doClick('pie');
         });
         const doughnut=$(`<li>
                 <a href="###">
@@ -30,98 +33,122 @@ export default class ChartTool extends Tool{
                 </a>
             </li>`);
         ul.append(doughnut);
+        doughnut.click(function(){
+            _this._doClick('doughnut');
+        });
         const line=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-line" style="color: #0e90d2;"></i> 曲线图
                 </a>
             </li>`);
         ul.append(line);
+        line.click(function(){
+            _this._doClick('line');
+        });
         const bar=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-bar" style="color: #0e90d2;"></i> 柱状图
                 </a>
             </li>`);
         ul.append(bar);
+        bar.click(function(){
+            _this._doClick('bar');
+        });
         const horBar=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-horizontal-bar" style="color: #0e90d2;"></i> 水平柱状图
                 </a>
             </li>`);
         ul.append(horBar);
+        horBar.click(function(){
+            _this._doClick('horizontalBar');
+        });
         const area=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-area" style="color: #0e90d2;"></i> 面积图
                 </a>
             </li>`);
         ul.append(area);
+        area.click(function(){
+            _this._doClick('area');
+        });
         const radar=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-radar" style="color: #0e90d2;"></i> 雷达图
                 </a>
             </li>`);
         ul.append(radar);
+        radar.click(function(){
+            _this._doClick('radar');
+        });
         const polar=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-polar" style="color: #0e90d2;"></i> 极坐标图
                 </a>
             </li>`);
         ul.append(polar);
+        polar.click(function(){
+            _this._doClick('polar');
+        });
         const scatter=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-scatter" style="color: #0e90d2;"></i> 散点图
                 </a>
             </li>`);
         ul.append(scatter);
+        scatter.click(function(){
+            _this._doClick('scatter');
+        });
         const bubble=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-bubble" style="color: #0e90d2;"></i> 气泡图
                 </a>
             </li>`);
         ul.append(bubble);
+        bubble.click(function(){
+            _this._doClick('bubble');
+        });
+        /*
         const mix=$(`<li>
                 <a href="###">
                     <i class="ureport ureport-mixchart" style="color: #0e90d2;"></i> 组合图
                 </a>
             </li>`);
         ul.append(mix);
-
+        mix.click(function(){
+            _this._doClick('mix');
+        });
+        */
         group.append(mainBtn);
         group.append(ul);
         return group;
     }
     _doClick(category){
+        if(!this.checkSelection()){
+            return;
+        }
+        const _this=this;
         const hot=_this.context.hot;
         const selected=hot.getSelected();
         const startRow=selected[0],startCol=selected[1],endRow=selected[2],endCol=selected[3];
         let cellDef=_this.context.getCell(startRow,startCol);
         let oldValue=cellDef.value,oldCellData=hot.getDataAtCell(startRow,startCol);
         hot.setDataAtCell(startRow,startCol,'');
-        let td=hot.getCell(startRow,startCol);
-        let width=_this._buildWidth(startCol,td.colSpan,hot),height=_this._buildHeight(startRow,td.rowSpan,hot);
         cellDef.value={
-            width,
-            height,
             type:'chart',
-            category:this._newChart(category),
-            data:''
+            chart:this._newChart(category)
         };
         hot.render();
         setDirty();
         Handsontable.hooks.run(hot, 'afterSelectionEnd',startRow,startCol,endRow,endCol);
-        const _this=this;
         undoManager.add({
             redo:function(){
                 cellDef=_this.context.getCell(startRow,startCol);
                 oldValue=cellDef.value,oldCellData=hot.getDataAtCell(startRow,startCol);
                 hot.setDataAtCell(startRow,startCol,'');
-                td=hot.getCell(startRow,startCol);
-                width=_this._buildWidth(startCol,td.colSpan,hot),height=_this._buildHeight(startRow,td.rowSpan,hot);
                 cellDef.value={
-                    width,
-                    height,
                     type:'chart',
-                    category:_this._newChart(category),
-                    data:''
+                    chart:_this._newChart(category)
                 };
                 hot.render();
                 setDirty();
@@ -181,30 +208,5 @@ export default class ChartTool extends Tool{
                 return {type:"radar"};
         }
         */
-    }
-
-
-    _buildWidth(colIndex,colspan,hot){
-        let width=hot.getColWidth(colIndex)-3;
-        if(!colspan || colspan<2){
-            return width;
-        }
-        let start=colIndex+1,end=colIndex+colspan;
-        for(let i=start;i<end;i++){
-            width+=hot.getColWidth(i);
-        }
-        return width;
-    }
-
-    _buildHeight(rowIndex,rowspan,hot){
-        let height=hot.getRowHeight(rowIndex)-3;
-        if(!rowspan || rowspan<2){
-            return height;
-        }
-        let start=rowIndex+1,end=rowIndex+rowspan;
-        for(let i=start;i<end;i++){
-            height+=hot.getRowHeight(i);
-        }
-        return height;
     }
 }

@@ -138,7 +138,7 @@ export default class UReportDesigner{
         this.tools.push(new CrosstabTool(context));
         this.tools.push(new ImageTool(context));
         this.tools.push(new ZxingTool(context));
-        this.tools.push(new ChartTool(context));
+        //this.tools.push(new ChartTool(context));
         this.tools.push(new SettingsTool(context));
         for(const tool of this.tools){
             toolbar.append(tool.buildButton());
