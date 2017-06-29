@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.chart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bstek.ureport.build.Context;
@@ -29,7 +30,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年6月8日
  */
 public class Chart {
-	private List<Option> options;
+	private List<Option> options=new ArrayList<Option>();
 	private Dataset dataset;
 	private XAxes xaxes;
 	private YAxes yaxes;

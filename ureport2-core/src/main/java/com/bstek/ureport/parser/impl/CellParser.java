@@ -32,6 +32,7 @@ import com.bstek.ureport.definition.value.Value;
 import com.bstek.ureport.exception.ReportException;
 import com.bstek.ureport.exception.ReportParseException;
 import com.bstek.ureport.parser.Parser;
+import com.bstek.ureport.parser.impl.value.ChartValueParser;
 import com.bstek.ureport.parser.impl.value.DatasetValueParser;
 import com.bstek.ureport.parser.impl.value.ExpressionValueParser;
 import com.bstek.ureport.parser.impl.value.ImageValueParser;
@@ -52,6 +53,7 @@ public class CellParser implements Parser<CellDefinition>{
 		parsers.put("dataset-value",new DatasetValueParser());
 		parsers.put("slash-value",new SlashValueParser());
 		parsers.put("zxing-value",new ZxingValueParser());
+		parsers.put("chart-value",new ChartValueParser());
 		parsers.put("cell-style",new CellStyleParser());
 		parsers.put("link-parameter",new LinkParameterParser());
 		parsers.put("condition-property-item",new ConditionParameterItemParser());

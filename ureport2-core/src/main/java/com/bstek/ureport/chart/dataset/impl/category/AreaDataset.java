@@ -34,4 +34,8 @@ public class AreaDataset extends LineDataset {
 		sb.append("}");
 		return sb.toString();
 	}
+	@Override
+	public String getType() {
+		return "area";
+	}
 }
