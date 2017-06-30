@@ -5,7 +5,6 @@ UReport2是一款高性能的架构在Spring之上纯Java报表引擎，通过�
 
 UReport2是第一款基于Apache-2.0协议开源免费的中式报表引擎。
 
-<iframe class="tscplayer_inline" id="embeddedSmartPlayerInstance" src="http://58.246.62.194:16808/ureport2-setup/ureport2-setup_player.html?embedIFrameId=embeddedSmartPlayerInstance" scrolling="no" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 
 # 相关链接
 
