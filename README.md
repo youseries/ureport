@@ -15,7 +15,7 @@ QQ群名称：规则报表工作流交流群（解答UReport2报表引擎、URul
 
 群号：423339793
 
-#### ![](/assets/1498803608590.png)
+#### ![](../assets/images/qq-qrcode.png)
 
 # License
 
