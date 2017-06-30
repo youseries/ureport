@@ -13,7 +13,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
         <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">属性绑定配置</legend></fieldset>`);
         dsContent.append(legendGroup);
 
-        const datasetGroup=$(`<div class="form-group" style="margin-top: 10px"><label>数据集：</label></div>`);
+        const datasetGroup=$(`<div class="form-group" style="margin-top: 10px;margin-bottom: 5px"><label>数据集：</label></div>`);
         legendGroup.append(datasetGroup);
         this.datasetSelect=$(`<select class="form-control" style="display: inline-block;width:300px;padding:2px;font-size: 12px;height: 25px"></select>`);
         datasetGroup.append(this.datasetSelect);
@@ -27,25 +27,50 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             dataset.categoryProperty=$(this).val();
         });
 
-        const propertyGroup=$(`<div class="form-group"></div>`);
-        legendGroup.append(propertyGroup);
+        const valuePropertyGroup=$(`<div class="form-group"><label>值属性：</label></div>`);
+        this.valuePropertySelect=$(`<select class="form-control" style="display: inline-block;width:300px;padding: 2px;font-size: 12px;height: 25px"></select>`);
+        valuePropertyGroup.append(this.valuePropertySelect);
+        legendGroup.append(valuePropertyGroup);
+        this.valuePropertySelect.change(function(){
+            const dataset=_this.getDatasetConfig();
+            dataset.valueProperty=$(this).val();
+        });
 
-        const seriesPropertyGroup=$(`<div class="form-group" style="margin-bottom: 5px;"><label>系列属性：</label></div>`);
-        this.seriesPropertySelect=$(`<select class="form-control" style="display: inline-block;width:285px;padding: 2px;font-size: 12px;height: 25px"></select>`);
-        seriesPropertyGroup.append(this.seriesPropertySelect);
-        propertyGroup.append(seriesPropertyGroup);
+        const seriesGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>系列值：</label></div>`);
+        legendGroup.append(seriesGroup);
+        this.propertySeriesRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__chart_series_radio_${this.id}">属性</label>`);
+        seriesGroup.append(this.propertySeriesRadio);
+        this.textSeriesRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__chart_series_radio_${this.id}" checked>静态值</label>`);
+        seriesGroup.append(this.textSeriesRadio);
+        this.propertySeriesRadio.children('input').click(function(){
+            _this.seriesPropertyGroup.show();
+            _this.seriesTextGroup.hide();
+            const dataset=_this.getDatasetConfig();
+            dataset.seriesType='property';
+        });
+        this.textSeriesRadio.children('input').click(function(){
+            _this.seriesPropertyGroup.hide();
+            _this.seriesTextGroup.show();
+            const dataset=_this.getDatasetConfig();
+            dataset.seriesType='text';
+        });
+
+        this.seriesPropertyGroup=$(`<div class="form-group"  style="margin-left: 10px"><span>属性：</span></div>`);
+        this.seriesPropertySelect=$(`<select class="form-control" style="display: inline-block;width:303px;padding: 2px;font-size: 12px;height: 25px"></select>`);
+        this.seriesPropertyGroup.append(this.seriesPropertySelect);
+        legendGroup.append(this.seriesPropertyGroup);
         this.seriesPropertySelect.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.seriesProperty=$(this).val();
         });
-
-        const valuePropertyGroup=$(`<div class="form-group" style="margin-top: 5px;margin-bottom: 5px;"><label>值属性：</label></div>`);
-        this.valuePropertySelect=$(`<select class="form-control" style="display: inline-block;width:300px;padding: 2px;font-size: 12px;height: 25px"></select>`);
-        valuePropertyGroup.append(this.valuePropertySelect);
-        propertyGroup.append(valuePropertyGroup);
-        this.valuePropertySelect.change(function(){
+        this.seriesPropertyGroup.hide();
+        this.seriesTextGroup=$(`<div class="form-group" style="margin-left: 10px"><span>静态值：</span></div>`);
+        this.seriesTextEditor=$(`<input type="text" class="form-control" style="display: inline-block;width:288px;padding: 2px;font-size: 12px;height: 25px">`);
+        this.seriesTextGroup.append(this.seriesTextEditor);
+        legendGroup.append(this.seriesTextGroup);
+        this.seriesTextEditor.change(function(){
             const dataset=_this.getDatasetConfig();
-            dataset.valueProperty=$(this).val();
+            dataset.seriesText=$(this).val();
         });
 
         this.datasetSelect.change(function(){

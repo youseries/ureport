@@ -26,7 +26,7 @@ import com.bstek.ureport.chart.option.Position;
 public class TitleOption implements Option {
 	private boolean display;
 	private Position position=Position.top;
-	private int fontSize=12;
+	private int fontSize=14;
 	private String fontColor="#666";
 	private FontStyle fontStyle=FontStyle.bold;
 	private int padding=10;
@@ -37,7 +37,7 @@ public class TitleOption implements Option {
 		sb.append("title:{");
 		sb.append("display:"+display+",");
 		sb.append("text:\""+text+"\",");
-		sb.append("position:\""+position+"\"");
+		sb.append("position:\""+position+"\",");
 		sb.append("fontSize:"+fontSize+",");
 		sb.append("fontColor:\""+fontColor+"\",");
 		sb.append("fontStyle:\""+fontStyle+"\",");

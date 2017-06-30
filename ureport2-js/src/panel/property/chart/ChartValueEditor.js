@@ -188,6 +188,7 @@ export default class ChartValueEditor{
             chart.options.title={
                 display:true,
                 text:'',
+                fontSize:14,
                 position:'top'
             };
             _this.cellDef.chartWidget.chart.update();
@@ -220,6 +221,7 @@ export default class ChartValueEditor{
             chart.options.title={
                 display:true,
                 text:targetOption.text,
+                fontSize:14,
                 position:targetOption.position
             };
             _this.cellDef.chartWidget.chart.update();

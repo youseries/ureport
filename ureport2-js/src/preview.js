@@ -112,7 +112,7 @@ function buildPrintStyle(paper){
     return style;
 };
 
-function _buildChart(canvasId,chartJson){
+window._buildChart=function(canvasId,chartJson){
     const ctx=document.getElementById(canvasId);
     const chart=new Chart(ctx,chartJson);
 };

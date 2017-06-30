@@ -46,6 +46,8 @@ public abstract class CategoryDataset extends BaseDataset {
 	private String categoryProperty;
 	private String seriesProperty;
 	private String valueProperty;
+	private String seriesText;
+	private SeriesType seriesType=SeriesType.text;
 	
 	private String labels;
 	private String format;
@@ -62,8 +64,12 @@ public abstract class CategoryDataset extends BaseDataset {
 			if(!categoryList.contains(category)){
 				categoryList.add(category);
 			}
-			
-			Object series=Utils.getProperty(obj, seriesProperty);
+			Object series=null;
+			if(seriesType.equals(SeriesType.property)){
+				series=Utils.getProperty(obj, seriesProperty);				
+			}else{
+				series=seriesText;
+			}
 			if(series==null){
 				continue;
 			}
@@ -83,6 +89,7 @@ public abstract class CategoryDataset extends BaseDataset {
 				valueList.add(value);
 			}else{
 				Map<Object,List<Object>> categoryMap=new HashMap<Object,List<Object>>();
+				seriesDataMap.put(series, categoryMap);
 				for(Object cg:categoryList){
 					categoryMap.put(cg, new ArrayList<Object>());
 				}
@@ -95,25 +102,24 @@ public abstract class CategoryDataset extends BaseDataset {
 	}
 	
 	
-	private String buildDatasets(Map<Object,Map<Object,List<Object>>> map,String props){
+	protected String buildDatasets(Map<Object,Map<Object,List<Object>>> map,String props){
 		StringBuilder sb=new StringBuilder();
-		sb.append("");
 		int i=0; 
 		for(Object series:map.keySet()){
 			if(i>0){
 				sb.append(",");
 			}
-			i++;
 			sb.append("{");
 			sb.append("label:\""+series+"\",");
 			String color=null;
 			if(this instanceof LineDataset){
 				color="rgb("+getRgbColor(i)+")";
 			}else{
-				color="rgba("+getRgbColor(i)+",0.5)";				
+				color="rgba("+getRgbColor(i)+",0.3)";				
 			}
 			sb.append("backgroundColor:\""+color+"\",");
 			sb.append("borderColor:\"rgb("+getRgbColor(i)+")\",");
+			sb.append("borderWidth: 1,");
 			sb.append("data:"+buildData(map.get(series)));
 			if(this instanceof LineDataset){
 				sb.append(",");
@@ -124,15 +130,16 @@ public abstract class CategoryDataset extends BaseDataset {
 				}
 			}
 			if(props!=null){
-				sb.append(props);
+				sb.append(","+props);
 			}
 			sb.append("}");
+			i++;
 		}
 		sb.append("");
 		return sb.toString();
 	}
 	
-	private String buildData(Map<Object,List<Object>> categoryMap){
+	protected String buildData(Map<Object,List<Object>> categoryMap){
 		StringBuilder sb=new StringBuilder();
 		sb.append("[");
 		for(Object category:categoryMap.keySet()){
@@ -147,7 +154,7 @@ public abstract class CategoryDataset extends BaseDataset {
 		return sb.toString();
 	}
 	
-	private double collectData(List<Object> list){
+	protected double collectData(List<Object> list){
 		double result=0;
 		switch(collectType){
 		case select:
@@ -226,6 +233,23 @@ public abstract class CategoryDataset extends BaseDataset {
 		}
 		sb.append("]");
 		return sb.toString();
+	}
+
+	public String getSeriesText() {
+		return seriesText;
+	}
+	
+	public void setSeriesText(String seriesText) {
+		this.seriesText = seriesText;
+	}
+
+
+	public SeriesType getSeriesType() {
+		return seriesType;
+	}
+
+	public void setSeriesType(SeriesType seriesType) {
+		this.seriesType = seriesType;
 	}
 
 	public CollectType getCollectType() {

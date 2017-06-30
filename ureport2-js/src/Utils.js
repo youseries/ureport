@@ -240,6 +240,12 @@ export function tableToXml(context){
                 if(dataset.seriesProperty){
                     cellXml+=` series-property="${dataset.seriesProperty}"`;
                 }
+                if(dataset.seriesType){
+                    cellXml+=` series-type="${dataset.seriesType}"`;
+                }
+                if(dataset.seriesText){
+                    cellXml+=` series-text="${dataset.seriesText}"`;
+                }
                 if(dataset.valueProperty){
                     cellXml+=` value-property="${dataset.valueProperty}"`;
                 }
@@ -298,7 +304,7 @@ export function tableToXml(context){
                             cellXml+=` position="${option.position}"`;
                         }
                         if(option.display){
-                            cellXml+=`display="${option.display}"`;
+                            cellXml+=` display="${option.display}"`;
                         }
                         if(option.duration){
                             cellXml+=` duration="${option.duration}"`;
@@ -312,8 +318,6 @@ export function tableToXml(context){
                         cellXml+=`/>`;
                     }
                 }
-                cellXml+=``;
-                cellXml+=``;
                 cellXml+=`</chart-value>`;
             }
             const propertyConditions=cellDef.conditionPropertyItems || [];

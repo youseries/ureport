@@ -54,7 +54,11 @@ public class Chart {
 				sb.append("]");
 			}
 			if(yaxes!=null){
-				sb.append("yAxes:[");
+				if(xaxes!=null){
+					sb.append(",yAxes:[");					
+				}else{
+					sb.append("yAxes:[");										
+				}
 				sb.append(yaxes.toJson());
 				sb.append("]");
 			}

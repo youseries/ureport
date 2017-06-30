@@ -23,7 +23,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年6月8日
  */
 public class RadarDataset extends CategoryDataset {
-	private boolean fill;
+	private boolean fill=true;
 	private double lineTension=0.1;
 	
 	@Override

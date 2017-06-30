@@ -71,9 +71,14 @@ export default class BarChartValueEditor extends CategoryChartValueEditor{
         this.datasetSelect.trigger('change');
         this.categoryPropertySelect.val(dataset.categoryProperty);
         this.seriesPropertySelect.val(dataset.seriesProperty);
+        this.seriesTextEditor.val(dataset.seriesText);
         this.valuePropertySelect.val(dataset.valueProperty);
         this.aggregateSelect.val(dataset.collectType);
-
+        if(dataset.seriesType==='text'){
+            this.propertySeriesRadio.children('input').attr('checked',true);
+        }else{
+            this.textSeriesRadio.children('input').attr('checked',true);
+        }
         this.formatEditor.val(dataset.format);
 
         const xaxes=chart.xaxes || {rotation:0,xposition:'left'};

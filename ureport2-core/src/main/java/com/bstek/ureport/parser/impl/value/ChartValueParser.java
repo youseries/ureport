@@ -21,6 +21,7 @@ import com.bstek.ureport.chart.dataset.impl.category.LineDataset;
 import com.bstek.ureport.chart.dataset.impl.category.PieDataset;
 import com.bstek.ureport.chart.dataset.impl.category.PolarDataset;
 import com.bstek.ureport.chart.dataset.impl.category.RadarDataset;
+import com.bstek.ureport.chart.dataset.impl.category.SeriesType;
 import com.bstek.ureport.chart.option.Easing;
 import com.bstek.ureport.chart.option.Option;
 import com.bstek.ureport.chart.option.Position;
@@ -197,6 +198,11 @@ public class ChartValueParser extends ValueParser {
 			if(StringUtils.isNotBlank(collectType)){
 				ds.setCollectType(CollectType.valueOf(collectType));
 			}
+			String seriesType=element.attributeValue("series-type");
+			if(StringUtils.isNotBlank(seriesType)){
+				ds.setSeriesType(SeriesType.valueOf(seriesType));
+			}
+			ds.setSeriesText(element.attributeValue("series-text"));
 		}
 		if(dataset!=null){
 			return dataset;

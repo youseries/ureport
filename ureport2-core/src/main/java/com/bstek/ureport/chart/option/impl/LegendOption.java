@@ -36,6 +36,7 @@ public class LegendOption implements Option {
 		if(labels!=null){
 			sb.append("labels:"+labels.toJson());			
 		}
+		sb.append("}");
 		return sb.toString();
 	}
 	@Override

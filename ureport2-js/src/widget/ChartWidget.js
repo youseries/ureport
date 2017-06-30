@@ -74,13 +74,13 @@ export default class ChartWidget{
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4", "类型5", "类型6"],
                     datasets: [{
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.red,
                         borderWidth: 1,
                         data: [21,25, 8,12,31,19]
                     }, {
-                        label: '数据集2',
+                        label: '系列2',
                         backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.blue,
                         borderWidth: 1,
@@ -93,13 +93,13 @@ export default class ChartWidget{
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4", "类型5", "类型6"],
                     datasets: [{
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.red,
                         borderWidth: 1,
                         data: [21,25, 8,12,31,19]
                     }, {
-                        label: '数据集2',
+                        label: '系列2',
                         backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.blue,
                         borderWidth: 1,
@@ -112,14 +112,14 @@ export default class ChartWidget{
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4", "类型5", "类型6"],
                     datasets: [{
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.red,
                         borderWidth: 1,
                         fill: false,
                         data: [21,25, 8,12,31,19]
                     }, {
-                        label: '数据集2',
+                        label: '系列2',
                         backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.blue,
                         borderWidth: 1,
@@ -133,13 +133,13 @@ export default class ChartWidget{
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4", "类型5", "类型6"],
                     datasets: [{
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.red,
                         borderWidth: 1,
                         data: [21,25, 8,12,31,19]
                     }, {
-                        label: '数据集2',
+                        label: '系列2',
                         backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.blue,
                         borderWidth: 1,
@@ -157,7 +157,7 @@ export default class ChartWidget{
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4"],
                     datasets: [{
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: [
                             window.chartColors.red,
                             window.chartColors.orange,
@@ -173,7 +173,7 @@ export default class ChartWidget{
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4"],
                     datasets: [{
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: [
                             window.chartColors.red,
                             window.chartColors.orange,
@@ -189,13 +189,13 @@ export default class ChartWidget{
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4", "类型5"],
                     datasets: [{
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.red,
                         borderWidth: 1,
                         data: [21,25, 8,12,31]
                     }, {
-                        label: '数据集2',
+                        label: '系列2',
                         backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.blue,
                         borderWidth: 1,
@@ -208,7 +208,7 @@ export default class ChartWidget{
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4"],
                     datasets: [{
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: [
                             window.chartColors.red,
                             window.chartColors.orange,
@@ -224,7 +224,7 @@ export default class ChartWidget{
                 data = {
                     datasets: [
                         {
-                            label: '数据集1',
+                            label: '系列1',
                             borderColor: window.chartColors.red,
                             backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
                             data: [
@@ -235,7 +235,7 @@ export default class ChartWidget{
                             ]
                         },
                         {
-                            label: '数据集2',
+                            label: '系列2',
                             borderColor: window.chartColors.blue,
                             backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
                             data: [
@@ -253,7 +253,7 @@ export default class ChartWidget{
                 data = {
                     datasets: [
                         {
-                            label: '数据集1',
+                            label: '系列1',
                             borderColor: window.chartColors.red,
                             backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
                             data: [
@@ -264,7 +264,7 @@ export default class ChartWidget{
                             ]
                         },
                         {
-                            label: '数据集2',
+                            label: '系列2',
                             borderColor: window.chartColors.blue,
                             backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
                             data: [
@@ -283,13 +283,13 @@ export default class ChartWidget{
                     labels: ["类型1", "类型2", "类型3", "类型4", "类型5", "类型6"],
                     datasets: [{
                         type: 'line',
-                        label: '数据集1',
+                        label: '系列1',
                         backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.red,
                         data: [21,25, 8,12,31,19]
                     }, {
                         type: 'bar',
-                        label: '数据集2',
+                        label: '系列2',
                         backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                         borderColor: window.chartColors.blue,
                         borderWidth: 1,

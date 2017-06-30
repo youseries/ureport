@@ -24,7 +24,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         tip=cellValue.value || '';
     }else if(valueType==='image'){
         tip='图片：'+cellValue.value;
-        const imagePath=window._server+'/res/asserts/icons/image.svg';
+        const imagePath=window._server+'/res/ureport-asserts/icons/image.svg';
         const image=$(`<img src="${imagePath}" width="40px">`);
         $td.append(image);
     }else if(valueType==='slash'){
@@ -34,11 +34,11 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         }
         cellDef.crossTabWidget.doDraw(cellDef);
     }else if(valueType==='zxing'){
-        let imagePath=window._server+'/res/asserts/icons/qrcode.svg';
+        let imagePath=window._server+'/res/ureport-asserts/icons/qrcode.svg';
         tip='二维码';
         if(cellValue.category==='barcode'){
             tip='条码';
-            imagePath=window._server+'/res/asserts/icons/barcode.svg';
+            imagePath=window._server+'/res/ureport-asserts/icons/barcode.svg';
         }
         const width=cellValue.width,height=cellValue.height;
         const image=$(`<img src="${imagePath}" width="${width}px" height="${height}px">`);
@@ -64,23 +64,23 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
     }
     $td.css({'word-break':'break-all','line-height':'normal','white-space':'nowrap',padding:'0 1px'});
     if(cellDef.expand === 'Down'){
-        let url=window._server+"/res/asserts/icons/expr-expand-down.svg";
+        let url=window._server+"/res/ureport-asserts/icons/expr-expand-down.svg";
         if(valueType==='dataset'){
-            url=window._server+"/res/asserts/icons/expand-down.svg";
+            url=window._server+"/res/ureport-asserts/icons/expand-down.svg";
         }
         $td.prepend(`<image src="${url}"></image>`);
     }else if(cellDef.expand === 'Right'){
-        let url=window._server+"/res/asserts/icons/expr-expand-right.svg";
+        let url=window._server+"/res/ureport-asserts/icons/expr-expand-right.svg";
         if(valueType==='dataset'){
-            url=window._server+"/res/asserts/icons/expand-right.svg";
+            url=window._server+"/res/ureport-asserts/icons/expand-right.svg";
         }
         $td.prepend(`<image src="${url}" style="display: block;"></image>`);
     }else{
         if(valueType==='dataset'){
-            let url=window._server+"/res/asserts/icons/property.svg";
+            let url=window._server+"/res/ureport-asserts/icons/property.svg";
             $td.prepend(`<image src="${url}" style="display: inline-block;"></image>`);
         }else if(valueType==='expression'){
-            let url=window._server+"/res/asserts/icons/expression.svg";
+            let url=window._server+"/res/ureport-asserts/icons/expression.svg";
             $td.prepend(`<image src="${url}" style="display: inline-block;"></image>`);
         }
     }
