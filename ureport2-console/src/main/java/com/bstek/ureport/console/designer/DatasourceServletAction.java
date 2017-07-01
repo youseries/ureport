@@ -169,7 +169,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 			ResultSetMetaData metadata=rs.getMetaData();
 			int columnCount=metadata.getColumnCount();
 			for(int i=0;i<columnCount;i++){
-				String columnName=metadata.getColumnName(i+1);
+				String columnName=metadata.getColumnLabel(i+1);
 				fields.add(new Field(columnName));
 			}
 			writeObjectToJson(resp, fields);
