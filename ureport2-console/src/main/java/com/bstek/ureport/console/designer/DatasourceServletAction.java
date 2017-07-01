@@ -19,6 +19,7 @@ import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -129,6 +130,42 @@ public class DatasourceServletAction extends RenderPageServletAction {
 			writeObjectToJson(resp, result);
 		}catch(Exception ex){
 			throw new ReportDesignException(ex);
+		}
+	}
+	
+	public void buildDatabaseTables(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Connection conn=null;
+		ResultSet rs = null;
+		try{
+			conn=buildConnection(req);
+			DatabaseMetaData metaData = conn.getMetaData();
+			String url = metaData.getURL();
+			String schema = null;
+			if (url.toLowerCase().contains("oracle")) {
+				schema = metaData.getUserName();
+			}
+			List<Map<String,String>> tables = new ArrayList<Map<String,String>>();
+			rs = metaData.getTables(null, schema, "%", new String[] { "TABLE","VIEW" });
+			while (rs.next()) {
+				Map<String,String> table = new HashMap<String,String>();
+				table.put("name",rs.getString("TABLE_NAME"));
+				table.put("type",rs.getString("TABLE_TYPE"));
+				tables.add(table);
+			}
+			writeObjectToJson(resp, tables);
+		}catch(Exception ex){
+			throw new ServletException(ex);
+		}finally{
+			try {
+				if(rs!=null){
+					rs.close();
+				}
+				if(conn!=null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
