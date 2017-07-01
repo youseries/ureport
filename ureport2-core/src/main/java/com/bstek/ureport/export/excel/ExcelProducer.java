@@ -43,6 +43,7 @@ import org.apache.poi.xssf.usermodel.XSSFShape;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.paging.Page;
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.definition.Orientation;
 import com.bstek.ureport.definition.Paper;
 import com.bstek.ureport.definition.PaperType;
@@ -191,6 +192,35 @@ public class ExcelProducer {
 				        			}finally{
 				        				IOUtils.closeQuietly(inputStream);
 				        			}
+				        		}else if(obj instanceof ChartData){
+				        			ChartData chartData=(ChartData)obj;
+				        			String base64Data=chartData.retriveBase64Data();
+				        			if(base64Data!=null){
+				        				Image img=new Image(base64Data,chartData.getWidth(),chartData.getHeight());
+				        				InputStream inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
+				        				BufferedImage bufferedImage=ImageIO.read(inputStream);
+				        				int width=bufferedImage.getWidth();
+				        				int height=bufferedImage.getHeight();
+				        				IOUtils.closeQuietly(inputStream);
+				        				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
+				        				try{
+				        					XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
+				        					byte[] bytes=IOUtils.toByteArray(inputStream);
+				        					int pictureFormat=buildImageFormat(img);
+				        					int pictureIndex=wb.addPicture(bytes, pictureFormat);
+				        					anchor.setCol1(i);
+				        					anchor.setCol2(i+colSpan);
+				        					anchor.setRow1(rowNumber);
+				        					anchor.setRow2(rowNumber+rowSpan);
+				        					anchor.setDx1(0 * XSSFShape.EMU_PER_PIXEL);
+				        					anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
+				        					anchor.setDy1(0 * XSSFShape.EMU_PER_PIXEL);
+				        					anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
+				        					drawing.createPicture(anchor, pictureIndex);
+				        				}finally{
+				        					IOUtils.closeQuietly(inputStream);
+				        				}
+				        			}
 				        		}else if(obj instanceof Date){
 				        			cell.setCellValue((Date)obj);
 				        		}
@@ -313,6 +343,35 @@ public class ExcelProducer {
 			        				drawing.createPicture(anchor, pictureIndex);
 			        			}finally{
 			        				IOUtils.closeQuietly(inputStream);
+			        			}
+			        		}else if(obj instanceof ChartData){
+			        			ChartData chartData=(ChartData)obj;
+			        			String base64Data=chartData.retriveBase64Data();
+			        			if(base64Data!=null){
+			        				Image img=new Image(base64Data,chartData.getWidth(),chartData.getHeight());
+			        				InputStream inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
+			        				BufferedImage bufferedImage=ImageIO.read(inputStream);
+			        				int width=bufferedImage.getWidth();
+			        				int height=bufferedImage.getHeight();
+			        				IOUtils.closeQuietly(inputStream);
+			        				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
+			        				try{
+			        					XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
+			        					byte[] bytes=IOUtils.toByteArray(inputStream);
+			        					int pictureFormat=buildImageFormat(img);
+			        					int pictureIndex=wb.addPicture(bytes, pictureFormat);
+			        					anchor.setCol1(i);
+			        					anchor.setCol2(i+colSpan);
+			        					anchor.setRow1(rowNumber);
+			        					anchor.setRow2(rowNumber+rowSpan);
+			        					anchor.setDx1(0 * XSSFShape.EMU_PER_PIXEL);
+			        					anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
+			        					anchor.setDy1(0 * XSSFShape.EMU_PER_PIXEL);
+			        					anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
+			        					drawing.createPicture(anchor, pictureIndex);
+			        				}finally{
+			        					IOUtils.closeQuietly(inputStream);
+			        				}
 			        			}
 			        		}else if(obj instanceof Date){
 			        			cell.setCellValue((Date)obj);

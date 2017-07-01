@@ -69,13 +69,16 @@ public class BubbleDataset extends BaseDataset {
 			list.add(new BubbleData(x,y,r));
 		}
 		StringBuilder sb=new StringBuilder();
-		sb.append("[");
+		sb.append("{");
+		sb.append("datasets:[");
 		int index=0;
 		for(Object obj:map.keySet()){
 			if(index>0){
 				sb.append(",");
 			}
 			sb.append("{");
+			sb.append("borderColor:\"rgb("+getRgbColor(index)+")\",");
+			sb.append("backgroundColor:\"rgba("+getRgbColor(index)+",0.5)\",");
 			sb.append("label:\""+obj+"\",");
 			sb.append("data:[");
 			List<BubbleData> list=map.get(obj);
@@ -91,12 +94,11 @@ public class BubbleDataset extends BaseDataset {
 				sb.append("r:"+data.getR());				
 				sb.append("}");				
 			}
-			sb.append("],");
-			sb.append("backgroundColor:\""+getRgbColor(index)+"\"");
+			sb.append("]");
 			sb.append("}");
 			index++;
 		}
-		sb.append("]");
+		sb.append("]}");
 		return sb.toString();
 	}
 	@Override

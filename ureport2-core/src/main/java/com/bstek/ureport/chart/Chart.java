@@ -67,6 +67,7 @@ public class Chart {
 		sb.append("}");
 		sb.append("}");
 		ChartData chartData=new ChartData(sb.toString());
+		context.addChartData(chartData);
 		return chartData;
 	}
 
