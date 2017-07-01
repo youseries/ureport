@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.bstek.ureport.build.paging.Page;
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.definition.Alignment;
 import com.bstek.ureport.definition.CellStyle;
 import com.bstek.ureport.definition.Orientation;
@@ -312,6 +313,18 @@ public class PdfProducer implements Producer {
 		if(cellData instanceof Image){
 			Image img=(Image)cellData;
 			cell=new PdfPCell(buildPdfImage(img.getBase64Data(), 0, 0));
+		}else if(cellData instanceof ChartData){
+			ChartData chartData=(ChartData)cellData;
+			String base64Data=chartData.retriveBase64Data();
+			if(base64Data!=null){
+				Image img=new Image(base64Data,chartData.getWidth(),chartData.getHeight());
+				cell=new PdfPCell(buildPdfImage(img.getBase64Data(), 0, 0));
+			}else{
+				cell=new PdfPCell();
+				CellPhrase pargraph=new CellPhrase(cellInfo,"");
+				cell.setPhrase(pargraph);
+				cell.setFixedHeight(cellHeight);
+			}
 		}else{
 			cell=new PdfPCell();
 			CellPhrase pargraph=new CellPhrase(cellInfo,cellData);

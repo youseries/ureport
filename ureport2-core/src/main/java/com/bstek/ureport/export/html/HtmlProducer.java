@@ -163,9 +163,9 @@ public class HtmlProducer{
 					sb.append("<img src=\"data:"+imageType+";base64,"+img.getBase64Data()+"\"");
 					sb.append(">");
 				}else if(obj instanceof ChartData){
-					String canvasId="_canvas_"+cell.getName()+i+"-"+j;
-					sb.append("<canvas id=\""+canvasId+"\"></canvas>");
 					ChartData chartData=(ChartData)obj;
+					String canvasId=chartData.getId();
+					sb.append("<canvas id=\""+canvasId+"\"></canvas>");
 					sb.append(chartData.buildJavascript(canvasId));
 				}else{
 					String text=obj.toString();

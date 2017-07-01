@@ -53,6 +53,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STPageOrientation;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STVerticalJc;
 
 import com.bstek.ureport.build.paging.Page;
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.definition.Alignment;
 import com.bstek.ureport.definition.Border;
 import com.bstek.ureport.definition.BorderStyle;
@@ -292,8 +293,19 @@ public class WordProducer implements Producer{
 			run.setText(String.valueOf(value));
 		}else if(value instanceof Boolean){
 			run.setText(value.toString());
-		}else if(value instanceof Image){
-			Image img=(Image)value;
+		}else if((value instanceof Image) || (value instanceof ChartData)){
+			Image img=null;
+			if(value instanceof Image){
+				img=(Image)value;
+			}else{
+				ChartData chartData=(ChartData)value;
+				String base64Data=chartData.retriveBase64Data();
+				if(base64Data!=null){
+					img=new Image(base64Data,chartData.getWidth(),chartData.getHeight());
+				}else{
+					img=new Image("",chartData.getWidth(),chartData.getHeight());					
+				}
+			}
 			String path=img.getPath();
 			String imageType="png";
 			if(StringUtils.isNotBlank(path)){

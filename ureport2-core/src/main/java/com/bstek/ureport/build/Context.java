@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.exception.CellDependencyException;
 import com.bstek.ureport.exception.DatasetUndefinitionException;
 import com.bstek.ureport.model.Cell;
@@ -47,7 +48,8 @@ public class Context {
 	private Map<String,Object> parameters;
 	private Map<String,List<Cell>> unprocessedCellsMap = new HashMap<String,List<Cell>>();
 	private Map<Row,Map<Column,Cell>> blankCellsMap=new HashMap<Row,Map<Column,Cell>>();
-	private Map<Row,Integer> fillBlankRowsMap=new HashMap<Row,Integer>(); 
+	private Map<Row,Integer> fillBlankRowsMap=new HashMap<Row,Integer>();
+	private Map<String,ChartData> chartDataMap=new HashMap<String,ChartData>();
 	
 	public Context(ReportBuilder reportBuilder,Report report,Map<String,Dataset> datasetMap,ApplicationContext applicationContext,Map<String,Object> parameters) {
 		this.reportBuilder=reportBuilder;
@@ -158,10 +160,17 @@ public class Context {
 		newCell.doFormat();
 		newCell.doDataWrapCompute(this);
 	}
+	public void addChartData(ChartData data){
+		chartDataMap.put(data.getId(), data);
+	}
+	public Map<String, ChartData> getChartDataMap() {
+		return chartDataMap;
+	}
 	
 	public Row getRow(int rowNumber){
 		return report.getRow(rowNumber);
 	}
+	
 	
 	public Column getColumn(int columnNumber){
 		return report.getColumn(columnNumber);

@@ -38,5 +38,7 @@
 	<bean id="ureport.imageServletAction" class="com.bstek.ureport.console.image.ImageServletAction"></bean>
 	<bean id="ureport.importExcelServletAction" class="com.bstek.ureport.console.importexcel.ImportExcelServletAction"></bean>
 	
+	<bean id="ureport.chartServletAction" class="com.bstek.ureport.console.chart.ChartServletAction"></bean>
+	
 	<bean id="ureport.httpSessionReportCache" class="com.bstek.ureport.console.cache.HttpSessionReportCache"></bean>
 </beans>

@@ -37,7 +37,7 @@ public class ScatterDataset extends BaseDataset {
 	private String xProperty;
 	private String yProperty;
 	
-	private boolean fill;
+	private boolean fill=true;
 	private double lineTension=0.2;
 	
 	@Override
@@ -66,13 +66,13 @@ public class ScatterDataset extends BaseDataset {
 			list.add(new ScatterData(x,y));
 		}
 		StringBuilder sb=new StringBuilder();
-		sb.append("[");
+		sb.append("{");
+		sb.append("datasets:[");
 		int index=0;
 		for(Object obj:map.keySet()){
 			if(index>0){
 				sb.append(",");
 			}
-			index++;
 			sb.append("{");
 			sb.append("label:\""+obj+"\",");
 			sb.append("fill:"+fill+",");
@@ -94,8 +94,10 @@ public class ScatterDataset extends BaseDataset {
 			}
 			sb.append("]");
 			sb.append("}");
+			index++;
 		}
 		sb.append("]");
+		sb.append("}");
 		return sb.toString();
 	}
 	@Override
