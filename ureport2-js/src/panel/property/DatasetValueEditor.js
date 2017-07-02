@@ -40,14 +40,15 @@ export default class DatasetValueEditor extends BaseValueEditor{
         tabContainer.append(mappingContainer);
         this._buildMappingTable(mappingContainer);
 
-        const datasetGroup=$(`<div class="form-group" style="margin-bottom: 5px;"><label>数据集：</label></div>`);
-        this.datasetSelect=$(`<select class="form-control" style="display: inline-block;width:100px;padding:2px;font-size: 12px;height: 25px"></select>`);
+        const datasetGroup=$(`<div class="form-group" style="margin-bottom: 5px;margin-top: 10px;"><label>数据集：</label></div>`);
+        this.datasetSelect=$(`<select class="form-control" style="display: inline-block;width:305px;padding:2px;font-size: 12px;height: 25px"></select>`);
         datasetGroup.append(this.datasetSelect);
+        dsContainer.append(datasetGroup);
 
-        const propertyGroup=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;display: inline-block;"><label>属性：</label></div>`);
-        this.propertySelect=$(`<select class="form-control" style="display: inline-block;width:140px;padding: 2px;font-size: 12px;height: 25px"></select>`);
+        const propertyGroup=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;"><label>属性：</label></div>`);
+        this.propertySelect=$(`<select class="form-control" style="display: inline-block;width:310px;padding: 2px;font-size: 12px;height: 25px"></select>`);
         propertyGroup.append(this.propertySelect);
-        datasetGroup.append(propertyGroup);
+        dsContainer.append(propertyGroup);
 
         this.datasetSelect.change(function(){
             _this.propertySelect.empty();
@@ -75,8 +76,6 @@ export default class DatasetValueEditor extends BaseValueEditor{
             const value=$(this).val();
             _this._setProperty(value);
         });
-
-        dsContainer.append(datasetGroup);
 
         const aggregateGroup=$(`<div class="form-group" style="margin-bottom: 10px;"><label>聚合方式：</label></div>`);
         this.aggregateSelect=$(`<select class="form-control" style="display: inline-block;width: 143px;font-size: 12px;height: 25px;padding: 3px;">

@@ -114,5 +114,30 @@ function buildPrintStyle(paper){
 
 window._buildChart=function(canvasId,chartJson){
     const ctx=document.getElementById(canvasId);
+    let options=chartJson.options;
+    if(!options){
+        options={};
+        chartJson.options=options;
+    }
+    let animation=options.animation;
+    if(!animation){
+        animation={};
+        options.animation=animation;
+    }
+    animation.onComplete=function(event){
+        const chart=event.chart;
+        console.log("render OK!");
+        const base64Image=chart.toBase64Image();
+        const urlParameters=window.location.search;
+        const url=window._server+'/chart/storeData'+urlParameters;
+        const canvas=$("#"+canvasId);
+        const width=chart.width;
+        const height=chart.height;
+        $.ajax({
+            type:'POST',
+            data:{_base64Data:base64Image,_chartId:canvasId,_width:width,_height:height},
+            url
+        });
+    };
     const chart=new Chart(ctx,chartJson);
 };

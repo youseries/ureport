@@ -27,13 +27,53 @@ export default class SqlDatasetDialog{
             </div>
         </div>`);
         const body=this.dialog.find('.modal-body'),footer=this.dialog.find(".modal-footer");
-        this.initSqlEditor(body);
-        this.initParameterEditor(body);
+        const container=$(`<div></div>`);
+        body.append(container);
+        const leftContainer=$(`<div style="width: 200px;display: inline-block;vertical-align: top;height: 450px;overflow: auto;"></div>`);
+        const rightContainer=$(`<div style="display: inline-block"></div>`);
+        container.append(leftContainer);
+        container.append(rightContainer);
+        this.initTables(leftContainer);
+
+        this.initSqlEditor(rightContainer);
+        this.initParameterEditor(rightContainer);
         this.initButton(footer);
+    }
+    initTables(container){
+        const searchGroup=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
+        container.append(searchGroup);
+        const searchEdior=$(`<input class="form-control" placeholder="表名查询" style="display: inline-block;width: 142px;">`);
+        searchGroup.append(searchEdior);
+        const searchButton=$(`<button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>`);
+        searchGroup.append(searchButton);
+        const _this=this;
+        searchButton.click(function(){
+            const name=searchEdior.val();
+            const rows=_this.tableBody.children('tr');
+            for(let row of rows){
+                const $row=$(row);
+                if(!name || name===""){
+                    $row.show();
+                    continue;
+                }
+                const nameTD=$row.find('a');
+                const tableName=$(nameTD).text();
+                if(tableName.indexOf(name)>-1){
+                    $row.show();
+                }else{
+                    $row.hide();
+                }
+            }
+        });
+
+        const table=$(`<table class="table table-bordered" style="font-size: 12px"><thead><tr style="height: 30px;background: #fafafa"><td style="width: 135px;vertical-align: middle">表名</td><td style="width: 35px;vertical-align: middle">类型</td></tr></thead></table>`);
+        this.tableBody=$(`<tbody></tbody>`);
+        table.append(this.tableBody);
+        container.append(table);
     }
     initSqlEditor(body){
         const nameRow=$(`<div class="row" style="margin: 10px;">数据集名称：</div>`);
-        this.nameEditor=$(`<input type="text" class="form-control" style="font-size: 13px;width:762px;display: inline-block">`);
+        this.nameEditor=$(`<input type="text" class="form-control" style="font-size: 13px;width:562px;display: inline-block">`);
         nameRow.append(this.nameEditor);
         body.append(nameRow);
 
@@ -120,10 +160,10 @@ export default class SqlDatasetDialog{
         });
     }
 
-    show(onSave,parameters){
+    show(onSave,params){
         this.onSave=onSave;
-        if(parameters){
-            this.data=parameters;
+        if(params){
+            this.data=params;
             this.parameterTable.data=this.data.parameters;
         }
         this.dialog.modal('show');
@@ -131,5 +171,46 @@ export default class SqlDatasetDialog{
         this.nameEditor.val(this.data.name);
         this.sqlEditor.val(this.data.sql);
         this.parameterTable.refreshData();
+
+        const type=this.db.type;
+        const parameters={type};
+        if(type==='jdbc'){
+            parameters.username=this.db.username;
+            parameters.password=this.db.password;
+            parameters.driver=this.db.driver;
+            parameters.url=this.db.url;
+        }else if(type==='buildin'){
+            parameters.name=this.db.name;
+        }
+        const _this=this;
+        const url=window._server+"/datasource/buildDatabaseTables";
+        $.ajax({
+            type:"POST",
+            data:parameters,
+            url,
+            success:function(tables){
+                for(let table of tables){
+                    const tr=$(`<tr style="height: 30px"></tr>`);
+                    const nameTD=$(`<td style="vertical-align: middle"><a href="###" title="双击表名添加查询">${table.name}</a></td>`);
+                    tr.append(nameTD);
+                    nameTD.dblclick(function(){
+                        const sql="select * from "+table.name+"";
+                        _this.sqlEditor.val(sql);
+                    });
+                    const typeTD=$(`<td style="vertical-align: middle"></td>`);
+                    tr.append(typeTD);
+                    const type=table.type;
+                    if(type==="TABLE"){
+                        typeTD.append('<span style="color: #49a700">表</span>')
+                    }else{
+                        typeTD.append('<span style="color: #8B2252">视图</span>')
+                    }
+                    _this.tableBody.append(tr);
+                }
+            },
+            error:function(){
+                alert("加载表失败!");
+            }
+        })
     }
 }
