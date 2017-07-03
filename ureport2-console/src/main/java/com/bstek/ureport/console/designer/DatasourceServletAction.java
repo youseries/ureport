@@ -185,22 +185,31 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		try{
 			conn=buildConnection(req);
 			stmt=conn.prepareStatement(sqlToUse);
+			int index=1;
 			for(int i=0;i<params.length;i++){
 				Object obj=params[i];
 				if(obj!=null){
 					if(obj instanceof Date){
 						Date d=(Date)obj;
 						java.sql.Date sqlDate=new java.sql.Date(d.getTime());
-						stmt.setDate(i+1, sqlDate);
+						stmt.setDate(index, sqlDate);
 					}else if(obj instanceof Boolean){
 						Boolean b=(Boolean)obj;
-						stmt.setBoolean(i+1, b);
+						stmt.setBoolean(index, b);
+					}else if(obj instanceof List){
+						List<?> list=(List<?>)obj;
+						for(Object item:list){
+							stmt.setObject(index, item);
+							index++;
+						}
+						continue;
 					}else{
-						stmt.setObject(i+1, obj);
+						stmt.setObject(index, obj);
 					}
 				}else{
-					stmt.setObject(i+1, obj);					
+					stmt.setObject(index, obj);					
 				}
+				index++;
 			}
 			rs=stmt.executeQuery();
 			ResultSetMetaData metadata=rs.getMetaData();

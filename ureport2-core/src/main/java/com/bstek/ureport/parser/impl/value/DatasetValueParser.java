@@ -64,6 +64,7 @@ public class DatasetValueParser extends ValueParser {
 					topCondition=condition;
 				}else{
 					topCondition.setNextCondition(condition);
+					topCondition.setJoin(condition.getJoin());
 				}				
 			}else if(ele.getName().equals("group-item")){
 				if(groupItems==null){

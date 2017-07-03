@@ -525,6 +525,7 @@ export default class PropertyPanel{
             let num=parseInt(char);
             if(!isNaN(num)){
                 pos=i;
+                break;
             }
         }
         const name=cellName.substring(0,pos);

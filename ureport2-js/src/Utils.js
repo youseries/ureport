@@ -253,7 +253,7 @@ export function tableToXml(context){
                     cellXml+=` r-property="${dataset.rProperty}"`;
                 }
                 if(dataset.xProperty){
-                    cellXm+=` x-property="${dataset.xProperty}"`;
+                    cellXml+=` x-property="${dataset.xProperty}"`;
                 }
                 if(dataset.yProperty){
                     cellXml+=` y-property="${dataset.yProperty}"`;

@@ -62,7 +62,7 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
         });
         legendGroup.append(xPropertyGroup);
 
-        const yPropertyGroup=$(`<div class="form-group" style="margin-bottom: 5px;"><label>X值属性：</label></div>`);
+        const yPropertyGroup=$(`<div class="form-group" style="margin-bottom: 5px;"><label>Y值属性：</label></div>`);
         this.yPropertySelect=$(`<select class="form-control" style="display: inline-block;width:285px;padding: 2px;font-size: 12px;height: 25px"></select>`);
         yPropertyGroup.append(this.yPropertySelect);
         yPropertyGroup.append(yPropertyGroup);
