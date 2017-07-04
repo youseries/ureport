@@ -77,6 +77,12 @@ public class Cell implements ReportCell {
 	 * 当前单元格计算后的实际值
 	 */
 	private Object data;
+	
+	/**
+	 * 存储当前单元格对应值在进行格式化后的值
+	 */
+	private Object formatData;
+	
 	private CellStyle cellStyle;
 	private CellStyle customCellStyle;
 	private Value value;
@@ -233,6 +239,16 @@ public class Cell implements ReportCell {
 		this.data = data;
 	}
 	
+	public Object getFormatData() {
+		if(formatData==null){
+			return data;
+		}
+		return formatData;
+	}
+	public void setFormatData(Object formatData) {
+		this.formatData = formatData;
+	}
+	
 	public void doCompute(Context context){
 		doComputeConditionProperty(context);
 		doFormat();
@@ -254,11 +270,11 @@ public class Cell implements ReportCell {
 		if(data instanceof Date){
 			Date d=(Date)data;
 			SimpleDateFormat sd=new SimpleDateFormat(format);
-			data=sd.format(d);
+			formatData=sd.format(d);
 		}else{
 			DecimalFormat df=new DecimalFormat(format);
 			BigDecimal bd=Utils.toBigDecimal(data);
-			data=df.format(bd.doubleValue());
+			formatData=df.format(bd.doubleValue());
 		}
 	}
 	

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.export.excel;
+package com.bstek.ureport.export.excel.high;
 
 import java.awt.Color;
 import java.util.HashMap;

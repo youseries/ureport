@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.export.excel;
+package com.bstek.ureport.export.excel.high;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
@@ -155,7 +155,7 @@ public class ExcelProducer {
 			        			CellRangeAddress cellRegion=new CellRangeAddress(rowNumber,(rowNumber+rowSpan),i,(i+colSpan));
 			        			sheet.addMergedRegion(cellRegion);
 			        		}
-			        		Object obj=cellInfo.getData();
+			        		Object obj=cellInfo.getFormatData();
 			        		if(obj!=null){
 				        		if(obj instanceof String){
 				        			cell.setCellValue((String)obj);     
@@ -307,7 +307,7 @@ public class ExcelProducer {
 		        			CellRangeAddress cellRegion=new CellRangeAddress(rowNumber,(rowNumber+rowSpan),i,(i+colSpan));
 		        			sheet.addMergedRegion(cellRegion);
 		        		}
-		        		Object obj=cellInfo.getData();
+		        		Object obj=cellInfo.getFormatData();
 		        		if(obj!=null){
 			        		if(obj instanceof String){
 			        			cell.setCellValue((String)obj);     

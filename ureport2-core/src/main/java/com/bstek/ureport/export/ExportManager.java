@@ -53,15 +53,30 @@ public interface ExportManager {
 	 */
 	void exportExcel(ExportConfigure config);
 	/**
+	 * 不分页导出Excel97格式文件
+	 * @param config 包含报表模版文件名、参数等信息的配置对象
+	 */
+	void exportExcel97(ExportConfigure config);
+	/**
 	 * 分页导出Excel
 	 * @param config 包含报表模版文件名、参数等信息的配置对象
 	 */
 	void exportExcelWithPaging(ExportConfigure config);
 	/**
+	 * 分页导出Excel
+	 * @param config 包含报表模版文件名、参数等信息的配置对象
+	 */
+	void exportExcel97WithPaging(ExportConfigure config);
+	/**
 	 * 分页分Sheet导出Excel
 	 * @param config 包含报表模版文件名、参数等信息的配置对象
 	 */
 	void exportExcelWithPagingSheet(ExportConfigure config);
+	/**
+	 * 分页分Sheet导出Excel
+	 * @param config 包含报表模版文件名、参数等信息的配置对象
+	 */
+	void exportExcel97WithPagingSheet(ExportConfigure config);
 	/**
 	 * 导出Word
 	 * @param config 包含报表模版文件名、参数等信息的配置对象

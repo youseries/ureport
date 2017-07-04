@@ -309,7 +309,7 @@ public class PdfProducer implements Producer {
 	
 	private PdfPCell newPdfCell(Cell cellInfo,int cellHeight) throws Exception{
 		PdfPCell cell=null;
-		Object cellData=cellInfo.getData();
+		Object cellData=cellInfo.getFormatData();
 		if(cellData instanceof Image){
 			Image img=(Image)cellData;
 			cell=new PdfPCell(buildPdfImage(img.getBase64Data(), 0, 0));
