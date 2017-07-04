@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.export.word;
+package com.bstek.ureport.export.word.high;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.paging.HeaderFooter;

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.export.word;
+package com.bstek.ureport.export.word.high;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

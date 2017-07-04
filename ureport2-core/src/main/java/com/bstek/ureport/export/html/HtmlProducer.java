@@ -147,7 +147,7 @@ public class HtmlProducer{
 					if(StringUtils.isBlank(target))target="_self";
 					sb.append("<a href=\""+linkURL+"\" target=\""+target+"\">");
 				}
-				Object obj=(cell.getData()== null) ? "&nbsp;" : cell.getData();
+				Object obj=(cell.getFormatData()== null) ? "&nbsp;" : cell.getFormatData();
 				if(obj instanceof Image){
 					Image img=(Image)obj;
 					String path=img.getPath();

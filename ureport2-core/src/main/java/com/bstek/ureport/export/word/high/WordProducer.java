@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.export.word;
+package com.bstek.ureport.export.word.high;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
@@ -62,6 +62,7 @@ import com.bstek.ureport.definition.Orientation;
 import com.bstek.ureport.definition.Paper;
 import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.export.Producer;
+import com.bstek.ureport.export.word.DxaUtils;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Column;
 import com.bstek.ureport.model.Image;
@@ -276,7 +277,7 @@ public class WordProducer implements Producer{
 		}else{
 			run=para.createRun();
 		}
-		Object value=cell.getData();
+		Object value=cell.getFormatData();
 		if(value instanceof String){
 			String text=value.toString();
 			if(text.contains("\n")){

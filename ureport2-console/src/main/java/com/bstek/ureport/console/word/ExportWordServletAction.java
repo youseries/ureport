@@ -34,7 +34,7 @@ import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.export.ExportConfigure;
 import com.bstek.ureport.export.ExportConfigureImpl;
 import com.bstek.ureport.export.ExportManager;
-import com.bstek.ureport.export.word.WordProducer;
+import com.bstek.ureport.export.word.high.WordProducer;
 import com.bstek.ureport.model.Report;
 
 /**
