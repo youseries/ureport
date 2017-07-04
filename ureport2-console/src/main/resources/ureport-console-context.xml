@@ -35,6 +35,11 @@
 		<property name="reportBuilder" ref="ureport.reportBuilder"></property>
 	</bean>
 	
+	<bean id="ureport.exportExcel97ServletAction" class="com.bstek.ureport.console.excel.ExportExcel97ServletAction">
+		<property name="exportManager" ref="ureport.exportManager"></property>
+		<property name="reportBuilder" ref="ureport.reportBuilder"></property>
+	</bean>
+	
 	<bean id="ureport.imageServletAction" class="com.bstek.ureport.console.image.ImageServletAction"></bean>
 	<bean id="ureport.importExcelServletAction" class="com.bstek.ureport.console.importexcel.ImportExcelServletAction"></bean>
 	

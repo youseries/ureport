@@ -34,17 +34,17 @@ import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.export.ExportConfigure;
 import com.bstek.ureport.export.ExportConfigureImpl;
 import com.bstek.ureport.export.ExportManager;
-import com.bstek.ureport.export.excel.high.ExcelProducer;
+import com.bstek.ureport.export.excel.low.Excel97Producer;
 import com.bstek.ureport.model.Report;
 
 /**
  * @author Jacky.gao
- * @since 2017年4月17日
+ * @since 2017年7月3日
  */
-public class ExportExcelServletAction extends BaseServletAction {
+public class ExportExcel97ServletAction extends BaseServletAction {
 	private ReportBuilder reportBuilder;
 	private ExportManager exportManager;
-	private ExcelProducer excelProducer=new ExcelProducer();
+	private Excel97Producer excelProducer=new Excel97Producer();
 	
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -72,7 +72,7 @@ public class ExportExcelServletAction extends BaseServletAction {
 		if(StringUtils.isNotBlank(fileName)){
 			fileName=decode(fileName);
 		}else{
-			fileName="ureport.xlsx";
+			fileName="ureport.xls";
 		}
 		resp.setContentType("application/octet-stream;charset=ISO8859-1");
 		resp.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
@@ -118,6 +118,6 @@ public class ExportExcelServletAction extends BaseServletAction {
 
 	@Override
 	public String url() {
-		return "/excel";
+		return "/excel97";
 	}
 }
