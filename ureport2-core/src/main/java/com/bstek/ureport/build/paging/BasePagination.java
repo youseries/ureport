@@ -94,7 +94,7 @@ public abstract class BasePagination {
 						}
 						
 						int nextRowNumber=lastRowNumber+1;
-						Row nextRow=reportRows.get(nextRowNumber-1);
+						Row nextRow=fetchNextRow(reportRows, nextRowNumber-1);
 						newCell.setRow(nextRow);
 						Map<Column,Cell> cmap=null;
 						if(rowColCellsMap.containsKey(nextRow)){
@@ -160,6 +160,18 @@ public abstract class BasePagination {
 		}
 		Page page=new Page(rows,columns);
 		return page;
+	}
+	
+	private Row fetchNextRow(List<Row> reportRows,int rowNumber){
+		Row row=null;
+		do{
+			if(rowNumber>reportRows.size()){
+				break;
+			}
+			row=reportRows.get(rowNumber);
+			rowNumber++;
+		}while(row.getRealHeight()==0);
+		return row;
 	}
 
 	private Row duplicateRepeateRow(Row row,Context context){
