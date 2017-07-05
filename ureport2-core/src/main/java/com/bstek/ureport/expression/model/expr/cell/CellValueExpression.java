@@ -26,6 +26,8 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年1月20日
  */
 public class CellValueExpression extends BaseExpression{
+	private static final long serialVersionUID = 5964924636009364350L;
+
 	@Override
 	protected ExpressionData<?> compute(Cell cell, Cell currentCell,Context context) {
 		while(!context.isCellPocessed(cell.getName())){

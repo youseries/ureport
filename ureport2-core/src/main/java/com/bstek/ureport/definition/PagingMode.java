@@ -15,10 +15,12 @@
  ******************************************************************************/
 package com.bstek.ureport.definition;
 
+import java.io.Serializable;
+
 /**
  * @author Jacky.gao
  * @since 2017年1月16日
  */
-public enum PagingMode {
+public enum PagingMode implements Serializable{
 	fitpage,fixrows
 }

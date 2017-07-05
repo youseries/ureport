@@ -26,6 +26,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年1月1日
  */
 public class SimpleValueSetExpression extends BaseExpression {
+	private static final long serialVersionUID = -5433811018086391838L;
 	private Object simpleValue;
 	public SimpleValueSetExpression(Object simpleValue) {
 		this.simpleValue=simpleValue;

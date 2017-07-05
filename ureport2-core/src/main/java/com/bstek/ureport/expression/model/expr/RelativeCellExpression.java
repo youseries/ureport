@@ -32,6 +32,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年1月21日
  */
 public class RelativeCellExpression extends CellExpression {
+	private static final long serialVersionUID = 8826396779392348224L;
 	public RelativeCellExpression(String cellName) {
 		super(cellName);
 	}

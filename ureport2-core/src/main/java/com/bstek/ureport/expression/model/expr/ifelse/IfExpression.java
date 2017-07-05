@@ -29,6 +29,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年1月16日
  */
 public class IfExpression extends BaseExpression {
+	private static final long serialVersionUID = -514395376408127087L;
 	private ExpressionConditionList conditionList;
 	private Expression expression;
 	private List<ElseIfExpression> elseIfExpressions;

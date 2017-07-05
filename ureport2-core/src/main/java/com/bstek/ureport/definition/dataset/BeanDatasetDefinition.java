@@ -27,6 +27,7 @@ import com.bstek.ureport.exception.ReportComputeException;
  * @since 2016年12月27日
  */
 public class BeanDatasetDefinition implements DatasetDefinition {
+	private static final long serialVersionUID = -1332306988025304185L;
 	private String name;
 	private String method;
 	private String clazz;

@@ -32,6 +32,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年1月1日
  */
 public class CellPairExpression extends BaseExpression {
+	private static final long serialVersionUID = 775139518725235246L;
 	private String startCellName;
 	private String endCellName;
 	public CellPairExpression(String startCellName,String endCellName) {

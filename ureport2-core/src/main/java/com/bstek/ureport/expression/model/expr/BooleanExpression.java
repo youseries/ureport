@@ -25,6 +25,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2016年12月23日
  */
 public class BooleanExpression extends BaseExpression {
+	private static final long serialVersionUID = -7372409829479132080L;
 	private Boolean value;
 	public BooleanExpression(Boolean value) {
 		this.value=value;

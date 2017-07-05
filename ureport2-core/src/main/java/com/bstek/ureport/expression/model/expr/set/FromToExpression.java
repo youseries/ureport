@@ -32,6 +32,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年1月1日
  */
 public class FromToExpression extends BaseExpression {
+	private static final long serialVersionUID = -3250140935488901894L;
 	private BaseExpression fromExpression;
 	private BaseExpression toExpression;
 	

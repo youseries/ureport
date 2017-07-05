@@ -30,6 +30,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年4月6日
  */
 public class WholeCellExpression extends CellExpression{
+	private static final long serialVersionUID = 4926788994485522808L;
 	private Condition condition;
 	public WholeCellExpression(String cellName) {
 		super(cellName);

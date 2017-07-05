@@ -29,6 +29,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年1月20日
  */
 public class CellObjectExpression extends BaseExpression {
+	private static final long serialVersionUID = 1558531964770533126L;
 	private String property;
 	public CellObjectExpression(String property) {
 		this.property=property;

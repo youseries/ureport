@@ -32,6 +32,7 @@ import com.bstek.ureport.definition.datasource.DataType;
  * @since 2016年12月27日
  */
 public class SqlDatasetDefinition implements DatasetDefinition {
+	private static final long serialVersionUID = -1134526105416805870L;
 	private String name;
 	private String sql;
 	private List<Parameter> parameters;

@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.bstek.ureport.expression.model;
 
+import java.io.Serializable;
+
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.model.Cell;
@@ -23,6 +25,6 @@ import com.bstek.ureport.model.Cell;
  * @author Jacky.gao
  * @since 2016年11月18日
  */
-public interface Expression {
+public interface Expression extends Serializable{
 	ExpressionData<?> execute(Cell cell,Cell currentCell,Context context);
 }

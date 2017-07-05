@@ -45,5 +45,7 @@
 	
 	<bean id="ureport.chartServletAction" class="com.bstek.ureport.console.chart.ChartServletAction"></bean>
 	
-	<bean id="ureport.httpSessionReportCache" class="com.bstek.ureport.console.cache.HttpSessionReportCache"></bean>
+	<bean id="ureport.httpSessionReportCache" class="com.bstek.ureport.console.cache.HttpSessionReportCache">
+		<property name="disabled" value="${ureport.disableHttpSessionReportCache}"></property>
+	</bean>
 </beans>

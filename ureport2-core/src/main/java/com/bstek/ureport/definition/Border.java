@@ -14,11 +14,15 @@
  * the License.
  ******************************************************************************/
 package com.bstek.ureport.definition;
+
+import java.io.Serializable;
+
 /**
  * @author Jacky.gao
  * @since 2014年3月12日
  */
-public class Border {
+public class Border implements Serializable{
+	private static final long serialVersionUID = 5320929211828633858L;
 	private int width;
 	private String color;
 	private BorderStyle style;

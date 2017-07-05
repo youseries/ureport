@@ -24,4 +24,5 @@ import com.bstek.ureport.model.Report;
 public interface ReportCache {
 	Report getReport(String file);
 	void storeReport(String file,Report report);
+	boolean disabled();
 }

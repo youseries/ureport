@@ -14,11 +14,15 @@
  * the License.
  ******************************************************************************/
 package com.bstek.ureport.definition;
+
+import java.io.Serializable;
+
 /**
  * @author Jacky.gao
  * @since 2014年4月29日
  */
-public class Paper {
+public class Paper implements Serializable{
+	private static final long serialVersionUID = -6153150083492704136L;
 	private int leftMargin=90;
 	private int rightMargin=90;
 	private int topMargin=72;

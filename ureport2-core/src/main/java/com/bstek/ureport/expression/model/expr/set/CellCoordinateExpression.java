@@ -35,6 +35,7 @@ import com.bstek.ureport.model.Row;
  * @since 2017年1月1日
  */
 public class CellCoordinateExpression extends CellExpression {
+	private static final long serialVersionUID = 4132183845260722859L;
 	private Condition condition;
 	private CellCoordinateSet leftCoordinate;
 	private CellCoordinateSet topCoordinate;

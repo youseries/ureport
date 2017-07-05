@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.definition;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.bstek.ureport.model.Row;
@@ -23,7 +24,8 @@ import com.bstek.ureport.model.Row;
  * @author Jacky.gao
  * @since 2016年11月1日
  */
-public class RowDefinition implements Comparable<RowDefinition>{
+public class RowDefinition implements Comparable<RowDefinition>,Serializable{
+	private static final long serialVersionUID = 8326047944994933822L;
 	private int rowNumber;
 	private int height;
 	private Band band;

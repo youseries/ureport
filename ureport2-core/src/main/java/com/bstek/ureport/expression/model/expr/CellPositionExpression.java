@@ -30,7 +30,8 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年4月5日
  */
 public class CellPositionExpression extends CellExpression {
-	
+	private static final long serialVersionUID = 6881039873078990276L;
+
 	public CellPositionExpression(String cellName) {
 		super(cellName);
 	}

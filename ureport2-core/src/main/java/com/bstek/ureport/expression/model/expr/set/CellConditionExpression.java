@@ -32,6 +32,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2017年1月1日
  */
 public class CellConditionExpression extends CellExpression {
+	private static final long serialVersionUID = 536887481808944331L;
 	protected Condition condition;
 	public CellConditionExpression(String cellName,Condition condition) {
 		super(cellName);

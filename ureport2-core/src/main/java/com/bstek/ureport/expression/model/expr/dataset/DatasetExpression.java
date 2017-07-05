@@ -39,6 +39,7 @@ import com.bstek.ureport.parser.impl.value.MappingItem;
  * @since 2016年11月18日
  */
 public class DatasetExpression extends BaseExpression {
+	private static final long serialVersionUID = -8794866509447790340L;
 	private String datasetName;
 	private AggregateType aggregate;
 	private String property;

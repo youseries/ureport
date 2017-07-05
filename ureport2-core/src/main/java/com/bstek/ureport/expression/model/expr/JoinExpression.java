@@ -33,6 +33,7 @@ import com.bstek.ureport.utils.ElUtils;
  * @since 2017年1月15日
  */
 public class JoinExpression extends BaseExpression {
+	private static final long serialVersionUID = -9045259827109781135L;
 	private List<Operator> operators;
 	private List<BaseExpression> expressions;
 	

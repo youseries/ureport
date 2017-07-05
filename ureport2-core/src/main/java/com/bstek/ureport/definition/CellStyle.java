@@ -16,6 +16,7 @@
 package com.bstek.ureport.definition;
 
 import java.awt.Font;
+import java.io.Serializable;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -24,7 +25,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author Jacky.gao
  * @since 2017年1月18日
  */
-public class CellStyle {
+public class CellStyle implements Serializable{
+	private static final long serialVersionUID = 8327688051735343849L;
 	private String bgcolor;
 	private String forecolor="0,0,0";
 	private int fontSize=10;

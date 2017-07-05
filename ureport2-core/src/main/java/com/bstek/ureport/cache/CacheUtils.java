@@ -54,8 +54,12 @@ public class CacheUtils implements ApplicationContextAware{
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		Collection<ReportCache> coll=applicationContext.getBeansOfType(ReportCache.class).values();
-		if(coll.size()>0){
-			reportCache=coll.iterator().next();
+		for(ReportCache cache:coll){
+			if(cache.disabled()){
+				continue;
+			}
+			reportCache=cache;
+			break;
 		}
 		Collection<ReportDefinitionCache> reportCaches=applicationContext.getBeansOfType(ReportDefinitionCache.class).values();
 		if(reportCaches.size()==0){

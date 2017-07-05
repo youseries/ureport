@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.definition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,8 @@ import com.bstek.ureport.model.Cell;
  * @author Jacky.gao
  * @since 2016年11月1日
  */
-public class CellDefinition {
+public class CellDefinition implements Serializable{
+	private static final long serialVersionUID = -2667510071560936139L;
 	private int rowNumber;
 	private int columnNumber;
 	private int rowSpan;

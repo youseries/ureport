@@ -25,6 +25,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2016年12月23日
  */
 public class IntegerExpression extends BaseExpression {
+	private static final long serialVersionUID = -8903608366537307519L;
 	private Integer value;
 	public IntegerExpression(Integer value) {
 		this.value=value;

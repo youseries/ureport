@@ -27,6 +27,7 @@ import com.bstek.ureport.model.Cell;
  * @since 2016年12月23日
  */
 public class NumberExpression extends BaseExpression {
+	private static final long serialVersionUID = 1694636614530741241L;
 	private BigDecimal value;
 	public NumberExpression(BigDecimal value) {
 		this.value=value;

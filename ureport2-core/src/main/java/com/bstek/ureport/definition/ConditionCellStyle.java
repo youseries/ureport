@@ -20,6 +20,7 @@ package com.bstek.ureport.definition;
  * @since 2017年4月24日
  */
 public class ConditionCellStyle extends CellStyle{
+	private static final long serialVersionUID = -3295823703567508310L;
 	private int fontSize;
 	private String fontFamily;
 	private Scope bgcolorScope=Scope.cell;

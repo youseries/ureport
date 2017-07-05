@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.definition;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -30,7 +31,8 @@ import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
  * @author Jacky.gao
  * @since 2017年1月16日
  */
-public class HeaderFooterDefinition {
+public class HeaderFooterDefinition implements Serializable{
+	private static final long serialVersionUID = -7239528314017768029L;
 	private String left;
 	private String center;
 	private String right;

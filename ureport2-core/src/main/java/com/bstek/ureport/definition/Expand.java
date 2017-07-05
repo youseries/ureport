@@ -15,10 +15,12 @@
  ******************************************************************************/
 package com.bstek.ureport.definition;
 
+import java.io.Serializable;
+
 /**
  * @author Jacky.gao
  * @since 2016年11月1日
  */
-public enum Expand {
+public enum Expand implements Serializable{
 	Right,Down,None;
 }

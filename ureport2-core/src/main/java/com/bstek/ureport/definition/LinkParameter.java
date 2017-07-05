@@ -15,13 +15,16 @@
  ******************************************************************************/
 package com.bstek.ureport.definition;
 
+import java.io.Serializable;
+
 import com.bstek.ureport.expression.model.Expression;
 
 /**
  * @author Jacky.gao
  * @since 2017年3月31日
  */
-public class LinkParameter {
+public class LinkParameter implements Serializable{
+	private static final long serialVersionUID = -5156733452111427492L;
 	private String name;
 	private String value;
 	private Expression valueExpression;

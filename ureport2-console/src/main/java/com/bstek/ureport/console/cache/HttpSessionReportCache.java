@@ -34,7 +34,7 @@ import com.bstek.ureport.model.Report;
 public class HttpSessionReportCache implements ReportCache {
 	private final String KEY="__ureport_map";
 	private final int MAX_ITEM=3;
-	
+	private boolean disabled;
 	@Override
 	public Report getReport(String file) {
 		HttpServletRequest req=RequestHolder.getRequest();
@@ -67,6 +67,14 @@ public class HttpSessionReportCache implements ReportCache {
 		map.put(file, report);
 	}
 	
+	@Override
+	public boolean disabled() {
+		return disabled;
+	}
+	
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
 
 	@SuppressWarnings("unchecked")
 	private Map<String, Report> getReportMap(HttpServletRequest req) {

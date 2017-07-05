@@ -22,7 +22,8 @@ import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
  * @since 2016年12月21日
  */
 public class DatasetValue extends DatasetExpression implements Value{
-	
+	private static final long serialVersionUID = 1892973888854385049L;
+
 	@Override
 	public ValueType getType() {
 		return ValueType.dataset;

@@ -15,11 +15,14 @@
  ******************************************************************************/
 package com.bstek.ureport.definition;
 
+import java.io.Serializable;
+
 /**
  * @author Jacky.gao
  * @since 2017年2月26日
  */
-public class BlankCellInfo {
+public class BlankCellInfo implements Serializable{
+	private static final long serialVersionUID = -7492794314898687250L;
 	private int offset;
 	private int span;
 	private boolean parent;
