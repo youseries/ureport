@@ -21,3 +21,9 @@ QQ群名称：规则报表工作流交流群（解答UReport2报表引擎、URul
 # License
 
 Apache-2.0
+
+# 分支特性
+
+* 模版编辑页面预览按钮，支持带URL参数。（默认取编辑时url除_u之外的参数）
+* 预览界面增加编辑模版按钮。默认开启按钮，按钮编号10，设置显示/隐藏方式与其他按钮相同，具体参见[主干文档](http://wiki.bsdn.org/pages/viewpage.action?pageId=76448872)
+
