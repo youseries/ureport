@@ -18,8 +18,10 @@ package com.bstek.ureport.expression.model.expr;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.expression.model.Operator;
+import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
@@ -54,6 +56,22 @@ public class JoinExpression extends BaseExpression {
 			}else if(data instanceof ObjectListExpressionData){
 				ObjectListExpressionData d=(ObjectListExpressionData)data;
 				obj=d.getData();
+			}else if(data instanceof BindDataListExpressionData){
+				BindDataListExpressionData dataList=(BindDataListExpressionData)data;
+				List<BindData> bindList=dataList.getData();
+				if(bindList.size()==1){
+					BindData bindData=bindList.get(0);
+					obj=bindData.getValue();
+				}else{
+					StringBuilder sb=new StringBuilder();
+					for(BindData bd:bindList){
+						if(sb.length()>0){
+							sb.append(",");
+						}
+						sb.append(bd.getValue());
+					}
+					obj=sb.toString();
+				}
 			}
 			if(obj==null){
 				obj="";

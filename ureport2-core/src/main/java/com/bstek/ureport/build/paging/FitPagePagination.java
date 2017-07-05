@@ -56,8 +56,11 @@ public class FitPagePagination extends BasePagination implements Pagination {
 		int pageIndex=1;
 		while(row!=null){
 			int rowRealHeight=row.getRealHeight();
+			if(rowRealHeight==0){
+				continue;
+			}
 			Band band=row.getBand();
-			if(band!=null && rowRealHeight>0){
+			if(band!=null){
 				String rowKey=row.getRowKey();
 				int index=-1;
 				if(band.equals(Band.headerrepeat)){
@@ -81,27 +84,26 @@ public class FitPagePagination extends BasePagination implements Pagination {
 					pageRepeatFooters.remove(index);
 					pageRepeatFooters.add(index,row);
 				}
+				continue;
 			}
-			if(rowRealHeight>1 && band==null){
-				rowHeight+=rowRealHeight;
-				pageRows.add(row);
-				boolean overflow=false;
-				if((i+1)<rows.size()){
-					Row nextRow=rows.get(i+1);
-					if((rowHeight+nextRow.getRealHeight()) > height){
-						overflow=true;
-					}
-				}
-				if(!overflow && row.isPageBreak()){
+			rowHeight+=rowRealHeight;
+			pageRows.add(row);
+			boolean overflow=false;
+			if((i+1)<rows.size()){
+				Row nextRow=rows.get(i+1);
+				if((rowHeight+nextRow.getRealHeight()) > height){
 					overflow=true;
 				}
-				if(overflow){
-					Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
-					pageIndex++;
-					pages.add(newPage);
-					rowHeight=repeatHeaderRowHeight+repeatFooterRowHeight;
-					pageRows=new ArrayList<Row>();
-				}
+			}
+			if(!overflow && row.isPageBreak()){
+				overflow=true;
+			}
+			if(overflow){
+				Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
+				pageIndex++;
+				pages.add(newPage);
+				rowHeight=repeatHeaderRowHeight+repeatFooterRowHeight;
+				pageRows=new ArrayList<Row>();
 			}
 			i++;
 			if(i<rowSize){

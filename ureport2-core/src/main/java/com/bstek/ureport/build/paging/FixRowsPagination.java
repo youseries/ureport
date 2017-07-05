@@ -50,8 +50,11 @@ public class FixRowsPagination extends BasePagination implements Pagination {
 		int pageIndex=1;
 		for(Row row:rows){
 			int height=row.getRealHeight();
+			if(height==0){
+				continue;
+			}
 			Band band=row.getBand();
-			if(band!=null && height>0){
+			if(band!=null){
 				String rowKey=row.getRowKey();
 				int index=-1;
 				if(band.equals(Band.headerrepeat)){
@@ -78,8 +81,6 @@ public class FixRowsPagination extends BasePagination implements Pagination {
 				if(index==-1){
 					throw new ReportComputeException("Invalid row["+band+"] with key "+rowKey+".");
 				}
-			}
-			if(height<1 && row.getBand()!=null){
 				continue;
 			}
 			pageRows.add(row);

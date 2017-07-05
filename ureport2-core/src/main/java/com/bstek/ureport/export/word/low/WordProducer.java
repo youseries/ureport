@@ -15,6 +15,60 @@
  ******************************************************************************/
 package com.bstek.ureport.export.word.low;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.usermodel.Range;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.util.Units;
+import org.apache.poi.xwpf.usermodel.BreakType;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTColumns;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageMar;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageSz;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTShd;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcBorders;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTVerticalJc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STPageOrientation;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STVerticalJc;
+
+import com.bstek.ureport.build.paging.Page;
+import com.bstek.ureport.chart.ChartData;
+import com.bstek.ureport.definition.Alignment;
+import com.bstek.ureport.definition.Border;
+import com.bstek.ureport.definition.BorderStyle;
+import com.bstek.ureport.definition.CellStyle;
+import com.bstek.ureport.definition.Orientation;
+import com.bstek.ureport.definition.Paper;
+import com.bstek.ureport.exception.ReportComputeException;
+import com.bstek.ureport.export.Producer;
+import com.bstek.ureport.export.word.DxaUtils;
+import com.bstek.ureport.model.Cell;
+import com.bstek.ureport.model.Column;
+import com.bstek.ureport.model.Image;
+import com.bstek.ureport.model.Report;
+import com.bstek.ureport.model.Row;
+import com.bstek.ureport.utils.ImageUtils;
+import com.microsoft.schemas.office.word.CTBorder;
+
 
 /**
  * @author Jacky.gao

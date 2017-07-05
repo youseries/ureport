@@ -81,7 +81,7 @@ public class ElUtils {
         Collections.reverse(postfixStack);// 将后缀式栈反转
         while (!postfixStack.isEmpty()) {
             String currentValue = postfixStack.pop();
-            if (!isOperator(currentValue.charAt(0))) {// 如果不是运算符则存入操作数栈中
+            if (currentValue.equals("") || !isOperator(currentValue.charAt(0))) {// 如果不是运算符则存入操作数栈中
                 currentValue = currentValue.replace("~", "-");
                 resultStack.push(currentValue);
             } else {// 如果是运算符则从操作数栈中取两个值和该数值一起参与运算

@@ -320,10 +320,16 @@ public class Cell implements ReportCell {
 			int rowHeight=item.getRowHeight();
 			if(rowHeight>-1){
 				row.setRealHeight(rowHeight);
+				if(rowHeight==0){
+					context.doHideProcessRow(row);
+				}
 			}
 			int colWidth=item.getColWidth();
 			if(colWidth>-1){
 				column.setWidth(colWidth);
+				if(colWidth==0){
+					context.doHideProcessColumn(column);
+				}
 			}
 			if(StringUtils.isNotBlank(item.getNewValue())){
 				this.data=item.getNewValue();
