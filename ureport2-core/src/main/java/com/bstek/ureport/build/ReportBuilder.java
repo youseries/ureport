@@ -64,6 +64,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 	private Map<String,DatasourceProvider> datasourceProviderMap=new HashMap<String,DatasourceProvider>();
 	private Map<Expand,CellBuilder> cellBuildersMap=new HashMap<Expand,CellBuilder>();
 	private NoneExpandBuilder noneExpandBuilder=new NoneExpandBuilder();
+	private HideRowColumnBuilder hideRowColumnBuilder;
 	public ReportBuilder() {
 		cellBuildersMap.put(Expand.Right,new RightExpandBuilder());
 		cellBuildersMap.put(Expand.Down,new DownExpandBuilder());
@@ -72,7 +73,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 	public Report buildReport(ReportDefinition reportDefinition,Map<String,Object> parameters) {
 		Report report = reportDefinition.newReport();
 		Map<String,Dataset> datasetMap=buildDatasets(reportDefinition, parameters, applicationContext);
-		Context context = new Context(this,report,datasetMap,applicationContext,parameters);
+		Context context = new Context(this,report,datasetMap,applicationContext,parameters,hideRowColumnBuilder);
 		long start=System.currentTimeMillis();
 		List<Cell> cells=new ArrayList<Cell>();
 		cells.add(report.getRootCell());
@@ -265,8 +266,11 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 			for(int i=0;i<rowSize;i++){
 				Row row=rows.get(i);
 				int rowRealHeight=row.getRealHeight();
+				if(rowRealHeight==0){
+					continue;
+				}
 				Band band=row.getBand();
-				if(band!=null && rowRealHeight>0){
+				if(band!=null){
 					String rowKey=row.getRowKey();
 					int index=-1;
 					if(band.equals(Band.headerrepeat)){
@@ -290,29 +294,27 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 						pageRepeatFooters.remove(index);
 						pageRepeatFooters.add(index,row);
 					} 
+					continue;
 				}
-				if(rowRealHeight>1 && band==null){
-					rowHeight+=rowRealHeight;
-					pageRows.add(row);
-					boolean overflow=false;
-					if((i+1)<rows.size()){
-						Row nextRow=rows.get(i+1);
-						if((rowHeight+nextRow.getRealHeight()) > height){
-							overflow=true;
-						}
-					}
-					if(!overflow && row.isPageBreak()){
+				rowHeight+=rowRealHeight;
+				pageRows.add(row);
+				boolean overflow=false;
+				if((i+1)<rows.size()){
+					Row nextRow=rows.get(i+1);
+					if((rowHeight+nextRow.getRealHeight()) > height){
 						overflow=true;
 					}
-					if(overflow){
-						Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
-						pageIndex++;
-						pages.add(newPage);
-						rowHeight=repeatHeaderRowHeight+repeatFooterRowHeight;
-						pageRows=new ArrayList<Row>();
-					}
 				}
-				processRowColumn(report, i, row);
+				if(!overflow && row.isPageBreak()){
+					overflow=true;
+				}
+				if(overflow){
+					Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
+					pageIndex++;
+					pages.add(newPage);
+					rowHeight=repeatHeaderRowHeight+repeatFooterRowHeight;
+					pageRows=new ArrayList<Row>();
+				}
 			}
 			if(pageRows.size()>0){
 				Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
@@ -326,10 +328,12 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 			}
 			for(int i=0;i<rowSize;i++){
 				Row row=rows.get(i);
-				processRowColumn(report, i, row);
 				int height=row.getRealHeight();
+				if(height==0){
+					continue;
+				}
 				Band band=row.getBand();
-				if(band!=null && height>0){
+				if(band!=null){
 					String rowKey=row.getRowKey();
 					int index=-1;
 					if(band.equals(Band.headerrepeat)){
@@ -357,7 +361,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 						throw new ReportComputeException("Invalid row["+band+"] with key "+rowKey+".");
 					}
 				}
-				if(height<1 || band!=null){
+				if(band!=null){
 					continue;
 				}
 				pageRows.add(row);
@@ -379,80 +383,9 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		buildSummaryRows(summaryRows, pages);
 		report.setPages(pages);
 	}
-	private void processRowColumn(Report report, int i, Row row) {
-		Map<Row, Map<Column, Cell>> cellMap=report.getRowColCellMap();
-		Map<Column,Cell> map=cellMap.get(row);
-		if(map==null){
-			return;
-		}
-		List<Row> rows=report.getRows();
-		List<Column> columns=report.getColumns();
-		int colSize=columns.size();
-		for(int j=0;j<colSize;j++){
-			Column col=columns.get(j);
-			if(col==null){
-				continue;
-			}
-			Cell cell=map.get(col);
-			if(cell==null){
-				continue;
-			}
-			int colWidth=col.getWidth();
-			int colSpan=cell.getColSpan();
-			if(colWidth<1){
-				if(colSpan>1){
-					colSpan--;
-					if(colSpan<2)colSpan=0;
-					cell.setColSpan(colSpan);
-					Column nextCol=columns.get(j+1);
-					map.put(nextCol, cell);
-				}
-				map.remove(col);
-			}else{
-				if(colSpan>1){
-					int start=j+1,end=j+colSpan;
-					for(int num=start;num<end;num++){
-						Column nextCol=columns.get(num);
-						if(nextCol.getWidth()<1){
-							colSpan--;
-						}
-					}
-					if(colSpan<2){
-						colSpan=0;
-					}
-					cell.setColSpan(colSpan);
-				}
-			}
-			int rowHeight=row.getRealHeight();
-			int rowSpan=cell.getRowSpan();
-			if(rowHeight<1){
-				if(rowSpan>1){
-					rowSpan--;
-					if(rowSpan<2)rowSpan=0;
-					cell.setRowSpan(rowSpan);
-					Row nextRow=rows.get(i+1);
-					Map<Column,Cell> cmap=cellMap.get(nextRow);
-					cmap.put(col, cell);
-				}
-			}else{
-				if(rowSpan>1){
-					int start=i+1,end=i+rowSpan;
-					for(int num=start;num<end;num++){
-						Row nextRow=rows.get(num);
-						if(nextRow.getRealHeight()<1){
-							rowSpan--;
-						}
-					}
-					if(rowSpan<2){
-						rowSpan=0;
-					}
-					cell.setRowSpan(rowSpan);
-				}
-			}
-		}
-		if(row.getRealHeight()<1){
-			cellMap.remove(row);
-		}
+	
+	public void setHideRowColumnBuilder(HideRowColumnBuilder hideRowColumnBuilder) {
+		this.hideRowColumnBuilder = hideRowColumnBuilder;
 	}
 	
 	@Override

@@ -50,14 +50,16 @@ public class Context {
 	private Map<Row,Map<Column,Cell>> blankCellsMap=new HashMap<Row,Map<Column,Cell>>();
 	private Map<Row,Integer> fillBlankRowsMap=new HashMap<Row,Integer>();
 	private Map<String,ChartData> chartDataMap=new HashMap<String,ChartData>();
+	private HideRowColumnBuilder hideRowColumnBuilder;
 	
-	public Context(ReportBuilder reportBuilder,Report report,Map<String,Dataset> datasetMap,ApplicationContext applicationContext,Map<String,Object> parameters) {
+	public Context(ReportBuilder reportBuilder,Report report,Map<String,Dataset> datasetMap,ApplicationContext applicationContext,Map<String,Object> parameters,HideRowColumnBuilder hideRowColumnBuilder) {
 		this.reportBuilder=reportBuilder;
 		this.report = report;
 		report.setContext(this);
 		this.datasetMap=datasetMap;
 		this.applicationContext=applicationContext;
 		this.parameters=parameters;
+		this.hideRowColumnBuilder=hideRowColumnBuilder;
 		Map<String,List<Cell>> cellsMap=report.getCellsMap();
 		for(String key:cellsMap.keySet()){
 			if(key.equals(report.getRootCell().getName())){
@@ -69,6 +71,14 @@ public class Context {
 		}
 		this.rootCell=new Cell();
 		this.rootCell.setName("ROOT");
+	}
+	
+	public void doHideProcessColumn(Column col) {
+		hideRowColumnBuilder.doHideProcessColumn(report, col);
+	}
+	
+	public void doHideProcessRow(Row row) {
+		hideRowColumnBuilder.doHideProcessRow(report, row);
 	}
 	
 	public void addFillBlankRow(Row row,int value){
