@@ -68,7 +68,7 @@ public class DesignerServletAction extends RenderPageServletAction {
 			context.put("contextPath", req.getContextPath());
 			resp.setContentType("text/html");
 			resp.setCharacterEncoding("utf-8");
-			Template template=ve.getTemplate("html/designer.html","utf-8");
+			Template template=ve.getTemplate("ureport-html/designer.html","utf-8");
 			PrintWriter writer=resp.getWriter();
 			template.merge(context, writer);
 			writer.close();
