@@ -52,6 +52,11 @@
 		<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-with-paging-sheet.svg' width="20px">
 	</button>
 	#end
+	#if($tools.designer)
+	<button type="button" class="btn btn-default ureport-designer" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="编辑模板">
+		<img src='${contextPath}/ureport/res/ureport-asserts/icons/edit4.svg' width="20px">
+	</button>
+	#end
 	#if($tools.paging)
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background:#f8f8f8;border:none;color:#337ab7">

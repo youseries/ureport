@@ -14,6 +14,7 @@ public class Tools {
 	private boolean pdfPrint=true;
 	private boolean pdfPreviewPrint=true;
 	private boolean paging=true;
+	private boolean designer=true;
 	public Tools(boolean init) {
 		if(init){
 			word=true;
@@ -25,6 +26,7 @@ public class Tools {
 			pdfPrint=true;
 			pdfPreviewPrint=true;
 			paging=true;
+			designer=true;
 		}else{
 			word=false;
 			excel=false;
@@ -35,6 +37,7 @@ public class Tools {
 			pdfPrint=false;
 			pdfPreviewPrint=false;
 			paging=false;
+			designer=false;
 		}
 	}
 	public void doInit(String name){
@@ -56,6 +59,8 @@ public class Tools {
 			pagingExcel=true;
 		}else if(name.equals("8")){
 			sheetPagingExcel=true;
+		}else if(name.equals("10")){
+			designer=true;
 		}
 	}
 	public boolean isWord() {
@@ -111,5 +116,11 @@ public class Tools {
 	}
 	public void setPaging(boolean paging) {
 		this.paging = paging;
+	}
+	public boolean isDesigner() {
+		return designer;
+	}
+	public void setDesigner(boolean designer) {
+		this.designer = designer;
 	}
 }
