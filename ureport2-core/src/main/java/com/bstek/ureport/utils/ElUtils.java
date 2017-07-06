@@ -82,6 +82,9 @@ public class ElUtils {
         while (!postfixStack.isEmpty()) {
             String currentValue = postfixStack.pop();
             if (currentValue.equals("") || !isOperator(currentValue.charAt(0))) {// 如果不是运算符则存入操作数栈中
+            	if(currentValue.startsWith("\"")){
+            		currentValue=currentValue.substring(1,currentValue.length()-1);
+            	}
                 currentValue = currentValue.replace("~", "-");
                 resultStack.push(currentValue);
             } else {// 如果是运算符则从操作数栈中取两个值和该数值一起参与运算
@@ -117,6 +120,7 @@ public class ElUtils {
             		currentOp = arr[i];
             		if(isInvertedComma(currentOp)){
                 		prevData=new String(arr, currentIndex, count-1);
+                		prevData="\""+prevData+"\"";
                 		break;
             		}
             		i++;
