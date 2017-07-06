@@ -10,6 +10,9 @@ UReport2是第一款基于Apache-2.0协议开源免费的中式报表引擎。
 
 文档视频教程地址：[http://wiki.bsdn.org/display/UR/ureport2+Home](http://wiki.bsdn.org/display/UR/ureport2+Home)
 
+或者 可以参考本人整理的部分[文档](https://github.com/J-cafe/ureport/blob/master/doc.md) 目前还未完善，仅供参考。
+
+
 # QQ群
 
 QQ群名称：规则报表工作流交流群（解答UReport2报表引擎、URule2规则引擎以及UFLO2工作流引擎相关问题），如您有使用问题、或改进建议，都可以在群里提交给我们。
