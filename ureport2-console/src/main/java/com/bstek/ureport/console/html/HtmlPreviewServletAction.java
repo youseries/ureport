@@ -105,7 +105,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			context.put("contextPath", req.getContextPath());
 			resp.setContentType("text/html");
 			resp.setCharacterEncoding("utf-8");
-			Template template=ve.getTemplate("html/html-preview.html","utf-8");
+			Template template=ve.getTemplate("ureport-html/html-preview.html","utf-8");
 			PrintWriter writer=resp.getWriter();
 			template.merge(context, writer);
 			writer.close();
