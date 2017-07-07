@@ -76,6 +76,9 @@ export default class ImageValueEditor extends BaseValueEditor{
             });
             _this.codeMirror.setSize('auto','120px');
             _this.codeMirror.on('change',function(cm,changes){
+                if(_this.initialize){
+                    return;
+                }
                 let expr=cm.getValue();
                 _this.cellDef.value.value=expr;
                 setDirty();
@@ -125,6 +128,7 @@ export default class ImageValueEditor extends BaseValueEditor{
     }
 
     show(cellDef,rowIndex,colIndex,row2Index,col2Index){
+        this.initialize=true;
         this.cellDef=cellDef;
         this.rowIndex=rowIndex;
         this.colIndex=colIndex;
@@ -152,6 +156,7 @@ export default class ImageValueEditor extends BaseValueEditor{
         }else if(expand==='Right'){
             this.rightExpandRadio.trigger('click');
         }
+        this.initialize=false;
     }
     hide(){
         this.container.hide();

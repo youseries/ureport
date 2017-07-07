@@ -182,7 +182,7 @@ export default class PropertyPanel{
                     width,
                     height,
                     type:'chart',
-                    category:{
+                    chart:{
                         dataset:{
                             type:'pie'
                         }

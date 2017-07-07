@@ -108,17 +108,7 @@ export default class ChartTool extends Tool{
         bubble.click(function(){
             _this._doClick('bubble');
         });
-        /*
-        const mix=$(`<li>
-                <a href="###">
-                    <i class="ureport ureport-mixchart" style="color: #0e90d2;"></i> 组合图
-                </a>
-            </li>`);
-        ul.append(mix);
-        mix.click(function(){
-            _this._doClick('mix');
-        });
-        */
+
         group.append(mainBtn);
         group.append(ul);
         return group;
@@ -170,43 +160,5 @@ export default class ChartTool extends Tool{
                 type:category
             }
         };
-        /*
-        switch (category){
-            case "pie":
-                return {
-                    dataset:{
-                        type:"pie"
-                    }
-                };
-            case "doughnut":
-                return {
-                    dataset:{
-                        type:"doughnut"
-                    }
-                };
-            case "line":
-                return {
-                    dataset:{
-                        type:"line"
-                    }
-                };
-            case "area":
-                return {type:"area"};
-            case "polar":
-                return {type:"polar"};
-            case "scatter":
-                return {type:"scatter"};
-            case "bar":
-                return {type:"bar"};
-            case "horizontalBar":
-                return {type:"horizontalBar"};
-            case "mix":
-                return {type:"mix"};
-            case "bubble":
-                return {type:"bubble"};
-            case "radar":
-                return {type:"radar"};
-        }
-        */
     }
 }

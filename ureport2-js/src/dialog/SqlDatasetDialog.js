@@ -42,7 +42,7 @@ export default class SqlDatasetDialog{
     initTables(container){
         const searchGroup=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(searchGroup);
-        const searchEdior=$(`<input class="form-control" placeholder="表名查询" style="display: inline-block;width: 142px;">`);
+        const searchEdior=$(`<input class="form-control" placeholder="表名查询" style="display: inline-block;width: 135px;">`);
         searchGroup.append(searchEdior);
         const searchButton=$(`<button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>`);
         searchGroup.append(searchButton);
