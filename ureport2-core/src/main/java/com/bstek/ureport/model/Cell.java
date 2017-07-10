@@ -558,10 +558,11 @@ public class Cell implements ReportCell {
 		if(wrapCompute==null || !wrapCompute){
 			return;
 		}
-		if(data==null || !(data instanceof String)){
+		Object targetData=getFormatData();
+		if(targetData==null || !(targetData instanceof String)){
 			return;
 		}
-		String dataText=data.toString();
+		String dataText=targetData.toString();
 		if(StringUtils.isBlank(dataText) || dataText.length()<2){
 			return;
 		}
@@ -618,7 +619,7 @@ public class Cell implements ReportCell {
 			}
 			multipleLine.append(sb);
 		}
-		this.data=multipleLine.toString();
+		this.formatData=multipleLine.toString();
 		int totalRowHeight=row.getHeight();
 		if(rowSpan>0){
 			int rowNumber=row.getRowNumber();

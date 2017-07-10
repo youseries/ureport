@@ -192,7 +192,7 @@ public abstract class BasePagination {
 			Cell newCell=cell.newCell();
 			newCell.setRow(newRow);
 			newCell.setData(cell.getData());
-			newCell.setExistPageFunction(true);
+			newCell.setExistPageFunction(cell.isExistPageFunction());
 			newMap.put(col, newCell);
 		}
 		return newRow;
