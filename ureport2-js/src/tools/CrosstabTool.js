@@ -4,6 +4,7 @@
 import Tool from './Tool.js';
 import {buildNewCellDef,setDirty,undoManager} from '../Utils.js';
 import CrossTabWidget from '../widget/CrossTabWidget.js';
+import Handsontable from 'handsontable';
 
 export default class CrosstabTool extends Tool{
     execute(){

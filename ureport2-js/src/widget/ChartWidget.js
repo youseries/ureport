@@ -9,7 +9,10 @@ export default class ChartWidget{
         this.container=container;
         this.cellDef=cellDef;
     }
-    renderChart(){
+    renderChart(container){
+        if(container){
+            this.container=container;
+        }
         this.container.empty();
         const canvas=$(`<div style="position: relative;"><canvas></canvas></div>`);
         this.container.append(canvas);

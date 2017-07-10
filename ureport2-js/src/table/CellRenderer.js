@@ -48,7 +48,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         if(!cellDef.chartWidget){
             cellDef.chartWidget=new ChartWidget($td,cellDef);
         }
-        cellDef.chartWidget.renderChart();
+        cellDef.chartWidget.renderChart($td);
     }else{
         tip=cellValue.value || "";
     }
