@@ -189,6 +189,7 @@ export default class SqlDatasetDialog{
             data:parameters,
             url,
             success:function(tables){
+                _this.tableBody.empty();
                 for(let table of tables){
                     const tr=$(`<tr style="height: 30px"></tr>`);
                     const nameTD=$(`<td style="vertical-align: middle"><a href="###" title="双击表名添加查询">${table.name}</a></td>`);

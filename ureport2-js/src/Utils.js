@@ -131,24 +131,24 @@ export function tableToXml(context){
                 cellXml+=` col-span="${colSpan}"`;
             }
 
-            const value=cellDef.value;
-            if(value.linkUrl && value.linkUrl!==''){
-                cellXml+=` link-url="${value.linkUrl}"`;
+            if(cellDef.linkUrl && cellDef.linkUrl!==''){
+                cellXml+=` link-url="${cellDef.linkUrl}"`;
             }
-            if(value.linkTargetWindow && value.linkTargetWindow!==''){
-                cellXml+=` link-target-window="${value.linkTargetWindow}"`;
+            if(cellDef.linkTargetWindow && cellDef.linkTargetWindow!==''){
+                cellXml+=` link-target-window="${cellDef.linkTargetWindow}"`;
             }
 
             cellXml+='>';
             let cellStyle=cellDef.cellStyle;
             cellXml+=buildCellStyle(cellStyle);
-            if(value.linkParameters && value.linkParameters.length>0){
-                for(let param of value.linkParameters){
+            if(cellDef.linkParameters && cellDef.linkParameters.length>0){
+                for(let param of cellDef.linkParameters){
                     cellXml+=`<link-parameter name="${param.name}">`;
                     cellXml+=`<value><![CDATA[${param.value}]]></value>`;
                     cellXml+=`</link-parameter>`;
                 }
             }
+            const value=cellDef.value;
             if(value.type==='dataset'){
                 let msg=null;
                 if(!value.datasetName){
@@ -491,7 +491,7 @@ export function tableToXml(context){
     const paper=context.reportDef.paper;
     xml+=`<paper type="${paper.paperType}" left-margin="${paper.leftMargin}" right-margin="${paper.rightMargin}"
     top-margin="${paper.topMargin}" bottom-margin="${paper.bottomMargin}" paging-mode="${paper.pagingMode}" fixrows="${paper.fixRows}"
-    width="${paper.width}" height="${paper.height}" orientation="${paper.orientation}" column-enabled="${paper.columnEnabled}"`;
+    width="${paper.width}" height="${paper.height}" orientation="${paper.orientation}" html-report-align="${paper.htmlReportAlign}" column-enabled="${paper.columnEnabled}"`;
     if(paper.columnEnabled){
         xml+=` column-count="${paper.columnCount}" column-margin="${paper.columnMargin}"`;
     }

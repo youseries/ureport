@@ -238,6 +238,20 @@ export default class SettingsDialog{
             _this.context.printLine.refresh();
             setDirty();
         });
+
+        const htmlReportAlignGroup=$(`<div class="form-group"><label>HTML报表输出时对齐方式：</label></div>`);
+        pageTab.append(htmlReportAlignGroup);
+        this.htmlReportAlignSelect=$(`<select class="form-control" style="display:inline-block;width: 175px">
+            <option value="left">居左</option>
+            <option value="center">居中</option>
+            <option value="right">居右</option>
+        </select>`);
+        this.htmlReportAlignSelect.change(function(){
+            let value=$(this).val();
+            _this.paper.htmlReportAlign=value;
+            setDirty();
+        });
+        htmlReportAlignGroup.append(this.htmlReportAlignSelect);
     }
     initHeaderFootSetting(headerFooterTab){
         const _this=this;
@@ -473,6 +487,7 @@ export default class SettingsDialog{
         this.footer=this.reportDef.footer;
         this.dialog.modal('show');
         this.pageSelect.val(this.paper.paperType);
+        this.htmlReportAlignSelect.val(this.paper.htmlReportAlign);
         this.pageWidthEditor.val(pointToMM(this.paper.width));
         this.pageHeightEditor.val(pointToMM(this.paper.height));
         this.pageSelect.trigger('change');

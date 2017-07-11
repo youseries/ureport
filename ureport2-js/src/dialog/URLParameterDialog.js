@@ -37,13 +37,13 @@ export default class URLParameterDialog{
             const param={name:'',value:''};
             _this.urlParameterItemDialog.show(function(){
                 _this.parameters.push(param);
-                const tr=$(`<tr></tr>`);
-                const nameTD=$(`<td>${param.name}</td>`);
-                const valueTD=$(`<td>${param.value}</td>`);
+                const tr=$(`<tr style="height: 30px"></tr>`);
+                const nameTD=$(`<td style="vertical-align: middle">${param.name}</td>`);
+                const valueTD=$(`<td style="vertical-align: middle">${param.value}</td>`);
                 tr.append(nameTD);
                 tr.append(valueTD);
                 _this.tbody.append(tr);
-                const td=$(`<td></td>`);
+                const td=$(`<td style="vertical-align: middle"></td>`);
                 const edit=$(`<a href="###"><i class="glyphicon glyphicon-edit" style="font-size: 12pt;color: #0000C0"></i></a>`);
                 td.append(edit);
                 edit.click(function(){
@@ -66,7 +66,7 @@ export default class URLParameterDialog{
         });
         body.append(addButton);
         const table=$(`<table class="table table-bordered">
-            <thead><tr style="background-color: #eeeeee"><td style="width: 150px">参数名</td><td style="width: 350px">参数值表达式</td><td>操作</td></tr></thead>
+            <thead><tr style="background-color: #eeeeee;height: 30px;"><td style="width: 150px;vertical-align: middle">参数名</td><td style="width: 350px;vertical-align: middle">参数值表达式</td><td style="vertical-align: middle">操作</td></tr></thead>
         </table>`);
         this.tbody=$(`<tbody></tbody>`);
         table.append(this.tbody);
@@ -78,13 +78,13 @@ export default class URLParameterDialog{
         this.tbody.empty();
         const _this=this;
         for(let param of parameters){
-            const tr=$(`<tr></tr>`);
-            const nameTD=$(`<td>${param.name}</td>`);
-            const valueTD=$(`<td>${param.value}</td>`);
+            const tr=$(`<tr style="height: 30px"></tr>`);
+            const nameTD=$(`<td style="vertical-align: middle">${param.name}</td>`);
+            const valueTD=$(`<td style="vertical-align: middle">${param.value}</td>`);
             tr.append(nameTD);
             tr.append(valueTD);
             _this.tbody.append(tr);
-            const td=$(`<td></td>`);
+            const td=$(`<td style="vertical-align: middle"></td>`);
             const edit=$(`<a href="###"><i class="glyphicon glyphicon-edit" style="font-size: 12pt;color: #0000C0"></i></a>`);
             td.append(edit);
             edit.click(function(){

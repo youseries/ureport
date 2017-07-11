@@ -70,7 +70,7 @@ export default class PropertyPanel{
         this.linkEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 310px;padding: 3px;font-size: 12px;height: 25px;">`);
         urlGroup.append(this.linkEditor);
         this.linkEditor.change(function(){
-            _this.cellDef.value.linkUrl=$(this).val();
+            _this.cellDef.linkUrl=$(this).val();
             setDirty();
         });
         const configGroup=$(`<div class="form-group" style="margin-bottom:0px"><label>目标窗口：</label></div>`);
@@ -81,21 +81,21 @@ export default class PropertyPanel{
         </select>`);
         configGroup.append(this.targetSelect);
         this.targetSelect.change(function(){
-            _this.cellDef.value.linkTargetWindow=$(this).val();
+            _this.cellDef.linkTargetWindow=$(this).val();
             setDirty();
         });
         const urlParameterDialog=new URLParameterDialog();
         const parameterButton=$(`<button type="button" class="btn btn-primary" style="margin-left: 10px;font-size: 12px;height: 25px;padding: 4px 10px;">URL参数配置</button>`);
         configGroup.append(parameterButton);
         parameterButton.click(function(){
-            if(!_this.cellDef.value.linkUrl || _this.cellDef.value.linkUrl===''){
+            if(!_this.cellDef.linkUrl || _this.cellDef.linkUrl===''){
                 alert('请先定义链接URL！');
                 return;
             }
-            if(!_this.cellDef.value.linkParameters){
-                _this.cellDef.value.linkParameters=[];
+            if(!_this.cellDef.linkParameters){
+                _this.cellDef.linkParameters=[];
             }
-            urlParameterDialog.show(_this.cellDef.value.linkParameters);
+            urlParameterDialog.show(_this.cellDef.linkParameters);
             setDirty();
         });
         this.panel.append(this.linkGroup);
@@ -400,8 +400,8 @@ export default class PropertyPanel{
         this.linkGroup.show();
         //this.rendererGroup.show();
         this.initialized=true;
-        this.linkEditor.val(cellDef.value.linkUrl);
-        this.targetSelect.val(cellDef.value.linkTargetWindow);
+        this.linkEditor.val(cellDef.linkUrl);
+        this.targetSelect.val(cellDef.linkTargetWindow);
 
         this._buildParentCellNameOptions(this.leftParentCellNameSelect);
         this._buildParentRowNumberOptions(this.leftParentRowNumberSelect);

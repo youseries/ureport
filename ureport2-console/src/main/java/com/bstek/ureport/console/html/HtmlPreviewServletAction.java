@@ -81,6 +81,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}else{
 				context.put("content", htmlReport.getContent());
 				context.put("style", htmlReport.getStyle());
+				context.put("reportAlign", htmlReport.getReportAlign());				
 				context.put("totalPage", htmlReport.getTotalPage()); 
 				context.put("pageIndex", htmlReport.getPageIndex()); 
 				context.put("error", false);
@@ -217,6 +218,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}
 			htmlReport.setContent(html);
 			htmlReport.setStyle(reportDefinition.getStyle());
+			htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
 		}else{
 			if(StringUtils.isNotBlank(pageIndex)){
 				int index=Integer.valueOf(pageIndex);
