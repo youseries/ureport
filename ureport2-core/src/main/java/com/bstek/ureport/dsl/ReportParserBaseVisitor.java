@@ -157,6 +157,13 @@ public class ReportParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitCurrentCellValue(ReportParserParser.CurrentCellValueContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitCell(ReportParserParser.CellContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

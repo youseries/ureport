@@ -18,6 +18,7 @@ package com.bstek.ureport.parser.impl;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
+import com.bstek.ureport.definition.HtmlReportAlign;
 import com.bstek.ureport.definition.Orientation;
 import com.bstek.ureport.definition.PagingMode;
 import com.bstek.ureport.definition.Paper;
@@ -71,6 +72,10 @@ public class PaperParser implements Parser<Paper> {
 		if(paper.isColumnEnabled()){
 			paper.setColumnCount(Integer.valueOf(element.attributeValue("column-count")));
 			paper.setColumnMargin(Integer.valueOf(element.attributeValue("column-margin")));
+		}
+		String htmlReportAlign=element.attributeValue("html-report-align");
+		if(StringUtils.isNotBlank(htmlReportAlign)){
+			paper.setHtmlReportAlign(HtmlReportAlign.valueOf(htmlReportAlign));
 		}
 		return paper;
 	}

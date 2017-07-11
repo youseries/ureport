@@ -50,6 +50,7 @@ public class ExportManagerImpl implements ExportManager {
 		String content=htmlProducer.produce(report);
 		htmlReport.setContent(content);
 		htmlReport.setStyle(reportDefinition.getStyle());
+		htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
 		return htmlReport;
 	}
 	
@@ -74,6 +75,7 @@ public class ExportManagerImpl implements ExportManager {
 		htmlReport.setStyle(reportDefinition.getStyle());
 		htmlReport.setPageIndex(pageIndex);
 		htmlReport.setTotalPage(pageData.getTotalPages());
+		htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
 		return htmlReport;
 	}
 	@Override

@@ -51,9 +51,9 @@ public class HtmlProducer{
 		int tableWidth=singleTableWidth*pageSize+columnMargin*(pageSize-1);
 		StringBuilder sb=new StringBuilder();
 		if(breakPage){
-			sb.append("<table border='0' class='page-break' style='border-collapse:collapse;width:"+tableWidth+"pt'>");			
+			sb.append("<table border='0' class='page-break' style='margin:auto;border-collapse:collapse;width:"+tableWidth+"pt'>");			
 		}else{
-			sb.append("<table border='0' class='page-break' style='border-collapse:collapse;width:"+tableWidth+"pt'>");			
+			sb.append("<table border='0' class='page-break' style='margin:auto;border-collapse:collapse;width:"+tableWidth+"pt'>");			
 		}
 		sb.append("<tr>");
 		for(int i=0;i<pageSize;i++){
@@ -83,9 +83,9 @@ public class HtmlProducer{
 		StringBuilder sb=new StringBuilder();
 		int tableWidth=buildTableWidth(columns);
 		if(breakPage){
-			sb.append("<table class='page-break' border='0' style='border-collapse:collapse;width:"+tableWidth+"pt'>");						
+			sb.append("<table class='page-break' border='0' style='margin:auto;border-collapse:collapse;width:"+tableWidth+"pt'>");						
 		}else{
-			sb.append("<table border='0' style='border-collapse:collapse;width:"+tableWidth+"pt'>");						
+			sb.append("<table border='0' style='margin:auto;border-collapse:collapse;width:"+tableWidth+"pt'>");						
 		}
 		int colSize=columns.size();
 		int rowSize=rows.size();

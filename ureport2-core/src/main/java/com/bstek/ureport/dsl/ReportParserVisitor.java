@@ -138,6 +138,12 @@ public interface ReportParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRelativeCell(ReportParserParser.RelativeCellContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ReportParserParser#currentCellValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCurrentCellValue(ReportParserParser.CurrentCellValueContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ReportParserParser#cell}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

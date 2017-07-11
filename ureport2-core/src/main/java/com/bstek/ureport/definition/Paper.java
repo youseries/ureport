@@ -33,6 +33,7 @@ public class Paper implements Serializable{
 	private int width;
 	private int height;
 	private Orientation orientation;
+	private HtmlReportAlign htmlReportAlign=HtmlReportAlign.left;
 	
 	private boolean columnEnabled;
 	private int columnCount=2;
@@ -132,5 +133,13 @@ public class Paper implements Serializable{
 
 	public void setColumnMargin(int columnMargin) {
 		this.columnMargin = columnMargin;
+	}
+
+	public HtmlReportAlign getHtmlReportAlign() {
+		return htmlReportAlign;
+	}
+
+	public void setHtmlReportAlign(HtmlReportAlign htmlReportAlign) {
+		this.htmlReportAlign = htmlReportAlign;
 	}
 }

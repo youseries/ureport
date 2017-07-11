@@ -272,9 +272,15 @@ public class Cell implements ReportCell {
 			SimpleDateFormat sd=new SimpleDateFormat(format);
 			formatData=sd.format(d);
 		}else{
-			DecimalFormat df=new DecimalFormat(format);
-			BigDecimal bd=Utils.toBigDecimal(data);
-			formatData=df.format(bd.doubleValue());
+			BigDecimal bd=null;
+			try{
+				bd=Utils.toBigDecimal(data);				
+			}catch(Exception ex){
+			}
+			if(bd!=null){				
+				DecimalFormat df=new DecimalFormat(format);
+				formatData=df.format(bd.doubleValue());
+			}
 		}
 	}
 	

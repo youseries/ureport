@@ -24,6 +24,7 @@ public class HtmlReport {
 	private String style;
 	private int totalPage;
 	private int pageIndex;
+	private String reportAlign;
 	
 	public String getContent() {
 		return content;
@@ -48,5 +49,11 @@ public class HtmlReport {
 	}
 	public void setPageIndex(int pageIndex) {
 		this.pageIndex = pageIndex;
+	}
+	public String getReportAlign() {
+		return reportAlign;
+	}
+	public void setReportAlign(String reportAlign) {
+		this.reportAlign = reportAlign;
 	}
 }

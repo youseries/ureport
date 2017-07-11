@@ -48,6 +48,7 @@ import com.bstek.ureport.expression.parse.ExpressionVisitor;
 import com.bstek.ureport.expression.parse.builder.BooleanExpressionBuilder;
 import com.bstek.ureport.expression.parse.builder.CellObjectExpressionBuilder;
 import com.bstek.ureport.expression.parse.builder.CellPositionExpressionBuilder;
+import com.bstek.ureport.expression.parse.builder.CurrentCellValueExpressionBuilder;
 import com.bstek.ureport.expression.parse.builder.DatasetExpressionBuilder;
 import com.bstek.ureport.expression.parse.builder.ExpressionBuilder;
 import com.bstek.ureport.expression.parse.builder.FunctionExpressionBuilder;
@@ -80,6 +81,7 @@ public class ExpressionUtils implements ApplicationContextAware{
 		expressionBuilders.add(new SetExpressionBuilder());
 		expressionBuilders.add(new CellObjectExpressionBuilder());
 		expressionBuilders.add(new NullExpressionBuilder());
+		expressionBuilders.add(new CurrentCellValueExpressionBuilder());
 		
 		assertorsMap.put(Op.Equals, new EqualsAssertor());
 		assertorsMap.put(Op.EqualsGreatThen, new EqualsGreatThenAssertor());

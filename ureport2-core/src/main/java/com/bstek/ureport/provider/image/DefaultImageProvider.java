@@ -44,7 +44,12 @@ public class DefaultImageProvider implements ImageProvider,ApplicationContextAwa
 				return new FileInputStream(path);
 			}
 		} catch (IOException e) {
-			throw new ReportComputeException(e);
+			path="classpath:com/bstek/ureport/image/image-not-exist.jpg";
+			try {
+				return applicationContext.getResource(path).getInputStream();
+			} catch (IOException e1) {
+				throw new ReportComputeException(e1);
+			}
 		}
 	}
 

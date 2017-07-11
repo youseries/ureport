@@ -40,6 +40,7 @@ unit : dataset
 	 | set
 	 | cellPosition
 	 | relativeCell
+	 | currentCellValue
 	 | cell
 	 | INTEGER
 	 | BOOLEAN
@@ -51,6 +52,8 @@ unit : dataset
 cellPosition : '&'Cell ;//表示单元格位置
 
 relativeCell : '$'Cell ; //表示当前引用对应的单元格的值
+
+currentCellValue : '#' ;//表示当前单元格值
 
 cell : 'cell' ('.'property)? ;
 
