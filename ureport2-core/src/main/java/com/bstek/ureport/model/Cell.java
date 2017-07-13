@@ -326,14 +326,14 @@ public class Cell implements ReportCell {
 			int rowHeight=item.getRowHeight();
 			if(rowHeight>-1){
 				row.setRealHeight(rowHeight);
-				if(rowHeight==0){
+				if(rowHeight==0 && !row.isHide()){
 					context.doHideProcessRow(row);
 				}
 			}
 			int colWidth=item.getColWidth();
 			if(colWidth>-1){
 				column.setWidth(colWidth);
-				if(colWidth==0){
+				if(colWidth==0 && !column.isHide()){
 					context.doHideProcessColumn(column);
 				}
 			}

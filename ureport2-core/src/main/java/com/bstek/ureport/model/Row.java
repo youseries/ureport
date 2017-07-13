@@ -35,6 +35,7 @@ public class Row extends Line{
 	private Band band;
 	private boolean forPaging;
 	private boolean pageBreak;
+	private boolean hide;
 	
 	private List<Row> rows;
 	
@@ -108,5 +109,13 @@ public class Row extends Line{
 
 	public void setRealHeight(int realHeight) {
 		this.realHeight = realHeight;
+	}
+
+	public boolean isHide() {
+		return hide;
+	}
+
+	public void setHide(boolean hide) {
+		this.hide = hide;
 	}
 }

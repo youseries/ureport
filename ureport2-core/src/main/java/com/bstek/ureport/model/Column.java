@@ -38,7 +38,6 @@ public class Column extends Line{
 	public Column newColumn(){
 		Column col=new Column(columns);
 		col.setWidth(width);
-		col.setHide(hide);
 		return col;
 	}
 	

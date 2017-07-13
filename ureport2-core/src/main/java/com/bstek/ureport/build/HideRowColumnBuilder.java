@@ -16,9 +16,10 @@ import com.bstek.ureport.model.Row;
 public class HideRowColumnBuilder {
 	public void doHideProcessColumn(Report report, Column col) {
 		int colWidth=col.getWidth();
-		if(colWidth>0){
+		if(colWidth>0 || col.isHide()){
 			return;
 		}
+		col.setHide(true);
 		List<Column> columns=report.getColumns();
 		int colNumber=col.getColumnNumber();
 		Map<Row, Map<Column, Cell>> cellMap=report.getRowColCellMap();
@@ -58,9 +59,10 @@ public class HideRowColumnBuilder {
 	
 	public void doHideProcessRow(Report report, Row row) {
 		int rowHeight=row.getRealHeight();
-		if(rowHeight>0){
+		if(rowHeight>0 || row.isHide()){
 			return;
 		}
+		row.setHide(true);
 		Map<Row, Map<Column, Cell>> cellMap=report.getRowColCellMap();
 		Map<Column,Cell> map=cellMap.get(row);
 		if(map==null){

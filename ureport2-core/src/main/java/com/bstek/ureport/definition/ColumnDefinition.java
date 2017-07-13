@@ -30,7 +30,6 @@ public class ColumnDefinition implements Comparable<ColumnDefinition>{
 	
 	protected Column newColumn(List<Column> columns){
 		Column col=new Column(columns);
-		col.setHide(hide);
 		col.setWidth(width);
 		return col;
 	}
