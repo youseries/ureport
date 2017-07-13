@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +89,7 @@ public abstract class CategoryDataset extends BaseDataset {
 				}
 				valueList.add(value);
 			}else{
-				Map<Object,List<Object>> categoryMap=new HashMap<Object,List<Object>>();
+				Map<Object,List<Object>> categoryMap=new LinkedHashMap<Object,List<Object>>();
 				seriesDataMap.put(series, categoryMap);
 				for(Object cg:categoryList){
 					categoryMap.put(cg, new ArrayList<Object>());
