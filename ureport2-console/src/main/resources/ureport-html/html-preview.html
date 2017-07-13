@@ -11,6 +11,7 @@
  	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/js/preview.bundle.js"></script>
 </head>
 <body style="margin:5px">
+#if($tools.show)
 <div style="border:solid 1px #ddd;border-radius:5px;height:35px;width:100%;margin-bottom:5px;background:#f8f8f8">
 	<div style="text-align:${reportAlign}">
 		#if($tools.print)
@@ -89,6 +90,7 @@
 		#end
 	</div>
 </div>
+#end
 <div id="_ureport_table" style="float:${reportAlign}">
 	${content}
 </div>

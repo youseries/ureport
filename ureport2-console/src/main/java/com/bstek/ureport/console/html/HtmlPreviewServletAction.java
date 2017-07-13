@@ -92,9 +92,13 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				String toolsInfo=req.getParameter("_t");
 				if(StringUtils.isNotBlank(toolsInfo)){
 					tools=new Tools(false);
-					String[] infos=toolsInfo.split(",");
-					for(String name:infos){
-						tools.doInit(name);
+					if(toolsInfo.equals("0")){
+						tools.setShow(false);
+					}else{
+						String[] infos=toolsInfo.split(",");
+						for(String name:infos){
+							tools.doInit(name);
+						}						
 					}
 					context.put("_t", toolsInfo);
 					context.put("hasTools", true);

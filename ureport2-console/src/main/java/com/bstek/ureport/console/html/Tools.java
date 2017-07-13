@@ -5,6 +5,7 @@ package com.bstek.ureport.console.html;
  * @since 2017年6月1日
  */
 public class Tools {
+	private boolean show=true;
 	private boolean word=true;
 	private boolean excel=true;
 	private boolean pdf=true;
@@ -57,6 +58,12 @@ public class Tools {
 		}else if(name.equals("8")){
 			sheetPagingExcel=true;
 		}
+	}
+	public boolean isShow() {
+		return show;
+	}
+	public void setShow(boolean show) {
+		this.show = show;
 	}
 	public boolean isWord() {
 		return word;
