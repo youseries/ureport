@@ -22,6 +22,10 @@ import com.bstek.ureport.build.Context;
 import com.bstek.ureport.chart.axes.impl.XAxes;
 import com.bstek.ureport.chart.axes.impl.YAxes;
 import com.bstek.ureport.chart.dataset.Dataset;
+import com.bstek.ureport.chart.dataset.impl.BubbleDataset;
+import com.bstek.ureport.chart.dataset.impl.ScatterDataset;
+import com.bstek.ureport.chart.dataset.impl.category.BarDataset;
+import com.bstek.ureport.chart.dataset.impl.category.LineDataset;
 import com.bstek.ureport.chart.option.Option;
 import com.bstek.ureport.model.Cell;
 
@@ -61,8 +65,16 @@ public class Chart {
 				}
 				sb.append(yaxes.toJson());
 				sb.append("]");
+			}else{
+				if(hasYAxes(dataset)){
+					sb.append(",yAxes:[{ticks:{min:0}}]");					
+				}
 			}
 			sb.append("}");
+		}else{
+			if(hasYAxes(dataset)){
+				sb.append("scales:{yAxes:[{ticks:{min:0}}]}");				
+			}
 		}
 		sb.append("}");
 		sb.append("}");
@@ -71,6 +83,22 @@ public class Chart {
 		return chartData;
 	}
 
+	private boolean hasYAxes(Dataset dataset){
+		if(dataset instanceof BarDataset){
+			return true;
+		}
+		if(dataset instanceof LineDataset){
+			return true;
+		}
+		if(dataset instanceof BubbleDataset){
+			return true;
+		}
+		if(dataset instanceof ScatterDataset){
+			return true;
+		}
+		return false;
+	}
+	
 	public List<Option> getOptions() {
 		return options;
 	}

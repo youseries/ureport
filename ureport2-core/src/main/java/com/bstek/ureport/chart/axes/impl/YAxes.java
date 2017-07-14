@@ -30,6 +30,7 @@ public class YAxes extends BaseAxes {
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
 		sb.append("ticks:{");
+		sb.append("min:0,");
 		sb.append("minRotation:"+getRotation()+"");
 		sb.append("}");
 		ScaleLabel scaleLabel=getScaleLabel();

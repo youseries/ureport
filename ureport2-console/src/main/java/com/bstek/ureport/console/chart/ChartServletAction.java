@@ -44,6 +44,7 @@ public class ChartServletAction extends RenderPageServletAction {
 		}
 		Map<String, ChartData> map=report.getContext().getChartDataMap();
 		ChartData chartData=map.get(chartId);
+		if(chartData==null)return;
 		chartData.setBase64Data(base64Data);
 		String width=req.getParameter("_width");
 		String height=req.getParameter("_height");
