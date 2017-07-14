@@ -1,6 +1,7 @@
 /**
  * Created by Jacky.Gao on 2017-06-23.
  */
+import {setDirty} from '../../../Utils.js';
 
 export default class ChartValueEditor{
     constructor(){
@@ -17,6 +18,7 @@ export default class ChartValueEditor{
         this.durationEditor.change(function(){
             const targetOption=_this.getTargetOption('animation');
             targetOption.duration=$(this).val();
+            setDirty();
         });
         const easingGroup=$(`<span style="margin-left: 20px">效果：</span>`);
         g.append(easingGroup);
@@ -33,6 +35,7 @@ export default class ChartValueEditor{
         this.easingSelect.change(function(){
             const targetOption=_this.getTargetOption('animation');
             targetOption.easing=$(this).val();
+            setDirty();
         });
     }
     initPaddingOption(container){
@@ -55,6 +58,7 @@ export default class ChartValueEditor{
                 padding:targetOption.padding
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         const downGroup=$(`<span style="margin-left: 10px">下：</span>`);
@@ -72,6 +76,7 @@ export default class ChartValueEditor{
                 padding:targetOption.padding
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         const leftGroup=$(`<span style="margin-left: 10px">左：</span>`);
@@ -89,6 +94,7 @@ export default class ChartValueEditor{
                 padding:targetOption.padding
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         const rightGroup=$(`<span style="margin-left: 10px">右：</span>`);
@@ -106,6 +112,7 @@ export default class ChartValueEditor{
                 padding:targetOption.padding
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
     }
     initLegendOption(container){
@@ -132,6 +139,7 @@ export default class ChartValueEditor{
                 position:targetOption.position
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
         this.hideLegendRadio.children('input').change(function(){
             const targetOption=_this.getTargetOption('legend');
@@ -142,6 +150,7 @@ export default class ChartValueEditor{
                 display:false
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         this.legendPositionGroup=$(`<span style="margin-left: 20px">位置：</span>`);
@@ -162,6 +171,7 @@ export default class ChartValueEditor{
                 position:targetOption.position
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
     }
     initTitleOption(container){
@@ -192,6 +202,7 @@ export default class ChartValueEditor{
                 position:'top'
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
         this.hideTitleRadio.children('input').change(function(){
             const targetOption=_this.getTargetOption('title');
@@ -203,6 +214,7 @@ export default class ChartValueEditor{
                 display:false
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         this.titlePositionGroup=$(`<span style="margin-left: 15px">位置：</span>`);
@@ -225,6 +237,7 @@ export default class ChartValueEditor{
                 position:targetOption.position
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         this.titleTextGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>标题内容：</label></div>`);
@@ -241,6 +254,7 @@ export default class ChartValueEditor{
                 position:targetOption.position
             };
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
         this.titleTextGroup.hide();
         this.titlePositionGroup.hide();

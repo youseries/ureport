@@ -2,6 +2,7 @@
  * Created by Jacky.Gao on 2017-06-27.
  */
 import CategoryChartValueEditor from './CategoryChartValueEditor.js';
+import {setDirty} from '../../../Utils.js';
 
 export default class ScatterChartValueEditor extends CategoryChartValueEditor{
     constructor(parentContainer,context){
@@ -59,6 +60,7 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
         this.xPropertySelect.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.xProperty=$(this).val();
+            setDirty();
         });
         legendGroup.append(xPropertyGroup);
 
@@ -69,6 +71,7 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
         this.yPropertySelect.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.yProperty=$(this).val();
+            setDirty();
         });
         legendGroup.append(yPropertyGroup);
 
@@ -80,6 +83,7 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
         this.rPropertySelect.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.rProperty=$(this).val();
+            setDirty();
         });
         legendGroup.append(rPropertyGroup);
 
@@ -108,6 +112,10 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
                 _this.yPropertySelect.append(`<option>${field.name}</option>`);
                 _this.rPropertySelect.append(`<option>${field.name}</option>`);
             }
+            _this.categoryPropertySelect.append(`<option selected></option>`);
+            _this.xPropertySelect.append(`<option selected></option>`);
+            _this.yPropertySelect.append(`<option selected></option>`);
+            _this.rPropertySelect.append(`<option selected></option>`);
             const dataset=_this.getDatasetConfig();
             dataset.datasetName=dsName;
         });
@@ -137,6 +145,7 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
                 this.datasetSelect.append(`<option>${dataset.name}</option>`);
             }
         }
+        this.datasetSelect.append(`<option selected></option>`);
         const dataset=chart.dataset;
         this.datasetSelect.val(dataset.datasetName);
         this.datasetSelect.trigger('change');
@@ -149,9 +158,23 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
 
         const xaxes=chart.xaxes || {rotation:0,xposition:'left'};
         this.xAxesRotationEditor.val(xaxes.rotation);
+        const xScaleLabel=xaxes.scaleLabel || {};
+        if(xScaleLabel.display){
+            this.showXTitleRadio.trigger('click');
+            this.xTitleEditor.val(xScaleLabel.labelString);
+        }else{
+            this.hideXTitleRadio.trigger('click');
+        }
 
-        const yaxes=chart.xaxes || {rotation:0,yposition:'bottom'};
+        const yaxes=chart.yaxes || {rotation:0,yposition:'bottom'};
         this.yAxesRotationEditor.val(yaxes.rotation);
+        const yScaleLabel=yaxes.scaleLabel || {};
+        if(yScaleLabel.display){
+            this.showYTitleRadio.trigger('click');
+            this.yTitleEditor.val(yScaleLabel.labelString);
+        }else{
+            this.hideYTitleRadio.trigger('click');
+        }
 
         const options=chart.options || [];
         for(let option of options){

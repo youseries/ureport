@@ -2,6 +2,7 @@
  * Created by Jacky.Gao on 2017-06-25.
  */
 import ChartValueEditor from './ChartValueEditor.js';
+import {setDirty} from '../../../Utils.js';
 
 export default class CategoryChartValueEditor extends ChartValueEditor{
     constructor(){
@@ -25,6 +26,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
         this.categoryPropertySelect.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.categoryProperty=$(this).val();
+            setDirty();
         });
 
         const valuePropertyGroup=$(`<div class="form-group"><label>值属性：</label></div>`);
@@ -34,6 +36,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
         this.valuePropertySelect.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.valueProperty=$(this).val();
+            setDirty();
         });
 
         const seriesGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>系列值：</label></div>`);
@@ -47,12 +50,14 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             _this.seriesTextGroup.hide();
             const dataset=_this.getDatasetConfig();
             dataset.seriesType='property';
+            setDirty();
         });
         this.textSeriesRadio.children('input').click(function(){
             _this.seriesPropertyGroup.hide();
             _this.seriesTextGroup.show();
             const dataset=_this.getDatasetConfig();
             dataset.seriesType='text';
+            setDirty();
         });
 
         this.seriesPropertyGroup=$(`<div class="form-group"  style="margin-left: 10px"><span>属性：</span></div>`);
@@ -62,6 +67,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
         this.seriesPropertySelect.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.seriesProperty=$(this).val();
+            setDirty();
         });
         this.seriesPropertyGroup.hide();
         this.seriesTextGroup=$(`<div class="form-group" style="margin-left: 10px"><span>静态值：</span></div>`);
@@ -71,6 +77,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
         this.seriesTextEditor.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.seriesText=$(this).val();
+            setDirty();
         });
 
         this.datasetSelect.change(function(){
@@ -96,8 +103,12 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
                 _this.seriesPropertySelect.append(`<option>${field.name}</option>`);
                 _this.valuePropertySelect.append(`<option>${field.name}</option>`);
             }
+            _this.categoryPropertySelect.append(`<option selected></option>`);
+            _this.seriesPropertySelect.append(`<option selected></option>`);
+            _this.valuePropertySelect.append(`<option selected></option>`);
             const dataset=_this.getDatasetConfig();
             dataset.datasetName=dsName;
+            setDirty();
         });
 
         const aggregateGroup=$(`<div class="form-group" style="margin-bottom: 5px"><label>聚合方式：</label></div>`);
@@ -109,11 +120,13 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             <option value="max">最大值</option>
             <option value="min">最小值</option>
             <option value="avg">平均值</option>
+            <option selected></option>
         </select>`);
         aggregateGroup.append(this.aggregateSelect);
         this.aggregateSelect.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.collectType=$(this).val();
+            setDirty();
         });
     }
     initXAxes(container){
@@ -131,6 +144,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             const targetTicks=_this.getXTicks();
             targetTicks.minRotation=xaxes.rotation;
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         const formatGroup=$(`<div class="form-group" style="margin-bottom: 10px"><label>标题格式化：</label></div>`);
@@ -141,6 +155,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
         this.formatEditor.change(function(){
             const dataset=_this.getDatasetConfig();
             dataset.format=$(this).val();
+            setDirty();
         });
 
         const displayGroup=$(`<div class="form-group" style="margin-bottom: 10px"><label>显示轴标题：</label></div>`);
@@ -162,6 +177,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             const targetScaleLabel=_this.getXScaleLabel();
             targetScaleLabel.display=true;
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
         this.hideXTitleRadio.children('input').change(function(){
             _this.xTitleGroup.hide();
@@ -176,6 +192,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             const targetScaleLabel=_this.getXScaleLabel();
             targetScaleLabel.display=false;
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         this.xTitleGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>轴标题：</label></div>`);
@@ -194,6 +211,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             const targetScaleLabel=_this.getXScaleLabel();
             targetScaleLabel.labelString=$(this).val();
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
         this.xTitleGroup.hide();
     }
@@ -213,6 +231,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             const targetTicks=_this.getYTicks();
             targetTicks.minRotation=yaxes.rotation;
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
 
@@ -235,6 +254,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             const targetScaleLabel=_this.getYScaleLabel();
             targetScaleLabel.display=true;
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
         this.hideYTitleRadio.children('input').change(function(){
             _this.yTitleGroup.hide();
@@ -249,6 +269,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             const targetScaleLabel=_this.getYScaleLabel();
             targetScaleLabel.display=false;
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
 
         this.yTitleGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>轴标题：</label></div>`);
@@ -267,6 +288,7 @@ export default class CategoryChartValueEditor extends ChartValueEditor{
             const targetScaleLabel=_this.getYScaleLabel();
             targetScaleLabel.labelString=$(this).val();
             _this.cellDef.chartWidget.chart.update();
+            setDirty();
         });
         this.yTitleGroup.hide();
     }

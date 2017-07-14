@@ -66,6 +66,7 @@ export default class BarChartValueEditor extends CategoryChartValueEditor{
                 this.datasetSelect.append(`<option>${dataset.name}</option>`);
             }
         }
+        this.datasetSelect.append(`<option selected></option>`);
         const dataset=chart.dataset;
         this.datasetSelect.val(dataset.datasetName);
         this.datasetSelect.trigger('change');
@@ -83,9 +84,23 @@ export default class BarChartValueEditor extends CategoryChartValueEditor{
 
         const xaxes=chart.xaxes || {rotation:0,xposition:'left'};
         this.xAxesRotationEditor.val(xaxes.rotation);
+        const xScaleLabel=xaxes.scaleLabel || {};
+        if(xScaleLabel.display){
+            this.showXTitleRadio.trigger('click');
+            this.xTitleEditor.val(xScaleLabel.labelString);
+        }else{
+            this.hideXTitleRadio.trigger('click');
+        }
 
-        const yaxes=chart.xaxes || {rotation:0,yposition:'bottom'};
+        const yaxes=chart.yaxes || {rotation:0,yposition:'bottom'};
         this.yAxesRotationEditor.val(yaxes.rotation);
+        const yScaleLabel=yaxes.scaleLabel || {};
+        if(yScaleLabel.display){
+            this.showYTitleRadio.trigger('click');
+            this.yTitleEditor.val(yScaleLabel.labelString);
+        }else{
+            this.hideYTitleRadio.trigger('click');
+        }
 
         const options=chart.options || [];
         for(let option of options){
