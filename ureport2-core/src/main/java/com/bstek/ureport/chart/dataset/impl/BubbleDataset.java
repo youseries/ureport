@@ -16,7 +16,7 @@
 package com.bstek.ureport.chart.dataset.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +40,7 @@ public class BubbleDataset extends BaseDataset {
 	
 	@Override
 	public String buildDataJson(Context context,Cell cell) {
-		Map<Object,List<BubbleData>> map=new HashMap<Object,List<BubbleData>>();
+		Map<Object,List<BubbleData>> map=new LinkedHashMap<Object,List<BubbleData>>();
 		List<?> dataList=DataUtils.fetchData(cell, context, datasetName);
 		for(Object obj:dataList){
 			if(obj==null){
