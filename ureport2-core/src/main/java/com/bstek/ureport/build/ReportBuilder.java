@@ -16,6 +16,7 @@
 package com.bstek.ureport.build;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -126,15 +127,23 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 			if(dsDef instanceof JdbcDatasourceDefinition){
 				String dsName=dsDef.getName();
 				Connection conn=null;
-				if(datasourceProviderMap.containsKey(dsName)){
-					conn=datasourceProviderMap.get(dsName).getConnection();
-				}
-				JdbcDatasourceDefinition ds=(JdbcDatasourceDefinition)dsDef;
-				List<Dataset> ls=ds.buildDatasets(conn, parameters);
-				if(ls!=null){
-					for(Dataset dataset:ls){
-						datasetMap.put(dataset.getName(), dataset);
-					}					
+				try{
+					if(datasourceProviderMap.containsKey(dsName)){
+						conn=datasourceProviderMap.get(dsName).getConnection();
+					}
+					JdbcDatasourceDefinition ds=(JdbcDatasourceDefinition)dsDef;
+					List<Dataset> ls=ds.buildDatasets(conn, parameters);
+					if(ls!=null){
+						for(Dataset dataset:ls){
+							datasetMap.put(dataset.getName(), dataset);
+						}					
+					}
+				}finally{
+					if(conn!=null){
+						try {
+							conn.close();
+						} catch (SQLException e) {}
+					}
 				}
 			}else if(dsDef instanceof SpringBeanDatasourceDefinition){
 				SpringBeanDatasourceDefinition ds=(SpringBeanDatasourceDefinition)dsDef;
@@ -147,23 +156,31 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 			}else if(dsDef instanceof BuildinDatasourceDefinition){
 				String dsName=dsDef.getName();
 				Connection conn=null;
-				if(datasourceProviderMap.containsKey(dsName)){
-					conn=datasourceProviderMap.get(dsName).getConnection();
-				}
-				for(BuildinDatasource datasource:Utils.getBuildinDatasources()){
-					if(datasource.name().equals(dsName)){
-						conn=datasource.getConnection();
-						break;
+				try{
+					if(datasourceProviderMap.containsKey(dsName)){
+						conn=datasourceProviderMap.get(dsName).getConnection();
 					}
-				}
-				if(conn==null){
-					throw new ReportComputeException("Buildin datasource ["+dsName+"] not exist.");
-				}
-				BuildinDatasourceDefinition ds=(BuildinDatasourceDefinition)dsDef;
-				List<Dataset> ls=ds.buildDatasets(conn, parameters);
-				if(ls!=null){					
-					for(Dataset dataset:ls){
-						datasetMap.put(dataset.getName(), dataset);
+					for(BuildinDatasource datasource:Utils.getBuildinDatasources()){
+						if(datasource.name().equals(dsName)){
+							conn=datasource.getConnection();
+							break;
+						}
+					}
+					if(conn==null){
+						throw new ReportComputeException("Buildin datasource ["+dsName+"] not exist.");
+					}
+					BuildinDatasourceDefinition ds=(BuildinDatasourceDefinition)dsDef;
+					List<Dataset> ls=ds.buildDatasets(conn, parameters);
+					if(ls!=null){					
+						for(Dataset dataset:ls){
+							datasetMap.put(dataset.getName(), dataset);
+						}
+					}
+				}finally{
+					if(conn!=null){
+						try {
+							conn.close();
+						} catch (SQLException e) {}
 					}
 				}
 			}

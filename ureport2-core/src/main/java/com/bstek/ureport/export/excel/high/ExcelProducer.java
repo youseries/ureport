@@ -30,9 +30,11 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.PaperSize;
 import org.apache.poi.ss.usermodel.PrintOrientation;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -175,6 +177,23 @@ public class ExcelProducer {
 				    				int height=bufferedImage.getHeight();
 				    				IOUtils.closeQuietly(inputStream);
 				    				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
+				    				
+				    				int leftMargin=0,topMargin=0;
+				    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
+				    				int wholeHeight=getWholeHeight(rows, rowNumber, cellInfo.getRowSpan());
+				    				HorizontalAlignment align=style.getAlignmentEnum();
+				    				if(align.equals(HorizontalAlignment.CENTER)){
+				    					leftMargin=(wholeWidth-width)/2;
+				    				}else if(align.equals(HorizontalAlignment.RIGHT)){
+				    					leftMargin=wholeWidth-width;
+				    				}
+				    				VerticalAlignment valign=style.getVerticalAlignmentEnum();
+				    				if(valign.equals(VerticalAlignment.CENTER)){
+				    					topMargin=(wholeHeight-height)/2;
+				    				}else if(valign.equals(VerticalAlignment.BOTTOM)){
+				    					topMargin=wholeHeight-height;
+				    				}
+				    				
 				        			try{
 				        				XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
 				        				byte[] bytes=IOUtils.toByteArray(inputStream);
@@ -184,9 +203,9 @@ public class ExcelProducer {
 				        				anchor.setCol2(i+colSpan);
 				        				anchor.setRow1(rowNumber);
 				        				anchor.setRow2(rowNumber+rowSpan);
-				        				anchor.setDx1(0 * XSSFShape.EMU_PER_PIXEL);
+				        				anchor.setDx1(leftMargin * XSSFShape.EMU_PER_PIXEL);
 				        				anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
-				        				anchor.setDy1(0 * XSSFShape.EMU_PER_PIXEL);
+				        				anchor.setDy1(topMargin * XSSFShape.EMU_PER_PIXEL);
 				        				anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
 				        				drawing.createPicture(anchor, pictureIndex);
 				        			}finally{
@@ -203,6 +222,22 @@ public class ExcelProducer {
 				        				int height=bufferedImage.getHeight();
 				        				IOUtils.closeQuietly(inputStream);
 				        				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
+				        				
+					    				int leftMargin=0,topMargin=0;
+					    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
+					    				int wholeHeight=getWholeHeight(rows, rowNumber, cellInfo.getRowSpan());
+					    				HorizontalAlignment align=style.getAlignmentEnum();
+					    				if(align.equals(HorizontalAlignment.CENTER)){
+					    					leftMargin=(wholeWidth-width)/2;
+					    				}else if(align.equals(HorizontalAlignment.RIGHT)){
+					    					leftMargin=wholeWidth-width;
+					    				}
+					    				VerticalAlignment valign=style.getVerticalAlignmentEnum();
+					    				if(valign.equals(VerticalAlignment.CENTER)){
+					    					topMargin=(wholeHeight-height)/2;
+					    				}else if(valign.equals(VerticalAlignment.BOTTOM)){
+					    					topMargin=wholeHeight-height;
+					    				}
 				        				try{
 				        					XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
 				        					byte[] bytes=IOUtils.toByteArray(inputStream);
@@ -212,9 +247,9 @@ public class ExcelProducer {
 				        					anchor.setCol2(i+colSpan);
 				        					anchor.setRow1(rowNumber);
 				        					anchor.setRow2(rowNumber+rowSpan);
-				        					anchor.setDx1(0 * XSSFShape.EMU_PER_PIXEL);
+				        					anchor.setDx1(leftMargin * XSSFShape.EMU_PER_PIXEL);
 				        					anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
-				        					anchor.setDy1(0 * XSSFShape.EMU_PER_PIXEL);
+				        					anchor.setDy1(topMargin * XSSFShape.EMU_PER_PIXEL);
 				        					anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
 				        					drawing.createPicture(anchor, pictureIndex);
 				        				}finally{
@@ -327,6 +362,23 @@ public class ExcelProducer {
 			    				int height=bufferedImage.getHeight();
 			    				IOUtils.closeQuietly(inputStream);
 			    				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
+			    				
+			    				int leftMargin=0,topMargin=0;
+			    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
+			    				int wholeHeight=getWholeHeight(rows, rowNumber, cellInfo.getRowSpan());
+			    				HorizontalAlignment align=style.getAlignmentEnum();
+			    				if(align.equals(HorizontalAlignment.CENTER)){
+			    					leftMargin=(wholeWidth-width)/2;
+			    				}else if(align.equals(HorizontalAlignment.RIGHT)){
+			    					leftMargin=wholeWidth-width;
+			    				}
+			    				VerticalAlignment valign=style.getVerticalAlignmentEnum();
+			    				if(valign.equals(VerticalAlignment.CENTER)){
+			    					topMargin=(wholeHeight-height)/2;
+			    				}else if(valign.equals(VerticalAlignment.BOTTOM)){
+			    					topMargin=wholeHeight-height;
+			    				}
+			    				
 			        			try{
 			        				XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
 			        				byte[] bytes=IOUtils.toByteArray(inputStream);
@@ -336,9 +388,9 @@ public class ExcelProducer {
 			        				anchor.setCol2(i+colSpan);
 			        				anchor.setRow1(rowNumber);
 			        				anchor.setRow2(rowNumber+rowSpan);
-			        				anchor.setDx1(0 * XSSFShape.EMU_PER_PIXEL);
+			        				anchor.setDx1(leftMargin * XSSFShape.EMU_PER_PIXEL);
 			        				anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
-			        				anchor.setDy1(0 * XSSFShape.EMU_PER_PIXEL);
+			        				anchor.setDy1(topMargin * XSSFShape.EMU_PER_PIXEL);
 			        				anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
 			        				drawing.createPicture(anchor, pictureIndex);
 			        			}finally{
@@ -355,6 +407,24 @@ public class ExcelProducer {
 			        				int height=bufferedImage.getHeight();
 			        				IOUtils.closeQuietly(inputStream);
 			        				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
+			        				
+				    				
+				    				int leftMargin=0,topMargin=0;
+				    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
+				    				int wholeHeight=getWholeHeight(rows, rowNumber, cellInfo.getRowSpan());
+				    				HorizontalAlignment align=style.getAlignmentEnum();
+				    				if(align.equals(HorizontalAlignment.CENTER)){
+				    					leftMargin=(wholeWidth-width)/2;
+				    				}else if(align.equals(HorizontalAlignment.RIGHT)){
+				    					leftMargin=wholeWidth-width;
+				    				}
+				    				VerticalAlignment valign=style.getVerticalAlignmentEnum();
+				    				if(valign.equals(VerticalAlignment.CENTER)){
+				    					topMargin=(wholeHeight-height)/2;
+				    				}else if(valign.equals(VerticalAlignment.BOTTOM)){
+				    					topMargin=wholeHeight-height;
+				    				}
+			        				
 			        				try{
 			        					XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
 			        					byte[] bytes=IOUtils.toByteArray(inputStream);
@@ -364,9 +434,9 @@ public class ExcelProducer {
 			        					anchor.setCol2(i+colSpan);
 			        					anchor.setRow1(rowNumber);
 			        					anchor.setRow2(rowNumber+rowSpan);
-			        					anchor.setDx1(0 * XSSFShape.EMU_PER_PIXEL);
+			        					anchor.setDx1(leftMargin * XSSFShape.EMU_PER_PIXEL);
 			        					anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
-			        					anchor.setDy1(0 * XSSFShape.EMU_PER_PIXEL);
+			        					anchor.setDy1(topMargin * XSSFShape.EMU_PER_PIXEL);
 			        					anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
 			        					drawing.createPicture(anchor, pictureIndex);
 			        				}finally{
@@ -389,6 +459,30 @@ public class ExcelProducer {
 		}finally{
 			wb.dispose();			
 		}
+	}
+	
+	private int getWholeWidth(List<Column> columns,int colNumber,int colSpan){
+		Column col=columns.get(colNumber);
+		int start=colNumber+1,end=colNumber+colSpan;
+		int w=col.getWidth();
+		for(int i=start;i<end;i++){
+			Column c=columns.get(i);
+			w+=c.getWidth();
+		}
+		w=UnitUtils.pointToPixel(w);
+		return w;
+	}
+	
+	private int getWholeHeight(List<Row> rows,int rowNumber,int rowSpan){
+		Row row=rows.get(rowNumber);
+		int start=rowNumber+1,end=rowNumber+rowSpan;
+		int h=row.getRealHeight();
+		for(int i=start;i<end;i++){
+			Row r=rows.get(i);
+			h+=r.getRealHeight();
+		}
+		h=UnitUtils.pointToPixel(h);
+		return h;
 	}
 	
 	private Sheet createSheet(SXSSFWorkbook wb,Paper paper,String name){
