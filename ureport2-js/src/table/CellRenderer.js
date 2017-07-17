@@ -42,6 +42,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         }
         const width=cellValue.width,height=cellValue.height;
         const image=$(`<img src="${imagePath}" width="${width}px" height="${height}px">`);
+        $td.empty();
         $td.append(image);
     }else if(valueType==='chart'){
         tip='图表';

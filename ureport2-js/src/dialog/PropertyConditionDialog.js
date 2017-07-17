@@ -1014,6 +1014,7 @@ export default class PropertyConditionDialog{
         this.propertyConditions.splice(index,1,item);
         this.item=item;
         this.propGroup.show();
+        this.rowHeightEditor.val('');
         const rowHeight=item.rowHeight;
         if(rowHeight!==null && rowHeight!==undefined && rowHeight!==-1){
             this.rowHeightGroup.show();
@@ -1023,6 +1024,7 @@ export default class PropertyConditionDialog{
             this.rowHeightGroup.hide();
             this.rowHeightCheckbox.children('input').prop('checked',false);
         }
+        this.colWidthEditor.val('');
         const colWidth=item.colWidth;
         if(colWidth!==null && colWidth!==undefined && colWidth!==-1){
             this.colWidthGroup.show();
@@ -1032,6 +1034,7 @@ export default class PropertyConditionDialog{
             this.colWidthGroup.hide();
             this.colWidthCheckbox.children('input').prop('checked',false);
         }
+        this.newValueEditor.val('');
         const newValue=item.newValue;
         if(newValue && newValue!==''){
             this.newValueEditor.val(newValue);
@@ -1041,6 +1044,8 @@ export default class PropertyConditionDialog{
             this.newValueGroup.hide();
             this.newValueCheckbox.children('input').prop('checked',false);
         }
+        this.linkEditor.children('input').val('');
+        this.linkTargetSelect.children('select').val('');
         const linkUrl=item.linkUrl;
         if(linkUrl){
             this.linkEditor.children('input').val(linkUrl);
@@ -1051,6 +1056,8 @@ export default class PropertyConditionDialog{
             this.linkGroup.hide();
             this.linkCheckbox.children('input').prop('checked',false);
         }
+        this.pagingBreakSelect.val('');
+        this.pagingLineEditor.val('');
         const paging=item.paging;
         if(paging){
             this.pagingBreakGroup.show();
@@ -1062,6 +1069,8 @@ export default class PropertyConditionDialog{
             this.pagingBreakGroup.hide();
         }
 
+        this.forceColorEditor.children('input').val('');
+        this.forceScopeSelect.val('');
         const cellStyle=item.cellStyle || {};
         const forecolor=cellStyle.forecolor;
         if(forecolor && forecolor!==''){
@@ -1074,6 +1083,8 @@ export default class PropertyConditionDialog{
             this.forceGroup.hide();
             this.forceCheckbox.children('input').prop('checked',false);
         }
+        this.bgColorEditor.children('input').val('');
+        this.bgcolorScopeSelect.val('');
         const bgcolor=cellStyle.bgcolor;
         if(bgcolor && bgcolor!==''){
             this.bgcolorGroup.show();
@@ -1085,6 +1096,8 @@ export default class PropertyConditionDialog{
             this.bgcolorGroup.hide();
             this.bgcolorCheckbox.children('input').prop('checked',false);
         }
+        this.fontSelect.val('');
+        this.fontScopeSelect.val('');
         const fontFamily=cellStyle.fontFamily;
         if(fontFamily && fontFamily!=='0'){
             this.fontSelect.val(fontFamily);
@@ -1095,6 +1108,8 @@ export default class PropertyConditionDialog{
             this.fontGroup.hide();
             this.fontCheckbox.children('input').prop('checked',false);
         }
+        this.fontSizeSelect.val('');
+        this.fontSizeScopeSelect.val('');
         const fontSize=cellStyle.fontSize;
         if(fontSize && fontSize!=='0'){
             this.fontSizeSelect.val(fontSize);
@@ -1105,6 +1120,8 @@ export default class PropertyConditionDialog{
             this.fontSizeCheckbox.children('input').prop('checked',false);
             this.fontSizeGroup.hide();
         }
+        this.fontBoldSelect.val("false");
+        this.fontBoldScopeSelect.val('');
         const bold=cellStyle.bold;
         if(bold!==null && bold!==undefined && bold!==''){
             if(bold==="true" || bold===true){
@@ -1119,6 +1136,8 @@ export default class PropertyConditionDialog{
             this.fontBoldCheckbox.children('input').prop('checked',false);
             this.fontBoldGroup.hide();
         }
+        this.fontItalicSelect.val("false");
+        this.fontItalicScopeSelect.val('');
         const italic=cellStyle.italic;
         if(italic!==null && italic!==undefined && italic!==''){
             if(italic===true || italic==="true"){
@@ -1133,6 +1152,8 @@ export default class PropertyConditionDialog{
             this.fontItalicCheckbox.children('input').prop('checked',false);
             this.fontItalicGroup.hide();
         }
+        this.fontUnderlineSelect.val("false");
+        this.fontUnderlineScopeSelect.val('');
         const underline=cellStyle.underline;
         if(underline!==null && underline!==undefined && underline!==''){
             if(underline===true || underline==="true"){
@@ -1147,6 +1168,8 @@ export default class PropertyConditionDialog{
             this.fontUnderlineCheckbox.children('input').prop('checked',false);
             this.fontUnderlineGroup.hide();
         }
+        this.alignSelect.val('');
+        this.alignScopeSelect.val('');
         const align=cellStyle.align;
         if(align && align!==''){
             this.alignSelect.val(align);
@@ -1157,6 +1180,8 @@ export default class PropertyConditionDialog{
             this.alignCheckbox.children('input').prop('checked',false);
             this.alignGroup.hide();
         }
+        this.valignSelect.val('');
+        this.valignScopeSelect.val('');
         const valign=cellStyle.valign;
         if(valign && valign!==''){
             this.valignSelect.val(valign);
@@ -1174,6 +1199,7 @@ export default class PropertyConditionDialog{
             this.borderCheckbox.children('input').prop('checked',false);
             this.borderGroup.hide();
         }
+        this.formatEditor.val('');
         const format=cellStyle.format;
         if(format && format!==''){
             this.formatEditor.val(format);

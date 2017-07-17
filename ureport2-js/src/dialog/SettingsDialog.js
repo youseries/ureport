@@ -252,6 +252,21 @@ export default class SettingsDialog{
             setDirty();
         });
         htmlReportAlignGroup.append(this.htmlReportAlignSelect);
+
+        const bgImageGroup=$(`<div class="form-group"><label>套打背景图：</label></div>`);
+        pageTab.append(bgImageGroup);
+        this.bgImageEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 470px;" placeholder="请输入背景图片URL,图片分辨率需要为96dpi">`);
+        bgImageGroup.append(this.bgImageEditor);
+        this.bgImageEditor.change(function(){
+            let value=$(this).val();
+            _this.paper.bgImage=value;
+            if(value===''){
+                $('.ht_master').css('background','transparent');
+            }else{
+                $('.ht_master').css('background',`url(${value}) 50px 26px no-repeat`);
+            }
+            setDirty();
+        });
     }
     initHeaderFootSetting(headerFooterTab){
         const _this=this;
@@ -488,6 +503,7 @@ export default class SettingsDialog{
         this.dialog.modal('show');
         this.pageSelect.val(this.paper.paperType);
         this.htmlReportAlignSelect.val(this.paper.htmlReportAlign);
+        this.bgImageEditor.val(this.paper.bgImage || '');
         this.pageWidthEditor.val(pointToMM(this.paper.width));
         this.pageHeightEditor.val(pointToMM(this.paper.height));
         this.pageSelect.trigger('change');

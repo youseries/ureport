@@ -118,6 +118,11 @@ export default class ReportTable{
                 }else{
                     _this.hot.context.fileInfo.setFile("未命名");
                 }
+                if(reportDef.paper.bgImage){
+                    $('.ht_master').css('background',`url(${reportDef.paper.bgImage}) 50px 26px no-repeat`);
+                }else{
+                    $('.ht_master').css('background','transparent');
+                }
             },
             error:function(){
                 alert(`加载报表文件${file}失败!`);
