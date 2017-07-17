@@ -34,7 +34,7 @@ public class Paper implements Serializable{
 	private int height;
 	private Orientation orientation;
 	private HtmlReportAlign htmlReportAlign=HtmlReportAlign.left;
-	
+	private String bgImage;
 	private boolean columnEnabled;
 	private int columnCount=2;
 	private int columnMargin=5;
@@ -141,5 +141,13 @@ public class Paper implements Serializable{
 
 	public void setHtmlReportAlign(HtmlReportAlign htmlReportAlign) {
 		this.htmlReportAlign = htmlReportAlign;
+	}
+
+	public String getBgImage() {
+		return bgImage;
+	}
+
+	public void setBgImage(String bgImage) {
+		this.bgImage = bgImage;
 	}
 }

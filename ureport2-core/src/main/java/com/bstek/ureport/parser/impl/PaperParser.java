@@ -77,6 +77,7 @@ public class PaperParser implements Parser<Paper> {
 		if(StringUtils.isNotBlank(htmlReportAlign)){
 			paper.setHtmlReportAlign(HtmlReportAlign.valueOf(htmlReportAlign));
 		}
+		paper.setBgImage(element.attributeValue("bg-image"));
 		return paper;
 	}
 }
