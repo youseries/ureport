@@ -128,6 +128,7 @@ public class WordProducer implements Producer{
 					XWPFTableRow tableRow=table.getRow(rowNumber);
 					tableRow.setHeight(DxaUtils.points2dxa(height));
 					Map<Column,Cell> colCell=cellMap.get(row);
+					if(colCell==null)continue;
 					for(Column col:columns){
 						int width=col.getWidth();
 						if(width<1){

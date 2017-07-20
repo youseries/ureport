@@ -197,6 +197,7 @@ public class Utils implements ApplicationContextAware{
 		}
 		throw new ConvertException("Can not convert "+obj+" to BigDecimal.");
 	}
+	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)throws BeansException {
 		Utils.applicationContext=applicationContext;
