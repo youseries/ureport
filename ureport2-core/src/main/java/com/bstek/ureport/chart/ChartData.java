@@ -17,6 +17,8 @@ package com.bstek.ureport.chart;
 
 import java.util.UUID;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * @author Jacky.gao
  * @since 2017年6月16日
@@ -24,23 +26,19 @@ import java.util.UUID;
 public class ChartData {
 	private String id;
 	private String json;
+	@JsonIgnore
 	private String base64Data;
+	@JsonIgnore
 	private int width;
+	@JsonIgnore
 	private int height;
 	public ChartData(String json) {
 		this.json=json;
 		this.id=UUID.randomUUID().toString();
 	}
-	public String buildJavascript(String canvasId){
-		StringBuilder sb=new StringBuilder();
-		sb.append("<script>");
-		sb.append("$(document).ready(function(){");
-		sb.append("_buildChart(\""+canvasId+"\","+json+");");
-		sb.append(" });");
-		sb.append("</script>");
-		return sb.toString();
+	public String getJson() {
+		return json;
 	}
-	
 	public void setBase64Data(String base64Data) {
 		this.base64Data = base64Data;
 	}

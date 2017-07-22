@@ -34,14 +34,14 @@ public class TooltipOption implements Option {
 	@Override
 	public String buildOptionJson() {
 		StringBuilder sb=new StringBuilder();
-		sb.append("tooltips:{");
-		sb.append("enabled:"+enabled+",");
-		sb.append("titleFontSize:"+titleFontSize+",");
-		sb.append("titleFontStyle:\""+titleFontStyle+"\",");
-		sb.append("titleFontColor:\""+titleFontColor+"\",");
-		sb.append("bodyFontSize:"+bodyFontSize+",");
-		sb.append("bodyFontStyle:\""+bodyFontStyle+"\",");
-		sb.append("bodyFontColor:\""+bodyFontColor+"\",");
+		sb.append("\"tooltips\":{");
+		sb.append("\"enabled\":"+enabled+",");
+		sb.append("\"titleFontSize\":"+titleFontSize+",");
+		sb.append("\"titleFontStyle\":\""+titleFontStyle+"\",");
+		sb.append("\"titleFontColor\":\""+titleFontColor+"\",");
+		sb.append("\"bodyFontSize\":"+bodyFontSize+",");
+		sb.append("\"bodyFontStyle\":\""+bodyFontStyle+"\",");
+		sb.append("\"bodyFontColor\":\""+bodyFontColor+"\",");
 		sb.append("}");
 		return sb.toString();
 	}

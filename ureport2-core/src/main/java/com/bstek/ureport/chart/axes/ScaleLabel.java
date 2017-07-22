@@ -31,11 +31,11 @@ public class ScaleLabel {
 	public String toJson(){
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
-		sb.append("display:"+display+",");
-		sb.append("labelString:\""+labelString+"\",");
-		sb.append("fontColor:\""+fontColor+"\",");
-		sb.append("fontSize:"+fontSize+",");
-		sb.append("fontStyle:\""+fontStyle+"\"");
+		sb.append("\"display\":"+display+",");
+		sb.append("\"labelString\":\""+labelString+"\",");
+		sb.append("\"fontColor\":\""+fontColor+"\",");
+		sb.append("\"fontSize\":"+fontSize+",");
+		sb.append("\"fontStyle\":\""+fontStyle+"\"");
 		sb.append("}");
 		return sb.toString();
 	}

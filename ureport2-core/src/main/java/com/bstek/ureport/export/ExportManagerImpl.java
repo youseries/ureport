@@ -51,6 +51,8 @@ public class ExportManagerImpl implements ExportManager {
 		htmlReport.setContent(content);
 		htmlReport.setStyle(reportDefinition.getStyle());
 		htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
+		htmlReport.setChartDatas(report.getContext().getChartDataMap().values());
+		htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
 		return htmlReport;
 	}
 	
@@ -76,6 +78,8 @@ public class ExportManagerImpl implements ExportManager {
 		htmlReport.setPageIndex(pageIndex);
 		htmlReport.setTotalPage(pageData.getTotalPages());
 		htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
+		htmlReport.setChartDatas(report.getContext().getChartDataMap().values());
+		htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
 		return htmlReport;
 	}
 	@Override

@@ -77,6 +77,10 @@ public class PaperParser implements Parser<Paper> {
 		if(StringUtils.isNotBlank(htmlReportAlign)){
 			paper.setHtmlReportAlign(HtmlReportAlign.valueOf(htmlReportAlign));
 		}
+		String htmlIntervalRefreshValue=element.attributeValue("html-interval-refresh-value");
+		if(StringUtils.isNotBlank(htmlIntervalRefreshValue)){
+			paper.setHtmlIntervalRefreshValue(Integer.valueOf(htmlIntervalRefreshValue));
+		}
 		paper.setBgImage(element.attributeValue("bg-image"));
 		return paper;
 	}

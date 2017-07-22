@@ -28,9 +28,9 @@ public class AnimationsOption implements Option {
 	@Override
 	public String buildOptionJson() {
 		StringBuilder sb=new StringBuilder();
-		sb.append("animation:{");
-		sb.append("duration:"+duration+",");
-		sb.append("easing:\""+easing+"\"");
+		sb.append("\"animation\":{");
+		sb.append("\"duration\":"+duration+",");
+		sb.append("\"easing\":\""+easing+"\"");
 		sb.append("}");
 		return sb.toString();
 	}

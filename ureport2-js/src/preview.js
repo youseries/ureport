@@ -111,7 +111,60 @@ function buildPrintStyle(paper){
     `;
     return style;
 };
+window._intervalRefresh=function(value,file,totalPage,customParameters){
+    if(!value){
+        return;
+    }
+    const second=value*1000;
+    setTimeout(function(){
+        _refreshData(customParameters,file,totalPage,second);
+    },second);
+};
 
+
+window._currentPageIndex=1;
+
+function _refreshData(customParameters,file,totalPage,second){
+    let url=window._server+"/preview/loadData?_u="+file+"";
+    if(customParameters){
+        url+=customParameters;
+    }
+    if(totalPage>0){
+        if(window._currentPageIndex>totalPage){
+            window._currentPageIndex=1;
+        }
+        url+="&_i="+window._currentPageIndex+"";
+        $("#pageSelector").val(window._currentPageIndex);
+        window._currentPageIndex++;
+    }
+    $.ajax({
+        url,
+        type:'GET',
+        success:function(report){
+            const tableContainer=$(`#_ureport_table`);
+            tableContainer.empty();
+            tableContainer.append(report.content);
+            _buildChartDatas(report.chartDatas);
+            setTimeout(function(){
+                _refreshData(customParameters,file,totalPage,second);
+            },second);
+        },
+        error:function(){
+            alert('加载数据失败！');
+        }
+    });
+};
+
+window._buildChartDatas=function(chartData){
+    if(!chartData){
+        return;
+    }
+    for(let d of chartData){
+        let json=d.json;
+        json=JSON.parse(json);
+        _buildChart(d.id,json);
+    }
+};
 window._buildChart=function(canvasId,chartJson){
     const ctx=document.getElementById(canvasId);
     let options=chartJson.options;

@@ -29,8 +29,8 @@ public class HorizontalBarDataset extends BarDataset {
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
 		String labels=getLabels();
-		sb.append("labels:"+labels+",");
-		sb.append("datasets:["+datasetJson+"]");
+		sb.append("\"labels\":"+labels+",");
+		sb.append("\"datasets\":["+datasetJson+"]");
 		sb.append("}");
 		return sb.toString();
 	}

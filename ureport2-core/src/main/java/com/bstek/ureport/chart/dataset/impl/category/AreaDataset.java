@@ -25,13 +25,13 @@ import com.bstek.ureport.model.Cell;
 public class AreaDataset extends LineDataset {
 	@Override
 	public String buildDataJson(Context context,Cell cell) {
-		String props="fill:true";
+		String props="\"fill\":true";
 		String datasetJson=buildDatasetJson(context, cell,props);
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
 		String labels=getLabels();
-		sb.append("labels:"+labels+",");
-		sb.append("datasets:["+datasetJson+"]");
+		sb.append("\"labels\":"+labels+",");
+		sb.append("\"datasets\":["+datasetJson+"]");
 		sb.append("}");
 		return sb.toString();
 	}

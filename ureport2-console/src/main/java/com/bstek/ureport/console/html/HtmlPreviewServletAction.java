@@ -17,6 +17,7 @@ package com.bstek.ureport.console.html;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +30,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.ReportBuilder;
 import com.bstek.ureport.build.paging.Page;
 import com.bstek.ureport.cache.CacheUtils;
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.console.RenderPageServletAction;
 import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.Paper;
@@ -83,9 +86,11 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				context.put("style", htmlReport.getStyle());
 				context.put("reportAlign", htmlReport.getReportAlign());				
 				context.put("totalPage", htmlReport.getTotalPage()); 
-				context.put("pageIndex", htmlReport.getPageIndex()); 
+				context.put("pageIndex", htmlReport.getPageIndex());
+				context.put("chartDatas", convertJson(htmlReport.getChartDatas()));
 				context.put("error", false);
 				context.put("file", req.getParameter("_u"));
+				context.put("intervalRefreshValue",htmlReport.getHtmlIntervalRefreshValue());
 				String customParameters=buildCustomParameters(req);
 				context.put("customParameters", customParameters);
 				Tools tools=null;
@@ -115,6 +120,24 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			template.merge(context, writer);
 			writer.close();
 		}
+	}
+	
+	private String convertJson(Collection<ChartData> data){
+		if(data==null || data.size()==0){
+			return "";
+		}
+		ObjectMapper mapper=new ObjectMapper();
+		try {
+			String json = mapper.writeValueAsString(data);
+			return json;
+		} catch (Exception e) {
+			throw new ReportComputeException(e);
+		}
+	}
+	
+	public void loadData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HtmlReport htmlReport=loadReport(req);
+		writeObjectToJson(resp, htmlReport);
 	}
 
 	public void loadPrintPages(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -220,9 +243,11 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}else{
 				html=htmlProducer.produce(report);				
 			}
+			htmlReport.setChartDatas(report.getContext().getChartDataMap().values());			
 			htmlReport.setContent(html);
 			htmlReport.setStyle(reportDefinition.getStyle());
 			htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
+			htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
 		}else{
 			if(StringUtils.isNotBlank(pageIndex)){
 				int index=Integer.valueOf(pageIndex);

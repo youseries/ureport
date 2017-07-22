@@ -176,7 +176,6 @@ public class HtmlProducer{
 					ChartData chartData=(ChartData)obj;
 					String canvasId=chartData.getId();
 					sb.append("<canvas id=\""+canvasId+"\"></canvas>");
-					sb.append(chartData.buildJavascript(canvasId));
 				}else{
 					String text=obj.toString();
 					text=text.replaceAll("\r\n", "<br>");

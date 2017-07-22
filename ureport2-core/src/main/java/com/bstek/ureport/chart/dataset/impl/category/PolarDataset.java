@@ -32,8 +32,8 @@ public class PolarDataset extends CategoryDataset {
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
 		String labels=getLabels();
-		sb.append("labels:"+labels+",");
-		sb.append("datasets:["+datasetJson+"]");
+		sb.append("\"labels\":"+labels+",");
+		sb.append("\"datasets\":["+datasetJson+"]");
 		sb.append("}");
 		return sb.toString();
 	}
@@ -47,10 +47,10 @@ public class PolarDataset extends CategoryDataset {
 				sb.append(",");
 			}
 			sb.append("{");
-			sb.append("label:\""+series+"\",");
+			sb.append("\"label\":\""+series+"\",");
 			Map<Object,List<Object>> categoryMap=map.get(series);
-			sb.append("backgroundColor:"+buildBackgroundColor(i, categoryMap.size())+",");
-			sb.append("data:"+buildData(categoryMap));
+			sb.append("\"backgroundColor\":"+buildBackgroundColor(i, categoryMap.size())+",");
+			sb.append("\"data\":"+buildData(categoryMap));
 			if(props!=null){
 				sb.append(","+props);
 			}

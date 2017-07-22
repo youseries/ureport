@@ -241,7 +241,7 @@ export default class SettingsDialog{
 
         const htmlReportAlignGroup=$(`<div class="form-group"><label>HTML报表输出时对齐方式：</label></div>`);
         pageTab.append(htmlReportAlignGroup);
-        this.htmlReportAlignSelect=$(`<select class="form-control" style="display:inline-block;width: 175px">
+        this.htmlReportAlignSelect=$(`<select class="form-control" style="display:inline-block;width: 80px">
             <option value="left">居左</option>
             <option value="center">居中</option>
             <option value="right">居右</option>
@@ -252,6 +252,25 @@ export default class SettingsDialog{
             setDirty();
         });
         htmlReportAlignGroup.append(this.htmlReportAlignSelect);
+
+        const htmlIntervalReloadGroup=$(`<span style="margin-left: 35px;"><label>HTML报表定时刷新(秒)：</label></span>`);
+        htmlReportAlignGroup.append(htmlIntervalReloadGroup);
+        this.htmlIntervalEditor=$(`<input type="number" class="form-control" placeholder="0表示不刷新" title="为0时不刷新" value="0" style="width: 100px;display: inline-block">`);
+        htmlIntervalReloadGroup.append(this.htmlIntervalEditor);
+        this.htmlIntervalEditor.change(function(){
+            let value=$(this).val();
+            if(isNaN(value)){
+                alert("请输入一个大于或等于0的数字");
+                return;
+            }
+            const num=parseInt(value);
+            if(num<0){
+                alert("请输入一个大于或等于0的数字");
+                return;
+            }
+            _this.paper.htmlIntervalRefreshValue=value;
+            setDirty();
+        });
 
         const bgImageGroup=$(`<div class="form-group"><label>套打背景图：</label></div>`);
         pageTab.append(bgImageGroup);
@@ -503,6 +522,7 @@ export default class SettingsDialog{
         this.dialog.modal('show');
         this.pageSelect.val(this.paper.paperType);
         this.htmlReportAlignSelect.val(this.paper.htmlReportAlign);
+        this.htmlIntervalEditor.val(this.paper.htmlIntervalRefreshValue);
         this.bgImageEditor.val(this.paper.bgImage || '');
         this.pageWidthEditor.val(pointToMM(this.paper.width));
         this.pageHeightEditor.val(pointToMM(this.paper.height));

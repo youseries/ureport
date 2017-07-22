@@ -30,11 +30,11 @@ public class LegendOption implements Option {
 	@Override
 	public String buildOptionJson() {
 		StringBuilder sb=new StringBuilder();
-		sb.append("legend:{");
-		sb.append("display:"+display+",");
-		sb.append("position:\""+position+"\"");
+		sb.append("\"legend\":{");
+		sb.append("\"display\":"+display+",");
+		sb.append("\"position\":\""+position+"\"");
 		if(labels!=null){
-			sb.append("labels:"+labels.toJson());			
+			sb.append("\"labels\":"+labels.toJson());			
 		}
 		sb.append("}");
 		return sb.toString();

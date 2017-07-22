@@ -38,7 +38,7 @@ public class Paper implements Serializable{
 	private boolean columnEnabled;
 	private int columnCount=2;
 	private int columnMargin=5;
-	
+	private int htmlIntervalRefreshValue=0;
 	public int getLeftMargin() {
 		return leftMargin;
 	}
@@ -149,5 +149,13 @@ public class Paper implements Serializable{
 
 	public void setBgImage(String bgImage) {
 		this.bgImage = bgImage;
+	}
+
+	public int getHtmlIntervalRefreshValue() {
+		return htmlIntervalRefreshValue;
+	}
+
+	public void setHtmlIntervalRefreshValue(int htmlIntervalRefreshValue) {
+		this.htmlIntervalRefreshValue = htmlIntervalRefreshValue;
 	}
 }

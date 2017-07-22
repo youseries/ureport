@@ -37,7 +37,7 @@ public class MixDataset implements Dataset {
 	public String buildDataJson(Context context,Cell cell) {
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
-		sb.append("datasets:[");
+		sb.append("\"datasets\":[");
 		int index=0;
 		for(BarDataset ds:barDatasets){
 			if(index>0){				

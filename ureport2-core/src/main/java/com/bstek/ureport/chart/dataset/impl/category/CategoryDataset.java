@@ -111,23 +111,23 @@ public abstract class CategoryDataset extends BaseDataset {
 				sb.append(",");
 			}
 			sb.append("{");
-			sb.append("label:\""+series+"\",");
+			sb.append("\"label\":\""+series+"\",");
 			String color=null;
 			if(this instanceof LineDataset){
 				color="rgb("+getRgbColor(i)+")";
 			}else{
 				color="rgba("+getRgbColor(i)+",0.3)";				
 			}
-			sb.append("backgroundColor:\""+color+"\",");
-			sb.append("borderColor:\"rgb("+getRgbColor(i)+")\",");
-			sb.append("borderWidth: 1,");
-			sb.append("data:"+buildData(map.get(series)));
+			sb.append("\"backgroundColor\":\""+color+"\",");
+			sb.append("\"borderColor\":\"rgb("+getRgbColor(i)+")\",");
+			sb.append("\"borderWidth\": 1,");
+			sb.append("\"data\":"+buildData(map.get(series)));
 			if(this instanceof LineDataset){
 				sb.append(",");
 				if(this instanceof AreaDataset){
-					sb.append("fill:true");					
+					sb.append("\"fill\":true");					
 				}else{
-					sb.append("fill:false");									
+					sb.append("\"fill\":false");									
 				}
 			}
 			if(props!=null){

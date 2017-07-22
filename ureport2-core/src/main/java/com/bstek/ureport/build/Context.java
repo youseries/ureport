@@ -46,12 +46,11 @@ public class Context {
 	private ApplicationContext applicationContext;
 	private ReportBuilder reportBuilder;
 	private Map<String,Object> parameters;
+	private HideRowColumnBuilder hideRowColumnBuilder;
 	private Map<String,List<Cell>> unprocessedCellsMap = new HashMap<String,List<Cell>>();
 	private Map<Row,Map<Column,Cell>> blankCellsMap=new HashMap<Row,Map<Column,Cell>>();
 	private Map<Row,Integer> fillBlankRowsMap=new HashMap<Row,Integer>();
 	private Map<String,ChartData> chartDataMap=new HashMap<String,ChartData>();
-	private HideRowColumnBuilder hideRowColumnBuilder;
-	
 	public Context(ReportBuilder reportBuilder,Report report,Map<String,Dataset> datasetMap,ApplicationContext applicationContext,Map<String,Object> parameters,HideRowColumnBuilder hideRowColumnBuilder) {
 		this.reportBuilder=reportBuilder;
 		this.report = report;
@@ -140,7 +139,7 @@ public class Context {
 		cellMap.put(column, cell);
 		addReportCell(cell);
 	}
-
+	
 	public void addCell(Cell newCell){
 		addReportCell(newCell);
 		addUnprocessedCell(newCell);

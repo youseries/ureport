@@ -50,10 +50,35 @@ public class ImageValueCompute implements ValueCompute{
 			if(obj instanceof List){
 				List<?> listData=(List<?>)obj;
 				for(Object o:listData){
-					if(o!=null){
-						String base64Data=ImageUtils.getImageBase64Data(ImageType.image, o.toString());
-						list.add(new BindData(new Image(base64Data,o.toString(),-1,-1)));						
+					if(o==null){
+						continue;
 					}
+					String path=null;
+					if(o instanceof BindData){
+						BindData bindData=(BindData)o;
+						Object valueData=bindData.getValue();
+						if(valueData!=null){
+							path=valueData.toString();
+						}
+					}else{
+						path=o.toString();
+					}
+					if(path==null){
+						continue;
+					}
+					String base64Data=ImageUtils.getImageBase64Data(ImageType.image, path);
+					list.add(new BindData(new Image(base64Data,path,-1,-1)));						
+				}
+			}else if(obj instanceof BindData){
+				BindData bindData=(BindData)obj;
+				String path=null;
+				Object valueData=bindData.getValue();
+				if(valueData!=null){
+					path=valueData.toString();
+				}
+				if(path!=null){
+					String base64Data=ImageUtils.getImageBase64Data(ImageType.image, path);
+					list.add(new BindData(new Image(base64Data,path,-1,-1)));
 				}
 			}else if(obj instanceof String){
 				String text=obj.toString();

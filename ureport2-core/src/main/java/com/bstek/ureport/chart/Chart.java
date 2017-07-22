@@ -41,9 +41,9 @@ public class Chart {
 	public ChartData doCompute(Cell cell, Context context){
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
-		sb.append("type:\""+dataset.getType()+"\",");
-		sb.append("data:"+dataset.buildDataJson(context, cell)+",");
-		sb.append("options:{");
+		sb.append("\"type\":\""+dataset.getType()+"\",");
+		sb.append("\"data\":"+dataset.buildDataJson(context, cell)+",");
+		sb.append("\"options\":{");
 		if(options!=null && options.size()>0){
 			for(Option option:options){
 				sb.append(option.buildOptionJson());					
@@ -51,29 +51,29 @@ public class Chart {
 			}
 		}
 		if(xaxes!=null || yaxes!=null){
-			sb.append("scales:{");
+			sb.append("\"scales\":{");
 			if(xaxes!=null){
-				sb.append("xAxes:[");
+				sb.append("\"xAxes\":[");
 				sb.append(xaxes.toJson());
 				sb.append("]");
 			}
 			if(yaxes!=null){
 				if(xaxes!=null){
-					sb.append(",yAxes:[");					
+					sb.append(",\"yAxes\":[");					
 				}else{
-					sb.append("yAxes:[");										
+					sb.append("\"yAxes\":[");										
 				}
 				sb.append(yaxes.toJson());
 				sb.append("]");
 			}else{
 				if(hasYAxes(dataset)){
-					sb.append(",yAxes:[{ticks:{min:0}}]");					
+					sb.append(",\"yAxes\":[{\"ticks\":{\"min\":0}}]");					
 				}
 			}
 			sb.append("}");
 		}else{
 			if(hasYAxes(dataset)){
-				sb.append("scales:{yAxes:[{ticks:{min:0}}]}");				
+				sb.append("\"scales\":{\"yAxes\":[{\"ticks\":{\"min\":0}}]}");				
 			}
 		}
 		sb.append("}");
