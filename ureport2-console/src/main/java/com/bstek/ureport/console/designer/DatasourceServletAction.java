@@ -41,10 +41,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
 import org.springframework.jdbc.core.namedparam.ParsedSql;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.support.JdbcUtils;
 
@@ -172,60 +178,47 @@ public class DatasourceServletAction extends RenderPageServletAction {
 	public void buildFields(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String sql=req.getParameter("sql");
 		String parameters=req.getParameter("parameters");
-		Map<String, Object> map = buildParameters(parameters);
-		MapSqlParameterSource mapParamSource=new MapSqlParameterSource(map);
-		ParsedSql parsedSql=NamedParameterUtils.parseSqlStatement(sql);
-		String sqlToUse = NamedParameterUtils.substituteNamedParameters(parsedSql, mapParamSource);
-		Object[] params = NamedParameterUtils.buildValueArray(parsedSql, mapParamSource, null);
-		
 		Connection conn=null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
-		List<Field> fields=new ArrayList<Field>();
+		final List<Field> fields=new ArrayList<Field>();
 		try{
 			conn=buildConnection(req);
-			stmt=conn.prepareStatement(sqlToUse);
-			int index=1;
-			for(int i=0;i<params.length;i++){
-				Object obj=params[i];
-				if(obj!=null){
-					if(obj instanceof Date){
-						Date d=(Date)obj;
-						java.sql.Date sqlDate=new java.sql.Date(d.getTime());
-						stmt.setDate(index, sqlDate);
-					}else if(obj instanceof Boolean){
-						Boolean b=(Boolean)obj;
-						stmt.setBoolean(index, b);
-					}else if(obj instanceof List){
-						List<?> list=(List<?>)obj;
-						for(Object item:list){
-							stmt.setObject(index, item);
-							index++;
+			Map<String, Object> map = buildParameters(parameters);
+			DataSource dataSource=new SingleConnectionDataSource(conn,false);
+			NamedParameterJdbcTemplate jdbc=new NamedParameterJdbcTemplate(dataSource);
+			PreparedStatementCreator statementCreator=getPreparedStatementCreator(sql,new MapSqlParameterSource(map));
+			jdbc.getJdbcOperations().execute(statementCreator, new PreparedStatementCallback<Object>() {
+				@Override
+				public Object doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+					ResultSet rs = null;
+					try {
+						rs = ps.executeQuery();
+						ResultSetMetaData metadata=rs.getMetaData();
+						int columnCount=metadata.getColumnCount();
+						for(int i=0;i<columnCount;i++){
+							String columnName=metadata.getColumnLabel(i+1);
+							fields.add(new Field(columnName));
 						}
-						continue;
-					}else{
-						stmt.setObject(index, obj);
+						return null;
+					}finally {
+						JdbcUtils.closeResultSet(rs);
 					}
-				}else{
-					stmt.setObject(index, obj);					
 				}
-				index++;
-			}
-			rs=stmt.executeQuery();
-			ResultSetMetaData metadata=rs.getMetaData();
-			int columnCount=metadata.getColumnCount();
-			for(int i=0;i<columnCount;i++){
-				String columnName=metadata.getColumnLabel(i+1);
-				fields.add(new Field(columnName));
-			}
+			});
 			writeObjectToJson(resp, fields);
 		}catch(Exception ex){
 			throw new ReportDesignException(ex);
 		}finally{
-			JdbcUtils.closeStatement(stmt);
-			JdbcUtils.closeResultSet(rs);
 			JdbcUtils.closeConnection(conn);
 		}
+	}
+	
+	protected PreparedStatementCreator getPreparedStatementCreator(String sql, SqlParameterSource paramSource) {
+		ParsedSql parsedSql = NamedParameterUtils.parseSqlStatement(sql);
+		String sqlToUse = NamedParameterUtils.substituteNamedParameters(parsedSql, paramSource);
+		Object[] params = NamedParameterUtils.buildValueArray(parsedSql, paramSource, null);
+		List<SqlParameter> declaredParameters = NamedParameterUtils.buildSqlParameterList(parsedSql, paramSource);
+		PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(sqlToUse, declaredParameters);
+		return pscf.newPreparedStatementCreator(params);
 	}
 
 	public void previewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
