@@ -24,6 +24,8 @@ import java.util.Set;
 import org.springframework.context.ApplicationContext;
 
 import com.bstek.ureport.chart.ChartData;
+import com.bstek.ureport.definition.value.SimpleValue;
+import com.bstek.ureport.definition.value.Value;
 import com.bstek.ureport.exception.CellDependencyException;
 import com.bstek.ureport.exception.DatasetUndefinitionException;
 import com.bstek.ureport.model.Cell;
@@ -206,9 +208,15 @@ public class Context {
 		for(String cellName:keySet){
 			List<Cell> cells=unprocessedCellsMap.get(cellName);
 			Cell cell=cells.get(0);
+			Value value=cell.getValue();
 			Cell leftParent=cell.getLeftParentCell();
 			Cell topParent=cell.getTopParentCell();
 			if((leftParent==null || leftParent.isProcessed()) && (topParent==null || topParent.isProcessed())){
+				targetCellsList=cells;
+				targetCellName=cellName;
+				break;
+			}
+			if(value instanceof SimpleValue){
 				targetCellsList=cells;
 				targetCellName=cellName;
 				break;

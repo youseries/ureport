@@ -26,14 +26,11 @@ public class ElUtils {
     private static int[] operatPriority = new int[] { 0, 3, 2, 1, -1, 1, 0, 2 };// 运用运算符ASCII码-40做索引的运算符优先级
     
     public static void main(String[] args) {
-    	long start=System.currentTimeMillis();
-    	for(int i=0;i<3;i++){
+    	try{
+    		System.out.println(100/0);    		
+    	}catch(Exception ex){
+    		System.out.println("="+ex.getMessage()+"=");
     	}
-    	String expr="\"我来自中国:\"+23%3+32";
-    	Object data=eval(expr);
-    	System.out.println(data);    		
-    	long end=System.currentTimeMillis();
-    	System.out.println(end-start);
 	}
 
     public static Object eval(String expression) {
@@ -205,10 +202,13 @@ public class ElUtils {
         		result = ArithUtils.com(firstValue, secondValue);
         	}
         }catch(Exception ex){
+        	String msg=ex.getMessage() == null ? "" : ex.getMessage();
         	String a=(firstValue == null ? "null" : firstValue.toString());
-			String b=(secondValue == null ? "null" : secondValue.toString());
+        	String b=(secondValue == null ? "null" : secondValue.toString());
 			if(currentOp=='+'){
 				result = a+b;				
+			}else if(currentOp=='/' && msg.indexOf("by zero")!=-1){
+				result = "Infinity";
 			}else{
 				throw ex;							
 			}

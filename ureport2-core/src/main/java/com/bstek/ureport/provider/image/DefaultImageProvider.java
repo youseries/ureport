@@ -18,6 +18,7 @@ package com.bstek.ureport.provider.image;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -34,6 +35,7 @@ import com.bstek.ureport.exception.ReportComputeException;
 public class DefaultImageProvider implements ImageProvider,ApplicationContextAware {
 	private ApplicationContext applicationContext;
 	private String baseWebPath;
+	private Logger log=Logger.getGlobal();
 	@Override
 	public InputStream getImage(String path) {
 		try {
@@ -44,6 +46,7 @@ public class DefaultImageProvider implements ImageProvider,ApplicationContextAwa
 				return new FileInputStream(path);
 			}
 		} catch (IOException e) {
+			log.warning("Image ["+path+"] not exist,use default picture.");
 			path="classpath:com/bstek/ureport/image/image-not-exist.jpg";
 			try {
 				return applicationContext.getResource(path).getInputStream();

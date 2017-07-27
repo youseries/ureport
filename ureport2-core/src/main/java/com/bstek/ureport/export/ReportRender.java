@@ -131,7 +131,6 @@ public class ReportRender implements ApplicationContextAware{
 		childrenCells.add(childCell);
 		addColumnChildCell(topCell,childCell);
 	}
-	
 	public void setReportParser(ReportParser reportParser) {
 		this.reportParser = reportParser;
 	}
