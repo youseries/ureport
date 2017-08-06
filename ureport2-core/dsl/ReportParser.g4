@@ -64,7 +64,7 @@ dataset : Identifier '.' aggregate '(' property? (',' conditions )? (',' ORDER)?
 
 function : Identifier '(' functionParameter? ')' ;
 
-functionParameter : set (','? set)* ;
+functionParameter : item (','? item)* ;
 
 set : simpleValue										#simpleData
 	| Cell												#singleCell

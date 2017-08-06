@@ -60,10 +60,9 @@ EXP
 	[Ee] [+\-]? DIGIT+
 ;
 
-LETTER : [A-Z]+ ;
-
 Identifier : StartChar Char* ;
 
+LETTER : [A-Z]+ ;
 
 Char    :   StartChar
             |   '-' | '_' | DIGIT 
