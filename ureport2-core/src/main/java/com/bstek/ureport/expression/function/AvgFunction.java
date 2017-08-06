@@ -21,6 +21,7 @@ import java.util.List;
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.expression.model.data.ExpressionData;
+import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
 import com.bstek.ureport.model.Cell;
 
@@ -48,8 +49,14 @@ public class AvgFunction implements Function {
 					total=total.add(bigData);
 					size++;
 				}
+			}else if(exprData instanceof ObjectExpressionData){
+				ObjectExpressionData data=(ObjectExpressionData)exprData;
+				BigDecimal bigData=Utils.toBigDecimal(data.getData());
+				total=total.add(bigData);
+				size++;
 			}
 		}
+		if(size==0)size=1;
 		return total.divide(new BigDecimal(size), 8, BigDecimal.ROUND_HALF_UP);
 	}
 	@Override

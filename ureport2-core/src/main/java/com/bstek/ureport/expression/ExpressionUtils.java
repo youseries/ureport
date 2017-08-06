@@ -65,6 +65,7 @@ import com.bstek.ureport.expression.parse.builder.StringExpressionBuilder;
  * @since 2016年12月24日
  */
 public class ExpressionUtils implements ApplicationContextAware{
+	private static ExpressionVisitor exprVisitor;
 	private static Map<String,Function> functions=new HashMap<String,Function>();
 	private static Map<Op,Assertor> assertorsMap=new HashMap<Op,Assertor>();
 	private static List<ExpressionBuilder> expressionBuilders=new ArrayList<ExpressionBuilder>();
@@ -132,13 +133,17 @@ public class ExpressionUtils implements ApplicationContextAware{
 		ReportParserParser parser=new ReportParserParser(tokenStream);
 		ExpressionErrorListener errorListener=new ExpressionErrorListener();
 		parser.addErrorListener(errorListener);
-		ExpressionVisitor visitor=new ExpressionVisitor(expressionBuilders);
-		Expression expression=visitor.visitExpression(parser.expression());
+		exprVisitor=new ExpressionVisitor(expressionBuilders);
+		Expression expression=exprVisitor.visitExpression(parser.expression());
 		String error=errorListener.getErrorMessage();
 		if(error!=null){
 			throw new ReportParseException("Expression parse error:"+error);
 		}
 		return expression;
+	}
+	
+	public static ExpressionVisitor getExprVisitor() {
+		return exprVisitor;
 	}
 	
 	@Override

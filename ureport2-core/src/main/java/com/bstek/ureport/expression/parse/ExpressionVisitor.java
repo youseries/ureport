@@ -214,7 +214,7 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 		return new ExpressionConditionList(list,joins);
 	}
 	
-	private BaseExpression parseItemContext(ItemContext itemContext){
+	public BaseExpression parseItemContext(ItemContext itemContext){
 		BaseExpression expression=null;
 		if(itemContext instanceof SimpleJoinContext){
 			SimpleJoinContext simpleJoinContext=(SimpleJoinContext)itemContext;

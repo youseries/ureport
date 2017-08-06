@@ -20,8 +20,9 @@ import java.util.List;
 
 import com.bstek.ureport.dsl.ReportParserParser.FunctionContext;
 import com.bstek.ureport.dsl.ReportParserParser.FunctionParameterContext;
-import com.bstek.ureport.dsl.ReportParserParser.SetContext;
+import com.bstek.ureport.dsl.ReportParserParser.ItemContext;
 import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
+import com.bstek.ureport.expression.ExpressionUtils;
 import com.bstek.ureport.expression.model.expr.BaseExpression;
 import com.bstek.ureport.expression.model.expr.FunctionExpression;
 
@@ -30,10 +31,6 @@ import com.bstek.ureport.expression.model.expr.FunctionExpression;
  * @since 2016年12月26日
  */
 public class FunctionExpressionBuilder extends BaseExpressionBuilder {
-	private SetExpressionBuilder setExpressionBuilder;
-	public FunctionExpressionBuilder() {
-		setExpressionBuilder=new SetExpressionBuilder();
-	}
 	@Override
 	public BaseExpression build(UnitContext unitContext) {
 		FunctionContext ctx=unitContext.function();
@@ -43,10 +40,13 @@ public class FunctionExpressionBuilder extends BaseExpressionBuilder {
 		FunctionParameterContext functionParameterContext=ctx.functionParameter();
 		if(functionParameterContext!=null){
 			List<BaseExpression> exprList=new ArrayList<BaseExpression>();
-			List<SetContext> setContextList=functionParameterContext.set();
-			for(SetContext setContext:setContextList){
-				BaseExpression setExpr=setExpressionBuilder.buildSetExpression(setContext);
-				exprList.add(setExpr);
+			List<ItemContext> itemContexts=functionParameterContext.item();
+			if(itemContexts!=null){
+				for(int i=0;i<itemContexts.size();i++){
+					ItemContext itemContext=itemContexts.get(i);
+					BaseExpression baseExpr=ExpressionUtils.getExprVisitor().parseItemContext(itemContext);
+					exprList.add(baseExpr);
+				}
 			}
 			expr.setExpressions(exprList);
 		}

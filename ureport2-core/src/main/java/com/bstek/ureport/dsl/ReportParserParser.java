@@ -21,7 +21,7 @@ public class ReportParserParser extends Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, Cell=17, 
 		Operator=18, OP=19, ORDER=20, BOOLEAN=21, COLON=22, COMMA=23, NULL=24, 
 		LeftParen=25, RightParen=26, STRING=27, AND=28, OR=29, INTEGER=30, NUMBER=31, 
-		EXCLAMATION=32, EXP=33, LETTER=34, Identifier=35, Char=36, DIGIT=37, WS=38, 
+		EXCLAMATION=32, EXP=33, Identifier=34, LETTER=35, Char=36, DIGIT=37, WS=38, 
 		NL=39;
 	public static final int
 		RULE_expression = 0, RULE_exprComposite = 1, RULE_ternaryExpr = 2, RULE_caseExpr = 3, 
@@ -51,7 +51,7 @@ public class ReportParserParser extends Parser {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, "Cell", "Operator", "OP", "ORDER", "BOOLEAN", 
 		"COLON", "COMMA", "NULL", "LeftParen", "RightParen", "STRING", "AND", 
-		"OR", "INTEGER", "NUMBER", "EXCLAMATION", "EXP", "LETTER", "Identifier", 
+		"OR", "INTEGER", "NUMBER", "EXCLAMATION", "EXP", "Identifier", "LETTER", 
 		"Char", "DIGIT", "WS", "NL"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
@@ -1592,7 +1592,7 @@ public class ReportParserParser extends Parser {
 			match(LeftParen);
 			setState(281);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << Cell) | (1L << BOOLEAN) | (1L << NULL) | (1L << STRING) | (1L << INTEGER) | (1L << NUMBER))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__12) | (1L << Cell) | (1L << BOOLEAN) | (1L << NULL) | (1L << LeftParen) | (1L << STRING) | (1L << INTEGER) | (1L << NUMBER) | (1L << Identifier))) != 0)) {
 				{
 				setState(280);
 				functionParameter();
@@ -1615,11 +1615,11 @@ public class ReportParserParser extends Parser {
 	}
 
 	public static class FunctionParameterContext extends ParserRuleContext {
-		public List<SetContext> set() {
-			return getRuleContexts(SetContext.class);
+		public List<ItemContext> item() {
+			return getRuleContexts(ItemContext.class);
 		}
-		public SetContext set(int i) {
-			return getRuleContext(SetContext.class,i);
+		public ItemContext item(int i) {
+			return getRuleContext(ItemContext.class,i);
 		}
 		public FunctionParameterContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1640,11 +1640,11 @@ public class ReportParserParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(285);
-			set(0);
+			item();
 			setState(292);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << Cell) | (1L << BOOLEAN) | (1L << COMMA) | (1L << NULL) | (1L << STRING) | (1L << INTEGER) | (1L << NUMBER))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__12) | (1L << Cell) | (1L << BOOLEAN) | (1L << COMMA) | (1L << NULL) | (1L << LeftParen) | (1L << STRING) | (1L << INTEGER) | (1L << NUMBER) | (1L << Identifier))) != 0)) {
 				{
 				{
 				setState(287);
@@ -1657,7 +1657,7 @@ public class ReportParserParser extends Parser {
 				}
 
 				setState(289);
-				set(0);
+				item();
 				}
 				}
 				setState(294);
@@ -2640,17 +2640,17 @@ public class ReportParserParser extends Parser {
 		"\7\23\2\2\u00fb\37\3\2\2\2\u00fc\u00fd\7\r\2\2\u00fd!\3\2\2\2\u00fe\u00ff"+
 		"\7\r\2\2\u00ff\u0100\7\16\2\2\u0100\u0101\58\35\2\u0101#\3\2\2\2\u0102"+
 		"\u0105\7\17\2\2\u0103\u0104\7\16\2\2\u0104\u0106\58\35\2\u0105\u0103\3"+
-		"\2\2\2\u0105\u0106\3\2\2\2\u0106%\3\2\2\2\u0107\u0108\7%\2\2\u0108\u0109"+
+		"\2\2\2\u0105\u0106\3\2\2\2\u0106%\3\2\2\2\u0107\u0108\7$\2\2\u0108\u0109"+
 		"\7\16\2\2\u0109\u010a\5> \2\u010a\u010c\7\33\2\2\u010b\u010d\58\35\2\u010c"+
 		"\u010b\3\2\2\2\u010c\u010d\3\2\2\2\u010d\u0110\3\2\2\2\u010e\u010f\7\31"+
 		"\2\2\u010f\u0111\5\64\33\2\u0110\u010e\3\2\2\2\u0110\u0111\3\2\2\2\u0111"+
 		"\u0114\3\2\2\2\u0112\u0113\7\31\2\2\u0113\u0115\7\26\2\2\u0114\u0112\3"+
 		"\2\2\2\u0114\u0115\3\2\2\2\u0115\u0116\3\2\2\2\u0116\u0117\7\34\2\2\u0117"+
-		"\'\3\2\2\2\u0118\u0119\7%\2\2\u0119\u011b\7\33\2\2\u011a\u011c\5*\26\2"+
+		"\'\3\2\2\2\u0118\u0119\7$\2\2\u0119\u011b\7\33\2\2\u011a\u011c\5*\26\2"+
 		"\u011b\u011a\3\2\2\2\u011b\u011c\3\2\2\2\u011c\u011d\3\2\2\2\u011d\u011e"+
-		"\7\34\2\2\u011e)\3\2\2\2\u011f\u0126\5,\27\2\u0120\u0122\7\31\2\2\u0121"+
-		"\u0120\3\2\2\2\u0121\u0122\3\2\2\2\u0122\u0123\3\2\2\2\u0123\u0125\5,"+
-		"\27\2\u0124\u0121\3\2\2\2\u0125\u0128\3\2\2\2\u0126\u0124\3\2\2\2\u0126"+
+		"\7\34\2\2\u011e)\3\2\2\2\u011f\u0126\5\30\r\2\u0120\u0122\7\31\2\2\u0121"+
+		"\u0120\3\2\2\2\u0121\u0122\3\2\2\2\u0122\u0123\3\2\2\2\u0123\u0125\5\30"+
+		"\r\2\u0124\u0121\3\2\2\2\u0125\u0128\3\2\2\2\u0126\u0124\3\2\2\2\u0126"+
 		"\u0127\3\2\2\2\u0127+\3\2\2\2\u0128\u0126\3\2\2\2\u0129\u012a\b\27\1\2"+
 		"\u012a\u014b\5:\36\2\u012b\u014b\7\23\2\2\u012c\u012d\7\23\2\2\u012d\u012e"+
 		"\7\20\2\2\u012e\u0133\7\21\2\2\u012f\u0130\7\5\2\2\u0130\u0131\5\64\33"+
@@ -2681,11 +2681,11 @@ public class ReportParserParser extends Parser {
 		"\u0179\5\24\13\2\u0179\u017f\3\2\2\2\u017a\u017b\5\24\13\2\u017b\u017c"+
 		"\7\25\2\2\u017c\u017d\5\24\13\2\u017d\u017f\3\2\2\2\u017e\u0173\3\2\2"+
 		"\2\u017e\u0176\3\2\2\2\u017e\u017a\3\2\2\2\u017f\67\3\2\2\2\u0180\u0181"+
-		"\b\35\1\2\u0181\u0182\7%\2\2\u0182\u0188\3\2\2\2\u0183\u0184\f\3\2\2\u0184"+
+		"\b\35\1\2\u0181\u0182\7$\2\2\u0182\u0188\3\2\2\2\u0183\u0184\f\3\2\2\u0184"+
 		"\u0185\7\16\2\2\u0185\u0187\58\35\4\u0186\u0183\3\2\2\2\u0187\u018a\3"+
 		"\2\2\2\u0188\u0186\3\2\2\2\u0188\u0189\3\2\2\2\u01899\3\2\2\2\u018a\u0188"+
 		"\3\2\2\2\u018b\u018c\t\2\2\2\u018c;\3\2\2\2\u018d\u018e\t\3\2\2\u018e"+
-		"=\3\2\2\2\u018f\u0190\7%\2\2\u0190?\3\2\2\2*CLS\\kvz}\u0085\u0089\u0093"+
+		"=\3\2\2\2\u018f\u0190\7$\2\2\u0190?\3\2\2\2*CLS\\kvz}\u0085\u0089\u0093"+
 		"\u0099\u009d\u00aa\u00b0\u00b4\u00bb\u00bf\u00c8\u00d4\u00e1\u00e5\u00f4"+
 		"\u0105\u010c\u0110\u0114\u011b\u0121\u0126\u0133\u014a\u0151\u0157\u015e"+
 		"\u0165\u0168\u0170\u017e\u0188";
