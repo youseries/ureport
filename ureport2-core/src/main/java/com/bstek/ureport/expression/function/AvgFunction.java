@@ -19,7 +19,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.bstek.ureport.Utils;
+import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
+import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
@@ -54,6 +56,18 @@ public class AvgFunction implements Function {
 				BigDecimal bigData=Utils.toBigDecimal(data.getData());
 				total=total.add(bigData);
 				size++;
+			}else if(exprData instanceof BindDataListExpressionData){
+				BindDataListExpressionData data=(BindDataListExpressionData)exprData;
+				List<BindData> bindDataList=data.getData();
+				for(BindData bindData:bindDataList){
+					Object obj=bindData.getValue();
+					if(obj==null){
+						continue;
+					}
+					BigDecimal bigData=Utils.toBigDecimal(obj);
+					total=total.add(bigData);
+					size++;
+				}
 			}
 		}
 		if(size==0)size=1;

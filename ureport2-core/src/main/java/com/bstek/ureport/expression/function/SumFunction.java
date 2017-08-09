@@ -21,7 +21,9 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.bstek.ureport.Utils;
+import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
+import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
@@ -53,6 +55,17 @@ public class SumFunction implements Function {
 			}else if(exprData instanceof ObjectExpressionData){
 				Object obj=exprData.getData();
 				if(obj!=null && StringUtils.isNotBlank(obj.toString())){
+					BigDecimal bigData=Utils.toBigDecimal(obj);
+					total=total.add(bigData);
+				}
+			}else if(exprData instanceof BindDataListExpressionData){
+				BindDataListExpressionData data=(BindDataListExpressionData)exprData;
+				List<BindData> bindDataList=data.getData();
+				for(BindData bindData:bindDataList){
+					Object obj=bindData.getValue();
+					if(obj==null){
+						continue;
+					}
 					BigDecimal bigData=Utils.toBigDecimal(obj);
 					total=total.add(bigData);
 				}
