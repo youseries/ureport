@@ -36,7 +36,6 @@ import com.bstek.ureport.build.cell.right.RightExpandBuilder;
 import com.bstek.ureport.build.paging.BasePagination;
 import com.bstek.ureport.build.paging.Page;
 import com.bstek.ureport.definition.Band;
-import com.bstek.ureport.definition.CellStyle;
 import com.bstek.ureport.definition.Expand;
 import com.bstek.ureport.definition.Orientation;
 import com.bstek.ureport.definition.PagingMode;
@@ -49,6 +48,7 @@ import com.bstek.ureport.definition.datasource.DatasourceProvider;
 import com.bstek.ureport.definition.datasource.JdbcDatasourceDefinition;
 import com.bstek.ureport.definition.datasource.SpringBeanDatasourceDefinition;
 import com.bstek.ureport.exception.ReportComputeException;
+import com.bstek.ureport.exception.ReportException;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Column;
 import com.bstek.ureport.model.Report;
@@ -189,65 +189,110 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 	}
 	
 	private void doFillBlankRows(Report report,Context context){
-		List<Column> columns=report.getColumns();
-		Map<Row, Map<Column, Cell>> rowMap=report.getRowColCellMap();
 		Map<Row, Integer> map=context.getFillBlankRowsMap();
 		List<Row> newRowList=new ArrayList<Row>();
 		for(Row row:map.keySet()){
-			Map<Column,Cell> cellMap=rowMap.get(row);
 			int size=map.get(row);
+			Row lastRow=findLastRow(row, report);
 			for(int i=0;i<size;i++){
-				Row newRow=row.newRow();
-				newRow.setBand(null);
+				Row newRow=buildNewRow(lastRow, report);
 				newRowList.add(newRow);
-				Map<Column,Cell> newCellMap=new HashMap<Column,Cell>();
-				rowMap.put(newRow, newCellMap);
-				for(Column col:columns){
-					Cell newCell=newBlankCell(cellMap, col,report);
-					newCell.setRow(newRow);
-					newRow.getCells().add(newCell);
-					newCellMap.put(col, newCell);
-				}
 			}
+			int rowNumber=lastRow.getRowNumber();
 			if(newRowList.size()>0){
-				int rowNumber=row.getRowNumber();
 				report.insertRows(rowNumber+1, newRowList);
 				newRowList.clear();
 			}
 		}
 	}
 	
-	private Cell newBlankCell(Map<Column,Cell> cellMap,Column column,Report report){
-		if(cellMap!=null){
-			Cell cell=cellMap.get(column);
-			if(cell!=null){
-				Cell newCell=new Cell();
-				newCell.setData("");
-				newCell.setConditionPropertyItems(cell.getConditionPropertyItems());
-				report.addLazyCell(newCell);
-				newCell.setCellStyle(cell.getCellStyle());
-				newCell.setName(cell.getName());
-				newCell.setColumn(column);
-				column.getCells().add(newCell);
-				Cell leftParent=cell.getLeftParentCell();
-				if(leftParent!=null){
-					newCell.setLeftParentCell(leftParent);
-					leftParent.addRowChild(newCell);
+	private Row buildNewRow(Row row,Report report){
+		Row newRow=row.newRow();
+		newRow.setBand(null);
+		List<Row> rows=report.getRows();
+		List<Column> columns=report.getColumns();
+		int start=-1,colSize=columns.size();
+		Map<Row, Map<Column, Cell>> rowMap=report.getRowColCellMap();
+		Map<Column,Cell> newCellMap=new HashMap<Column,Cell>();
+		rowMap.put(newRow, newCellMap);
+		
+		Map<Column, Cell> colMap=rowMap.get(row);
+		for(int index=0;index<colSize;index++){
+			Column column=columns.get(index);
+			Cell currentCell=colMap.get(column);
+			if(currentCell==null){
+				if(start==-1){
+					start=row.getRowNumber()-2;
 				}
-				Cell topParent=cell.getTopParentCell();
-				if(topParent!=null){
-					newCell.setTopParentCell(topParent);
-					topParent.addColumnChild(newCell);					
+				for(int i=start;i>-1;i--){
+					Row currentRow=rows.get(i);
+					Map<Column, Cell> prevColMap=rowMap.get(currentRow);
+					if(prevColMap.containsKey(column)){
+						currentCell=prevColMap.get(column);
+						break;
+					}
 				}
-				return newCell;
+			}
+			if(currentCell==null){
+				throw new ReportException("Insert blank rows fail.");
+			}
+			int colSpan=currentCell.getColSpan();
+			if(colSpan>0){
+				colSpan--;
+				index+=colSpan;
+			}
+			Cell newCell=newBlankCell(currentCell, column, report);
+			newCell.setRow(newRow);
+			newRow.getCells().add(newCell);
+			newCellMap.put(newCell.getColumn(), newCell);
+		}
+		return newRow;
+	}
+	
+	private Row findLastRow(Row row,Report report){
+		List<Row> rows=report.getRows();
+		List<Cell> cells=row.getCells();
+		Row lastRow=row;
+		int span=0;
+		for(Cell cell:cells){
+			int rowSpan=cell.getRowSpan();
+			if(rowSpan<2){
+				continue;
+			}
+			if(span==0){
+				span=rowSpan;
+			}else if(rowSpan>span){
+				span=rowSpan;
 			}
 		}
+		if(span>1){
+			int rowIndex=row.getRowNumber()-1+span-1;
+			lastRow=rows.get(rowIndex);
+		}
+		return lastRow;
+	}
+	
+	
+	private Cell newBlankCell(Cell cell,Column column,Report report){
 		Cell newCell=new Cell();
 		newCell.setData("");
-		newCell.setCellStyle(new CellStyle());
-		newCell.setName("");
+		newCell.setColSpan(cell.getColSpan());
+		newCell.setConditionPropertyItems(cell.getConditionPropertyItems());
+		report.addLazyCell(newCell);
+		newCell.setCellStyle(cell.getCellStyle());
+		newCell.setName(cell.getName());
 		newCell.setColumn(column);
 		column.getCells().add(newCell);
+		Cell leftParent=cell.getLeftParentCell();
+		if(leftParent!=null){
+			newCell.setLeftParentCell(leftParent);
+			leftParent.addRowChild(newCell);
+		}
+		Cell topParent=cell.getTopParentCell();
+		if(topParent!=null){
+			newCell.setTopParentCell(topParent);
+			topParent.addColumnChild(newCell);					
+		}
 		return newCell;
 	}
 	
@@ -377,13 +422,10 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 					if(index==-1){
 						throw new ReportComputeException("Invalid row["+band+"] with key "+rowKey+".");
 					}
-				}
-				if(band!=null){
 					continue;
 				}
 				pageRows.add(row);
 				if((pageRows.size()+footerRows.size()) >= fixRows){
-					pageRows.addAll(footerRows);
 					Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
 					pageIndex++;
 					pages.add(newPage);
@@ -391,7 +433,6 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				}
 			}
 			if(pageRows.size()>0){
-				pageRows.addAll(footerRows);
 				Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
 				pages.add(newPage);
 			}

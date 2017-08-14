@@ -165,7 +165,7 @@ public abstract class BasePagination {
 	private Row fetchNextRow(List<Row> reportRows,int rowNumber){
 		Row row=null;
 		do{
-			if(rowNumber>reportRows.size()){
+			if(rowNumber>=reportRows.size()){
 				break;
 			}
 			row=reportRows.get(rowNumber);

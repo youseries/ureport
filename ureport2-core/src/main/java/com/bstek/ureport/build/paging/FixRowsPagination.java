@@ -85,7 +85,6 @@ public class FixRowsPagination extends BasePagination implements Pagination {
 			}
 			pageRows.add(row);
 			if((pageRows.size()+footerRows.size()) >= fixRows){
-				pageRows.addAll(footerRows);
 				Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
 				pageIndex++;
 				pages.add(newPage);
@@ -93,7 +92,6 @@ public class FixRowsPagination extends BasePagination implements Pagination {
 			}
 		}
 		if(pageRows.size()>0){
-			pageRows.addAll(footerRows);
 			Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
 			pageIndex++;
 			pages.add(newPage);
