@@ -38,7 +38,7 @@ export function resetTableData(hot){
                     if(prop.length>13){
                         text+=prop.substring(0,10)+'..)';
                     }else{
-                        text+=prop;
+                        text+=prop+")";
                     }
                     rowData.push(text);
                 }else if(valueType==='expression'){

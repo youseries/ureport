@@ -19,13 +19,20 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
     if(valueType==='dataset'){
         tip=cellValue.datasetName+"."+cellValue.aggregate+"(";
         let prop=cellValue.property;
-        tip+=prop;
+        tip+=prop+")";
+        if($td.html()===''){
+            $td.html(tip);
+        }
     }else if(valueType==='expression'){
         tip=cellValue.value || '';
+        if($td.html()===''){
+            $td.html(tip);
+        }
     }else if(valueType==='image'){
         tip='图片：'+cellValue.value;
         const imagePath=window._server+'/res/ureport-asserts/icons/image.svg';
         const image=$(`<img src="${imagePath}" width="40px">`);
+        $td.empty();
         $td.append(image);
     }else if(valueType==='slash'){
         tip='斜线表头';
@@ -52,6 +59,9 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         cellDef.chartWidget.renderChart($td);
     }else{
         tip=cellValue.value || "";
+        if($td.html()===''){
+            $td.html(tip);
+        }
     }
     $td.prop('title',tip);
     if(valueType==="simple"){

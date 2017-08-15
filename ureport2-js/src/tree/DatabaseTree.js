@@ -11,6 +11,7 @@ export default class DatabaseTree extends BaseTree{
         super();
         this.type='jdbc';
         this.datasources=datasources;
+        this.ds=ds;
         this.datasets=ds.datasets || [];
         this.datasourceDialog=datasourceDialog;
         this.context=context;
@@ -79,6 +80,11 @@ export default class DatabaseTree extends BaseTree{
                         _this.password=password;
                         _this.driver=driver;
                         _this.url=url;
+                        _this.ds.name=name;
+                        _this.ds.username=username;
+                        _this.ds.password=password;
+                        _this.ds.driver=driver;
+                        _this.ds.url=url;
                         rootSpan.find(".ds_name").html(name);
                     }, {
                         name: _this.name,

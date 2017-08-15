@@ -572,6 +572,7 @@ export default class SettingsDialog{
 }
 function checkGrammar(text,callback){
     if(!text || text===''){
+        callback.call(this);
         return;
     }
     const url=window._server+"/designer/scriptValidation";
