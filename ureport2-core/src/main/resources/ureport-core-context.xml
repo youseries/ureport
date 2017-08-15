@@ -64,6 +64,7 @@
 	<bean id="ureport.absFunction" class="com.bstek.ureport.expression.function.math.AbsFunction"></bean>
 	<bean id="ureport.ceilFunction" class="com.bstek.ureport.expression.function.math.CeilFunction"></bean>
 	<bean id="ureport.ChnFunction" class="com.bstek.ureport.expression.function.math.ChnFunction"></bean>
+	<bean id="ureport.ChnMoneyFunction" class="com.bstek.ureport.expression.function.math.ChnMoneyFunction"></bean>
 	<bean id="ureport.CosFunction" class="com.bstek.ureport.expression.function.math.CosFunction"></bean>
 	<bean id="ureport.ExpFunction" class="com.bstek.ureport.expression.function.math.ExpFunction"></bean>
 	<bean id="ureport.floorFunction" class="com.bstek.ureport.expression.function.math.FloorFunction"></bean>

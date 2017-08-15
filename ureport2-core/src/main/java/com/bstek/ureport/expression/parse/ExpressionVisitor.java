@@ -248,6 +248,9 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 				operators.add(Operator.parse(op));
 			}
 		}
+		if(operators.size()==0 && expressions.size()==1){
+			return expressions.get(0);
+		}
 		JoinExpression expression=new JoinExpression(operators,expressions);
 		expression.setExpr(ctx.getText());
 		return expression;

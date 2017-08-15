@@ -26,30 +26,31 @@ import com.bstek.ureport.model.Cell;
  * @author Jacky.gao
  * @since 2017年1月23日
  */
-public class ChnFunction extends MathFunction {
+public class ChnMoneyFunction extends MathFunction {
 	private static final String[] CN_UPPER_NUMBER = { "零", "壹", "贰", "叁", "肆","伍", "陆", "柒", "捌", "玖" };
-	private static final String[] CN_UPPER_UNIT = { "", "","点","拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟", "兆", "拾","佰", "仟" };
+	private static final String[] CN_UPPER_UNIT = { "分", "角", "元","拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟", "兆", "拾","佰", "仟" };
 	private static final String CN_NEGATIVE = "负";
 	private static final int NUMBER_PRECISION = 2;
 	private static final String CN_ZEOR = "零";
+	private static final String CN_FULL = "整";
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
 		BigDecimal data = buildBigDecimal(dataList);
-		return numberToChn(data);
+		return numberToRMB(data);
 	}
 
 	@Override
 	public String name() {
-		return "chn";
+		return "rmb";
 	}
 	
 	public static void main(String[] args) {
-		BigDecimal numberData=new BigDecimal(30010.12);
-		String chn=numberToChn(numberData);
+		BigDecimal numberData=new BigDecimal(2031002101);
+		String chn=numberToRMB(numberData);
 		System.out.println(chn);
 	}
 	
-	private static String numberToChn(BigDecimal numberData){
+	private static String numberToRMB(BigDecimal numberData){
 		StringBuilder sb = new StringBuilder();
 		int signum = numberData.signum();
 		if (signum == 0) {
@@ -83,23 +84,18 @@ public class ChnFunction extends MathFunction {
 		        if ((numIndex == 13) && (zeroSize >= 3)) {
 		            sb.insert(0, CN_UPPER_UNIT[10]);
 		        }
-		        String unit=buildPoint(numIndex,sb);
-		        sb.insert(0, unit);
+		        sb.insert(0, CN_UPPER_UNIT[numIndex]);
 		        sb.insert(0, CN_UPPER_NUMBER[numUnit]);
 		        getZero = false;
 		        zeroSize = 0;
 		    } else {
 		        ++zeroSize;
 		        if (!(getZero)) {
-		        	String unit=CN_UPPER_UNIT[numIndex];
-		        	if(!unit.equals("点")){
-		        		sb.insert(0, CN_UPPER_NUMBER[numUnit]);		        		
-		        	}
+		            sb.insert(0, CN_UPPER_NUMBER[numUnit]);
 		        }
 		        if (numIndex == 2) {
 		            if (number > 0) {
-		            	String unit=buildPoint(numIndex,sb);
-		            	sb.insert(0, unit);
+		                sb.insert(0, CN_UPPER_UNIT[numIndex]);
 		            }
 		        } else if (((numIndex - 2) % 4 == 0) && (number % 1000 > 0)) {
 		            sb.insert(0, CN_UPPER_UNIT[numIndex]);
@@ -112,18 +108,9 @@ public class ChnFunction extends MathFunction {
 		if (signum == -1) {
 		    sb.insert(0, CN_NEGATIVE);
 		}
-		return sb.toString();
-	}
-	
-	private static String buildPoint(int numIndex,StringBuilder sb){
-		String unit=CN_UPPER_UNIT[numIndex];
-		if(unit.equals("点")){
-    		if(sb.length()>0){
-    			return unit;
-    		}
-		}else{
-			return unit;
+		if (!(scale > 0)) {
+			sb.append(CN_FULL);
 		}
-		return "";
+		return sb.toString();
 	}
 }
