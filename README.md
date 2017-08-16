@@ -6,7 +6,7 @@ UReport2是一款高性能的架构在Spring之上纯Java报表引擎，通过�
 UReport2是第一款基于Apache-2.0协议开源的中式报表引擎。
 
 
-# 相关链接
+# 链接
 
 文档视频教程地址：[http://wiki.bsdn.org/display/UR/ureport2+Home](http://wiki.bsdn.org/display/UR/ureport2+Home)
 
