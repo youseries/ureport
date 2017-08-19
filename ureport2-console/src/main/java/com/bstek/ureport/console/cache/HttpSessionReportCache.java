@@ -15,13 +15,12 @@
  ******************************************************************************/
 package com.bstek.ureport.console.cache;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.bstek.ureport.cache.ReportCache;
 import com.bstek.ureport.console.RequestHolder;
@@ -32,8 +31,7 @@ import com.bstek.ureport.model.Report;
  * @since 2017年3月8日
  */
 public class HttpSessionReportCache implements ReportCache {
-	private final String KEY="__ureport_map";
-	private final int MAX_ITEM=3;
+	private Map<String,ReportMapObject> sessionReportMap=new HashMap<String,ReportMapObject>();
 	private boolean disabled;
 	@Override
 	public Report getReport(String file) {
@@ -41,8 +39,8 @@ public class HttpSessionReportCache implements ReportCache {
 		if(req==null){
 			return null;
 		}
-		Map<String, Report> map = getReportMap(req);
-		return map.get(file);
+		ReportMapObject reportMapObject = getReportMap(req);
+		return reportMapObject.getReport(file);
 	}
 
 	@Override
@@ -51,20 +49,8 @@ public class HttpSessionReportCache implements ReportCache {
 		if(req==null){
 			return;
 		}
-		Map<String, Report> map = getReportMap(req);
-		if(map.containsKey(file)){
-			map.remove(file);
-		}else{
-			if(map.size()>MAX_ITEM){
-				String lastFile=null;
-				for(Iterator<Entry<String,Report>> it=map.entrySet().iterator();it.hasNext();){
-					Entry<String,Report> entry=it.next();
-					lastFile=entry.getKey();
-				}
-				map.remove(lastFile);
-			}
-		}
-		map.put(file, report);
+		ReportMapObject reportMapObject = getReportMap(req);
+		reportMapObject.put(file, report);
 	}
 	
 	@Override
@@ -76,14 +62,25 @@ public class HttpSessionReportCache implements ReportCache {
 		this.disabled = disabled;
 	}
 
-	@SuppressWarnings("unchecked")
-	private Map<String, Report> getReportMap(HttpServletRequest req) {
-		HttpSession session=req.getSession();
-		Map<String,Report> map=(Map<String,Report>)session.getAttribute(KEY);
-		if(map==null){
-			map=new LinkedHashMap<String,Report>();
-			session.setAttribute(KEY, map);
+	private ReportMapObject getReportMap(HttpServletRequest req) {
+		List<String> expiredList=new ArrayList<String>();
+		for(String key:sessionReportMap.keySet()){
+			ReportMapObject reportObj=sessionReportMap.get(key);
+			if(reportObj.isExpired()){
+				expiredList.add(key);
+			}
 		}
-		return map;
+		for(String key:expiredList){
+			sessionReportMap.remove(key);
+		}
+		String sessionId=req.getSession().getId();
+		ReportMapObject reportObject=sessionReportMap.get(sessionId);
+		if(reportObject!=null){
+			return reportObject;
+		}else{
+			ReportMapObject reportMapObject=new ReportMapObject();
+			sessionReportMap.put(sessionId, reportMapObject);
+			return reportMapObject;
+		}
 	}
 }

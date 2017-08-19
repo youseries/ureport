@@ -55,11 +55,16 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.support.JdbcUtils;
 
 import com.bstek.ureport.Utils;
+import com.bstek.ureport.build.Context;
 import com.bstek.ureport.console.RenderPageServletAction;
 import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.dataset.Field;
 import com.bstek.ureport.definition.datasource.BuildinDatasource;
 import com.bstek.ureport.definition.datasource.DataType;
+import com.bstek.ureport.expression.ExpressionUtils;
+import com.bstek.ureport.expression.model.Expression;
+import com.bstek.ureport.expression.model.data.ExpressionData;
+import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 
 /**
  * @author Jacky.gao
@@ -183,6 +188,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		try{
 			conn=buildConnection(req);
 			Map<String, Object> map = buildParameters(parameters);
+			sql=parseSql(sql, map);
 			DataSource dataSource=new SingleConnectionDataSource(conn,false);
 			NamedParameterJdbcTemplate jdbc=new NamedParameterJdbcTemplate(dataSource);
 			PreparedStatementCreator statementCreator=getPreparedStatementCreator(sql,new MapSqlParameterSource(map));
@@ -225,6 +231,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		String sql=req.getParameter("sql");
 		String parameters=req.getParameter("parameters");
 		Map<String, Object> map = buildParameters(parameters);
+		sql=parseSql(sql, map);
 		Connection conn=null;
 		try{
 			conn=buildConnection(req);
@@ -264,6 +271,24 @@ public class DatasourceServletAction extends RenderPageServletAction {
 				}
 			}
 		}
+	}
+	
+	private String parseSql(String sql,Map<String,Object> parameters){
+		sql=sql.trim();
+		if(sql.startsWith(ExpressionUtils.SQL_EXPR_PREFIX) && sql.endsWith(ExpressionUtils.SQL_EXPR_SUFFIX)){
+			sql=sql.substring(2, sql.length()-1);
+			Expression expr=ExpressionUtils.parseExpression(sql);
+			Context context=new Context(applicationContext, parameters);
+			ExpressionData<?> exprData=expr.execute(null,null, context);
+			if(exprData instanceof ObjectExpressionData){
+				ObjectExpressionData objExprData=(ObjectExpressionData)exprData;
+				Object obj=objExprData.getData();
+				if(obj!=null){
+					return obj.toString();
+				}
+			}
+		}
+		return sql;
 	}
 	
 	public void testConnection(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
