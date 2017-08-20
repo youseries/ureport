@@ -28,7 +28,7 @@ import com.bstek.ureport.model.Report;
  */
 public class ReportMapObject {
 	private final int MAX_ITEM=3;
-	private static final int MILLISECOND=1800000;//default expired time is 30 minutes.
+	private static final int MILLISECOND=1200000;//default expired time is 20 minutes.
 	private Map<String, Report> reportMap=new LinkedHashMap<String, Report>();
 	private long start;
 	public ReportMapObject() {
