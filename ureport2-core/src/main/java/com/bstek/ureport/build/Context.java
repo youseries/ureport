@@ -74,6 +74,11 @@ public class Context {
 		this.rootCell.setName("ROOT");
 	}
 	
+	public Context(ApplicationContext applicationContext,Map<String,Object> parameters){
+		this.applicationContext=applicationContext;
+		this.parameters=parameters;
+	}
+	
 	public void doHideProcessColumn(Column col) {
 		hideRowColumnBuilder.doHideProcessColumn(report, col);
 	}

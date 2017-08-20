@@ -46,6 +46,7 @@ public class JdbcDatasourceDefinition implements DatasourceDefinition {
 		if(conn==null)conn=getConnection();
 		List<Dataset> list=new ArrayList<Dataset>();
 		try{
+			
 			for(DatasetDefinition dsDef:datasets){
 				SqlDatasetDefinition sqlDataset=(SqlDatasetDefinition)dsDef;
 				Dataset ds=sqlDataset.buildDataset(parameters, conn);

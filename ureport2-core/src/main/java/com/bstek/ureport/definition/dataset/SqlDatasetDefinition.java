@@ -23,8 +23,12 @@ import java.util.Map;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
+import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.Dataset;
 import com.bstek.ureport.definition.datasource.DataType;
+import com.bstek.ureport.expression.model.Expression;
+import com.bstek.ureport.expression.model.data.ExpressionData;
+import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 
 
 /**
@@ -37,12 +41,25 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 	private String sql;
 	private List<Parameter> parameters;
 	private List<Field> fields;
+	private Expression sqlExpression;
 	
 	public Dataset buildDataset(Map<String,Object> parameterMap,Connection conn){
+		String sqlForUse=sql;
+		if(sqlExpression!=null){
+			Context context=new Context(null,parameterMap);
+			ExpressionData<?> exprData=sqlExpression.execute(null, null, context);
+			if(exprData instanceof ObjectExpressionData){
+				ObjectExpressionData data=(ObjectExpressionData)exprData;
+				Object obj=data.getData();
+				if(obj!=null){
+					sqlForUse=obj.toString();
+				}
+			}
+		}
 		Map<String, Object> pmap = buildParameters(parameterMap);
 		SingleConnectionDataSource datasource=new SingleConnectionDataSource(conn,false);
 		NamedParameterJdbcTemplate jdbcTemplate=new NamedParameterJdbcTemplate(datasource);
-		List<Map<String,Object>> list= jdbcTemplate.queryForList(sql, pmap);
+		List<Map<String,Object>> list= jdbcTemplate.queryForList(sqlForUse, pmap);
 		return new Dataset(name,list);
 	}
 	
@@ -63,6 +80,10 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 	@Override
 	public List<Field> getFields() {
 		return fields;
+	}
+	
+	public void setSqlExpression(Expression sqlExpression) {
+		this.sqlExpression = sqlExpression;
 	}
 	
 	public void setFields(List<Field> fields) {

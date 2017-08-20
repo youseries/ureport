@@ -30,6 +30,8 @@ import com.bstek.ureport.definition.datasource.DataType;
 import com.bstek.ureport.definition.datasource.DatasourceDefinition;
 import com.bstek.ureport.definition.datasource.JdbcDatasourceDefinition;
 import com.bstek.ureport.definition.datasource.SpringBeanDatasourceDefinition;
+import com.bstek.ureport.expression.ExpressionUtils;
+import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.parser.Parser;
 
 /**
@@ -75,7 +77,7 @@ public class DatasourceParser implements Parser<DatasourceDefinition> {
 			if(type.equals("sql")){
 				SqlDatasetDefinition dataset=new SqlDatasetDefinition();
 				dataset.setName(ele.attributeValue("name"));
-				dataset.setSql(parseSql(ele));
+				dataset.setSql(parseSql(ele,dataset));
 				dataset.setFields(parseFields(ele));
 				dataset.setParameters(parseParameters(ele));
 				list.add(dataset);
@@ -126,13 +128,18 @@ public class DatasourceParser implements Parser<DatasourceDefinition> {
 		return fields;
 	}
 	
-	private String parseSql(Element element){
+	private String parseSql(Element element,SqlDatasetDefinition dataset){
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
 				continue;
 			}
 			Element ele=(Element)obj;
 			if(ele.getName().equals("sql")){
+				String sql=ele.getText().trim();
+				if(sql.startsWith(ExpressionUtils.SQL_EXPR_PREFIX) && sql.endsWith(ExpressionUtils.SQL_EXPR_SUFFIX)){
+					Expression expr=ExpressionUtils.parseExpression(sql.substring(2,sql.length()-1));
+					dataset.setSqlExpression(expr);
+				}
 				return ele.getText();
 			}
 		}

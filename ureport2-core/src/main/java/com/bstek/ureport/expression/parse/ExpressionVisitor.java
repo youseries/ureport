@@ -207,7 +207,11 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 			list.add(condition);
 			if(i>0){
 				JoinContext joinContext=joinContexts.get(i-1);
-				Join join=Join.valueOf(joinContext.getText());
+				String text=joinContext.getText();
+				Join join=Join.and;
+				if(text.equals("or") || text.equals("||")){
+					join=Join.or;
+				}
 				joins.add(join);
 			}
 		}
