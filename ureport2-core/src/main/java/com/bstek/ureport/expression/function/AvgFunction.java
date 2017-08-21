@@ -70,8 +70,11 @@ public class AvgFunction implements Function {
 				}
 			}
 		}
-		if(size==0)size=1;
-		return total.divide(new BigDecimal(size), 8, BigDecimal.ROUND_HALF_UP);
+		if(size==0){
+			return null;
+		}else{
+			return total.divide(new BigDecimal(size), 8, BigDecimal.ROUND_HALF_UP);			
+		}
 	}
 	@Override
 	public String name() {

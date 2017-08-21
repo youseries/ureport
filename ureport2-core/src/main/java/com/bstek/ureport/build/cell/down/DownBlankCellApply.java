@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
+import com.bstek.ureport.definition.ConditionPropertyItem;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Column;
 import com.bstek.ureport.model.Row;
@@ -56,6 +57,15 @@ public class DownBlankCellApply {
 		blankCell.setProcessed(true);
 		blankCell.setData(bindData.getValue());
 		blankCell.setBindData(bindData.getDataList());
+		blankCell.setConditionPropertyItems(cell.getConditionPropertyItems());
+		List<ConditionPropertyItem> conditionPropertyItems=blankCell.getConditionPropertyItems();
+		if(conditionPropertyItems!=null && conditionPropertyItems.size()>0){
+			context.getReport().getLazyComputeCells().add(blankCell);
+		}else{
+			blankCell.doFormat();
+			blankCell.doDataWrapCompute(context);
+		}
+		
 		processChildrenCell(cell,blankCell,index);
 		return true;
 	}
