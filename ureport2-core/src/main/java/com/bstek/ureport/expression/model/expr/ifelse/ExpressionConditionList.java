@@ -56,4 +56,7 @@ public class ExpressionConditionList {
 		}
 		return true;
 	}
+	public List<ExpressionCondition> getConditions() {
+		return conditions;
+	}
 }

@@ -34,6 +34,8 @@ import com.bstek.ureport.expression.model.expr.FunctionExpression;
 import com.bstek.ureport.expression.model.expr.JoinExpression;
 import com.bstek.ureport.expression.model.expr.ifelse.ElseExpression;
 import com.bstek.ureport.expression.model.expr.ifelse.ElseIfExpression;
+import com.bstek.ureport.expression.model.expr.ifelse.ExpressionCondition;
+import com.bstek.ureport.expression.model.expr.ifelse.ExpressionConditionList;
 import com.bstek.ureport.expression.model.expr.ifelse.IfExpression;
 import com.bstek.ureport.model.Cell;
 
@@ -78,8 +80,27 @@ public class ExpressionValueCompute implements ValueCompute {
 			return false;
 		}
 		if(expr instanceof IfExpression){
+			boolean has=false;
 			IfExpression ifExpr=(IfExpression)expr;
-			boolean has=hasPageFunction(ifExpr.getExpression());
+			ExpressionConditionList exprConditionList=ifExpr.getConditionList();
+			if(exprConditionList!=null){
+				List<ExpressionCondition> conditionList=exprConditionList.getConditions();
+				if(conditionList!=null){
+					for(ExpressionCondition exprCondition:conditionList){
+						Expression leftExpression=exprCondition.getLeft();
+						has=hasPageFunction(leftExpression);
+						if(has){
+							return has;
+						}
+						Expression rightExpression=exprCondition.getRight();
+						has=hasPageFunction(rightExpression);
+						if(has){
+							return has;
+						}
+					}
+				}
+			}
+			has=hasPageFunction(ifExpr.getExpression());
 			if(has){
 				return has;
 			}

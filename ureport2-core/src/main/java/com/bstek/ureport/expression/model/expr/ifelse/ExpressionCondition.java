@@ -70,4 +70,10 @@ public class ExpressionCondition {
 			throw new ReportComputeException("Unknow data : "+data);
 		}
 	}
+	public Expression getLeft() {
+		return left;
+	}
+	public Expression getRight() {
+		return right;
+	}
 }

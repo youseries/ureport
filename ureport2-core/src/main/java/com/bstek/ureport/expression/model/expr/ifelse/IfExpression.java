@@ -57,6 +57,9 @@ public class IfExpression extends BaseExpression {
 	public void setConditionList(ExpressionConditionList conditionList) {
 		this.conditionList = conditionList;
 	}
+	public ExpressionConditionList getConditionList() {
+		return conditionList;
+	}
 	public void setElseExpression(ElseExpression elseExpression) {
 		this.elseExpression = elseExpression;
 	}
