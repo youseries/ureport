@@ -32,8 +32,8 @@ public class CountFunction implements Function {
 
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
-		if(dataList==null){
-			return 0;
+		if(dataList==null || dataList.size()==0){
+			return null;
 		}
 		int size=0;
 		for(ExpressionData<?> data:dataList){

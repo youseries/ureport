@@ -34,8 +34,8 @@ import com.bstek.ureport.model.Cell;
 public class AvgFunction implements Function {
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
-		if(dataList==null){
-			return 0;
+		if(dataList==null || dataList.size()==0){
+			return null;
 		}
 		int size=0;
 		BigDecimal total=new BigDecimal(0);
@@ -71,7 +71,9 @@ public class AvgFunction implements Function {
 			}
 		}
 		if(size==0){
-			return null;
+			return 0;
+		}else if(size==1){
+			return total;
 		}else{
 			return total.divide(new BigDecimal(size), 8, BigDecimal.ROUND_HALF_UP);			
 		}

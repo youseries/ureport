@@ -37,8 +37,8 @@ public class MinFunction implements Function {
 
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
-		if(dataList==null){
-			return 0;
+		if(dataList==null || dataList.size()==0){
+			return null;
 		}
 		BigDecimal value=null;
 		for(ExpressionData<?> exprData:dataList){
