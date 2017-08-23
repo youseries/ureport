@@ -38,6 +38,7 @@ public class AvgFunction implements Function {
 			return null;
 		}
 		int size=0;
+		Object singleData=null;
 		BigDecimal total=new BigDecimal(0);
 		for(ExpressionData<?> exprData:dataList){
 			if(exprData instanceof ObjectListExpressionData){
@@ -47,6 +48,7 @@ public class AvgFunction implements Function {
 					if(obj==null){
 						continue;
 					}
+					singleData=obj;
 					BigDecimal bigData=Utils.toBigDecimal(obj);
 					total=total.add(bigData);
 					size++;
@@ -54,6 +56,7 @@ public class AvgFunction implements Function {
 			}else if(exprData instanceof ObjectExpressionData){
 				ObjectExpressionData data=(ObjectExpressionData)exprData;
 				BigDecimal bigData=Utils.toBigDecimal(data.getData());
+				singleData=data.getData();
 				total=total.add(bigData);
 				size++;
 			}else if(exprData instanceof BindDataListExpressionData){
@@ -64,6 +67,7 @@ public class AvgFunction implements Function {
 					if(obj==null){
 						continue;
 					}
+					singleData=obj;
 					BigDecimal bigData=Utils.toBigDecimal(obj);
 					total=total.add(bigData);
 					size++;
@@ -73,6 +77,9 @@ public class AvgFunction implements Function {
 		if(size==0){
 			return 0;
 		}else if(size==1){
+			if(singleData==null || singleData.equals("")){
+				return "";
+			}
 			return total;
 		}else{
 			return total.divide(new BigDecimal(size), 8, BigDecimal.ROUND_HALF_UP);			

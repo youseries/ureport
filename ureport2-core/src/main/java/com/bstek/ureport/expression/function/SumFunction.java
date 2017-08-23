@@ -40,6 +40,7 @@ public class SumFunction implements Function {
 		if(dataList==null || dataList.size()==0){
 			return null;
 		}
+		Object singleData=null;
 		BigDecimal total=new BigDecimal(0);
 		for(ExpressionData<?> exprData:dataList){
 			if(exprData instanceof ObjectListExpressionData){
@@ -49,11 +50,13 @@ public class SumFunction implements Function {
 					if(obj==null || StringUtils.isBlank(obj.toString())){
 						continue;
 					}
+					singleData=obj;
 					BigDecimal bigData=Utils.toBigDecimal(obj);
 					total=total.add(bigData);
 				}
 			}else if(exprData instanceof ObjectExpressionData){
 				Object obj=exprData.getData();
+				singleData=obj;
 				if(obj!=null && StringUtils.isNotBlank(obj.toString())){
 					BigDecimal bigData=Utils.toBigDecimal(obj);
 					total=total.add(bigData);
@@ -66,9 +69,15 @@ public class SumFunction implements Function {
 					if(obj==null){
 						continue;
 					}
+					singleData=obj;
 					BigDecimal bigData=Utils.toBigDecimal(obj);
 					total=total.add(bigData);
 				}
+			}
+		}
+		if(dataList.size()==1){
+			if(singleData==null || singleData.equals("")){
+				return "";
 			}
 		}
 		return total;
