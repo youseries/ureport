@@ -47,7 +47,8 @@ public class ElUtils {
     private static String transform(String expression) {
         char[] arr = expression.toCharArray();
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == '-') {
+        	char cc=arr[i];
+            if (cc == '-') {
                 if (i == 0) {
                     arr[i] = '~';
                 } else {

@@ -24,6 +24,13 @@ import com.bstek.ureport.Utils;
  * @since 2017年4月25日
  */
 public class ArithUtils {
+	
+	public static void main(String[] args) {
+		BigDecimal a=new BigDecimal(-3960);
+		BigDecimal b=new BigDecimal(-3080);
+		System.out.println(a.subtract(b));
+	}
+	
 	/**
 	 * @param first 第一个参数
 	 * @param second 第二个参数

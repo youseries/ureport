@@ -42,13 +42,13 @@ public enum Operator {
 	public String toString() {
 		switch(this){
 		case Add:
-			return " + ";
+			return "+";
 		case Divide:
-			return " / ";
+			return "/";
 		case Multiply:
-			return " * ";
+			return "*";
 		case Subtract:
-			return " - ";
+			return "-";
 		case Complementation:
 			return "%";
 		}
