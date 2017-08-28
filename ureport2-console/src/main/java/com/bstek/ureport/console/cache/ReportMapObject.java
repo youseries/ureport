@@ -51,6 +51,7 @@ public class ReportMapObject {
 		this.reportMap.put(file, report);
 	}
 	public Report getReport(String file){
+		this.start=System.currentTimeMillis();
 		return this.reportMap.get(file);
 	}
 	public boolean isExpired(){
