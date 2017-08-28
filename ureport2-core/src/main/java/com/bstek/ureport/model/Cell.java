@@ -264,7 +264,7 @@ public class Cell implements ReportCell {
 		if(StringUtils.isNotBlank(customFormat)){
 			format=customFormat;
 		}
-		if(StringUtils.isBlank(format) || data==null){
+		if(StringUtils.isBlank(format) || data==null || StringUtils.isBlank(data.toString())){
 			return;
 		}
 		if(data instanceof Date){
