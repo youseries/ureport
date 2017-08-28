@@ -5,11 +5,17 @@ import Raphael from 'raphael';
 import saveSvgAsPng from 'save-svg-as-png';
 
 export default class CrossTabWidget{
-    constructor(context,rowIndex,colIndex,cellDef){
+    constructor(context,rowIndex,colIndex,cellDef,value){
         this.context=context;
         this.hot=context.hot;
         this.rowIndex=rowIndex;
         this.colIndex=colIndex;
+        this.slashData=[];
+        if(value){
+            for(let name of value.split('|')){
+                this.slashData.push(name);
+            }
+        }
         this.refreshCell(cellDef);
     }
     refreshCell(cellDef){
@@ -39,6 +45,7 @@ export default class CrossTabWidget{
         for(let i=rowStart;i<rowEnd;i++){
             rowHeight+=this.hot.getRowHeight(i);
         }
+        const dataSize=this.slashData.length;
         let index=1;
         const slashes=[];
         for(let i=0;i<this.rowSpan;i++){
@@ -51,6 +58,14 @@ export default class CrossTabWidget{
             }else{
                 height-=3;
             }
+            let itemName='项目'+index;
+            if(dataSize>0 && index-1>=dataSize){
+                break;
+            }else{
+                if(dataSize>0){
+                    itemName=this.slashData[index-1];
+                }
+            }
             const degree=this._computeDegree(colWidth,height);
             const width=this.hot.getColWidth(this.colIndex+(this.colSpan-1));
             const x=parseInt(colWidth-30);
@@ -58,34 +73,48 @@ export default class CrossTabWidget{
                 degree,
                 x,
                 y:height,
-                text:'项目'+index
+                text:itemName
             });
             index++;
         }
-        const degree=this._computeDegree(colWidth,rowHeight);
-        let x=colWidth;
-        if(this.colSpan>1){
-            x-=this.hot.getColWidth(this.colIndex+(this.colSpan-1));
-        }else{
-            x-=parseInt(x/5);
+        if(dataSize===0 || index-1<dataSize){
+            let itemName='项目'+index;
+            if(dataSize>0){
+                itemName=this.slashData[index-1];
+            }
+            const degree=this._computeDegree(colWidth,rowHeight);
+            let x=colWidth;
+            if(this.colSpan>1){
+                x-=this.hot.getColWidth(this.colIndex+(this.colSpan-1));
+            }else{
+                x-=parseInt(x/5);
+            }
+            let y=rowHeight;
+            if(this.rowSpan>1){
+                y-=parseInt(this.hot.getRowHeight(this.rowIndex+(this.rowSpan-1))/2)+5;
+            }else{
+                y-=parseInt(y/2);
+            }
+            slashes.push({
+                degree,
+                x,
+                y,
+                text:itemName
+            });
+            index++;
         }
-        let y=rowHeight;
-        if(this.rowSpan>1){
-            y-=parseInt(this.hot.getRowHeight(this.rowIndex+(this.rowSpan-1))/2)+5;
-        }else{
-            y-=parseInt(y/2);
-        }
-        slashes.push({
-            degree,
-            x,
-            y,
-            text:'项目'+index
-        });
-        index++;
         for(let i=0;i<this.colSpan;i++){
             let width=0;
             for(let j=0;j<i;j++){
                 width+=this.hot.getColWidth(j);
+            }
+            let itemName='项目'+index;
+            if(dataSize>0 && index-1>=dataSize){
+                break;
+            }else{
+                if(dataSize>0){
+                    itemName=this.slashData[index-1];
+                }
             }
             width+=20;
             const degree=this._computeDegree(rowHeight,width);
@@ -94,7 +123,7 @@ export default class CrossTabWidget{
                 degree,
                 x:width,
                 y,
-                text:'项目'+index
+                text:itemName
             });
             index++;
         }
@@ -118,22 +147,6 @@ export default class CrossTabWidget{
         const container=$(`<div></div>`);
         $td.append(container);
         this.paper=Raphael(container.get(0),this.width,this.height);
-        /*
-        if(cellStyle.bgcolor){
-            let colWidth=0;
-            const colStart=this.colIndex,colEnd=this.colIndex+this.colSpan;
-            for(let i=colStart;i<colEnd;i++){
-                colWidth+=this.hot.getColWidth(i);
-            }
-            let rowHeight=0;
-            const rowStart=this.rowIndex,rowEnd=this.rowIndex+this.rowSpan;
-            for(let i=rowStart;i<rowEnd;i++){
-                rowHeight+=this.hot.getRowHeight(i);
-            }
-            const color=rgbToHex(cellStyle.bgcolor);
-            this.paper.rect("0","0",colWidth,rowHeight).attr({stroke:color,fill:color});
-        }
-        */
         let fontStyle=cellStyle.fontSize+"pt "+(cellStyle.fontFamily ? cellStyle.fontFamily : "宋体");
         let bold=cellStyle.bold ? 'bold' : 'normal';
         let italic=cellStyle.italic ? 'italic' : 'normal';
@@ -146,12 +159,18 @@ export default class CrossTabWidget{
             'text-decoration' : underline
         };
         const slashes=slashValue.slashes;
+        const size=slashes.length;
         for(let i=0;i<(this.rowSpan-1);i++){
+            if(size>0 && index>=size){
+                break;
+            }
             let h=0;
             for(let j=0;j<=i;j++){
                 h+=this.hot.getRowHeight(this.rowIndex+j);
             }
-            this.paper.path("M0 0L"+this.width+" "+h).attr({stroke:rgbToHex(cellStyle.forecolor)});
+            if(index<size){
+                this.paper.path("M0 0L"+this.width+" "+h).attr({stroke:rgbToHex(cellStyle.forecolor)});
+            }
             let slash=slashes[index];
             let text=this.paper.text(0,0,slash.text).attr(textStyle);
             text.attr({
@@ -159,47 +178,57 @@ export default class CrossTabWidget{
             });
             index++;
         }
-        let h=this.height-(this.hot.getRowHeight(this.rowIndex+(this.rowSpan-1)))/3;
-        this.paper.path("M0 0L"+this.width+" "+h).attr({stroke:rgbToHex(cellStyle.forecolor)});
 
-        let slash=slashes[index];
-        index++;
-        let text=this.paper.text(0,0,slash.text).attr(textStyle);
-        text.attr({
-            transform:'T'+slash.x+","+slash.y+"R"+slash.degree
-        });
-
-        let w=this.width-(this.hot.getColWidth(this.colIndex+(this.colSpan-1)))/3;
-        this.paper.path("M0 0L"+w+" "+this.height).attr({stroke:rgbToHex(cellStyle.forecolor)});
-
-        slash=slashes[index];
-        index++;
-        text=this.paper.text(0,0,slash.text).attr(textStyle);
-        text.attr({
-            transform:'T'+slash.x+","+slash.y+"R"+slash.degree
-        });
+        if(size===0 || index<size){
+            let h=this.height-(this.hot.getRowHeight(this.rowIndex+(this.rowSpan-1)))/3;
+            if(index+1<size){
+                this.paper.path("M0 0L"+this.width+" "+h).attr({stroke:rgbToHex(cellStyle.forecolor)});
+            }
+            let slash=slashes[index];
+            index++;
+            let text=this.paper.text(0,0,slash.text).attr(textStyle);
+            text.attr({
+                transform:'T'+slash.x+","+slash.y+"R"+slash.degree
+            });
+            if(size===0 || index<size){
+                let w=this.width-(this.hot.getColWidth(this.colIndex+(this.colSpan-1)))/3;
+                if(index+1<size){
+                    this.paper.path("M0 0L"+w+" "+this.height).attr({stroke:rgbToHex(cellStyle.forecolor)});
+                }
+                slash=slashes[index];
+                index++;
+                text=this.paper.text(0,0,slash.text).attr(textStyle);
+                text.attr({
+                    transform:'T'+slash.x+","+slash.y+"R"+slash.degree
+                });
+            }
+        }
 
         for(let i=0;i<(this.colSpan-1);i++){
+            if(size>0 && index>=size){
+                break;
+            }
             let w=0;
             for(let j=0;j<=i;j++){
                 w+=this.hot.getColWidth(this.colIndex+j);
             }
             this.paper.path("M0 0L"+w+" "+this.height).attr({stroke:rgbToHex(cellStyle.forecolor)});
 
-            slash=slashes[index];
+            let slash=slashes[index];
             index++;
-            text=this.paper.text(0,0,slash.text).attr(textStyle);
+            let text=this.paper.text(0,0,slash.text).attr(textStyle);
             text.attr({
                 transform:'T'+slash.x+","+slash.y+"R"+slash.degree
             });
         }
-
-        slash=slashes[index];
-        index++;
-        text=this.paper.text(0,0,slash.text).attr(textStyle);
-        text.attr({
-            transform:'T'+slash.x+","+slash.y+"R"+slash.degree
-        });
+        if(size===0 || index<size){
+            let slash=slashes[index];
+            index++;
+            let text=this.paper.text(0,0,slash.text).attr(textStyle);
+            text.attr({
+                transform:'T'+slash.x+","+slash.y+"R"+slash.degree
+            });
+        }
         const svg=container.children('svg').get(0);
         saveSvgAsPng.svgAsPngUri(svg,{encoderOptions:1},function(base64Data){
             slashValue.base64Data=base64Data;
