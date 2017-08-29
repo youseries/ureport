@@ -284,7 +284,9 @@ public class DatasourceServletAction extends RenderPageServletAction {
 				ObjectExpressionData objExprData=(ObjectExpressionData)exprData;
 				Object obj=objExprData.getData();
 				if(obj!=null){
-					return obj.toString();
+					sql=obj.toString();
+					sql=sql.replaceAll("\\\\", "");
+					return sql;
 				}
 			}
 		}
