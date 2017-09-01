@@ -14,7 +14,7 @@ export default class SqlDatasetDialog{
         this.datasources=db.datasources;
         this.data=data;
         this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 10000;overflow: auto">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg" style="width: 980px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -32,7 +32,7 @@ export default class SqlDatasetDialog{
         const body=this.dialog.find('.modal-body'),footer=this.dialog.find(".modal-footer");
         const container=$(`<div></div>`);
         body.append(container);
-        const leftContainer=$(`<div style="width: 200px;display: inline-block;vertical-align: top;height: 450px;overflow: auto;"></div>`);
+        const leftContainer=$(`<div style="width: 250px;display: inline-block;vertical-align: top;height: 450px;overflow: auto;"></div>`);
         const rightContainer=$(`<div style="display: inline-block"></div>`);
         container.append(leftContainer);
         container.append(rightContainer);
@@ -45,7 +45,7 @@ export default class SqlDatasetDialog{
     initTables(container){
         const searchGroup=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(searchGroup);
-        const searchEdior=$(`<input class="form-control" placeholder="表名查询" style="display: inline-block;width: 135px;">`);
+        const searchEdior=$(`<input class="form-control" placeholder="表名查询" style="display: inline-block;width: 150px;">`);
         searchGroup.append(searchEdior);
         const searchButton=$(`<button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>`);
         searchGroup.append(searchButton);
@@ -76,7 +76,7 @@ export default class SqlDatasetDialog{
     }
     initSqlEditor(body){
         const nameRow=$(`<div class="row" style="margin: 10px;">数据集名称：</div>`);
-        this.nameEditor=$(`<input type="text" class="form-control" style="font-size: 13px;width:562px;display: inline-block">`);
+        this.nameEditor=$(`<input type="text" class="form-control" style="font-size: 13px;width:570px;display: inline-block">`);
         nameRow.append(this.nameEditor);
         body.append(nameRow);
 

@@ -161,6 +161,10 @@ public class ReportDefinition implements Serializable{
 			if(valign!=null){
 				sb.append("vertical-align:"+valign.name()+";");				
 			}
+			float lineHeight=cellStyle.getLineHeight();
+			if(lineHeight>0){
+				sb.append("line-height:"+lineHeight+";");
+			}
 			String bgcolor=cellStyle.getBgcolor();
 			if(StringUtils.isNotBlank(bgcolor)){
 				sb.append("background-color:rgb("+bgcolor+");");				

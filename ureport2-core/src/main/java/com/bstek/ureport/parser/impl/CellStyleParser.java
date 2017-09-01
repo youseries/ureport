@@ -18,6 +18,7 @@ package com.bstek.ureport.parser.impl;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
+import com.bstek.ureport.Utils;
 import com.bstek.ureport.definition.Alignment;
 import com.bstek.ureport.definition.Border;
 import com.bstek.ureport.definition.BorderStyle;
@@ -118,6 +119,10 @@ public class CellStyleParser implements Parser<CellStyle> {
 		String wrapCompute=element.attributeValue("wrap-compute");
 		if(StringUtils.isNotBlank(wrapCompute)){
 			style.setWrapCompute(Boolean.valueOf(wrapCompute));
+		}
+		String lineHeight=element.attributeValue("line-height");
+		if(StringUtils.isNotBlank(lineHeight)){
+			style.setLineHeight(Utils.toBigDecimal(lineHeight).floatValue());
 		}
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){

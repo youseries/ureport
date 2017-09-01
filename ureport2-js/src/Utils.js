@@ -616,6 +616,9 @@ function buildCellStyle(cellStyle,condition){
     if(cellStyle.valignScope){
         cellXml+=` valign-scope="${cellStyle.valignScope}"`;
     }
+    if(cellStyle.lineHeight){
+        cellXml+=` line-height="${cellStyle.lineHeight}"`;
+    }
     cellXml+='>';
     let leftBorder=cellStyle.leftBorder;
     if(leftBorder && leftBorder.style!=="none"){

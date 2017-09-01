@@ -17,8 +17,11 @@ package com.bstek.ureport.definition;
 
 import java.awt.Font;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.bstek.ureport.Utils;
 
 
 /**
@@ -32,6 +35,7 @@ public class CellStyle implements Serializable{
 	private int fontSize=10;
 	private String fontFamily="宋体";
 	private String format;
+	private float lineHeight;
 	private Alignment align;
 	private Alignment valign;
 	private Boolean bold;
@@ -169,6 +173,14 @@ public class CellStyle implements Serializable{
 		this.font = font;
 	}
 
+	public float getLineHeight() {
+		return lineHeight;
+	}
+
+	public void setLineHeight(float lineHeight) {
+		this.lineHeight = lineHeight;
+	}
+
 	@JsonIgnore
 	public Font getFont(){
 		if(this.font==null){
@@ -180,7 +192,10 @@ public class CellStyle implements Serializable{
 			}else if(italic!=null && italic){
 				fontStyle=Font.ITALIC;							
 			}
-			this.font=new Font(fontFamily,fontStyle,fontSize);
+			double size=fontSize * 1.1;
+			BigDecimal bigData=Utils.toBigDecimal(size);
+			int s=bigData.setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+			this.font=new Font(fontFamily,fontStyle,s);
 		}
 		return this.font;
 	}

@@ -168,6 +168,7 @@ export default class CrossTabWidget{
             for(let j=0;j<=i;j++){
                 h+=this.hot.getRowHeight(this.rowIndex+j);
             }
+            if(size==2) h=this.height;
             if(index<size){
                 this.paper.path("M0 0L"+this.width+" "+h).attr({stroke:rgbToHex(cellStyle.forecolor)});
             }
@@ -182,6 +183,7 @@ export default class CrossTabWidget{
         if(size===0 || index<size){
             let h=this.height-(this.hot.getRowHeight(this.rowIndex+(this.rowSpan-1)))/3;
             if(index+1<size){
+                if(size==2) h=this.height;
                 this.paper.path("M0 0L"+this.width+" "+h).attr({stroke:rgbToHex(cellStyle.forecolor)});
             }
             let slash=slashes[index];
@@ -193,6 +195,7 @@ export default class CrossTabWidget{
             if(size===0 || index<size){
                 let w=this.width-(this.hot.getColWidth(this.colIndex+(this.colSpan-1)))/3;
                 if(index+1<size){
+                    if(size==2) w=this.width;
                     this.paper.path("M0 0L"+w+" "+this.height).attr({stroke:rgbToHex(cellStyle.forecolor)});
                 }
                 slash=slashes[index];
@@ -212,6 +215,7 @@ export default class CrossTabWidget{
             for(let j=0;j<=i;j++){
                 w+=this.hot.getColWidth(this.colIndex+j);
             }
+            if(size==2) w=this.width;
             this.paper.path("M0 0L"+w+" "+this.height).attr({stroke:rgbToHex(cellStyle.forecolor)});
 
             let slash=slashes[index];

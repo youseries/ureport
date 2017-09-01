@@ -56,6 +56,7 @@ import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
+import com.bstek.ureport.utils.UnitUtils;
 
 /**
  * @author Jacky.gao
@@ -583,7 +584,14 @@ public class Cell implements ReportCell {
 		Font font=cellStyle.getFont();
 		FontMetrics fontMetrics=new JLabel().getFontMetrics(font);
 		int textWidth=fontMetrics.stringWidth(dataText);
-		int singleLineHeight=fontMetrics.getHeight();
+		
+		double fontSize=cellStyle.getFontSize();
+		float lineHeight=1.2f;
+		if(cellStyle.getLineHeight()>0){
+			lineHeight=cellStyle.getLineHeight();
+		}
+		fontSize=fontSize*lineHeight;
+		int singleLineHeight=UnitUtils.pointToPixel(fontSize);//fontMetrics.getHeight();
 		if(textWidth<=totalColumnWidth){
 			return;
 		}
@@ -609,7 +617,7 @@ public class Cell implements ReportCell {
 			int width=fontMetrics.stringWidth(sb.toString());
 			if(width>totalColumnWidth){
 				sb.deleteCharAt(sb.length()-1);
-				totalLineHeight+=singleLineHeight;
+				totalLineHeight+=singleLineHeight;										
 				if(multipleLine.length()>0){
 					multipleLine.append('\n');
 				}
@@ -640,6 +648,8 @@ public class Cell implements ReportCell {
 			row.setRealHeight(rowHeight+dif);
 		}
 	}
+	
+	
 	
 	public static void main(String[] args) {
 		FontMetrics fontMetrics=new JLabel().getFontMetrics(new Font("宋体",Font.PLAIN,12));

@@ -331,6 +331,10 @@ public class PdfProducer implements Producer {
 			cell.setPhrase(pargraph);
 			cell.setFixedHeight(cellHeight);
 		}
+		CellStyle style=cellInfo.getCellStyle();
+		if(style!=null && style.getLineHeight()>0){
+			cell.setLeading(style.getLineHeight(), style.getLineHeight());			
+		}
 		return cell;
 	}
 	private com.itextpdf.text.Image buildPdfImage(String base64Data, int width,int height) throws Exception{

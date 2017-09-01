@@ -452,6 +452,9 @@ public class WordProducer implements Producer{
 				para.setAlignment(ParagraphAlignment.CENTER);
 			}
 		}
+		if(style.getLineHeight()>0){
+			para.setSpacingBetween(style.getLineHeight());			
+		}
 		align=style.getValign();
 		if(customStyle!=null && customStyle.getValign()!=null){
 			align=customStyle.getValign();
