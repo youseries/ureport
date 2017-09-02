@@ -37,7 +37,7 @@ LeftParen : '(' ;
 RightParen : ')' ;
 
 STRING : '"' STRING_CONTENT '"' 
-	   | '\'' STRING_CONTENT '\'' 
+	   | '\'' STRING_CONTENT '\''
 	   ;
 
 AND : 'and' | '&&' ;
