@@ -60,6 +60,7 @@
 	<bean id="ureport.dateFunction" class="com.bstek.ureport.expression.function.date.DateFunction"></bean>
 	<bean id="ureport.formatNumberFunction" class="com.bstek.ureport.expression.function.FormatNumberFunction"></bean>
 	<bean id="ureport.formatDateFunction" class="com.bstek.ureport.expression.function.FormatDateFunction"></bean>
+	<bean id="ureport.getFunction" class="com.bstek.ureport.expression.function.GetFunction"></bean>
 	
 	<bean id="ureport.absFunction" class="com.bstek.ureport.expression.function.math.AbsFunction"></bean>
 	<bean id="ureport.ceilFunction" class="com.bstek.ureport.expression.function.math.CeilFunction"></bean>
