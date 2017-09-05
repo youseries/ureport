@@ -52,7 +52,9 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 				ObjectExpressionData data=(ObjectExpressionData)exprData;
 				Object obj=data.getData();
 				if(obj!=null){
-					sqlForUse=obj.toString();
+					String s=obj.toString();
+					s=s.replaceAll("\\\\", "");
+					sqlForUse=s;
 				}
 			}
 		}

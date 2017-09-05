@@ -5,6 +5,7 @@ import Tool from './Tool.js';
 import {buildNewCellDef,setDirty,undoManager} from '../Utils.js';
 import CrossTabWidget from '../widget/CrossTabWidget.js';
 import Handsontable from 'handsontable';
+import CrosstabDialog from '../dialog/CrosstabDialog.js';
 
 export default class CrosstabTool extends Tool{
     execute(){
@@ -18,29 +19,32 @@ export default class CrosstabTool extends Tool{
         let oldCellData=hot.getDataAtCell(rowIndex,colIndex);
         let oldCellDataValue=cellDef.value;
         const $td=$(hot.getCell(rowIndex,colIndex));
-        cellDef.crossTabWidget=new CrossTabWidget(this.context,rowIndex,colIndex);
-        hot.render();
-        setDirty();
-        Handsontable.hooks.run(hot, 'afterSelectionEnd',rowIndex,colIndex,selected[2],selected[3]);
-
         const _this=this;
-        undoManager.add({
-            redo:function(){
-                oldCellData=hot.getDataAtCell(rowIndex,colIndex);
-                oldCellDataValue=cellDef.value;
-                cellDef.crossTabWidget=new CrossTabWidget(_this.context,rowIndex,colIndex);
-                hot.render();
-                setDirty();
-                Handsontable.hooks.run(hot, 'afterSelectionEnd',rowIndex,colIndex,selected[2],selected[3]);
-            },
-            undo:function(){
-                cellDef.value=oldCellDataValue;
-                cellDef.crossTabWidget=null;
-                hot.setDataAtCell(rowIndex,colIndex,oldCellData);
-                hot.render();
-                setDirty();
-                Handsontable.hooks.run(hot, 'afterSelectionEnd',rowIndex,colIndex,selected[2],selected[3]);
-            }
+        const dialog=new CrosstabDialog();
+        dialog.show(function(value){
+            cellDef.crossTabWidget=new CrossTabWidget(_this.context,rowIndex,colIndex,null,value);
+            hot.render();
+            setDirty();
+            Handsontable.hooks.run(hot, 'afterSelectionEnd',rowIndex,colIndex,selected[2],selected[3]);
+
+            undoManager.add({
+                redo:function(){
+                    oldCellData=hot.getDataAtCell(rowIndex,colIndex);
+                    oldCellDataValue=cellDef.value;
+                    cellDef.crossTabWidget=new CrossTabWidget(_this.context,rowIndex,colIndex,null,value);
+                    hot.render();
+                    setDirty();
+                    Handsontable.hooks.run(hot, 'afterSelectionEnd',rowIndex,colIndex,selected[2],selected[3]);
+                },
+                undo:function(){
+                    cellDef.value=oldCellDataValue;
+                    cellDef.crossTabWidget=null;
+                    hot.setDataAtCell(rowIndex,colIndex,oldCellData);
+                    hot.render();
+                    setDirty();
+                    Handsontable.hooks.run(hot, 'afterSelectionEnd',rowIndex,colIndex,selected[2],selected[3]);
+                }
+            });
         });
     }
 

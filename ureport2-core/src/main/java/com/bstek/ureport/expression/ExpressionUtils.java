@@ -154,6 +154,5 @@ public class ExpressionUtils implements ApplicationContextAware{
 		for(Function fun:coll){
 			functions.put(fun.name(), fun);
 		}
-		new ApplicationTracker(applicationContext).start();
 	}
 }

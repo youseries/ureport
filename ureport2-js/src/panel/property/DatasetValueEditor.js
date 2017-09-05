@@ -159,11 +159,31 @@ export default class DatasetValueEditor extends BaseValueEditor{
             _this._setExpand('None');
         });
         dsContainer.append(expandGroup);
+        dsContainer.append(this.buildLineHeight());
 
         this._buildWrapCompute(dsContainer);
         this._buildFormat(dsContainer);
         this._buildFillBlankRows(dsContainer);
         this._buildConditionProperty(dsContainer);
+    }
+
+    buildLineHeight(){
+        const _this=this;
+        const group=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;"><label>行高：</label></div>`);
+        this.lineHeightEditor=$(`<input type="number" class="form-control" placeholder="请输入一个数字,为空表示采用默认行高" style="display: inline-block;width: 316px;padding: 3px;font-size: 12px;height: 25px;">`);
+        group.append(this.lineHeightEditor);
+        this.lineHeightEditor.change(function(){
+            const value=$(this).val();
+            _this.cellDef.cellStyle.lineHeight=value;
+            let td=_this.context.hot.getCell(_this.rowIndex,_this.colIndex);
+            if(value===''){
+                $(td).css("line-height",'');
+            }else{
+                $(td).css("line-height",value);
+            }
+            _this.context.hot.render();
+        });
+        return group;
     }
 
     _setDatasetName(datasetName){
@@ -183,7 +203,7 @@ export default class DatasetValueEditor extends BaseValueEditor{
                 }
             }
         }
-        this._undateTableData();
+        this._updateTableData();
         setDirty();
     }
     _setProperty(property){
@@ -203,7 +223,7 @@ export default class DatasetValueEditor extends BaseValueEditor{
                 }
             }
         }
-        this._undateTableData();
+        this._updateTableData();
         setDirty();
     }
     _setAggregate(aggregate){
@@ -233,7 +253,7 @@ export default class DatasetValueEditor extends BaseValueEditor{
             this.noneSortRadio.children('input').trigger('click');
             this.noneExpandRadio.children('input').trigger('click');
         }
-        this._undateTableData();
+        this._updateTableData();
         hot.render();
         setDirty();
     }
@@ -440,7 +460,7 @@ export default class DatasetValueEditor extends BaseValueEditor{
         return fields;
     }
 
-    _undateTableData(){
+    _updateTableData(){
         const hot=this.context.hot,cellList=this.context.cellList;
         for(let i=this.rowIndex;i<=this.row2Index;i++) {
             for (let j = this.colIndex; j <= this.col2Index; j++) {
@@ -468,6 +488,11 @@ export default class DatasetValueEditor extends BaseValueEditor{
             this.enableWrapComput.children('input').prop('checked',true);
         }else{
             this.disableWrapComput.children('input').prop('checked',true);
+        }
+        if(cellStyle.lineHeight){
+            this.lineHeightEditor.val(cellStyle.lineHeight);
+        }else{
+            this.lineHeightEditor.val('');
         }
         if(cellStyle.format){
             this.formatEditor.val(cellStyle.format);

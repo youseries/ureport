@@ -32,8 +32,11 @@ export default class ImageTool extends Tool{
             value:''
         };
         this.context.addCell(newCellDef);
-        hot.setDataAtCell(startRow,startCol,'');
-        hot.render();
+        const imagePath=window._server+'/res/ureport-asserts/icons/image.svg';
+        const image=$(`<img src="${imagePath}" width="20px">`);
+        let $td=$(hot.getCell(startRow,startCol));
+        $td.empty();
+        $td.append(image);
         setDirty();
         Handsontable.hooks.run(hot, 'afterSelectionEnd',startRow,startCol,endRow,endCol);
 

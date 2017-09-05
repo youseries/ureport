@@ -1,6 +1,9 @@
 /**
  * Created by Jacky.Gao on 2017-02-06.
  */
+import CodeMirror from 'codemirror';
+import '../../node_modules/codemirror/addon/hint/show-hint.js';
+import '../../node_modules/codemirror/addon/lint/lint.js';
 import ParameterTable from './ParameterTable.js';
 import {alert} from '../MsgBox.js';
 import {setDirty} from '../Utils.js';
@@ -11,7 +14,7 @@ export default class SqlDatasetDialog{
         this.datasources=db.datasources;
         this.data=data;
         this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 10000;overflow: auto">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg" style="width: 980px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -29,7 +32,7 @@ export default class SqlDatasetDialog{
         const body=this.dialog.find('.modal-body'),footer=this.dialog.find(".modal-footer");
         const container=$(`<div></div>`);
         body.append(container);
-        const leftContainer=$(`<div style="width: 200px;display: inline-block;vertical-align: top;height: 450px;overflow: auto;"></div>`);
+        const leftContainer=$(`<div style="width: 250px;display: inline-block;vertical-align: top;height: 450px;overflow: auto;"></div>`);
         const rightContainer=$(`<div style="display: inline-block"></div>`);
         container.append(leftContainer);
         container.append(rightContainer);
@@ -42,7 +45,7 @@ export default class SqlDatasetDialog{
     initTables(container){
         const searchGroup=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(searchGroup);
-        const searchEdior=$(`<input class="form-control" placeholder="表名查询" style="display: inline-block;width: 135px;">`);
+        const searchEdior=$(`<input class="form-control" placeholder="表名查询" style="display: inline-block;width: 150px;">`);
         searchGroup.append(searchEdior);
         const searchButton=$(`<button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>`);
         searchGroup.append(searchButton);
@@ -73,14 +76,52 @@ export default class SqlDatasetDialog{
     }
     initSqlEditor(body){
         const nameRow=$(`<div class="row" style="margin: 10px;">数据集名称：</div>`);
-        this.nameEditor=$(`<input type="text" class="form-control" style="font-size: 13px;width:562px;display: inline-block">`);
+        this.nameEditor=$(`<input type="text" class="form-control" style="font-size: 13px;width:570px;display: inline-block">`);
         nameRow.append(this.nameEditor);
         body.append(nameRow);
 
-        const sqlRow=$(`<div class="row" style="margin:10px;">SQL:</div>`);
+        const sqlRow=$(`<div class="row" style="margin:10px;">SQL(<span style="color: #999999;font-size: 12px;">SQL支持表达式，格式为：\${表达式...}</span>):</div>`);
         this.sqlEditor=$(`<textarea placeholder="如:select username,dept_id from employee where dept_id=:deptId" class="form-control" rows="8" cols="30"></textarea>`);
         sqlRow.append(this.sqlEditor);
         body.append(sqlRow);
+    }
+
+    _buildScriptLintFunction(){
+        return function (text, updateLinting, options, editor){
+            if(text===''){
+                updateLinting(editor,[]);
+                return;
+            }
+            if(!text || text===''){
+                return;
+            }
+            const prefix=text.substring(0,2),suffix=text.substring(text.length-1,text.length);
+            if(prefix==='${' && suffix==='}'){
+                text=text.substring(2,text.length-1);
+            }else{
+                return;
+            }
+            const url=window._server+'/designer/scriptValidation';
+            $.ajax({
+                url,
+                data:{content:text},
+                type:'POST',
+                success:function(result){
+                    if(result){
+                        for(let item of result){
+                            item.from={line:item.line-1};
+                            item.to={line:item.line-1};
+                        }
+                        updateLinting(editor,result);
+                    }else{
+                        updateLinting(editor,[]);
+                    }
+                },
+                error:function(){
+                    alert('语法检查操作失败！');
+                }
+            });
+        };
     }
 
     initParameterEditor(body){
@@ -96,7 +137,7 @@ export default class SqlDatasetDialog{
         const previewButton=$(`<button class="btn btn-primary">预览数据</button>`);
         footer.append(previewButton);
         previewButton.click(function(){
-            const sql=_this.sqlEditor.val();
+            const sql=_this.codeMirror.getValue();
             const type=_this.db.type;
             const parameters={
                 sql,
@@ -130,7 +171,7 @@ export default class SqlDatasetDialog{
         const confirmButton=$(`<button class="btn btn-primary">确定</button>`);
         footer.append(confirmButton);
         confirmButton.click(function(){
-            const name=_this.nameEditor.val(),sql=_this.sqlEditor.val();
+            const name=_this.nameEditor.val(),sql=_this.codeMirror.getValue();
             if(!name || name===""){
                 alert("数据集名称不能为空!");
                 return;
@@ -169,9 +210,22 @@ export default class SqlDatasetDialog{
         this.dialog.modal('show');
         this.oldName=this.data.name;
         this.nameEditor.val(this.data.name);
-        this.sqlEditor.val(this.data.sql);
         this.parameterTable.refreshData();
-
+        setTimeout(()=>{
+            if(!this.codeMirror){
+                this.codeMirror=CodeMirror.fromTextArea(this.sqlEditor.get(0),{
+                    mode:'javascript',
+                    lineNumbers:true,
+                    gutters: ["CodeMirror-linenumbers", "CodeMirror-lint-markers"],
+                    lint: {
+                        getAnnotations:this._buildScriptLintFunction(),
+                        async:true
+                    }
+                });
+                this.codeMirror.setSize('auto','160px');
+            }
+            this.codeMirror.setValue(this.data.sql);
+        },500);
         const type=this.db.type;
         const parameters={type};
         if(type==='jdbc'){
@@ -196,7 +250,7 @@ export default class SqlDatasetDialog{
                     tr.append(nameTD);
                     nameTD.dblclick(function(){
                         const sql="select * from "+table.name+"";
-                        _this.sqlEditor.val(sql);
+                        _this.codeMirror.setValue(sql);
                     });
                     const typeTD=$(`<td style="vertical-align: middle"></td>`);
                     tr.append(typeTD);

@@ -31,7 +31,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
     }else if(valueType==='image'){
         tip='图片：'+cellValue.value;
         const imagePath=window._server+'/res/ureport-asserts/icons/image.svg';
-        const image=$(`<img src="${imagePath}" width="40px">`);
+        const image=$(`<img src="${imagePath}" width="20px">`);
         $td.empty();
         $td.append(image);
     }else if(valueType==='slash'){
@@ -121,6 +121,11 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
     }
     if(cellStyle.fontFamily){
         $td.css("font-family",cellStyle.fontFamily);
+    }
+    if(cellStyle.lineHeight){
+        $td.css('line-height',cellStyle.lineHeight);
+    }else{
+        $td.css('line-height','');
     }
 
     const leftBorder=cellStyle.leftBorder;

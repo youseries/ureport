@@ -46,8 +46,7 @@ public class RoundFunction extends MathFunction {
 				pos=Utils.toBigDecimal(obj).intValue();
 			}
 		}
-		data.setScale(pos, BigDecimal.ROUND_HALF_UP);
-		return Math.ceil(data.doubleValue());
+		return data.setScale(pos, BigDecimal.ROUND_HALF_UP);
 	}
 
 	@Override
