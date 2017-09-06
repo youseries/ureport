@@ -33,6 +33,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.bstek.ureport.console.RenderPageServletAction;
+import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.definition.ReportDefinition;
 
 /**
@@ -77,7 +78,7 @@ public class ImportExcelServletAction extends RenderPageServletAction {
 		Map<String,Object> result=new HashMap<String,Object>();
 		if(report!=null){
 			result.put("result", true);
-			req.getSession().setAttribute("classpath:template/template.ureport.xml", report);
+			TempObjectCache.putObject("classpath:template/template.ureport.xml", report);
 		}else{
 			result.put("result", false);
 			if(errorInfo!=null){

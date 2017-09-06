@@ -27,7 +27,6 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -39,6 +38,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.console.RenderPageServletAction;
+import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.ReportDefinition;
 import com.bstek.ureport.dsl.ReportParserLexer;
@@ -122,9 +122,7 @@ public class DesignerServletAction extends RenderPageServletAction {
 		ReportDefinition reportDef=reportParser.parse(inputStream,"p");
 		reportRender.rebuildReportDefinition(reportDef);
 		IOUtils.closeQuietly(inputStream);
-		HttpSession session=req.getSession();
-		session.removeAttribute(PREVIEW_KEY);
-		session.setAttribute(PREVIEW_KEY, reportDef);
+		TempObjectCache.putObject(PREVIEW_KEY, reportDef);
 	}
 	
 	public void loadReport(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -133,10 +131,10 @@ public class DesignerServletAction extends RenderPageServletAction {
 			throw new ReportDesignException("Report file can not be null.");
 		}
 		file=ReportUtils.decodeFileName(file);
-		Object obj=req.getSession().getAttribute(file);
+		Object obj=TempObjectCache.getObject(file);
 		if(obj!=null && obj instanceof ReportDefinition){
 			ReportDefinition reportDef=(ReportDefinition)obj;
-			req.getSession().removeAttribute(file);
+			TempObjectCache.removeObject(file);
 			writeObjectToJson(resp, new ReportDefinitionWrapper(reportDef));
 		}else{
 			ReportDefinition reportDef=reportRender.parseReport(file);

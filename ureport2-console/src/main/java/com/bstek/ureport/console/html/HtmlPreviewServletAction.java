@@ -38,6 +38,7 @@ import com.bstek.ureport.build.paging.Page;
 import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.console.RenderPageServletAction;
+import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.Paper;
 import com.bstek.ureport.definition.ReportDefinition;
@@ -191,7 +192,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		}
 		ReportDefinition report=null;
 		if(file.equals(PREVIEW_KEY)){
-			report=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);	
+			report=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);	
 			if(report==null){
 				throw new ReportDesignException("Report data has expired.");
 			}
@@ -217,7 +218,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			if(StringUtils.isNotBlank(pageIndex) && StringUtils.isBlank(reload)){
 				report=CacheUtils.getReport(fullName);
 			}
-			ReportDefinition reportDefinition=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);
+			ReportDefinition reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
 			if(report==null){
 				if(reportDefinition==null){
 					throw new ReportDesignException("Report data has expired,can not do preview.");
