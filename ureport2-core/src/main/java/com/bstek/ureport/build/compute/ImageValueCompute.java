@@ -18,6 +18,8 @@ package com.bstek.ureport.build.compute;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.definition.value.ImageValue;
@@ -63,7 +65,7 @@ public class ImageValueCompute implements ValueCompute{
 					}else{
 						path=o.toString();
 					}
-					if(path==null){
+					if(StringUtils.isBlank(path)){
 						continue;
 					}
 					String base64Data=ImageUtils.getImageBase64Data(ImageType.image, path);
@@ -76,7 +78,7 @@ public class ImageValueCompute implements ValueCompute{
 				if(valueData!=null){
 					path=valueData.toString();
 				}
-				if(path!=null){
+				if(StringUtils.isNotBlank(path)){
 					String base64Data=ImageUtils.getImageBase64Data(ImageType.image, path);
 					list.add(new BindData(new Image(base64Data,path,-1,-1)));
 				}
@@ -88,7 +90,7 @@ public class ImageValueCompute implements ValueCompute{
 				String base64Data=ImageUtils.getImageBase64Data(ImageType.image, text);
 				list.add(new BindData(new Image(base64Data,text,-1,-1)));			
 			}else{
-				if(obj!=null){
+				if(obj!=null && StringUtils.isNotBlank(obj.toString())){
 					String base64Data=ImageUtils.getImageBase64Data(ImageType.image, obj.toString());
 					list.add(new BindData(new Image(base64Data,obj.toString(),-1,-1)));					
 				}
