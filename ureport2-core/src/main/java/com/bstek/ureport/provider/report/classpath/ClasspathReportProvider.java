@@ -40,13 +40,26 @@ public class ClasspathReportProvider implements ReportProvider,ApplicationContex
 		try {
 			return resource.getInputStream();
 		} catch (IOException e) {
+			String newFileName=null;
+			if(file.startsWith("classpath:")){
+				newFileName="classpath*:"+file.substring(10,file.length());
+			}else if(file.startsWith("classpath*:")){
+				newFileName="classpath:"+file.substring(11,file.length());
+			}
+			if(newFileName!=null){
+				try{
+					return applicationContext.getResource(file).getInputStream();					
+				}catch(IOException ex){
+					throw new ReportException(e);
+				}				
+			}
 			throw new ReportException(e);
 		}
 	}
 	
 	@Override
 	public String getPrefix() {
-		return "classpath:";
+		return "classpath";
 	}
 	
 	@Override
