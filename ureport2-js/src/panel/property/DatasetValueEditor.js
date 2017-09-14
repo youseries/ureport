@@ -623,7 +623,7 @@ export default class DatasetValueEditor extends BaseValueEditor{
         this.mappingDatasetSelect.val(value.mappingDataset);
         this.mappingDatasetSelect.trigger('change');
         this.mappingKeyPropertySelect.val(value.mappingKeyProperty);
-        this.mappingKeyPropertySelect.val(value.mappingValueProperty);
+        this.mappingValuePropertySelect.val(value.mappingValueProperty);
         if(!value.mappingType || value.mappingType==='simple'){
             this.simpleMappingRadio.trigger('click');
         }else{
