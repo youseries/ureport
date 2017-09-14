@@ -19,10 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.DatasetUtils;
@@ -138,6 +136,12 @@ public class DatasetExpression extends BaseExpression {
 	}
 	public void setMappingItems(List<MappingItem> mappingItems) {
 		this.mappingItems = mappingItems;
+		if(mappingItems!=null){
+			mapping=new HashMap<String,String>();
+			for(MappingItem item:mappingItems){
+				mapping.put(item.getValue(),item.getLabel());
+			}				
+		}
 	}
 	
 	public MappingType getMappingType() {
@@ -172,33 +176,7 @@ public class DatasetExpression extends BaseExpression {
 		this.mappingValueProperty = mappingValueProperty;
 	}
 
-	public Map<String, String> getMapping(Context context) {
-		if(mapping!=null){
-			return mapping;
-		}
-		if(mappingType==null){
-			return null;
-		}
-		if(mappingType.equals(MappingType.dataset)){
-			mapping=new HashMap<String,String>();
-			if(StringUtils.isNotBlank(mappingDataset) && StringUtils.isNotBlank(mappingKeyProperty) && StringUtils.isNotBlank(mappingValueProperty)){
-				List<?> list=context.getDatasetData(mappingDataset);
-				for(Object obj:list){
-					Object key=Utils.getProperty(obj, mappingKeyProperty);
-					Object value=Utils.getProperty(obj, mappingValueProperty);
-					if(key!=null && value!=null){
-						mapping.put(key.toString(), value.toString());
-					}
-				}
-			}
-		}else{
-			if(mappingItems!=null){
-				mapping=new HashMap<String,String>();
-				for(MappingItem item:mappingItems){
-					mapping.put(item.getValue(),item.getLabel());
-				}				
-			}
-		}
+	public Map<String, String> getMapping() {
 		return mapping;
 	}
 }
