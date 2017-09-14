@@ -81,7 +81,7 @@ export default class SqlDatasetDialog{
         body.append(nameRow);
 
         const sqlRow=$(`<div class="row" style="margin:10px;">SQL(<span style="color: #999999;font-size: 12px;">SQL支持表达式，格式为：\${表达式...}</span>):</div>`);
-        this.sqlEditor=$(`<textarea placeholder="如:select username,dept_id from employee where dept_id=:deptId" class="form-control" rows="8" cols="30"></textarea>`);
+        this.sqlEditor=$(`<textarea placeholder="如:select username,dept_id from employee where dept_id=:deptId" class="form-control" rows="8" cols="30" style="width: 660px"></textarea>`);
         sqlRow.append(this.sqlEditor);
         body.append(sqlRow);
     }
@@ -222,7 +222,7 @@ export default class SqlDatasetDialog{
                         async:true
                     }
                 });
-                this.codeMirror.setSize('auto','160px');
+                this.codeMirror.setSize('660px','160px');
             }
             this.codeMirror.setValue(this.data.sql);
         },500);

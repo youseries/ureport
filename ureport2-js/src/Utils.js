@@ -164,7 +164,12 @@ export function tableToXml(context){
                     alert(msg);
                     throw msg;
                 }
-                cellXml+=`<dataset-value dataset-name="${encode(value.datasetName)}" aggregate="${value.aggregate}" property="${value.property}" order="${value.order}">`;
+                const mappingType=value.mappingType || 'simple';
+                cellXml+=`<dataset-value dataset-name="${encode(value.datasetName)}" aggregate="${value.aggregate}" property="${value.property}" order="${value.order}" mapping-type="${mappingType}"`;
+                if(mappingType==='dataset'){
+                    cellXml+=` mapping-dataset="${value.mappingDataset}" mapping-key-property="${value.mappingKeyProperty}" mapping-value-property="${value.mappingValueProperty}"`;
+                }
+                cellXml+='>';
                 cellXml+=buildConditions(value.conditions);
                 if(value.aggregate==='customgroup'){
                     const groupItems=value.groupItems;
@@ -183,10 +188,12 @@ export function tableToXml(context){
                         cellXml+='</group-item>';
                     }
                 }
-                const mappingItems=value.mappingItems;
-                if(mappingItems && mappingItems.length>0){
-                    for(let mappingItem of mappingItems){
-                        cellXml+=`<mapping-item value="${encode(mappingItem.value)}" label="${encode(mappingItem.label)}"/>`;
+                if(mappingType==='simple'){
+                    const mappingItems=value.mappingItems;
+                    if(mappingItems && mappingItems.length>0){
+                        for(let mappingItem of mappingItems){
+                            cellXml+=`<mapping-item value="${encode(mappingItem.value)}" label="${encode(mappingItem.label)}"/>`;
+                        }
                     }
                 }
                 cellXml+=`</dataset-value>`;

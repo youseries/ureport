@@ -9,12 +9,26 @@ export default class ChartWidget{
         this.container=container;
         this.cellDef=cellDef;
     }
-    renderChart(container){
+    renderChart(container,context,rowIndex,colIndex){
         if(container){
             this.container=container;
         }
+        this.hot=context.hot;
+        this.rowIndex=rowIndex;
+        this.colIndex=colIndex;
+        const $td=this.container;
+        this.rowSpan=$td.prop('rowspan'),this.colSpan=$td.prop('colspan');
+        this.width=-2,this.height=-2;
+        const rowStart=this.rowIndex,rowEnd=this.rowIndex+this.rowSpan;
+        for(let i=rowStart;i<rowEnd;i++){
+            this.height+=this.hot.getRowHeight(i);
+        }
+        const colStart=this.colIndex,colEnd=this.colIndex+this.colSpan;
+        for(let i=colStart;i<colEnd;i++){
+            this.width+=this.hot.getColWidth(i);
+        }
         this.container.empty();
-        const canvas=$(`<div style="position: relative;"><canvas></canvas></div>`);
+        const canvas=$(`<div style="position: relative;"><canvas style="width: ${this.width}px;height: ${this.height}px;;"></canvas></div>`);
         this.container.append(canvas);
         const type=this.cellDef.value.chart.dataset.type;
         let data=null,options={},chartType;

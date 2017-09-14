@@ -179,13 +179,12 @@ window._buildChart=function(canvasId,chartJson){
     }
     animation.onComplete=function(event){
         const chart=event.chart;
-        console.log("render OK!");
         const base64Image=chart.toBase64Image();
         const urlParameters=window.location.search;
         const url=window._server+'/chart/storeData'+urlParameters;
         const canvas=$("#"+canvasId);
-        const width=chart.width;
-        const height=chart.height;
+        const width=parseInt(canvas.css('width'));
+        const height=parseInt(canvas.css('height'));
         $.ajax({
             type:'POST',
             data:{_base64Data:base64Image,_chartId:canvasId,_width:width,_height:height},

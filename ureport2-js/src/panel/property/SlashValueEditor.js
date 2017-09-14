@@ -26,7 +26,7 @@ export default class SlashValueEditor{
         refreshButton.click(function(){
             const crossTabWidget=cellDef.crossTabWidget;
             crossTabWidget.refreshCell();
-            crossTabWidget.doDraw(cellDef);
+            crossTabWidget.doDraw(cellDef,rowIndex,colIndex);
             slashContainer.empty();
             _this._buildSlashes(cellDef,slashContainer);
         });

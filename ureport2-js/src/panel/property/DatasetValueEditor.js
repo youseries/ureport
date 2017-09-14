@@ -69,6 +69,7 @@ export default class DatasetValueEditor extends BaseValueEditor{
             for(let field of fields){
                 _this.propertySelect.append(`<option>${field.name}</option>`);
             }
+            _this.propertySelect.append(`<option selected></option>`);
             _this._setDatasetName(dsName);
         });
 
@@ -392,9 +393,32 @@ export default class DatasetValueEditor extends BaseValueEditor{
 
     _buildMappingTable(container){
         this.mappingGroup=$(`<div class="form-group" style="padding-top: 10px"></div>`);
-        const addButton=$(`<button type="button" class="btn btn-default" style="float: right;" title="添加映射项"><i class="glyphicon glyphicon-plus-sign" style="color: #00746f;"></i></button>`);
-        this.mappingGroup.append(addButton);
         const _this=this;
+
+        const typeGroup=$(`<div class="form-group" style="margin-bottom: 1px;"><label>映射方式：</label></div>`);
+        this.mappingGroup.append(typeGroup);
+        this.simpleMappingRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__data_mapping_radio" value="Down">简单值</label>`);
+        typeGroup.append(this.simpleMappingRadio);
+        this.simpleMappingRadio.children('input').click(function(){
+            _this.sampleMappingGroup.show();
+            _this.datasetMappingGroup.hide();
+            const datasetValue=_this.cellDef.value;
+            datasetValue.mappingType='simple';
+
+        });
+        this.datasetMappingRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__data_mapping_radio" value="Right">数据集</label>`);
+        typeGroup.append(this.datasetMappingRadio);
+        this.datasetMappingRadio.children('input').click(function(){
+            _this.sampleMappingGroup.hide();
+            _this.datasetMappingGroup.show();
+            const datasetValue=_this.cellDef.value;
+            datasetValue.mappingType='dataset';
+        });
+
+        this.sampleMappingGroup=$(`<div class="form-group" style="padding-top: 1px"></div>`);
+        this.mappingGroup.append(this.sampleMappingGroup);
+        const addButton=$(`<button type="button" class="btn btn-default" style="float: right;" title="添加映射项"><i class="glyphicon glyphicon-plus-sign" style="color: #00746f;"></i></button>`);
+        this.sampleMappingGroup.append(addButton);
         addButton.click(function(){
             const newItem={value:'',label:''};
             _this.mappingDialog.show(function(){
@@ -434,7 +458,62 @@ export default class DatasetValueEditor extends BaseValueEditor{
         const mappingTable=$(`<table class="table table-bordered"><thead><tr style="background-color: #f5f5f5;height: 30px;"><td style="width: 130px;vertical-align: middle">实际值</td><td style="width: 170px;vertical-align: middle">显示值</td><td style="vertical-align: middle">操作</td></tr></thead></table>`);
         this.mappingTbody=$(`<tbody style="font-size: 12px"></tbody>`);
         mappingTable.append(this.mappingTbody);
-        this.mappingGroup.append(mappingTable);
+        this.sampleMappingGroup.append(mappingTable);
+
+        this.datasetMappingGroup=$(`<div class="form-group" style="padding-top: 1px"></div>`);
+        this.mappingGroup.append(this.datasetMappingGroup);
+
+        const datasetGroup=$(`<div class="form-group" style="margin-bottom: 5px;margin-top: 10px;"><label>数据集：</label></div>`);
+        this.mappingDatasetSelect=$(`<select class="form-control" style="display: inline-block;width:305px;padding:2px;font-size: 12px;height: 25px"></select>`);
+        datasetGroup.append(this.mappingDatasetSelect);
+        this.datasetMappingGroup.append(datasetGroup);
+
+        const keyPropertyGroup=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;"><label>实际值属性：</label></div>`);
+        this.mappingKeyPropertySelect=$(`<select class="form-control" style="display: inline-block;width:270px;padding: 2px;font-size: 12px;height: 25px"></select>`);
+        keyPropertyGroup.append(this.mappingKeyPropertySelect);
+        this.datasetMappingGroup.append(keyPropertyGroup);
+
+        const valuePropertyGroup=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;"><label>显示值属性：</label></div>`);
+        this.mappingValuePropertySelect=$(`<select class="form-control" style="display: inline-block;width:270px;padding: 2px;font-size: 12px;height: 25px"></select>`);
+        valuePropertyGroup.append(this.mappingValuePropertySelect);
+        this.datasetMappingGroup.append(valuePropertyGroup);
+
+        this.mappingDatasetSelect.change(function(){
+            _this.mappingKeyPropertySelect.empty();
+            _this.mappingValuePropertySelect.empty();
+            const dsName=$(this).val();
+            const datasetValue=_this.cellDef.value;
+            datasetValue.mappingDataset=dsName;
+            let fields=[];
+            for(let ds of _this.datasources){
+                let datasets=ds.datasets || [];
+                for(let dataset of datasets){
+                    if(dataset.name===dsName){
+                        fields=dataset.fields || [];
+                        break;
+                    }
+                }
+                if(fields.length>0){
+                    break;
+                }
+            }
+            for(let field of fields){
+                _this.mappingKeyPropertySelect.append(`<option>${field.name}</option>`);
+                _this.mappingValuePropertySelect.append(`<option>${field.name}</option>`);
+            }
+            _this.mappingKeyPropertySelect.append(`<option selected></option>`);
+            _this.mappingValuePropertySelect.append(`<option selected></option>`);
+        });
+
+        this.mappingKeyPropertySelect.change(function(){
+            const datasetValue=_this.cellDef.value;
+            datasetValue.mappingKeyProperty=$(this).val();
+        });
+        this.mappingValuePropertySelect.change(function(){
+            const datasetValue=_this.cellDef.value;
+            datasetValue.mappingValueProperty=$(this).val();
+        });
+
         container.append(this.mappingGroup);
     }
 
@@ -507,12 +586,16 @@ export default class DatasetValueEditor extends BaseValueEditor{
         this.col2Index=col2Index;
         this.container.show();
         this.datasetSelect.empty();
+        this.mappingDatasetSelect.empty();
         this.propertySelect.empty();
+        this.mappingKeyPropertySelect.empty();
+        this.mappingValuePropertySelect.empty();
         this.datasources=this.context.reportDef.datasources;
         for(let ds of this.datasources){
             let datasets=ds.datasets || [];
             for(let dataset of datasets){
                 this.datasetSelect.append(`<option>${dataset.name}</option>`);
+                this.mappingDatasetSelect.append(`<option>${dataset.name}</option>`);
             }
         }
         if(cellDef.fillBlankRows){
@@ -537,6 +620,15 @@ export default class DatasetValueEditor extends BaseValueEditor{
         this.propertySelect.val(value.property);
         this.aggregateSelect.val(value.aggregate);
         this.aggregateSelect.trigger('change');
+        this.mappingDatasetSelect.val(value.mappingDataset);
+        this.mappingDatasetSelect.trigger('change');
+        this.mappingKeyPropertySelect.val(value.mappingKeyProperty);
+        this.mappingKeyPropertySelect.val(value.mappingValueProperty);
+        if(!value.mappingType || value.mappingType==='simple'){
+            this.simpleMappingRadio.trigger('click');
+        }else{
+            this.datasetMappingRadio.trigger('click');
+        }
         const order=value.order;
         if(order==='none'){
             this.noneSortRadio.trigger('click');
@@ -592,6 +684,13 @@ export default class DatasetValueEditor extends BaseValueEditor{
                     labelTd.html(item.label);
                 },item,'edit');
             });
+        }
+        if(!value.mappingType || value.mappingType==='simple'){
+            this.sampleMappingGroup.show();
+            this.datasetMappingGroup.hide();
+        }else{
+            this.sampleMappingGroup.hide();
+            this.datasetMappingGroup.show();
         }
     }
     hide(){

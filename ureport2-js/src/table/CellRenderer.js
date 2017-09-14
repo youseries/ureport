@@ -39,7 +39,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         if(!cellDef.crossTabWidget){
             cellDef.crossTabWidget=new CrossTabWidget(this.context,row,col,cellDef);
         }
-        cellDef.crossTabWidget.doDraw(cellDef);
+        cellDef.crossTabWidget.doDraw(cellDef,row,col);
     }else if(valueType==='zxing'){
         let imagePath=window._server+'/res/ureport-asserts/icons/qrcode.svg';
         tip='二维码';
@@ -56,7 +56,7 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         if(!cellDef.chartWidget){
             cellDef.chartWidget=new ChartWidget($td,cellDef);
         }
-        cellDef.chartWidget.renderChart($td);
+        cellDef.chartWidget.renderChart($td,this.context,row,col);
     }else{
         tip=cellValue.value || "";
         if($td.html()===''){
