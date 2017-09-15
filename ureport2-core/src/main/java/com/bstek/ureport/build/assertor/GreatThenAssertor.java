@@ -31,6 +31,7 @@ public class GreatThenAssertor extends AbstractAssertor {
 			return false;
 		}
 		BigDecimal leftObj=Utils.toBigDecimal(left);
+		right=buildObject(right);
 		BigDecimal rightObj=Utils.toBigDecimal(right);
 		return leftObj.compareTo(rightObj)==1;
 	}
