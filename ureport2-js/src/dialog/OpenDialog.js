@@ -65,7 +65,7 @@ export default class OpenDialog{
                 openCol.append(openIcon);
                 openIcon.click(function(){
                     confirm("真的要打开文件["+file.name+"]吗？",function(){
-                        let fullFile=value+file.name;
+                        let fullFile=value+encodeURI(encodeURI(file.name));
                         let path=window._server+"/designer?_u="+fullFile;
                         window.open(path,"_self");
                     });
