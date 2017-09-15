@@ -59,6 +59,7 @@ public class ExportWordServletAction extends BaseServletAction {
 	
 	public void buildWord(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}

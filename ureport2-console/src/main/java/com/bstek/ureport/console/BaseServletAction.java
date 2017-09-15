@@ -35,6 +35,9 @@ import com.bstek.ureport.exception.ReportComputeException;
 public abstract class BaseServletAction implements ServletAction {
 	
 	protected String decode(String value){
+		if(value==null){
+			return value;
+		}
 		try{
 			value=URLDecoder.decode(value, "utf-8");
 			value=URLDecoder.decode(value, "utf-8");

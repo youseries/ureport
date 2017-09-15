@@ -65,6 +65,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 
 	public void buildPdf(HttpServletRequest req, HttpServletResponse resp,boolean forPrint) throws IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}

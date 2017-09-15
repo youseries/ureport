@@ -163,6 +163,7 @@ public class DesignerServletAction extends RenderPageServletAction {
 	
 	public void saveReportFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("file");
+		file=ReportUtils.decodeFileName(file);
 		String content=req.getParameter("content");
 		ReportProvider targetReportProvider=null;
 		for(ReportProvider provider:reportProviders){

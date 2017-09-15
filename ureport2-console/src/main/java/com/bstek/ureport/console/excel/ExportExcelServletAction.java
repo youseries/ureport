@@ -66,6 +66,7 @@ public class ExportExcelServletAction extends BaseServletAction {
 	
 	public void buildExcel(HttpServletRequest req, HttpServletResponse resp,boolean withPage,boolean withSheet) throws IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}

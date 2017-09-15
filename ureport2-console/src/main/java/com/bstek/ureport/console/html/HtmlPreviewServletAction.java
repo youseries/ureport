@@ -143,6 +143,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 
 	public void loadPrintPages(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
@@ -187,6 +188,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 	
 	public void loadPagePaper(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
@@ -207,6 +209,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		Map<String, Object> parameters = buildParameters(req);
 		HtmlReport htmlReport=null;
 		String file=req.getParameter("_u");
+		file=decode(file);
 		String fullName=file+parameters.toString();
 		String pageIndex=req.getParameter("_i");
 		String reload=req.getParameter("_r");

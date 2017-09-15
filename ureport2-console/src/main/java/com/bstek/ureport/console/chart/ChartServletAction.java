@@ -28,6 +28,7 @@ public class ChartServletAction extends RenderPageServletAction {
 	
 	public void storeData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		Map<String, Object> parameters = buildParameters(req);
 		String fullName=file+parameters.toString();
 		Report report=CacheUtils.getReport(fullName);
