@@ -20,7 +20,7 @@ package com.bstek.ureport.build.assertor;
  * @author Jacky.gao
  * @since 2017年1月12日
  */
-public class NotEqualsAssertor implements Assertor {
+public class NotEqualsAssertor extends AbstractAssertor {
 
 	@Override
 	public boolean eval(Object left, Object right) {
@@ -30,6 +30,7 @@ public class NotEqualsAssertor implements Assertor {
 		if(left==null || right==null){
 			return true;
 		}
+		right=buildObject(right);
 		return !left.equals(right);
 	}
 }

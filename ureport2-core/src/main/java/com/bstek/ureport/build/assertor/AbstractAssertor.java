@@ -15,23 +15,23 @@
  ******************************************************************************/
 package com.bstek.ureport.build.assertor;
 
-import java.math.BigDecimal;
-
-import com.bstek.ureport.Utils;
+import java.util.List;
 
 /**
  * @author Jacky.gao
- * @since 2017年1月12日
+ * @since 2017年9月15日
  */
-public class GreatThenAssertor extends AbstractAssertor {
-
-	@Override
-	public boolean eval(Object left, Object right) {
-		if(left==null || right==null){
-			return false;
+public abstract class AbstractAssertor implements Assertor{
+	protected Object buildObject(Object obj){
+		if(obj==null){
+			return obj;
 		}
-		BigDecimal leftObj=Utils.toBigDecimal(left);
-		BigDecimal rightObj=Utils.toBigDecimal(right);
-		return leftObj.compareTo(rightObj)==1;
+		if(obj instanceof List){
+			List<?> list=(List<?>)obj;
+			if(list.size()==1){
+				return list.get(0);
+			}
+		}
+		return obj;
 	}
 }

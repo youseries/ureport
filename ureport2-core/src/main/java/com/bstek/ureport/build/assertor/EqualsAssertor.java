@@ -15,14 +15,13 @@
  ******************************************************************************/
 package com.bstek.ureport.build.assertor;
 
-import java.util.List;
 
 
 /**
  * @author Jacky.gao
  * @since 2017年1月12日
  */
-public class EqualsAssertor implements Assertor {
+public class EqualsAssertor extends AbstractAssertor {
 	
 	@Override
 	public boolean eval(Object left, Object right) {
@@ -37,13 +36,7 @@ public class EqualsAssertor implements Assertor {
 			Number r=(Number)right;
 			return l.doubleValue()==r.doubleValue();
 		}
-		if(right instanceof List){
-			List<?> rightList=(List<?>)right;
-			if(rightList.size()==1){
-				Object rightObj=rightList.get(0);
-				return left.equals(rightObj);
-			}
-		}
+		right=buildObject(right);
 		return left.equals(right);
 	}
 }
