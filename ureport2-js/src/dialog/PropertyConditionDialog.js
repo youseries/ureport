@@ -892,7 +892,7 @@ export default class PropertyConditionDialog{
         this.colWidthEditor=$(`<input type="number" class="form-control" style="display: inline-block;height: 25px;padding: 3px;width: 88px;">`);
         this.colWidthGroup.append(this.colWidthEditor);
         this.colWidthEditor.change(function(){
-            _this.item.position.line=$(this).val();
+            _this.item.colWidth=$(this).val();
         });
         this.colWidthCheckbox.children('input').click(function(){
             const checked=$(this).prop('checked');

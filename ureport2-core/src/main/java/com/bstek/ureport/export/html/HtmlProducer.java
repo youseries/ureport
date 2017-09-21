@@ -390,6 +390,8 @@ public class HtmlProducer{
 			sb.append("border-bottom:"+bottomBorder.getStyle().name()+" "+bottomBorder.getWidth()+"px rgb("+bottomBorder.getColor()+");");
 		}
 		if(sb.length()>0){
+			int colWidth=cell.getColumn().getWidth();
+			sb.append("width:"+colWidth+"pt");
 			sb.insert(0, "style=\"");
 			sb.append("\"");
 		}
