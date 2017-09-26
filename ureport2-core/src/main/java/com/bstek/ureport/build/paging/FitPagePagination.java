@@ -32,9 +32,9 @@ public class FitPagePagination extends BasePagination implements Pagination {
 	@Override
 	public List<Page> doPaging(Report report) {
 		Paper paper=report.getPaper();
-		int height=paper.getHeight()-paper.getBottomMargin()-paper.getTopMargin();
+		int height=paper.getHeight()-paper.getBottomMargin()-paper.getTopMargin()-5;
 		if(paper.getOrientation().equals(Orientation.landscape)){
-			height=paper.getWidth()-paper.getBottomMargin()-paper.getTopMargin();
+			height=paper.getWidth()-paper.getBottomMargin()-paper.getTopMargin()-5;
 		}
 		List<Row> rows=report.getRows();
 		List<Row> headerRows=report.getHeaderRepeatRows();
@@ -86,7 +86,7 @@ public class FitPagePagination extends BasePagination implements Pagination {
 				}
 				continue;
 			}
-			rowHeight+=rowRealHeight;
+			rowHeight+=rowRealHeight+1;
 			pageRows.add(row);
 			boolean overflow=false;
 			if((i+1)<rows.size()){
