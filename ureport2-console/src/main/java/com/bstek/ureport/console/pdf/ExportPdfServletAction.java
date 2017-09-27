@@ -75,6 +75,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 		}else{
 			fileName="ureport.pdf";
 		}
+		fileName=new String(fileName.getBytes("UTF-8"),"ISO8859-1");
 		if(forPrint){
 			resp.setContentType("application/pdf");
 			resp.setHeader("Content-Disposition","inline;filename=\"" + fileName + "\"");

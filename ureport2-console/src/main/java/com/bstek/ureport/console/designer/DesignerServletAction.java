@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -66,6 +67,12 @@ public class DesignerServletAction extends RenderPageServletAction {
 		}else{
 			VelocityContext context = new VelocityContext();
 			context.put("contextPath", req.getContextPath());
+			Locale locale=req.getLocale();
+			if(!locale.equals(Locale.CHINA)){
+				context.put("locale", "EN");
+			}else{
+				context.put("locale", "EN");				
+			}
 			resp.setContentType("text/html");
 			resp.setCharacterEncoding("utf-8");
 			Template template=ve.getTemplate("ureport-html/designer.html","utf-8");

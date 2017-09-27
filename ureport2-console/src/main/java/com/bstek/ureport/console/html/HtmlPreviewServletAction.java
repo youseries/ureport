@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -83,6 +84,12 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				context.put("content", "<div style='color:red'><strong>报表计算错误：</strong>"+errorMsg+"</div>");
 				context.put("error", true);
 			}else{
+				Locale locale=req.getLocale();
+				if(!locale.equals(Locale.CHINA)){
+					context.put("locale", "EN");
+				}else{
+					context.put("locale", "EN");				
+				}
 				context.put("content", htmlReport.getContent());
 				context.put("style", htmlReport.getStyle());
 				context.put("reportAlign", htmlReport.getReportAlign());				

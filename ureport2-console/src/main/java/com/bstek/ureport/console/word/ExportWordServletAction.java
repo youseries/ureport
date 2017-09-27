@@ -69,6 +69,7 @@ public class ExportWordServletAction extends BaseServletAction {
 		}else{
 			fileName="ureport.docx";
 		}
+		fileName=new String(fileName.getBytes("UTF-8"),"ISO8859-1");
 		resp.setContentType("application/octet-stream;charset=ISO8859-1");
 		resp.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
 		Map<String, Object> parameters = buildParameters(req);
