@@ -419,9 +419,6 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 						pageRepeatFooters.remove(index);
 						pageRepeatFooters.add(index,row);
 					}
-					if(index==-1){
-						throw new ReportComputeException("Invalid row["+band+"] with key "+rowKey+".");
-					}
 					continue;
 				}
 				pageRows.add(row);
