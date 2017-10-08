@@ -32,12 +32,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.1.2.RELEASE</version>
+			<version>4.3.11.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>4.1.2.RELEASE</version>
+			<version>4.3.11.RELEASE</version>
 		</dependency>
 		<dependency>
 		    <groupId>com.itextpdf</groupId>
