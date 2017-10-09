@@ -4,13 +4,13 @@ UReport2 is a high-performance pure Java report engine based on Spring architect
 
 UReport2 provides the brand new web-based report designer that runs in mainstream browsers including Chrome, Firefox and Edge etc. \(other than IE\). You can complete the design and preparation of complex statements and reports with UReport2 by simply opening the browser.
 
-UReport2 is the first Chinese-style report engine based on Apache-2.0 License with free open source. 
+UReport2 is the first Chinese-style report engine based on Apache-2.0 License with free open source.
 
 [中文 README](https://github.com/youseries/ureport/blob/master/README-zh_CN.md)
 
 # Teaching video
 
-http://pan.baidu.com/s/1boWTxF5，password：98hj
+[http://pan.baidu.com/s/1boWTxF5，password：98hj](http://pan.baidu.com/s/1boWTxF5，password：98hj)
 
 # Installation and Configuration
 
@@ -28,9 +28,9 @@ Firstly, we need to create a standard Maven project \(create a project with Ecli
 </dependency>
 ```
 
-Within the above dependence information, \[version\] indicates the specific version No. of the ureport2-console package. We can search the keyword  “ureport2-c onsole” at http://search.maven.org/ to check the specific version No. of the package. The latest source code can be downloaded from https://github.com/youseries/ureport.
+Within the above dependence information, \[version\] indicates the specific version No. of the ureport2-console package. We can search the keyword  “ureport2-c onsole” at [http://search.maven.org/](http://search.maven.org/) to check the specific version No. of the package. The latest source code can be downloaded from [https://github.com/youseries/ureport](https://github.com/youseries/ureport).
 
-It shall be noted that only the latest release version can be found at http://search.maven.org/. If you need the latest snapshot, you can search at https://oss.so natype.org/. Pursuant to regulations on sonatype, only the official version can be published on http://search.maven.org/, i.e. the central repository of mave, and the snapshot version only exists in https://oss.sonatype.org/. If we want to apply the latest snapshot at https://oss.sonatype.org/, we need to add repository information in pom.xml, to tell Maven to download the package of snapshot version there. The repository information is listed below:
+It shall be noted that only the latest release version can be found at [http://search.maven.org/](http://search.maven.org/). If you need the latest snapshot, you can search at [https://oss.so](https://oss.so) natype.org/. Pursuant to regulations on sonatype, only the official version can be published on [http://search.maven.org/](http://search.maven.org/), i.e. the central repository of mave, and the snapshot version only exists in [https://oss.sonatype.org/](https://oss.sonatype.org/). If we want to apply the latest snapshot at [https://oss.sonatype.org/](https://oss.sonatype.org/), we need to add repository information in pom.xml, to tell Maven to download the package of snapshot version there. The repository information is listed below:
 
 ```
 <repository>
@@ -50,7 +50,6 @@ Then, we need to configure the servlet that will be used by UReport2. Open the w
     <servlet-name>ureportServlet</servlet-name>
     <url-pattern>/ureport/*</url-pattern>
 </servlet-mapping>
-
 ```
 
 In the servlet configuratin, the url-pattern shall keep the fixed value of “/ureport/\*” from any change, otherwise the system will fail.
@@ -73,7 +72,7 @@ If spring is not used in your project, you can apply the above configuration and
 <import  resource="classpath:ureport-console-context.xml"  />
 ```
 
-By now, we have added UReport2 in a standard Maven project. Run the project, and you can see the interface of UReport2 report designer by visiting URL：**http://localhost:8080/\[contextPath\]/ureport/designer** in a browser.![](docs/images/dd.png)
+By now, we have added UReport2 in a standard Maven project. Run the project, and you can see the interface of UReport2 report designer by visiting URL：[http://localhost:8080/\[contextPath\]/ureport/designer](http://localhost:8080/[contextPath]/ureport/designer) in a browser.![](docs/images/dd.png)![](docs/images/designer.png)
 
 
 
