@@ -10,7 +10,7 @@ UReport2 is the first Chinese-style report engine based on Apache-2.0 License wi
 
 # Teaching video
 
-http://pan.baidu.com/s/1boWTxF5，password：98hj
+[http://pan.baidu.com/s/1boWTxF5](http://pan.baidu.com/s/1boWTxF5)，password：98hj
 
 # Installation and Configuration
 
