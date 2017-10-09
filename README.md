@@ -74,7 +74,7 @@ If spring is not used in your project, you can apply the above configuration and
 
 By now, we have added UReport2 in a standard Maven project. Run the project, and you can see the interface of UReport2 report designer by visiting URL：[http://localhost:8080/\[contextPath\]/ureport/designer](http://localhost:8080/[contextPath]/ureport/designer) in a browser.![](docs/images/dd.png)![](docs/images/designer.png)Links:
 
-* Reports Storage and Configuration of the Data Source
+* [Reports Storage and Configuration of the Data Source](docs/storage-datasource-config.md)
 * The introduction of the report calculation model
 * Expression
 * Function
