@@ -6,7 +6,7 @@ UReport2 provides the brand new web-based report designer that runs in mainstrea
 
 UReport2 is the first Chinese-style report engine based on Apache-2.0 License with free open source.
 
-[中文 README](https://github.com/youseries/ureport/blob/master/README-zh_CN.md)
+[中文 README](README-zh_CN.md)
 
 # Teaching video
 
