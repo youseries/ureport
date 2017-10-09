@@ -6,7 +6,7 @@ import {alert} from '../../MsgBox.js';
 export function doDeleteCol(){
     const selected=this.getSelected(),context=this.context;
     if(!selected){
-        alert("请先选中行!");
+        alert(`${window.i18n.table.colTip}`);
         return;
     }
     let startCol=selected[1],endCol=selected[3];

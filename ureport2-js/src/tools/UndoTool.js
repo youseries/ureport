@@ -10,11 +10,11 @@ export default class UndoTool extends Tool{
         if(undoManager.hasUndo()){
             undoManager.undo();
         }else{
-            alert("当前没有内容可以撤消！");
+            alert(`${window.i18n.tools.undo.noUndo}`);
         }
     }
     getTitle(){
-        return '撤消';
+        return `${window.i18n.tools.undo.undo}`;
     }
     getIcon(){
         return `<i class="ureport ureport-undo" style="color: #0e90d2;"></i>`;

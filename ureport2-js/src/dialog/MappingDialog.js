@@ -13,7 +13,7 @@ export default class MappingDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            添加数据映射项
+                            ${window.i18n.dialog.mapping.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -25,22 +25,22 @@ export default class MappingDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const valueGroup=$(`<div class="form-group"><label>实际值：</label></div>`);
+        const valueGroup=$(`<div class="form-group"><label>${window.i18n.dialog.mapping.key}</label></div>`);
         body.append(valueGroup);
         this.valueEditor=$(`<input type="text" class="form-control" style="display: inline-block;width:500px;">`);
         valueGroup.append(this.valueEditor);
-        const labelGroup=$(`<div class="form-group"><label>显示值：</label></div>`);
+        const labelGroup=$(`<div class="form-group"><label>${window.i18n.dialog.mapping.value}</label></div>`);
         this.labelEditor=$(`<input type="text" class="form-control" style="display: inline-block;width:500px;">`);
         labelGroup.append(this.labelEditor);
         body.append(labelGroup);
 
-        const saveButton=$(`<button type="button" class="btn btn-primary">保存</button>`);
+        const saveButton=$(`<button type="button" class="btn btn-primary">${window.i18n.dialog.mapping.save}</button>`);
         footer.append(saveButton);
         const _this=this;
         saveButton.click(function(){
             const value=_this.valueEditor.val(),label=_this.labelEditor.val();
             if(value==='' || label===''){
-                alert("映射项请输入完整！");
+                alert(`${window.i18n.dialog.mapping.tip}`);
                 return;
             }
             _this.mappingItem.value=value;
@@ -54,9 +54,9 @@ export default class MappingDialog{
         this.mappingItem=mappingItem;
         this.dialog.modal('show');
         if(op==='add'){
-            this.dialog.find('.modal-title').html('添加数据映射项');
+            this.dialog.find('.modal-title').html(`${window.i18n.dialog.mapping.add}`);
         }else{
-            this.dialog.find('.modal-title').html('编辑数据映射项');
+            this.dialog.find('.modal-title').html(`${window.i18n.dialog.mapping.edit}`);
         }
         this.valueEditor.val(mappingItem.value);
         this.labelEditor.val(mappingItem.label);

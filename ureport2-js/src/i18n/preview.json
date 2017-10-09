@@ -1,0 +1,21 @@
+{
+  "pdfPrint":{
+    "title":"PDF在线打印",
+    "setup":"打印配置",
+    "paper":"纸张:",
+    "custom":"自定义",
+    "width":"宽(毫米):",
+    "numberTip":"请输入数字！",
+    "height":"高(毫米):",
+    "orientation":"方向:",
+    "portrait":"纵向",
+    "landscape":"横向",
+    "leftMargin":"左边距(毫米):",
+    "rightMargin":"右边距(毫米):",
+    "topMargin":"上边距(毫米):",
+    "bottomMargin":"下边距(毫米):",
+    "apply":"应用",
+    "fail":"操作失败！",
+    "print":"打印"
+  }
+}

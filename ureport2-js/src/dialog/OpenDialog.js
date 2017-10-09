@@ -16,7 +16,7 @@ export default class OpenDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            打开报表文件
+                            ${window.i18n.dialog.open.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -28,17 +28,17 @@ export default class OpenDialog{
         this.initBody(body);
     }
     initBody(body){
-        const providerGroup=$(`<div class="form-group"><label>报表来源：</label></div>`);
+        const providerGroup=$(`<div class="form-group"><label>${window.i18n.dialog.open.source}</label></div>`);
         this.providerSelect=$(`<select class="form-control" style="display: inline-block;width:450px;">`);
         providerGroup.append(this.providerSelect);
         body.append(providerGroup);
         const tableContainer=$(`<div style="height:350px;overflow: auto"></div>`);
         body.append(tableContainer);
         const fileTable=$(`<table class="table table-bordered"><thead><tr style="background: #f4f4f4;height: 30px;">
-            <td style="vertical-align: middle">文件名</td>
-            <td style="width: 150px;vertical-align: middle">修改日期</td>
-            <td style="width:50px;vertical-align: middle">打开</td>
-            <td style="width:50px;vertical-align: middle">删除</td></tr></thead></table>`);
+            <td style="vertical-align: middle">${window.i18n.dialog.open.fileName}</td>
+            <td style="width: 150px;vertical-align: middle">${window.i18n.dialog.open.modDate}</td>
+            <td style="width:50px;vertical-align: middle">${window.i18n.dialog.open.open}</td>
+            <td style="width:50px;vertical-align: middle">${window.i18n.dialog.open.del}</td></tr></thead></table>`);
         this.fileTableBody=$(`<tbody></tbody>`);
         fileTable.append(this.fileTableBody);
         tableContainer.append(fileTable);
@@ -64,7 +64,7 @@ export default class OpenDialog{
                 let openIcon=$(`<a href="###"><i class="glyphicon glyphicon-folder-open" style="color: #008ed3;font-size: 14pt"></i></a>`);
                 openCol.append(openIcon);
                 openIcon.click(function(){
-                    confirm("真的要打开文件["+file.name+"]吗？",function(){
+                    confirm(`${window.i18n.dialog.open.openConfirm}[${file.name}]？`,function(){
                         let fullFile=value+encodeURI(encodeURI(file.name));
                         let path=window._server+"/designer?_u="+fullFile;
                         window.open(path,"_self");
@@ -77,7 +77,7 @@ export default class OpenDialog{
                 deleteCol.append(deleteIcon);
 
                 deleteIcon.click(function(){
-                    confirm("真要删除文件："+file.name,function(){
+                    confirm(`${window.i18n.dialog.open.delConfirm}`+file.name,function(){
                         let fullFile=value+file.name;
                         $.ajax({
                             type:'POST',
@@ -89,7 +89,7 @@ export default class OpenDialog{
                                 reportFiles.splice(index,1);
                             },
                             error:function(){
-                                alert("文件删除操作失败！");
+                                alert(`${window.i18n.dialog.open.delFail}`);
                             }
                         });
                     });
@@ -115,7 +115,7 @@ export default class OpenDialog{
                 _this.providerSelect.trigger('change');
             },
             error:function(){
-                alert("加载报表文件列表失败!");
+                alert(`${window.i18n.dialog.open.loadFail}`);
             }
         });
         this.dialog.modal('show');

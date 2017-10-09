@@ -11,14 +11,14 @@ export default class ForecolorTool extends Tool{
         this.forecolor="0,0,0";
         const group=$(`<div class="btn-group"></div>`);
         this.nameButton=$(`<button type="button" class="btn btn-default"
-            style="border:none;border-radius:0;background: #f8f8f8;padding: 2px 1px 6px 5px;color: #0e90d2;" title="填充颜色">
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 2px 1px 6px 5px;color: #0e90d2;" title="${window.i18n.tools.foreColor.color}">
                 <i class="ureport ureport-forecolor" style="color: #0e90d2;font-size: 14px"></i>
                 <span class="ud-select-color"></span>
             </button>`);
         group.append(this.nameButton);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="填充颜色">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.foreColor.color}">
             <span class="caret"></span>
-            <span class="sr-only">切换下拉菜单</span>
+            <span class="sr-only">${window.i18n.tools.foreColor.changeMenu}</span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;"></ul>`);
         const colorContainer=$(`<li></li>`);

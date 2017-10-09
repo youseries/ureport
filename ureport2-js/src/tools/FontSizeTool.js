@@ -12,11 +12,11 @@ export default class FontSizeTool extends Tool{
         this.fontSize=10;
         const group=$(`<div class="btn-group"></div>`);
         this.nameButton=$(`<button type="button" class="btn btn-default"
-            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;font-size: 12pt;" title="字体尺寸">10</button>`);
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;font-size: 12pt;" title="${window.i18n.tools.fontSize.size}">10</button>`);
         group.append(this.nameButton);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="字体尺寸">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.fontSize.size}">
             <span class="caret"></span>
-            <span class="sr-only">切换下拉菜单</span>
+            <span class="sr-only">${window.i18n.tools.fontSize.changeMenu}</span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;"></ul>`);
         for(let i=1;i<=100;i++){

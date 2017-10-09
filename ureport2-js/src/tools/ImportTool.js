@@ -13,7 +13,7 @@ export default class ImportTool extends Tool{
         this.dialog.show();
     }
     getTitle(){
-        return '导入Excel模版文件';
+        return `${window.i18n.importExcel}`;
     }
     getIcon(){
         return `<i class="ureport ureport-import" style="color: #0e90d2;"></i>`;

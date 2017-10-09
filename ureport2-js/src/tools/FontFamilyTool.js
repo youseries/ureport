@@ -12,13 +12,13 @@ export default class FontFamilyTool extends Tool{
         this.fontFamily="宋体";
         const group=$(`<div class="btn-group"></div>`);
         this.nameButton=$(`<button type="button" class="btn btn-default"
-            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;" title="字体">
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;" title="${window.i18n.tools.font.font}">
         宋体
         </button>`);
         group.append(this.nameButton);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" title="字体">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" title="${window.i18n.tools.font.font}">
             <span class="caret"></span>
-            <span class="sr-only">切换下拉菜单</span>
+            <span class="sr-only">${window.i18n.tools.font.changeMenu}</span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;"></ul>`);
         const fonts=[];

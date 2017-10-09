@@ -11,14 +11,14 @@ export default class BgcolorTool extends Tool{
         this.bgcolor="255,255,255";
         const group=$(`<div class="btn-group"></div>`);
         this.nameButton=$(`<button type="button" class="btn btn-default"
-            style="border:none;border-radius:0;background: #f8f8f8;padding: 2px 1px 6px 5px;color: #0e90d2;" title="背景颜色">
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 2px 1px 6px 5px;color: #0e90d2;" title="${window.i18n.tools.bgColor.bgColor}">
                 <span class="ureport ureport-bgcolor" style="color: #0e90d2;font-size: 13px"></span>
                 <span class="ud-select-bgcolor"></span>
             </button>`);
         group.append(this.nameButton);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="背景颜色">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.bgColor.bgColor}">
             <span class="caret"></span>
-            <span class="sr-only">切换下拉菜单</span>
+            <span class="sr-only">${window.i18n.tools.bgColor.changeMenu}</span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;"></ul>`);
         const colorContainer=$(`<li></li>`);

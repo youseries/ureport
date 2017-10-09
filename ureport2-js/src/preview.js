@@ -6,8 +6,19 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {getParameter,pointToMM,showLoading,hideLoading} from './Utils.js';
 import {alert} from './MsgBox.js';
 import PDFPrintDialog from './dialog/PDFPrintDialog.js';
+import defaultI18nJsonData from './i18n/preview.json';
+import en18nJsonData from './i18n/preview_en.json';
 
 $(document).ready(function(){
+    let language=window.navigator.language || window.navigator.browserLanguage;
+    if(!language){
+        language='zh-cn';
+    }
+    language=language.toLowerCase();
+    window.i18n=defaultI18nJsonData;
+    if(language!=='zh-cn'){
+        window.i18n=en18nJsonData;
+    }
     const urlParameters=window.location.search;
     $('.ureport-print').click(function(){
         const url=window._server+'/preview/loadPrintPages'+urlParameters;
@@ -17,6 +28,7 @@ $(document).ready(function(){
             type:'POST',
             success:function(result){
                 $.get(window._server+'/preview/loadPagePaper'+urlParameters,function(paper){
+                    hideLoading();
                     const html=result.html;
                     const iFrame=window.frames['_print_frame'];
                     let styles=`<style type="text/css">`;
@@ -25,7 +37,6 @@ $(document).ready(function(){
                     styles+=`</style>`;
                     $(iFrame.document.body).html(styles+html);
                     iFrame.window.focus();
-                    hideLoading();
                     iFrame.window.print();
                 });
             },
@@ -37,14 +48,9 @@ $(document).ready(function(){
     });
     let directPrintPdf=false,index=0;
     const pdfPrintDialog=new PDFPrintDialog();
-    let load=false;
     $(`.ureport-pdf-print`).click(function(){
         $.get(window._server+'/preview/loadPagePaper'+urlParameters,function(paper){
             pdfPrintDialog.show(paper);
-            if(!load){
-                showLoading();
-            }
-            load=true;
         });
     });
     $(`.ureport-pdf-direct-print`).click(function(){

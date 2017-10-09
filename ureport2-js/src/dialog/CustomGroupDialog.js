@@ -17,7 +17,7 @@ export default class CustomGroupDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            自定义分组配置
+                            ${window.i18n.dialog.customGroup.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -56,7 +56,7 @@ export default class CustomGroupDialog{
             const selectionOption=_this.itemSelect.find("option:selected");
             const selection=selectionOption.text();
             if(selection===''){
-                alert("请选择要删除的分组项!");
+                alert(`${window.i18n.dialog.customGroup.deleteTip}`);
                 return;
             }
             const groupItems=_this.cellDef.value.groupItems;
@@ -70,10 +70,10 @@ export default class CustomGroupDialog{
                 i++;
             }
             if(index===-1){
-                alert("请选择要删除的分组项!");
+                alert(`${window.i18n.dialog.customGroup.deleteTip}`);
                 return;
             }
-            confirm("真的要删除分组项["+selection+"]?",function(){
+            confirm(`${window.i18n.dialog.customGroup.deleteConfirm}[${selection}]?`,function(){
                 groupItems.splice(index,1);
                 selectionOption.remove();
             });
@@ -92,7 +92,7 @@ export default class CustomGroupDialog{
                 }
             }
             if(!selectItem){
-                alert("请选择要修改的分组项!");
+                alert(`${window.i18n.dialog.customGroup.modTip}`);
                 return;
             }
             groupItemDialog.show(selectItem,function(){
@@ -135,16 +135,16 @@ export default class CustomGroupDialog{
 
     _buildConditionTable(container){
         const _this=this;
-        const group=$(`<div style="margin-left: 20px;width:330px;display: inline-block;vertical-align: top"><label style="margin-right: 10px;">分组条件</label></div>`);
+        const group=$(`<div style="margin-left: 20px;width:330px;display: inline-block;vertical-align: top"><label style="margin-right: 10px;">${window.i18n.dialog.customGroup.groupCondition}</label></div>`);
         const conditionGroup=$(`<div style="float: right"></div>`);
         group.append(conditionGroup);
-        const addButton=$(`<button type="button" class="btn btn-default" title="添加条件"><i class="glyphicon glyphicon-plus-sign"></i></button>`);
+        const addButton=$(`<button type="button" class="btn btn-default" title="${window.i18n.dialog.customGroup.addCondition}"><i class="glyphicon glyphicon-plus-sign"></i></button>`);
         conditionGroup.append(addButton);
         this.conditionList=$(`<select class="form-control" size="13" style="height: 250px"></select>`);
         addButton.click(function(){
             const selectionItem=_this.itemSelect.find('option:selected');
             if(selectionItem.text()===""){
-                alert("请先选择一个分组项！");
+                alert(`${window.i18n.dialog.customGroup.selectTip}`);
                 return;
             }
             const groupItem=selectionItem.data();
@@ -162,18 +162,18 @@ export default class CustomGroupDialog{
                 _this.conditionList.append(option);
             },_this.fields);
         });
-        const editButton=$(`<button type="button" class="btn btn-default" style="margin-left: 1px;" title="编辑选中的条件"><i class="glyphicon glyphicon-edit"></i></button>`);
+        const editButton=$(`<button type="button" class="btn btn-default" style="margin-left: 1px;" title="${window.i18n.dialog.customGroup.editTip}"><i class="glyphicon glyphicon-edit"></i></button>`);
         conditionGroup.append(editButton);
         editButton.click(function(){
             const option=_this.conditionList.find('option:selected');
             if(option.length===0){
-                alert('请先选中要编辑的条件！');
+                alert(`${window.i18n.dialog.customGroup.editConditionTip}`);
                 return;
             }
             const condition=option.data();
             const selectionItem=_this.itemSelect.find('option:selected');
             if(selectionItem.text()===""){
-                alert("请先选择一个分组项！");
+                alert(`${window.i18n.dialog.customGroup.selectTip}`);
                 return;
             }
             const groupItem=selectionItem.data();
@@ -202,18 +202,18 @@ export default class CustomGroupDialog{
             },_this.fields,condition);
         });
 
-        const delButton=$(`<button type="button" class="btn btn-default" style="margin-left: 1px;" title="删除选中的条件"><i class="glyphicon glyphicon-minus-sign"></i></button>`);
+        const delButton=$(`<button type="button" class="btn btn-default" style="margin-left: 1px;" title="${window.i18n.dialog.customGroup.delTitle}"><i class="glyphicon glyphicon-minus-sign"></i></button>`);
         conditionGroup.append(delButton);
         delButton.click(function(){
             const option=_this.conditionList.find('option:selected');
             if(option.length===0){
-                alert('请先选中要删除的条件！');
+                alert(`${window.i18n.dialog.customGroup.delConditionTip}`);
                 return;
             }
             const condition=option.data();
             const selectionItem=_this.itemSelect.find('option:selected');
             if(selectionItem.text()===""){
-                alert("请先选择一个分组项！");
+                alert(`${window.i18n.dialog.customGroup.selectTip}`);
                 return;
             }
             const groupItem=selectionItem.data();

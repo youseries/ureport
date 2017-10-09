@@ -6,7 +6,7 @@ import {setDirty} from '../../Utils.js';
 export default class SlashValueEditor{
     constructor(parentContainer,context){
         this.context=context;
-        this.container=$(`<div><label>斜表头内容</label></div>`);
+        this.container=$(`<div><label>${window.i18n.property.slash.content}</label></div>`);
         parentContainer.append(this.container);
         this.headerContainer=$(`<div></div>`);
         this.container.append(this.headerContainer);
@@ -22,7 +22,7 @@ export default class SlashValueEditor{
         this.headerContainer.append(slashContainer);
         this._buildSlashes(cellDef,slashContainer);
         const _this=this;
-        const refreshButton=$(`<button type="button" class="btn btn-danger" style="margin-bottom: 10px;margin-top: 10px;float: right"><i class="glyphicon glyphicon-refresh"></i> 刷新</button>`);
+        const refreshButton=$(`<button type="button" class="btn btn-danger" style="margin-bottom: 10px;margin-top: 10px;float: right"><i class="glyphicon glyphicon-refresh"></i> ${window.i18n.property.slash.refresh}</button>`);
         refreshButton.click(function(){
             const crossTabWidget=cellDef.crossTabWidget;
             crossTabWidget.refreshCell();
@@ -38,7 +38,7 @@ export default class SlashValueEditor{
         for(let slash of slashes){
             const itemContainer=$(`<div style="margin-left: 10px;margin-top: 10px;"></div>`);
             slashContainer.append(itemContainer);
-            const nameContainer=$(`<span>名称:</span>`);
+            const nameContainer=$(`<span>${window.i18n.property.slash.name}</span>`);
             itemContainer.append(nameContainer);
             const nameEditor=$(`<input type="text" class="form-control" style="width:90px;display: inline-block;padding: 5px;height:28px">`);
             nameContainer.append(nameEditor);
@@ -74,7 +74,7 @@ export default class SlashValueEditor{
             });
             yEditor.val(slash.y);
 
-            const degreeContainer=$(`<span style="margin-left: 8px">角度:</span>`);
+            const degreeContainer=$(`<span style="margin-left: 8px">${window.i18n.property.slash.angle}</span>`);
             itemContainer.append(degreeContainer);
             const degreeEditor=$(`<input type="number" class="form-control" style="display: inline-block;width:50px;padding: 1px;height:28px">`);
             degreeContainer.append(degreeEditor);

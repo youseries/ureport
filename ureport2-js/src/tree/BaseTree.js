@@ -9,7 +9,7 @@ export default class BaseTree{
         let hot=context.hot,cellsMap=context.cellsMap;
         let selected=hot.getSelected();
         if(!selected || selected.length===0){
-            alert('请先选择单元格!');
+            alert(`${window.i18n.tree.cellTip}`);
             return;
         }
         let rowIndex=selected[0],colIndex=selected[1];

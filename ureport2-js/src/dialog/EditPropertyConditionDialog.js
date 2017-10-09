@@ -14,7 +14,7 @@ export default class EditPropertyConditionDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            条件配置
+                            ${window.i18n.dialog.editPropCondition.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -27,29 +27,29 @@ export default class EditPropertyConditionDialog{
     }
     init(body,footer){
         const _this=this;
-        this.joinGroup=$(`<div class="form-group"><label>与上一条件关系：</label></div>`);
+        this.joinGroup=$(`<div class="form-group"><label>${window.i18n.dialog.editPropCondition.relation}</label></div>`);
         this.joinSelect=$(`<select class="form-control" style="display: inline-block;width:430px;">
-            <option value="and">与</option>
-            <option value="or">或</option>
+            <option value="and">${window.i18n.dialog.editPropCondition.and}</option>
+            <option value="or">${window.i18n.dialog.editPropCondition.or}</option>
         </select>`);
         this.joinGroup.append(this.joinSelect);
         body.append(this.joinGroup);
 
-        const leftGroup=$(`<div class="form-group"><label>条件左值：</label></div>`);
+        const leftGroup=$(`<div class="form-group"><label>${window.i18n.dialog.editPropCondition.leftValue}</label></div>`);
         this.leftTypeSelect=$(`<select class="form-control" style="display: inline-block;width: inherit">
-            <option value="current">当前值</option>
-            <option value="property">属性</option>
-            <option value="expression">表达式</option>
+            <option value="current">${window.i18n.dialog.editPropCondition.currentValue}</option>
+            <option value="property">${window.i18n.dialog.editPropCondition.property}</option>
+            <option value="expression">${window.i18n.dialog.editPropCondition.expression}</option>
         </select>`);
         leftGroup.append(this.leftTypeSelect);
 
-        this.propertyGroup=$(`<span style="margin-left: 10px"><label>属性名：</label></span>`);
+        this.propertyGroup=$(`<span style="margin-left: 10px"><label>${window.i18n.dialog.editPropCondition.propName}</label></span>`);
         this.propertySelect=$(`<select class="form-control" style="display: inline-block;width:320px;"></select>`);
         this.propertyGroup.append(this.propertySelect);
         leftGroup.append(this.propertyGroup);
         body.append(leftGroup);
 
-        this.exprGroup=$(`<span style="margin-left: 10px"><label>表达式：</label></span>`);
+        this.exprGroup=$(`<span style="margin-left: 10px"><label>${window.i18n.dialog.editPropCondition.expr}</label></span>`);
         this.exprEditor=$(`<input type="text" style="display: inline-block;width:320px;" class="form-control">`);
         this.exprGroup.append(this.exprEditor);
         leftGroup.append(this.exprGroup);
@@ -62,7 +62,7 @@ export default class EditPropertyConditionDialog{
                 data:{content:val},
                 success:function(errors){
                     if(errors.length>0){
-                        alert(`${val} 存在语法错误！`);
+                        alert(`${val} ${window.i18n.dialog.editPropCondition.syntaxError}`);
                     }
                 }
             });
@@ -82,20 +82,20 @@ export default class EditPropertyConditionDialog{
             }
         });
 
-        const operatorGroup=$(`<div class="form-group"><label>操作符：</label></div>`);
+        const operatorGroup=$(`<div class="form-group"><label>${window.i18n.dialog.editPropCondition.operator}</label></div>`);
         this.operatorSelect=$(`<select class="form-control" style="display: inline-block;width:490px;">
-            <option value=">">大于</option>
-            <option value=">=">大于等于</option>
-            <option value="<">小于</option>
-            <option value="<=">小于等于</option>
-            <option value="==">等于</option>
-            <option value="!=">不等于</option>
-            <option value="in">在集合中</option>
-            <option value="like">相似</option>
+            <option value=">">${window.i18n.dialog.editPropCondition.greater}</option>
+            <option value=">=">${window.i18n.dialog.editPropCondition.greaterEquals}</option>
+            <option value="<">${window.i18n.dialog.editPropCondition.less}</option>
+            <option value="<=">${window.i18n.dialog.editPropCondition.lessEquals}</option>
+            <option value="==">${window.i18n.dialog.editPropCondition.equals}</option>
+            <option value="!=">${window.i18n.dialog.editPropCondition.notEquals}</option>
+            <option value="in">${window.i18n.dialog.editPropCondition.in}</option>
+            <option value="like">${window.i18n.dialog.editPropCondition.like}</option>
         </select>`);
         operatorGroup.append(this.operatorSelect);
         body.append(operatorGroup);
-        const valueGroup=$(`<div class="form-group"><label>值表达式：</label></div>`);
+        const valueGroup=$(`<div class="form-group"><label>${window.i18n.dialog.editPropCondition.valueExpr}</label></div>`);
         this.valueEditor=$(`<input type="text" class="form-control" style="display: inline-block;width:477px;">`);
         valueGroup.append(this.valueEditor);
         body.append(valueGroup);
@@ -108,23 +108,23 @@ export default class EditPropertyConditionDialog{
                 data:{content:val},
                 success:function(errors){
                     if(errors.length>0){
-                        alert(`${val} 存在语法错误！`);
+                        alert(`${val} ${window.i18n.dialog.editPropCondition.syntaxError}`);
                     }
                 }
             });
         });
 
-        const button=$(`<button class="btn btn-default">确定</button>`);
+        const button=$(`<button class="btn btn-default">${window.i18n.dialog.editPropCondition.ok}</button>`);
         button.click(function(){
             let property=_this.propertySelect.val(),op=_this.operatorSelect.val(),value=_this.valueEditor.val(),join=_this.joinSelect.val(),type=_this.leftTypeSelect.val(),expr=_this.exprEditor.val();
             if (type === 'property') {
                 if (property === '') {
-                    alert("请选择属性!");
+                    alert(`${window.i18n.dialog.editPropCondition.selectProp}`);
                     return;
                 }
             } else if(type==='expression') {
                 if(expr===''){
-                    alert('请输入左值表达式');
+                    alert(`${window.i18n.dialog.editPropCondition.leftValueExpr}`);
                     return;
                 }
                 property=expr;
@@ -135,11 +135,11 @@ export default class EditPropertyConditionDialog{
                 type="property";
             }
             if (op === '') {
-                alert("请选择操作符!");
+                alert(`${window.i18n.dialog.editPropCondition.selectOperator}`);
                 return;
             }
             if (value === '') {
-                alert("请输入表达式值!");
+                alert(`${window.i18n.dialog.editPropCondition.inputExpr}`);
                 return;
             }
             if (_this.condition) {

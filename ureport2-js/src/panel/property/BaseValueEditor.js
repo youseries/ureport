@@ -6,10 +6,10 @@ import PropertyConditionDialog from '../../dialog/PropertyConditionDialog.js';
 
 export default class BaseValueEditor{
     _buildFillBlankRows(container){
-        this.fillGroup=$(`<div class="form-group" style="margin-bottom: 10px;height: 25px;"><label>补充空白行：</label></div>`);
-        this.enableFillRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__fill_blank_row_radio" value="default">打开</label>`);
+        this.fillGroup=$(`<div class="form-group" style="margin-bottom: 10px;height: 25px;"><label>${window.i18n.property.base.fillBlank}</label></div>`);
+        this.enableFillRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__fill_blank_row_radio" value="default">${window.i18n.property.base.open}</label>`);
         this.fillGroup.append(this.enableFillRadio);
-        this.disableFillRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__fill_blank_row_radio" value="custom">关闭</label>`);
+        this.disableFillRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__fill_blank_row_radio" value="custom">${window.i18n.property.base.close}</label>`);
         this.fillGroup.append(this.disableFillRadio);
         if(container){
             container.append(this.fillGroup);
@@ -25,7 +25,7 @@ export default class BaseValueEditor{
             _this._setFillBlankRows(false);
             _this.multipleGroup.hide();
         });
-        this.multipleGroup=$(`<span style="margin-left: 10px">数据行倍数：</span>`);
+        this.multipleGroup=$(`<span style="margin-left: 10px">${window.i18n.property.base.rowTimes}</span>`);
         this.fillGroup.append(this.multipleGroup);
         this.multipleEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 77px;height: 25px;padding: 3px;font-size: 12px">`);
         this.multipleGroup.append(this.multipleEditor);
@@ -64,10 +64,10 @@ export default class BaseValueEditor{
     }
 
     _buildWrapCompute(container){
-        this.wrapGroup=$(`<div class="form-group" style="margin-bottom: 10px"><label>换行计算：</label></div>`);
-        this.enableWrapComput=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__wrap_compute_radio" value="default" title="打开换行计算将耗费更多报表计算时间">打开</label>`);
+        this.wrapGroup=$(`<div class="form-group" style="margin-bottom: 10px"><label>${window.i18n.property.base.newLineCompute}</label></div>`);
+        this.enableWrapComput=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__wrap_compute_radio" value="default" title="${window.i18n.property.base.newLineComputeTip}">${window.i18n.property.base.open}</label>`);
         this.wrapGroup.append(this.enableWrapComput);
-        this.disableWrapComput=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__wrap_compute_radio" value="custom">关闭</label>`);
+        this.disableWrapComput=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__wrap_compute_radio" value="custom">${window.i18n.property.base.close}</label>`);
         this.wrapGroup.append(this.disableWrapComput);
         if(container){
             container.append(this.wrapGroup);
@@ -101,8 +101,8 @@ export default class BaseValueEditor{
 
     _buildFormat(container){
         const _this=this;
-        this.formatGroup=$(`<div class="form-group" style="margin-bottom:10px;"><label>格式化：</label></div>`);
-        this.formatEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 302px;padding: 3px;font-size: 12px;height: 25px;" placeholder="对单元格内日期或数字格式化">`);
+        this.formatGroup=$(`<div class="form-group" style="margin-bottom:10px;"><label>${window.i18n.property.base.format}</label></div>`);
+        this.formatEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 302px;padding: 3px;font-size: 12px;height: 25px;" placeholder="${window.i18n.property.base.formatTip}">`);
         this.formatGroup.append(this.formatEditor);
         this.formatEditor.completer({
             source: [
@@ -145,13 +145,13 @@ export default class BaseValueEditor{
 
     _buildConditionProperty(container){
         const _this=this;
-        const group=$(`<div class="form-group" style="margin-bottom: 10px"><label>条件属性：</label></div>`);
+        const group=$(`<div class="form-group" style="margin-bottom: 10px"><label>${window.i18n.property.base.conditionProp}</label></div>`);
         if(container){
             container.append(group);
         }else{
             this.container.append(group);
         }
-        const configButton=$(`<button type="button" class="btn btn-default" style="font-size: 12px;height: 25px;padding: 4px;10px;"><i class="glyphicon glyphicon-filter"></i> 配置条件</button>`);
+        const configButton=$(`<button type="button" class="btn btn-default" style="font-size: 12px;height: 25px;padding: 4px;10px;"><i class="glyphicon glyphicon-filter"></i> ${window.i18n.property.base.configCondition}</button>`);
         group.append(configButton);
         const propertyConditionDialog=new PropertyConditionDialog();
         configButton.click(function(){
@@ -226,7 +226,7 @@ export default class BaseValueEditor{
                     }
                 },
                 error:function(){
-                    alert('语法检查操作失败！');
+                    alert(`${window.i18n.property.base.syntaxError}`);
                 }
             });
         };

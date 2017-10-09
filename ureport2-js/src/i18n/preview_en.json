@@ -1,0 +1,21 @@
+{
+  "pdfPrint":{
+    "title":"pdf online print",
+    "setup":"Print Setup",
+    "paper":"Paper:",
+    "custom":"Custom",
+    "width":"Width(mm):",
+    "numberTip":"Please input a number",
+    "height":"Height(mm):",
+    "orientation":"Orientation:",
+    "portrait":"Portrait",
+    "landscape":"Landscape",
+    "leftMargin":"Left Margin(mm):",
+    "rightMargin":"Right Margin(mm):",
+    "topMargin":"Top Margin(mm):",
+    "bottomMargin":"Bottom Margin(mm):",
+    "apply":"Apply",
+    "fail":"Apply fail!",
+    "print":"Print"
+  }
+}

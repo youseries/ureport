@@ -13,7 +13,7 @@ export default class OpenTool extends Tool{
         this.openDialog.show()
     }
     getTitle(){
-        return '打开报表文件';
+        return `${window.i18n.openFile}`;
     }
     getIcon(){
         return `<i class="ureport ureport-open" style="color: #0e90d2;"></i>`;

@@ -12,7 +12,7 @@ export default class PreviewDataDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            数据预览
+                            ${window.i18n.dialog.preview.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -27,11 +27,11 @@ export default class PreviewDataDialog{
         this.initButton(footer);
     }
     initBody(){
-        this.body.append("数据加载中...");
+        this.body.append(`${window.i18n.dialog.preview.load}`);
     }
 
     initButton(footer){
-        const button=$(`<button class="btn btn-primary">确定</button>`);
+        const button=$(`<button class="btn btn-primary">${window.i18n.dialog.preview.ok}</button>`);
         footer.append(button);
         const _this=this;
         button.click(function(){
@@ -43,7 +43,7 @@ export default class PreviewDataDialog{
         this.body.empty();
         const data=result.data;
         this.body.append(`<div style="height: 30px;background: #fdfdfd;">
-        <span style="margin: 4px;">共${result.total}条数据，当前预览前${result.currentTotal}条</span>
+        <span style="margin: 4px;">${window.i18n.dialog.preview.total}${result.total}${window.i18n.dialog.preview.totalMid}${result.currentTotal}${window.i18n.dialog.preview.item}</span>
         </div>`);
         const div=$(`<div style="overflow-x: auto"></div>`);
         this.body.append(div);

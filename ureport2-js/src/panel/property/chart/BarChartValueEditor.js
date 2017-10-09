@@ -16,11 +16,11 @@ export default class BarChartValueEditor extends CategoryChartValueEditor{
         parentContainer.append(this.container);
         const tabUL=$(`<ul class="nav nav-tabs"></ul>`);
         this.container.append(tabUL);
-        const dsLI=$(`<li class="active"><a href="#chart_bind_dataset_${this.id}" data-toggle="tab">数据集绑定</a></li>`);
+        const dsLI=$(`<li class="active"><a href="#chart_bind_dataset_${this.id}" data-toggle="tab">${window.i18n.chart.datasetBind}</a></li>`);
         tabUL.append(dsLI);
-        const optionLI=$(`<li><a href="#chart_option_${this.id}" data-toggle="tab">选项</a></li>`);
+        const optionLI=$(`<li><a href="#chart_option_${this.id}" data-toggle="tab">${window.i18n.chart.option}</a></li>`);
         tabUL.append(optionLI);
-        this.axisLI=$(`<li><a href="#chart_axis_${this.id}" data-toggle="tab">轴配置</a></li>`);
+        this.axisLI=$(`<li><a href="#chart_axis_${this.id}" data-toggle="tab">${window.i18n.chart.axisConfig}</a></li>`);
         tabUL.append(this.axisLI);
         const tabContent=$(`<div class="tab-content"></div>`);
         this.container.append(tabContent);

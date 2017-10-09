@@ -8,7 +8,7 @@ import {alert} from '../../MsgBox.js';
 export function doInsertRow(above){
     const selected=this.getSelected();
     if(!selected){
-        alert("请先选中行!");
+        alert(`${window.i18n.table.rowTip}`);
         return;
     }
     let startRow=selected[0],endRow=selected[2];

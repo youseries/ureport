@@ -12,14 +12,14 @@ export default class BorderTool extends Tool{
     buildButton(){
         const _this=this;
         const group=$(`<div class="btn-group"></div>`);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="边框线">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.border.borderLine}">
             <i class="ureport ureport-no-border" style="color: #0e90d2;"></i>
             <span class="caret"></span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu"></ul>`);
         const fullBorder=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-full-border" style="color: #0e90d2;"></i> 所有框线
+                    <i class="ureport ureport-full-border" style="color: #0e90d2;"></i> ${window.i18n.tools.border.allLine}
                 </a>
             </li>`);
         fullBorder.click(function(){
@@ -62,7 +62,7 @@ export default class BorderTool extends Tool{
         ul.append(fullBorder);
         const noBorder=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-no-border" style="color: #0e90d2;"></i> 无框线
+                    <i class="ureport ureport-no-border" style="color: #0e90d2;"></i> ${window.i18n.tools.border.noBorder}
                 </a>
             </li>`);
         noBorder.click(function(){
@@ -101,7 +101,7 @@ export default class BorderTool extends Tool{
         ul.append(noBorder);
         const leftBorder=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-left-border" style="color: #0e90d2;"></i> 左框线
+                    <i class="ureport ureport-left-border" style="color: #0e90d2;"></i> ${window.i18n.tools.border.leftBorder}
                 </a>
             </li>`);
         leftBorder.click(function(){
@@ -144,7 +144,7 @@ export default class BorderTool extends Tool{
         ul.append(leftBorder);
         const rightBorder=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-right-border" style="color: #0e90d2;"></i> 右框线
+                    <i class="ureport ureport-right-border" style="color: #0e90d2;"></i> ${window.i18n.tools.border.rightBorder}
                 </a>
             </li>`);
         rightBorder.click(function(){
@@ -187,7 +187,7 @@ export default class BorderTool extends Tool{
         ul.append(rightBorder);
         const topBorder=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-top-border" style="color: #0e90d2;"></i> 上框线
+                    <i class="ureport ureport-top-border" style="color: #0e90d2;"></i> ${window.i18n.tools.border.topBorder}
                 </a>
             </li>`);
         topBorder.click(function(){
@@ -230,7 +230,7 @@ export default class BorderTool extends Tool{
         ul.append(topBorder);
         const bottomBorder=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-bottom-border" style="color: #0e90d2;"></i> 下框线
+                    <i class="ureport ureport-bottom-border" style="color: #0e90d2;"></i> ${window.i18n.tools.border.bottomBorder}
                 </a>
             </li>`);
         bottomBorder.click(function(){
@@ -274,7 +274,7 @@ export default class BorderTool extends Tool{
         ul.append(`<li class="divider"></li>`);
         const customBorder=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-full-border" style="color: #0e90d2;"></i> 自定义框线
+                    <i class="ureport ureport-full-border" style="color: #0e90d2;"></i> ${window.i18n.tools.border.customBorder}
                 </a>
             </li>`);
         let content=null;
@@ -300,13 +300,13 @@ function showCustomBorderDialog(context,content,topBorderStyle,bottomBorderStyle
         content=$('<div></div>');
         const ul=$("<ul class='nav nav-tabs'></ul>");
         content.append(ul);
-        const topLi=$("<li class='active'><a data-toggle='tab' href='#topBorderConfig'>上</a></li>");
+        const topLi=$(`<li class='active'><a data-toggle='tab' href='#topBorderConfig'>${window.i18n.tools.border.up}</a></li>`);
         ul.append(topLi);
-        const bottomLi=$("<li><a data-toggle='tab' href='#bottomBorderConfig'>下</a></li>");
+        const bottomLi=$(`<li><a data-toggle='tab' href='#bottomBorderConfig'>${window.i18n.tools.border.down}</a></li>`);
         ul.append(bottomLi);
-        const leftLi=$("<li><a data-toggle='tab' href='#leftBorderConfig'>左</a></li>");
+        const leftLi=$(`<li><a data-toggle='tab' href='#leftBorderConfig'>${window.i18n.tools.border.left}</a></li>`);
         ul.append(leftLi);
-        const rightLi=$("<li><a data-toggle='tab' href='#rightBorderConfig'>右</a></li>");
+        const rightLi=$(`<li><a data-toggle='tab' href='#rightBorderConfig'>${window.i18n.tools.border.right}</a></li>`);
         ul.append(rightLi);
 
         const tabContent=$("<div class='tab-content'></div>");
@@ -328,7 +328,7 @@ function showCustomBorderDialog(context,content,topBorderStyle,bottomBorderStyle
         content.append(tabContent);
     }
 
-    dialog("自定义单元格框线",content,function(){
+    dialog(`${window.i18n.tools.border.customBorderLine}`,content,function(){
         const selected=context.hot.getSelected();
         const startRow=selected[0],startCol=selected[1],endRow=selected[2],endCol=selected[3];
         let oldBorderStyle=updateCustomBorderStyle(context,startRow,startCol,endRow,endCol,leftBorderStyle,rightBorderStyle,topBorderStyle,bottomBorderStyle);
@@ -342,7 +342,7 @@ function showCustomBorderDialog(context,content,topBorderStyle,bottomBorderStyle
         });
         setDirty();
     });
-    content.parents('.modal-content').css({width:'260px'});
+    content.parents('.modal-content').css({width:'280px'});
     return content;
 }
 
@@ -397,13 +397,13 @@ function cloneBorder(border){
 }
 
 function buildBorderStyleContent(borderConfig,borderStyle){
-    const borderLineContainer=$(`<div style="margin: 20px 0 10px 0;"><span>线型：</span></div>`);
+    const borderLineContainer=$(`<div style="margin: 20px 0 10px 0;"><span>${window.i18n.tools.border.lineStyle}：</span></div>`);
     borderConfig.append(borderLineContainer);
     const borderLineList=$(`
                 <select class="form-control" style="display: inline-block;width:120px">
-                    <option value="solid" ${borderStyle.style==='solid' ? 'selected' : ''}>实线</option>
-                    <option value="dashed" ${borderStyle.style==='dashed' ? 'selected' : ''}>虚线</option>
-                    <option value="none" ${!borderStyle.style ? 'selected' : ''}>无</option>
+                    <option value="solid" ${borderStyle.style==='solid' ? 'selected' : ''}>${window.i18n.tools.border.solidLine}</option>
+                    <option value="dashed" ${borderStyle.style==='dashed' ? 'selected' : ''}>${window.i18n.tools.border.dashed}</option>
+                    <option value="none" ${!borderStyle.style ? 'selected' : ''}>${window.i18n.tools.border.none}</option>
                 </select>
             `);
     borderLineContainer.append(borderLineList);
@@ -412,7 +412,7 @@ function buildBorderStyleContent(borderConfig,borderStyle){
         borderStyle.style=value;
     });
 
-    const borderSizeContainer=$(`<div style="margin: 20px 0 10px 0;"><span>尺寸：</span></div>`);
+    const borderSizeContainer=$(`<div style="margin: 20px 0 10px 0;"><span>${window.i18n.tools.border.size}：</span></div>`);
     borderConfig.append(borderSizeContainer);
     const borderSizeList=$(`
                 <select class="form-control" style="display: inline-block;width:120px">
@@ -432,7 +432,7 @@ function buildBorderStyleContent(borderConfig,borderStyle){
 
     const borderColor=$(`<div></div>`);
     borderConfig.append(borderColor);
-    const topBorderColorContainer=$("<div><span>颜色：</span></div>");
+    const topBorderColorContainer=$(`<div><span>${window.i18n.tools.border.color}：</span></div>`);
     borderColor.append(topBorderColorContainer);
     topBorderColorContainer.colorpicker({
         color: borderStyle.color,

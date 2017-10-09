@@ -75,16 +75,16 @@ export default class UReportDesigner{
         this.container.prepend(propertyPanel);
         const propertyTab=$(`<ul class="nav nav-tabs">
             <li class="active">
-                <a href="#${propContainerId}" data-toggle="tab" id="__prop_tab_link">属性</a>
+                <a href="#${propContainerId}" data-toggle="tab" id="__prop_tab_link">${window.i18n.panel.property}</a>
             </li>
             <li>
-                <a href="#${dsContainerId}" data-toggle="tab">数据源</a>
+                <a href="#${dsContainerId}" data-toggle="tab">${window.i18n.panel.datasource}</a>
             </li>
         </ul>`);
         const trigger=$(`
             <i class="glyphicon glyphicon-circle-arrow-down"
                 style="color:#9E9E9E;font-size: 16px;vertical-align: middle;cursor: pointer;float: right;margin: 10px 10px 0px 0px;"
-                title="点击显示/隐藏属性面板">
+                title="${window.i18n.panel.tip}">
              </i>
             `);
         propertyTab.append(trigger);

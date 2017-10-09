@@ -6,7 +6,7 @@ import {setDirty,resetTableData,buildNewCellDef,undoManager} from '../../Utils.j
 export function doInsertCol(left){
     const selected=this.getSelected();
     if(!selected){
-        alert("请先选中列!");
+        alert(`${window.i18n.table.colTip}`);
         return;
     }
     let startCol=selected[1],endCol=selected[3];

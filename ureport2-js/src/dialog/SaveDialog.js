@@ -15,7 +15,7 @@ export default class SaveDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            保存报表文件
+                            ${window.i18n.dialog.save.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -28,17 +28,17 @@ export default class SaveDialog{
         this.initFooter(footer);
     }
     initBody(body){
-        const fileGroup=$(`<div class="form-group"><label>文件名：</label></div>`);
+        const fileGroup=$(`<div class="form-group"><label>${window.i18n.dialog.save.fileName}:</label></div>`);
         this.fileEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 480px">`);
         fileGroup.append(this.fileEditor);
         body.append(fileGroup);
-        const providerGroup=$(`<div class="form-group"><label>存储目的地：</label></div>`);
+        const providerGroup=$(`<div class="form-group"><label>${window.i18n.dialog.save.source}</label></div>`);
         this.providerSelect=$(`<select class="form-control" style="display: inline-block;width:450px;">`);
         providerGroup.append(this.providerSelect);
         body.append(providerGroup);
         const tableContainer=$(`<div style="height:350px;overflow: auto"></div>`);
         body.append(tableContainer);
-        const fileTable=$(`<table class="table table-bordered"><thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">文件名</td><td style="width: 150px;vertical-align: middle">修改日期</td><td style="width:50px;vertical-align: middle">删除</td></tr></thead></table>`);
+        const fileTable=$(`<table class="table table-bordered"><thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">${window.i18n.dialog.save.fileName}</td><td style="width: 150px;vertical-align: middle">${window.i18n.dialog.save.modDate}</td><td style="width:50px;vertical-align: middle">${window.i18n.dialog.save.del}</td></tr></thead></table>`);
         this.fileTableBody=$(`<tbody></tbody>`);
         fileTable.append(this.fileTableBody);
         tableContainer.append(fileTable);
@@ -63,7 +63,7 @@ export default class SaveDialog{
                 let deleteIcon=$(`<a href="###"><i class="glyphicon glyphicon-trash" style="color: red;font-size: 14pt"></i></a>`);
                 deleteCol.append(deleteIcon);
                 deleteIcon.click(function(){
-                    confirm("真要删除文件："+file.name,function(){
+                    confirm(`${window.i18n.dialog.save.delConfirm}`+file.name,function(){
                         let fullFile=value+file.name;
                         $.ajax({
                             type:'POST',
@@ -75,7 +75,7 @@ export default class SaveDialog{
                                 reportFiles.splice(index,1);
                             },
                             error:function(){
-                                alert("文件删除操作失败！");
+                                alert(`${window.i18n.dialog.save.delFail}`);
                             }
                         });
                     });
@@ -87,17 +87,17 @@ export default class SaveDialog{
     }
 
     initFooter(footer){
-        const saveButton=$(`<button type="button" class="btn btn-primary">保存</button>`);
+        const saveButton=$(`<button type="button" class="btn btn-primary">${window.i18n.dialog.save.save}</button>`);
         footer.append(saveButton);
         const _this=this;
         saveButton.click(function(){
             let fileName=_this.fileEditor.val();
             if(fileName===''){
-                alert('请输入文件名！');
+                alert(`${window.i18n.dialog.save.nameTip}`);
                 return;
             }
             if(!_this.currentProviderPrefix || !_this.currentReportFiles){
-                alert("请选择文件保存地！");
+                alert(`${window.i18n.dialog.save.locationTip}`);
                 return;
             }
             for(let file of _this.currentReportFiles){
@@ -105,7 +105,7 @@ export default class SaveDialog{
                 let pos=fname.indexOf(".");
                 fname=fname.substring(0,pos);
                 if(fname===fileName){
-                    alert(`文件[${fileName}]已存在`);
+                    alert(`${window.i18n.dialog.save.file}[${fileName}]${window.i18n.dialog.save.exist}`);
                     return;
                 }
             }
@@ -115,14 +115,14 @@ export default class SaveDialog{
                 data:{file:fileName,content:_this.content},
                 type:'POST',
                 success:function(){
-                    alert("保存成功！");
+                    alert(`${window.i18n.dialog.save.success}`);
                     window._reportFile=fileName;
                     _this.context.fileInfo.setFile(fileName);
                     resetDirty();
                     _this.dialog.modal('hide');
                 },
                 error:function(){
-                    alert("文件保存失败！");
+                    alert(`${window.i18n.dialog.save.fail}`);
                 }
             });
         });
@@ -147,7 +147,7 @@ export default class SaveDialog{
                 _this.providerSelect.trigger('change');
             },
             error:function(){
-                alert("加载报表文件列表失败!");
+                alert(`${window.i18n.dialog.save.loadFail}`);
             }
         });
         this.dialog.modal('show');

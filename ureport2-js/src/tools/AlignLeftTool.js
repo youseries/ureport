@@ -9,7 +9,7 @@ export default class AlignLeftTool extends Tool{
     execute(){
         const cells=this.context.getSelectedCells();
         if(!cells){
-            alert("请先选择目标单元格!");
+            alert(`${window.i18n.selectTargetCellFirst}`);
             return;
         }
         for(const td of cells){
@@ -24,25 +24,25 @@ export default class AlignLeftTool extends Tool{
         this.align="left";
         const group=$(`<div class="btn-group"></div>`);
         const nameButton=$(`<button type="button" class="btn btn-default"
-            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;font-size: 12pt;" title="上下对齐">
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;font-size: 12pt;" title="${window.i18n.tools.alignLeft.upDownAlign}">
             <i class="ureport ureport-alignleft" id="align_button" style="color: #0e90d2;"></i>
             </button>`);
         group.append(nameButton);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="左右对齐">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.alignLeft.leftRightAlign}">
             <span class="caret"></span>
-            <span class="sr-only">切换下拉菜单</span>
+            <span class="sr-only">${window.i18n.tools.alignLeft.changeMenu}</span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu"></ul>`);
         const left=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-alignleft" style="color: #0e90d2;"></i> 左对齐
+                    <i class="ureport ureport-alignleft" style="color: #0e90d2;"></i> ${window.i18n.tools.alignLeft.leftAlign}
                 </a>
             </li>`);
         ul.append(left);
         nameButton.click(function(){
             const selectedCells=_this.context.hot.getSelected();
             if(!selectedCells || selectedCells.length===0){
-                alert("请先选择单元格！");
+                alert(`${window.i18n.selectTargetCellFirst}`);
                 return;
             }
             const align=_this.align;
@@ -62,7 +62,7 @@ export default class AlignLeftTool extends Tool{
         left.click(function(){
             const selectedCells=_this.context.hot.getSelected();
             if(!selectedCells || selectedCells.length===0){
-                alert("请先选择单元格！");
+                alert(`${window.i18n.selectTargetCellFirst}`);
                 return;
             }
             let oldAligns=_this._buildCellAlign(_this.context,"left");
@@ -80,13 +80,13 @@ export default class AlignLeftTool extends Tool{
         });
         const center=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-aligncenter" style="color: #0e90d2;"></i> 居中对齐
+                    <i class="ureport ureport-aligncenter" style="color: #0e90d2;"></i> ${window.i18n.tools.alignLeft.centerAlign}
                 </a>
             </li>`);
         center.click(function(){
             const selectedCells=_this.context.hot.getSelected();
             if(!selectedCells || selectedCells.length===0){
-                alert("请先选择单元格！");
+                alert(`${window.i18n.selectTargetCellFirst}`);
                 return;
             }
             let oldAligns=_this._buildCellAlign(_this.context,"center");
@@ -105,13 +105,13 @@ export default class AlignLeftTool extends Tool{
         ul.append(center);
         const right=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-alignright" style="color: #0e90d2;"></i> 右对齐
+                    <i class="ureport ureport-alignright" style="color: #0e90d2;"></i> ${window.i18n.tools.alignLeft.rightAlign}
                 </a>
             </li>`);
         right.click(function(){
             const selectedCells=_this.context.hot.getSelected();
             if(!selectedCells || selectedCells.length===0){
-                alert("请先选择单元格！");
+                alert(`${window.i18n.selectTargetCellFirst}`);
                 return;
             }
             let oldAligns=_this._buildCellAlign(_this.context,"right");
@@ -197,7 +197,7 @@ export default class AlignLeftTool extends Tool{
     }
 
     getTitle(){
-        return '左右对齐';
+        return `${window.i18n.tools.alignLeft.leftRightAlign}`;
     }
     getIcon(){
         return `<i class="ureport ureport-alignleft" style="color: #0e90d2;"></i>`;

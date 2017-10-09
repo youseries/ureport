@@ -16,42 +16,42 @@
 	<div style="text-align:${reportAlign}">
 		#if($tools.print)
 		<button type="button" class="btn btn-default ureport-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="在线打印">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/print.svg' width="20px">
+			<img src='${contextPath}/ureport/res/ureport-asserts/icons/print.svg' width="20px" height="20px">
 		</button>
 		#end
 		#if($tools.pdfPrint)
 		<button type="button" class="btn btn-default ureport-pdf-direct-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线打印">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf-direct-print.svg' width="20px">
+			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf-direct-print.svg' width="20px" height="20px">
 		</button>
 		#end
 		#if($tools.pdfPreviewPrint)
 		<button type="button" class="btn btn-default ureport-pdf-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线预览打印">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf-print.svg' width="20px">
+			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf-print.svg' width="20px" height="20px">
 		</button>
 		#end
 		#if($tools.pdf)
 		<button type="button" class="btn btn-default ureport-export-pdf" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出PDF">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf.svg' width="20px">
+			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf.svg' width="20px" height="20px">
 		</button>
 		#end
 		#if($tools.word)
 		<button type="button" class="btn btn-default ureport-export-word" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出WORD">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/word.svg' width="20px">
+			<img src='${contextPath}/ureport/res/ureport-asserts/icons/word.svg' width="20px" height="20px">
 		</button>
 		#end
 		#if($tools.excel)
 		<button type="button" class="btn btn-default ureport-export-excel" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出EXCEL">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel.svg' width="20px">
+			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel.svg' width="20px" height="20px">
 		</button>
 		#end
 		#if($tools.pagingExcel)
 		<button type="button" class="btn btn-default ureport-export-excel-paging" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页导出EXCEL">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-paging.svg' width="20px">
+			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-paging.svg' width="20px" height="20px">
 		</button>
 		#end
 		#if($tools.sheetPagingExcel)
 		<button type="button" class="btn btn-default ureport-export-excel-paging-sheet" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页分Sheet导出EXCEL">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-with-paging-sheet.svg' width="20px">
+			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-with-paging-sheet.svg' width="20px" height="20px">
 		</button>
 		#end
 		#if($tools.paging)
@@ -98,6 +98,7 @@
 <iframe name="_print_pdf_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 <script type="text/javascript">
 window._server="${contextPath}/ureport";
+window._locale="${locale}";
 $(document).ready(function(){
 	#if($totalPage>0)
 			$('#pageSelector').change(function(){
