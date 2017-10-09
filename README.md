@@ -10,7 +10,7 @@ UReport2 is the first Chinese-style report engine based on Apache-2.0 License wi
 
 # Teaching video
 
-[http://pan.baidu.com/s/1boWTxF5，password：98hj](http://pan.baidu.com/s/1boWTxF5，password：98hj)
+http://pan.baidu.com/s/1boWTxF5，password：98hj
 
 # Installation and Configuration
 
@@ -73,12 +73,4 @@ If spring is not used in your project, you can apply the above configuration and
 ```
 
 By now, we have added UReport2 in a standard Maven project. Run the project, and you can see the interface of UReport2 report designer by visiting URL：[http://localhost:8080/\[contextPath\]/ureport/designer](http://localhost:8080/[contextPath]/ureport/designer) in a browser.![](docs/images/dd.png)![](docs/images/designer.png)
-
-
-
-
-
-
-
-
 
