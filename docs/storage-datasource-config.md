@@ -248,21 +248,75 @@ In view of the introduction above, we can easily develop other types of report s
 
 Open the report designer in UReport2. We can see three types of data sources of reports provided by UReport2, as shown in the figure below:
 
-![](docs/images/datasource-tools.png)![](docs/images/datasource-tools.png)![](docs/images/datasource-tools.png)
+![](docs/images/datasource-tools.png)![](/docs/images/datasource-tools.png)
+
+The three types of data sources are respectively directly connected with the database, Spring Bean and the built-in data soure that is provided through com.bstek.ureport.definition.datasource.BuildinDatasource interface.
+
+It is very simple to connect with the database. Add the Jar package driven by the corresponding database in classpath of the project and configure the information on connection with the data source in the pop-up window, as shown in the figure below:![](/docs/images/db-config.png)The data source of Spring Bean type can choose a Bean defined in the context of Spring, click the icon and enter the name of data source and the ID of Bean to be applied in the pop-up window, as shown in the figure below:
+
+![](/docs/images/bean-datasource.png)
+
+After saving it, the specific data set can be added under the data source. Right click under the data source, choose “add the data set” in the pop-up menu and define the name of the data set, the corresponding method name and the type of the return object, as shown in the figure below:
+
+![](/docs/images/method-dialog.png)
+
+In the configuration of the Spring bean data set, we can click the “select method” on the right to choose the method for the type corresponding to the current Bean. The requirements on the method are as follows: the method must consist of three parameters, including respctively String, String, Map. For xample, the testBean defined above consists of two legal methods, as shown below:
+
+```
+package com.ureport.test;
+
+import java.util.List;
+import java.util.Map;
 
 
+public class TestBean {
+	public List<Map<String,Object>> loadReportData(String dsName,String datasetName,Map<String,Object> parameters){
+		return null;
+	}
+	public List<User> buildReport(String dsName,String datasetName,Map<String,Object> parameters){
+		return null;
+	}
+}
+```
 
+The method of a legal Bean data set shall consist of three parameters, including String, String, Map, respectively corresponding to the name of the data source, name of the data source and the external parameter Map. The method of Bean can only be chosen upon this structure. Currently, two types of return values of the method of the data set are supported here, the List set of Map&lt;String,Obj ect&gt; type returned in TestBean and the List set of POJO type, like the method below:
 
+```
+public  List<User>  loadData(String  dsName,String  datasetName,Map<String,Object>  parameters){ 
+    return null;
+}
+```
 
+In the above example, the set of User object is returned. The User object here is an ordinary POJO object.
 
+## Built-in data source
 
+This type of data source requires realizing the BuildinDatasource interface and configuring the implementation class of BuildinDatasource interface to Spring. The source code of BuildinDatasource interface is listed below:
 
+```
+package com.bstek.ureport.definition.datasource;
 
+import java.sql.Connection;
 
+/**
+ * @author Jacky.gao
+ * @since 2017年2月9日
+ */
+public interface BuildinDatasource {
+	/**
+	 * @return 返回数据源名称
+	 */
+	String name();
+	/**
+	 * @return 返回当前采用数据源的一个连接
+	 */
+	Connection getConnection();
+}
+```
 
+After configuring the implementation class of BuildinDatasource interface to Spring, it can be automatically detected by UReport2. Then in the report designer, click the "Add Buildin Connection" button  in the tab of data source and choose the defined built-in data source in the pop-up window, as shown in the figure below:
 
+![](/docs/images/buildin-dialog.png)
 
-
-
-![](docs/images/datasource-tools.png)
+The three types of data sources provided by UReport2 feature different characteristics and usages. Users shall make flexible choice among them based on their characteristics.
 
