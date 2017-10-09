@@ -8,5 +8,5 @@ If the project runs based on tomcat, there will be no directory of “ureportfil
 
 Start running the project created, open the report designer, click the save button on the toolbar and select “save”. Then we can see the pop-up window as shown in the figure below:![](docs/images/save-dialog.png)
 
-![](docs/images/save-dialog.png)![](docs/images/save-dialog.png)
+![](docs/images/save-dialog.png)![](docs/images/save-dialog.png)![](docs/images/save-dialog.png)
 
