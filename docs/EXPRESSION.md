@@ -41,13 +41,5 @@ According to the figure, it is same with ordinary ternary expressions that the f
 
 The syntactic structure of if expression in UReport2 is shown in the figure below:
 
-![](/docs/images/ifexpr.png)
-
-
-
-
-
-
-
-
+![](/docs/images/ifexpr.png)According to the figure, if judgement expression consists of the part of if conditional judgement, the judgement with several alternative elseif conditions and finally the part of alternative else conditions. The syntactic structure is similar to java or javascript.
 
