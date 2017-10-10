@@ -108,7 +108,9 @@ Change the parent cell to get the value of a cell：When introducing the report 
 
 UReport2 introduces the concept of cell coordinates in order to realize the more complicated cell reference. The cell coordinates are also calculated relative to the current cell. The principle of giving priority the same row, same column or common parent cell introduced above shall also apply here. A standard form of cell coordinates shall be as follows:
 
-**CellName\[Li:li,Li-1:li-1,…;Ti:ti,Ti-1:ti-1…\] {condition...}**
+**CellName\[Li:li,Li-1:li-1,…;Ti:ti,Ti-1:ti-1…\]   
+{condition...}  
+**
 
 L represents the left parent cell and l is the sequence number after the left parent cell is expanded; if the sequence number is a negative value, it means moving upward. T represents the top parent cell and t is the sequence number after the left parent cell is expanded; if the sequence number is a negative value, it means moving upward relative to the current cell, and if the number is a positive value, it means moving downward. If it only has a left parent cell, directly write the L part; and if it only has a top parent cell, place “;” before it and write the T part. The part of condition is placed in braces, where conditions shall be connected with and/or if more than one condition, to represent condition screening over the cells acquired through coordinates \(if more than one cell are acquired\). Opinions are available for the condition part. See the example as below:
 
@@ -119,7 +121,27 @@ L represents the left parent cell and l is the sequence number after the left pa
 | C2\[A1:2,B2:2\]{C2&gt;1000} | It means to take the second cell after cell A2 is expanded, then take the second cell after cell B2 under the cell taken above is expanded, take all C2 cells under B2, filter the conditions for cell C2 acquired and only take all C2 cells where the value of cell C2 exceeds 1,000. |
 | C2\[A1:2,B2:2\]{C2&gt;1000 and C2&lt;10000} | It means to take the second cell after cell A2 is expanded, then take the second cell after cell B2 under the cell taken above is expanded, take all C2 cells under B2, filter the conditions for cell C2 acquired and only take all C2 cells where the value of cell C2 exceeds 1,000 but is smaller than 10,000. |
 
+Let’s look at a concrete example. The report template is shown below:
 
+![](/docs/images/s4.png)
 
+In the above report template, we enter C1\[A1:2,B1:1\] in the expression of cell B2, which means to take the value of the corresponding cell C1 in the first cell after expansion of B1 which is in the second cell after cell A1 is expanded, so the result is shown in the following figure:
 
+![](/docs/images/s4-runtime.png)
+
+Of course, we can prepare a crosstab and locate a certain cell by adding the coordinates of its left and top parent cell. It will not be further demonstrated here. In practical applications, cell coordinates can be used in statistical statements on year-on-year or month-on-month basis. The sequence number of cell coordinates may be negative to suggest moving the current cell, in order to calculate ratios here.
+
+# Refer to all cells
+
+If we need to refer to all cells, we only need to add ”\[\]“ after the name of the cell. In case of A1\\[\], it means to refer to all A1 cells no matter where the referred cell is located. Conditions shall be used when referring to all cells, thus to realize conditional restriction on referred cells. For example, **A1\[\]{A1&gt;1000 and A1&lt;10000} **means to refer to all A1 cells, but the value of A1 cells referred to shall be greater than 1,000 and less than 10,000.
+
+# Month-on-month basis
+
+Report template is shown below:
+
+![](/docs/images/s5.png)
+
+In the above report template, the expression in cell D2 is C2 - C2\\[A2:-1\], which means to firstly take the value of cell C2 in cell D2, because cell C2 is located in the same row with D2 and is the only cell that can be directly acquired. The next C2 adopts the coordinates A2:-1, indicating to take the cell C2 corresponding to the cell A2 that is one cell top upon the cell A2 relative to the current cell \(the negative value suggests moving upward\). The result is shown in the following figure:
+
+![](/docs/images/s5-runtime.png)
 
