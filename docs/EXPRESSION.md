@@ -37,5 +37,17 @@ According to the figure, it is same with ordinary ternary expressions that the f
 | A1&gt;1000 ? “normal value" : “low value" | For expression calculation, obtain the value of cell A1 first and judge whether the value is bigger than 1,000. If yes, return to the string of “normal value”, otherwise return to the string of “low value”. |
 | A1&gt;1000 and A1&lt;20000 ? “normal value" : “corrected value："+\(A1+100\) | For the condition part, judge whether the value of A1 is greater than 1,000 and lesser than 20,000. If yes, return to the “normal value”, otherwise return to the value of the connection between the string “corrected value” and A1 value adding 100. If A1 is 2,000, then return to the “corrected value：2100” |
 
+# If Expression
+
+The syntactic structure of if expression in UReport2 is shown in the figure below:
+
+![](/docs/images/ifexpr.png)
+
+
+
+
+
+
+
 
 
