@@ -51,6 +51,21 @@ The syntactic structure of if expression in UReport2 is shown in the figure belo
 
 # Case Expression
 
+Case expression is another form of conditional judgement provided by UReport2. It is similar to if judgement, but is simpler. Its syntactic structure is shown in the figure below:
+
+![](/docs/images/caseexpr.png)
+
+The case judgement should be put in case\{...}, followed by several conditions and the return value.
+
+| Examples of case expression | Note |
+| :--- | :--- |
+| case{A1==100 return "normal ", A1&gt;100 and A1&lt;1000 return "normal value", A1&gt;100 and A1&lt;1000 return 'high'} | The two conditions have different values returned |
+| case{A1==100 return "normal ", A1&gt;100 and A1&lt;1000 return "normal value", A1&gt;100 and A1&lt;1000  ‘high'} | There are also several options of the keyword of return in the case expression. |
+
+
+
+
+
 
 
 
