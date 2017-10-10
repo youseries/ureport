@@ -55,20 +55,54 @@ Case expression is another form of conditional judgement provided by UReport2. I
 
 ![](/docs/images/caseexpr.png)
 
-The case judgement should be put in case\{...}, followed by several conditions and the return value.
+The case judgement should be put in case{...}, followed by several conditions and the return value.
 
 | Examples of case expression | Note |
 | :--- | :--- |
 | case{A1==100 return "normal ", A1&gt;100 and A1&lt;1000 return "normal value", A1&gt;100 and A1&lt;1000 return 'high'} | The two conditions have different values returned |
 | case{A1==100 return "normal ", A1&gt;100 and A1&lt;1000 return "normal value", A1&gt;100 and A1&lt;1000  ‘high'} | There are also several options of the keyword of return in the case expression. |
 
+# Cell reference
 
+Currently, most calculations in reports are made against cells or are relevant to cells. Since cells in reports are mostly bound to data and data are often multiple, one cell may have multiple values after calculation, making cell reference more complicated. In UReport2, the target cell referred to is calculated relative to the current cell. The name of the cell can be directly written in the expression for cell reference. For example, if referring to cell A1, directly write A1 in the expression. See the example below:
 
+![](/docs/images/s1.png)
 
+We enter the expression A1 in the cell D1 in the above figure means flling in the cell D1 with the value of cell A1 relative to the current cell D1. Then, the result will be:
 
+![](/docs/images/s1-runtime.png)
 
+Since D1 is the sub-cell to A1, the data that cell A1 is bound to featues the sectional structure. Based on the location of the current cell D1, the result shown in the figure above is reached. If entering B1 in cell D1, the result will be:
 
+![](/docs/images/s1-runtime1.png)
 
+Similarly, if entering expression C1 in D1, it will fill in each D1 cell with the value of C1 cell that is located in the same row of D1 cell. The result is not given here.
+
+According to the above example, if referring to the target cell with an expression in a cell in UReport2, the first thing is to judge whether the target cell is located in the same row of column with this cell. If yes, the value of the target cell at the corresponding row or column can be directly applied. If the current cell and the target cell are not in the sam row or column, the situation will be different. Let’s see another example.
+
+![](/docs/images/s2.png)
+
+In the above example, we enter B1 in the expression of cell C2 to indicate the reference to the value of cell B1. The cell B1 and C2 are not in the same row or column, and cell B1 will have several values after being expanded. However, both cell B1 and cell C2 have a common parent cell or indirect parent cell A1 \(the left parent cell to cell C2 is B2, and the left parent cell to cell B2 is A1, so A1 is the indirect left parent cell to cell C2\), hence all values of B1 under the common parent cell A1 will be applied. The result is shown in the figure below:
+
+![](/docs/images/s2-runtime.png)
+
+Outputs of several values：If more than one value is acquired in UReport2, these values shall be separated with “,” for outputs, as shown in the figure above.
+
+Principle for acquisition of the target cell ：As indicated in the above example, when acquiring the value of the target cell through the expression in a cell in UReport2, the first thing to consider is whether the target cell is located in the same row or column with the current cell. If yes, apply the value of the target cell located in the same row or column. If no, apply all target cells that have a common parent cell with the current cell. If they have a common top parent cell or common left parent cell, apply the target cell in the intersction between the common top parent cell and common left parent cell; and if they do not have a common parent cell, then all target cells after iteration shall be applied.
+
+If we enter C1 in the above cell in the above example, the result will be different. Since C1 is the top parent cell to C2, we directly use the value of the top parent cell located in the same column. The result is shown in the following figure:
+
+![](/docs/images/s2-runtime1.png)
+
+Now, let’s look at an example of report:
+
+![](/docs/images/s3.png)
+
+In the example above, we enter C1 in the expression of cell B2. Since B2 and C2 are not in the same row or column and have no common parent cell, B2 will take all values of cell C1, as shown in the following figure:
+
+![](/docs/images/s3-runtime.png)
+
+Change the parent cell to get the value of a cell：When introducing the report calculation model in the previous video class, we have changed the upper or left parent cell to the current cell several times to realize a common parent cell between the current cell and the target cell. The principle is given here.
 
 
 
