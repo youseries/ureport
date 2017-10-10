@@ -108,8 +108,8 @@ Change the parent cell to get the value of a cell：When introducing the report 
 
 UReport2 introduces the concept of cell coordinates in order to realize the more complicated cell reference. The cell coordinates are also calculated relative to the current cell. The principle of giving priority the same row, same column or common parent cell introduced above shall also apply here. A standard form of cell coordinates shall be as follows:
 
-**CellName\[Li:li,Li-1:li-1,…;Ti:ti,Ti-1:ti-1…\]   
-{condition...}  
+**CellName\[Li:li,Li-1:li-1,…;Ti:ti,Ti-1:ti-1…\]  
+{condition...}    
 **
 
 L represents the left parent cell and l is the sequence number after the left parent cell is expanded; if the sequence number is a negative value, it means moving upward. T represents the top parent cell and t is the sequence number after the left parent cell is expanded; if the sequence number is a negative value, it means moving upward relative to the current cell, and if the number is a positive value, it means moving downward. If it only has a left parent cell, directly write the L part; and if it only has a top parent cell, place “;” before it and write the T part. The part of condition is placed in braces, where conditions shall be connected with and/or if more than one condition, to represent condition screening over the cells acquired through coordinates \(if more than one cell are acquired\). Opinions are available for the condition part. See the example as below:
@@ -144,4 +144,38 @@ Report template is shown below:
 In the above report template, the expression in cell D2 is C2 - C2\\[A2:-1\], which means to firstly take the value of cell C2 in cell D2, because cell C2 is located in the same row with D2 and is the only cell that can be directly acquired. The next C2 adopts the coordinates A2:-1, indicating to take the cell C2 corresponding to the cell A2 that is one cell top upon the cell A2 relative to the current cell \(the negative value suggests moving upward\). The result is shown in the following figure:
 
 ![](/docs/images/s5-runtime.png)
+
+In this result, the month-on-month value in the first row is 0, because the previous row does not exist as cell D2 is located in the first row. In this case, UReport2 takes the value of the first C2 cell by default. The difference beteen the two values is 0.
+
+# Year-on-year basis
+
+Report template is shown below:
+
+![](/docs/images/s6.png)
+
+In the above template, cell D2 firstly acquires the value of cell C2 at the same row, then make use of the cell coordinates to take the record of the cell A2 top upon the cell A2 that is in the same row with the current cell D2 \(-1 indicates the coordinates moving upward\) and then acquire the cell C2 corresponding to the A2. Since C2 has several values, here the condition B2==$B2 is added. The first B2 here represents the value of B2 in the row corresponding to the current cell, while $B2 indicates the value of cell B2 corresponding to cell C2 after the coordinates are fixed. The condition requires the two values equal to each other actually requires the same month, thus to realize our goal of year-on-year basis. The result is shown below:
+
+![](/docs/images/s6-runtime.png)
+
+For $B2 in UReport2, adding $ before the name of the cell means to take the value of the cell relative to the target cell, which is mostly used in conditions. For example, in the C2\[A2:-1\]{B2==$B2} above, $B2 represents the value of cell B2 corresponding to cell C2 acquried.
+
+In the above instance, the year-on-year values are all 0 in the first group below 2,000, because the coordinates A2:-1 do not exist in the group and cannot be moved upward. Therefore, the system takes the current record by default, so the calculation results all turn out to be 0. If we hope the result shows no 0, we can add an if conditional judgement expression. If the current cell is located in the first group, enter the blank string, or the value upon practical calculation. The revised report template is listed below:
+
+![](/docs/images/s7.png)
+
+The expression content corresponding to D2 cell is shown in the follwoing figure:
+
+![](/docs/images/s7-expr.png)
+
+The run effect is shown in the following figure:
+
+![](/docs/images/s7-runtime.png)
+
+In the above examples, we uses "if judgment expression". Certainly, we can also adopt the "ternary expression" for judgment or the "case" for judgment. In the "if judgment", we firstly judge whether &A2==1 is established. In the formula, A2 represents the sequence relative to current expanded cell A2. In UReport2, we may mark the sequence of an expanded cell in a way of "&cell name". It should be noted that, when we mark the sequence of an expanded target cell in a way of "&cell name", the current cell must be the sub cell or indirect sub cell of the target cell; for example, in the above examples, the cell using &A2 is D2, an indirect cell of A2 unit. In this way, we can obtain the sequence value of the expanded A2 unit correctly.
+
+Regarding the use of &sign 	When the "& cell name" is used to mark the sequence of a target cell expanded, in addition to the notice described above, we should also notice that, obtaining sequences will be based on their common parent cell. If they share the same parent cell, sequences are to be arranged according to the quantity of target cells in the parrent cell. This has been embodied in the previous video of introducing the report calculation model when the data in slave table is sequenced  to achieve detailed main and slave reports.
+
+# Accumulated by layer
+
+
 
