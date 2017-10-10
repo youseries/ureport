@@ -104,5 +104,22 @@ In the example above, we enter C1 in the expression of cell B2. Since B2 and C2 
 
 Change the parent cell to get the value of a cell：When introducing the report calculation model in the previous video class, we have changed the upper or left parent cell to the current cell several times to realize a common parent cell between the current cell and the target cell. The principle is given here.
 
+# Cell coordinates
+
+UReport2 introduces the concept of cell coordinates in order to realize the more complicated cell reference. The cell coordinates are also calculated relative to the current cell. The principle of giving priority the same row, same column or common parent cell introduced above shall also apply here. A standard form of cell coordinates shall be as follows:
+
+**CellName\[Li:li,Li-1:li-1,…;Ti:ti,Ti-1:ti-1…\] {condition...}**
+
+L represents the left parent cell and l is the sequence number after the left parent cell is expanded; if the sequence number is a negative value, it means moving upward. T represents the top parent cell and t is the sequence number after the left parent cell is expanded; if the sequence number is a negative value, it means moving upward relative to the current cell, and if the number is a positive value, it means moving downward. If it only has a left parent cell, directly write the L part; and if it only has a top parent cell, place “;” before it and write the T part. The part of condition is placed in braces, where conditions shall be connected with and/or if more than one condition, to represent condition screening over the cells acquired through coordinates \(if more than one cell are acquired\). Opinions are available for the condition part. See the example as below:
+
+| Examples of cell coordinates | Note |
+| :--- | :--- |
+| C1\[A1:2,B1:1\] | When looking for C1, firstly find the second cell after cell A1 is expanded, then find the first cell after the second cell B1 under A1 is expanded, and finally find the cell C1 corresponding to cell B1. |
+| C2\[A1:2,B1:2;C1:3\] | When looking for C2, firstly find the second cell after cell A1 is expanded, then find the second cell after the second cell B2 under A1 is expanded, find the left sub-cell known as cell C2 under the second cell B2 expanded, find the third cell after cell C1 is expanded and finally find the cell C2 under it and take the intersection of cell C2. |
+| C2\[A1:2,B2:2\]{C2&gt;1000} | It means to take the second cell after cell A2 is expanded, then take the second cell after cell B2 under the cell taken above is expanded, take all C2 cells under B2, filter the conditions for cell C2 acquired and only take all C2 cells where the value of cell C2 exceeds 1,000. |
+| C2\[A1:2,B2:2\]{C2&gt;1000 and C2&lt;10000} | It means to take the second cell after cell A2 is expanded, then take the second cell after cell B2 under the cell taken above is expanded, take all C2 cells under B2, filter the conditions for cell C2 acquired and only take all C2 cells where the value of cell C2 exceeds 1,000 but is smaller than 10,000. |
+
+
+
 
 
