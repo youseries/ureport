@@ -22,9 +22,20 @@ The above three basic data types can be used independently or used in combinator
 | / | Calculate the division of two numbers | 6/3 results in 2. If one number will not divide into the other number, 8 decimal places shall be kept |
 | % | Calculate the residual value of two numbers | 5%3 results in 2; and 6%2 results in 0 |
 
+UReport2 also provides several types of conditional judgement operators. The first is the ternary expression.
 
+# Ternary expression
 
+Almost all languages support the ternary expression judgement, which is clear and simple and makes conditional judgements based on the fewest codes. The syntactic structure of the ternary expression in UReport2 is shown in the figure below:
 
+![](/docs/images/ternaryexpr.png)
+
+According to the figure, it is same with ordinary ternary expressions that the first part is about the condition, which may consist of several conditions \(connect them with and or\). The part after “？” is the expression returned after execution when conditions are satisfied. The part after “：” is the expression returned after execution when conditions are not met.
+
+| Examples of ternary expression | Note |
+| :--- | :--- |
+| A1&gt;1000 ? “normal value" : “low value" | For expression calculation, obtain the value of cell A1 first and judge whether the value is bigger than 1,000. If yes, return to the string of “normal value”, otherwise return to the string of “low value”. |
+| A1&gt;1000 and A1&lt;20000 ? “normal value" : “corrected value："+\(A1+100\) | For the condition part, judge whether the value of A1 is greater than 1,000 and lesser than 20,000. If yes, return to the “normal value”, otherwise return to the value of the connection between the string “corrected value” and A1 value adding 100. If A1 is 2,000, then return to the “corrected value：2100” |
 
 
 
