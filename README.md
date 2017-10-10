@@ -76,7 +76,7 @@ By now, we have added UReport2 in a standard Maven project. Run the project, and
 
 * [Reports Storage and Configuration of the Data Source](docs/STORAGE-DATASOURCE.md)
 * [The introduction of the report calculation model](docs/REPORT-MODEL.md)
-* Expression
+* [Expression](docs/EXPRESSION.md)
 * Function
 * Condition attribute
 * Parameter
