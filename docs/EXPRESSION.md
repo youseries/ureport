@@ -49,5 +49,11 @@ The syntactic structure of if expression in UReport2 is shown in the figure belo
 | if\(A1&gt;1000\){return "normal value"}else{“low value";} | Judge whether the value of cell A1 is greater than 1,000. If yes, return to the string of “normal value”, otherwise return to the string of “low value”. It shall be noted that in if expression, several options of the keyword of return are available. Adding ';’at the end of the row also indicates it is elective. This design is provided mainly to match the habits in java and javascript program. |
 | if\(A1&gt;1000 and A1&lt;20000\){ return "normal value:"+A1}else if\(A&gt;20000 and A1&lt;40000\){ return "High value" }else if\(A&gt;20000 and A1&lt;40000\){ return "ultra-high value"}else{ “low value"} | In this case, several combined conditions are added in the part of conditions, and elseif demands multiple judgements. |
 
+# Case Expression
+
+
+
+
+
 
 
