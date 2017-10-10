@@ -85,13 +85,13 @@ export default class DatasourceDialog{
         });
 
         const _this=this;
-        const testButton=$(`<button type="button" class="btn btn-default">测试连接</button>`);
+        const testButton=$(`<button type="button" class="btn btn-default">${window.i18n.dialog.datasource.test}</button>`);
         footer.append(testButton);
         testButton.click(function(){
             const dsName=_this.dsNameEditor.val(),username=_this.usernameEditor.val(),password=_this.passwordEditor.val(),driver=_this.driverEditor.val(),url=_this.urlEditor.val();
             _this.testConnection(dsName,username,password,driver,url);
         });
-        const saveButton=$(`<button type="button" class="btn btn-primary">保存</button>`);
+        const saveButton=$(`<button type="button" class="btn btn-primary">${window.i18n.dialog.datasource.save}</button>`);
         footer.append(saveButton);
         saveButton.click(function(){
             const name=_this.dsNameEditor.val(),username=_this.usernameEditor.val(),password=_this.passwordEditor.val(),driver=_this.driverEditor.val(),url=_this.urlEditor.val();
