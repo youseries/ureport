@@ -79,12 +79,16 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 				pageIndex++;
 				Drawing<?> drawing=sheet.createDrawingPatriarch();
 				List<Row> rows=page.getRows();
-				for(Row r:rows){
+				for(int rowIndex=0;rowIndex<rows.size();rowIndex++){
+					Row r=rows.get(rowIndex);
 					org.apache.poi.ss.usermodel.Row row = sheet.getRow(rowNumber);
 		        	if(row==null){
 		        		row=sheet.createRow(rowNumber);
 		        	}
 		        	Map<Column,com.bstek.ureport.model.Cell> colCell=cellMap.get(r);
+		        	if(colCell==null){
+		        		continue;
+		        	}
 		        	for(int i=0;i<columnSize;i++){
 		        		Column col=columns.get(i);
 		        		int w=col.getWidth();
@@ -163,7 +167,7 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			    				
 			    				int leftMargin=0,topMargin=0;
 			    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
-			    				int wholeHeight=getWholeHeight(rows, rowNumber, cellInfo.getRowSpan());
+			    				int wholeHeight=getWholeHeight(rows, rowIndex, cellInfo.getRowSpan());
 			    				HorizontalAlignment align=style.getAlignmentEnum();
 			    				if(align.equals(HorizontalAlignment.CENTER)){
 			    					leftMargin=(wholeWidth-width)/2;
@@ -208,7 +212,7 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			        				
 				    				int leftMargin=0,topMargin=0;
 				    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
-				    				int wholeHeight=getWholeHeight(rows, rowNumber, cellInfo.getRowSpan());
+				    				int wholeHeight=getWholeHeight(rows, rowIndex, cellInfo.getRowSpan());
 				    				HorizontalAlignment align=style.getAlignmentEnum();
 				    				if(align.equals(HorizontalAlignment.CENTER)){
 				    					leftMargin=(wholeWidth-width)/2;
