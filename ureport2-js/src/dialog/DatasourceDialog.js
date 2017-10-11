@@ -45,7 +45,7 @@ export default class DatasourceDialog{
 
         const passwordRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.datasource.password}</div></div>`);
         const passwordGroup=$(`<div class="col-md-10" style="padding: 0 10px 0 0px"></div>`);
-        this.passwordEditor=$(`<input type="text" class="form-control" style="font-size: 13px">`);
+        this.passwordEditor=$(`<input type="password" class="form-control" style="font-size: 13px">`);
         passwordGroup.append(this.passwordEditor);
         passwordRow.append(passwordGroup);
         body.append(passwordRow);
