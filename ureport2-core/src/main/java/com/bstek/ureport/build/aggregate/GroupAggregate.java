@@ -55,10 +55,14 @@ public class GroupAggregate extends Aggregate {
 				return list;
 			}
 			Object data=Utils.getProperty(o, property);
-			data=mappingData(mappingMap,data);
+			Object mappingData=mappingData(mappingMap,data);
 			List<Object> rowList=new ArrayList<Object>();
 			rowList.add(o);
-			list.add(new BindData(data,rowList));
+			if(mappingData==null){
+				list.add(new BindData(data,rowList));				
+			}else{
+				list.add(new BindData(data,mappingData,rowList));								
+			}
 			return list;
 		}
 		Map<Object,List<Object>> map=new HashMap<Object,List<Object>>();
@@ -68,14 +72,18 @@ public class GroupAggregate extends Aggregate {
 				continue;
 			}
 			Object data=Utils.getProperty(o, property);
-			data=mappingData(mappingMap,data);
+			Object mappingData=mappingData(mappingMap,data);
 			List<Object> rowList=null;
 			if(map.containsKey(data)){
 				rowList=map.get(data);
 			}else{
 				rowList=new ArrayList<Object>();
 				map.put(data, rowList);
-				list.add(new BindData(data,rowList));
+				if(mappingData==null){
+					list.add(new BindData(data,rowList));				
+				}else{
+					list.add(new BindData(data,mappingData,rowList));								
+				}
 			}
 			rowList.add(o);				
 		}

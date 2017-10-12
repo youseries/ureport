@@ -63,6 +63,7 @@ public class RightExpandBuilder extends ExpandBuilder {
 			}
 			Cell newCell = cell.newCell();
 			newCell.setData(bindData.getValue());
+			newCell.setFormatData(bindData.getLabel());
 			newCell.setBindData(bindData.getDataList());
 			newCell.setProcessed(true);
 			Cell topParentCell=cell.getTopParentCell();

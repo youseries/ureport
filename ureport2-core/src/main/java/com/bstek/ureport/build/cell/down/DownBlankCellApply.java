@@ -56,6 +56,7 @@ public class DownBlankCellApply {
 		blankCell.setValue(cell.getValue());
 		blankCell.setProcessed(true);
 		blankCell.setData(bindData.getValue());
+		blankCell.setFormatData(bindData.getLabel());
 		blankCell.setBindData(bindData.getDataList());
 		blankCell.setConditionPropertyItems(cell.getConditionPropertyItems());
 		List<ConditionPropertyItem> conditionPropertyItems=blankCell.getConditionPropertyItems();
