@@ -50,6 +50,7 @@ public class DownExpandBuilder extends ExpandBuilder {
 			BindData bindData = dataList.get(i);
 			if (i == 0) {
 				cell.setData(bindData.getValue());
+				cell.setFormatData(bindData.getLabel());
 				cell.setBindData(bindData.getDataList());
 				List<ConditionPropertyItem> conditionPropertyItems=cell.getConditionPropertyItems();
 				if(conditionPropertyItems!=null && conditionPropertyItems.size()>0){
