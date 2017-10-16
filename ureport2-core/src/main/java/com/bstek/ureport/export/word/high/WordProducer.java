@@ -122,9 +122,9 @@ public class WordProducer implements Producer{
 				XWPFTable table = document.createTable(rows.size(), totalColumn);
 				table.getCTTbl().getTblPr().unsetTblBorders();
 				table.getCTTbl().addNewTblPr().addNewTblW().setW(BigInteger.valueOf(DxaUtils.points2dxa(tableWidth)));
-				for(Row row:rows){
+				for(int rowNumber=0;rowNumber<rows.size();rowNumber++){
+					Row row=rows.get(rowNumber);
 					int height=row.getRealHeight();
-					int rowNumber=rows.indexOf(row);
 					XWPFTableRow tableRow=table.getRow(rowNumber);
 					tableRow.setHeight(DxaUtils.points2dxa(height));
 					Map<Column,Cell> colCell=cellMap.get(row);

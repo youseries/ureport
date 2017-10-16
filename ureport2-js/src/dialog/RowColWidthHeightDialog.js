@@ -14,7 +14,7 @@ export default class RowColWidthHeightDialog{
                             &times;
                         </button>
                         <h4 class="modal-title row-col-wh">
-                            行列宽高设置
+                            ${window.i18n.dialog.rowColWidthHeight.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -30,17 +30,17 @@ export default class RowColWidthHeightDialog{
         const group=$(`<div class="form-group"></div>`);
         this.label=$(`<label></label>`);
         group.append(this.label);
-        this.valueEditor=$(`<input type="number" class="form-control" placeholder="请输入一个大于0的数字">`);
+        this.valueEditor=$(`<input type="number" class="form-control" placeholder="${window.i18n.dialog.rowColWidthHeight.tip}">`);
         group.append(this.valueEditor);
         body.append(group);
 
-        const button=$(`<button type="button" class="btn btn-danger">确定</button>`);
+        const button=$(`<button type="button" class="btn btn-danger">${window.i18n.dialog.rowColWidthHeight.ok}</button>`);
         footer.append(button);
         const _this=this;
         button.click(function(){
             const value=parseInt(_this.valueEditor.val());
             if(!value){
-                alert("请输入一个合法的数字!");
+                alert(`${window.i18n.dialog.rowColWidthHeight.numValidate}`);
                 return;
             }
             _this.callback.call(this,value);
@@ -51,11 +51,11 @@ export default class RowColWidthHeightDialog{
         this.dialog.modal('show');
         this.callback=callback;
         if(iscol){
-            this.label.html("设置列宽：");
-            $(".row-col-wh").html("设置列宽");
+            this.label.html(`${window.i18n.dialog.rowColWidthHeight.colWidth}:`);
+            $(".row-col-wh").html(`${window.i18n.dialog.rowColWidthHeight.colWidth}`);
         }else{
-            this.label.html("设置行高：");
-            $(".row-col-wh").html("设置行高");
+            this.label.html(`${window.i18n.dialog.rowColWidthHeight.rowHeight}:`);
+            $(".row-col-wh").html(`${window.i18n.dialog.rowColWidthHeight.rowHeight}`);
         }
         this.valueEditor.val(value);
     }

@@ -21,7 +21,7 @@ export default class SqlDatasetDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            数据集配置
+                            ${window.i18n.dialog.sql.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -45,7 +45,7 @@ export default class SqlDatasetDialog{
     initTables(container){
         const searchGroup=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(searchGroup);
-        const searchEdior=$(`<input class="form-control" placeholder="表名查询" style="display: inline-block;width: 150px;">`);
+        const searchEdior=$(`<input class="form-control" placeholder="${window.i18n.dialog.sql.search}" style="display: inline-block;width: 150px;">`);
         searchGroup.append(searchEdior);
         const searchButton=$(`<button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>`);
         searchGroup.append(searchButton);
@@ -69,19 +69,19 @@ export default class SqlDatasetDialog{
             }
         });
 
-        const table=$(`<table class="table table-bordered" style="font-size: 12px"><thead><tr style="height: 30px;background: #fafafa"><td style="width: 135px;vertical-align: middle">表名</td><td style="width: 35px;vertical-align: middle">类型</td></tr></thead></table>`);
+        const table=$(`<table class="table table-bordered" style="font-size: 12px"><thead><tr style="height: 30px;background: #fafafa"><td style="width: 135px;vertical-align: middle">${window.i18n.dialog.sql.tableName}</td><td style="width: 35px;vertical-align: middle">${window.i18n.dialog.sql.type}</td></tr></thead></table>`);
         this.tableBody=$(`<tbody></tbody>`);
         table.append(this.tableBody);
         container.append(table);
     }
     initSqlEditor(body){
-        const nameRow=$(`<div class="row" style="margin: 10px;">数据集名称：</div>`);
+        const nameRow=$(`<div class="row" style="margin: 10px;">${window.i18n.dialog.sql.datasetName}</div>`);
         this.nameEditor=$(`<input type="text" class="form-control" style="font-size: 13px;width:570px;display: inline-block">`);
         nameRow.append(this.nameEditor);
         body.append(nameRow);
 
-        const sqlRow=$(`<div class="row" style="margin:10px;">SQL(<span style="color: #999999;font-size: 12px;">SQL支持表达式，格式为：\${表达式...}</span>):</div>`);
-        this.sqlEditor=$(`<textarea placeholder="如:select username,dept_id from employee where dept_id=:deptId" class="form-control" rows="8" cols="30"></textarea>`);
+        const sqlRow=$(`<div class="row" style="margin:10px;">SQL(<span style="color: #999999;font-size: 12px;">${window.i18n.dialog.sql.desc}`);
+        this.sqlEditor=$(`<textarea placeholder="select username,dept_id from employee where dept_id=:deptId" class="form-control" rows="8" cols="30" style="width: 660px"></textarea>`);
         sqlRow.append(this.sqlEditor);
         body.append(sqlRow);
     }
@@ -118,14 +118,14 @@ export default class SqlDatasetDialog{
                     }
                 },
                 error:function(){
-                    alert('语法检查操作失败！');
+                    alert(`${window.i18n.dialog.sql.syntaxCheckError}`);
                 }
             });
         };
     }
 
     initParameterEditor(body){
-        const row=$(`<div class="row" style="margin:10px;">查询参数<span class="text-info">(请将上述SQL中用到的查询参数名定义在下面的表格中)</span>:</div>`);
+        const row=$(`<div class="row" style="margin:10px;">${window.i18n.dialog.sql.fiterParam}<span class="text-info">${window.i18n.dialog.sql.paramDesc}</span>:</div>`);
         body.append(row);
         const tableRow=$(`<div class="row" style="margin:10px;"></div>`);
         body.append(tableRow);
@@ -134,7 +134,7 @@ export default class SqlDatasetDialog{
 
     initButton(footer){
         const _this=this;
-        const previewButton=$(`<button class="btn btn-primary">预览数据</button>`);
+        const previewButton=$(`<button class="btn btn-primary">${window.i18n.dialog.sql.preview}</button>`);
         footer.append(previewButton);
         previewButton.click(function(){
             const sql=_this.codeMirror.getValue();
@@ -163,21 +163,21 @@ export default class SqlDatasetDialog{
                     previewDialog.showData(data);
                 },
                 error:function(){
-                    previewDialog.showError("<div style='color: #d30e00;'>数据预览失败，请检查配置是否正确.</div>");
+                    previewDialog.showError(`<div style='color: #d30e00;'>${window.i18n.dialog.sql.previewFail}</div>`);
                 }
             });
         });
 
-        const confirmButton=$(`<button class="btn btn-primary">确定</button>`);
+        const confirmButton=$(`<button class="btn btn-primary">${window.i18n.dialog.sql.ok}</button>`);
         footer.append(confirmButton);
         confirmButton.click(function(){
             const name=_this.nameEditor.val(),sql=_this.codeMirror.getValue();
             if(!name || name===""){
-                alert("数据集名称不能为空!");
+                alert(`${window.i18n.dialog.sql.nameTip}`);
                 return;
             }
             if(!sql || sql===""){
-                alert("数据集SQL不能为空！");
+                alert(`${window.i18n.dialog.sql.sqlTip}`);
                 return;
             }
             let check=false;
@@ -189,7 +189,7 @@ export default class SqlDatasetDialog{
                     let datasets=datasource.datasets;
                     for(let dataset of datasets){
                         if(dataset.name===name){
-                            alert("数据集["+name+"]已存在，请换一个数据集名称.");
+                            alert(`${window.i18n.dialog.sql.ds}[${name}]${window.i18n.dialog.sql.exist}`);
                             return;
                         }
                     }
@@ -222,7 +222,7 @@ export default class SqlDatasetDialog{
                         async:true
                     }
                 });
-                this.codeMirror.setSize('auto','160px');
+                this.codeMirror.setSize('660px','160px');
             }
             this.codeMirror.setValue(this.data.sql);
         },500);
@@ -246,7 +246,7 @@ export default class SqlDatasetDialog{
                 _this.tableBody.empty();
                 for(let table of tables){
                     const tr=$(`<tr style="height: 30px"></tr>`);
-                    const nameTD=$(`<td style="vertical-align: middle"><a href="###" title="双击表名添加查询">${table.name}</a></td>`);
+                    const nameTD=$(`<td style="vertical-align: middle"><a href="###" title="${window.i18n.dialog.sql.addSql}">${table.name}</a></td>`);
                     tr.append(nameTD);
                     nameTD.dblclick(function(){
                         const sql="select * from "+table.name+"";
@@ -256,15 +256,15 @@ export default class SqlDatasetDialog{
                     tr.append(typeTD);
                     const type=table.type;
                     if(type==="TABLE"){
-                        typeTD.append('<span style="color: #49a700">表</span>')
+                        typeTD.append(`<span style="color: #49a700">${window.i18n.dialog.sql.table}</span>`)
                     }else{
-                        typeTD.append('<span style="color: #8B2252">视图</span>')
+                        typeTD.append(`<span style="color: #8B2252">${window.i18n.dialog.sql.view}</span>`)
                     }
                     _this.tableBody.append(tr);
                 }
             },
             error:function(){
-                alert("加载表失败!");
+                alert(`${window.i18n.dialog.sql.loadFail}`);
             }
         })
     }

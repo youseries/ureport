@@ -13,7 +13,7 @@ export default class MethodSelectDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            SpringBean数据集配置
+                            ${window.i18n.dialog.methodSelect.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -26,7 +26,7 @@ export default class MethodSelectDialog{
     }
     initBody(body,footer){
         const table=$(`<table class="table table-bordered">
-            <thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">方法名</td><td style="vertical-align: middle">选择</td></tr></thead>
+            <thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">${window.i18n.dialog.methodSelect.methodName}</td><td style="vertical-align: middle">${window.i18n.dialog.methodSelect.select}</td></tr></thead>
         </table>`);
         this.tbody=$(`<tbody></tbody>`);
         table.append(this.tbody);
@@ -54,7 +54,7 @@ export default class MethodSelectDialog{
                 }
             },
             error:function(){
-                alert("加载Bean["+beanId+"]的可用方法失败！");
+                alert(`${window.i18n.dialog.methodSelect.load}["+beanId+"]${window.i18n.dialog.methodSelect.fail}`);
             }
         });
     }

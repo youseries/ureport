@@ -29,22 +29,22 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
             $td.html(tip);
         }
     }else if(valueType==='image'){
-        tip='图片：'+cellValue.value;
+        tip=`${window.i18n.table.render.image}`+cellValue.value;
         const imagePath=window._server+'/res/ureport-asserts/icons/image.svg';
         const image=$(`<img src="${imagePath}" width="20px">`);
         $td.empty();
         $td.append(image);
     }else if(valueType==='slash'){
-        tip='斜线表头';
+        tip=`${window.i18n.table.render.slash}`;
         if(!cellDef.crossTabWidget){
             cellDef.crossTabWidget=new CrossTabWidget(this.context,row,col,cellDef);
         }
-        cellDef.crossTabWidget.doDraw(cellDef);
+        cellDef.crossTabWidget.doDraw(cellDef,row,col);
     }else if(valueType==='zxing'){
         let imagePath=window._server+'/res/ureport-asserts/icons/qrcode.svg';
-        tip='二维码';
+        tip=`${window.i18n.table.render.qrcode}`;
         if(cellValue.category==='barcode'){
-            tip='条码';
+            tip=`${window.i18n.table.render.barcode}`;
             imagePath=window._server+'/res/ureport-asserts/icons/barcode.svg';
         }
         const width=cellValue.width,height=cellValue.height;
@@ -52,11 +52,11 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         $td.empty();
         $td.append(image);
     }else if(valueType==='chart'){
-        tip='图表';
+        tip=`${window.i18n.table.render.chart}`;
         if(!cellDef.chartWidget){
             cellDef.chartWidget=new ChartWidget($td,cellDef);
         }
-        cellDef.chartWidget.renderChart($td);
+        cellDef.chartWidget.renderChart($td,this.context,row,col);
     }else{
         tip=cellValue.value || "";
         if($td.html()===''){

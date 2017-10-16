@@ -10,7 +10,7 @@ export default class MergeTool extends Tool{
         const table=this.context.hot;
         const selected=table.getSelected();
         if(!selected){
-            alert("请选择目标单元格.");
+            alert(`${window.i18n.selectTargetCellFirst}`);
             return;
         }
         let mergeCells=table.getSettings().mergeCells || [];
@@ -43,7 +43,7 @@ export default class MergeTool extends Tool{
         setDirty();
     }
     getTitle(){
-        return '合并/拆分单元格';
+        return `${window.i18n.mergeSplitCells}`;
     }
     getIcon(){
         return `<i class="ureport ureport-merge" style="color: #0e90d2;"></i>`;
@@ -114,7 +114,7 @@ function doMergeCells(startRow,startCol,endRow,endCol,table,context){
                 }
             }
         }else{
-            alert("请选择多个单元格后再进行此操作！");
+            alert(`${window.i18n.selectMultiTargetCellFirst}`);
         }
     }
     table.updateSettings({mergeCells});

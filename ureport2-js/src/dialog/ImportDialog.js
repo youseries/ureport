@@ -14,7 +14,7 @@ export default class ImportDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            导入Excel模版文件
+                            ${window.i18n.dialog.import.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -30,13 +30,13 @@ export default class ImportDialog{
         const url=window._server+"/import";
         const form=$(`<form enctype="multipart/form-data" action="${url}" method="post" target="_import_excel_frame"></form>`);
         body.append(form);
-        form.append(`<div style="margin-bottom: 10px;line-height: 2;color: #929191;">此操作将导入Excel的第一个Sheet页内容，如果选择是的xlsx格式的Excel文件，导入后发现背景色未正常解析，可将该文件另存为xls格式，再次上传这个xls格式Excel文件即可。</div>`);
-        const fileGroup=$(`<div class="form-group"><label>请选择要导入的Excel文件：</label></div>`);
+        form.append(`<div style="margin-bottom: 10px;line-height: 2;color: #929191;">${window.i18n.dialog.import.desc}</div>`);
+        const fileGroup=$(`<div class="form-group"><label>${window.i18n.dialog.import.file}</label></div>`);
         form.append(fileGroup);
         const file=$(`<input name="_excel_file" class="form-control" type="file">`);
         fileGroup.append(file);
         const buttonGroup=$(`<div class="form-group"></div>`);
-        const submit=$(`<button type="submit" class="btn btn-primary">上传文件</button>`);
+        const submit=$(`<button type="submit" class="btn btn-primary">${window.i18n.dialog.import.upload}</button>`);
         buttonGroup.append(submit);
         form.append(buttonGroup);
         const iframe=$(`<iframe height="0" width="0" src="" name="_import_excel_frame"></iframe>`);
@@ -54,9 +54,9 @@ export default class ImportDialog{
             }else{
                 const errorInfo=json.errorInfo;
                 if(errorInfo){
-                    alert("导入失败："+errorInfo);
+                    alert(`${window.i18n.dialog.import.fail}：`+errorInfo);
                 }else{
-                    alert("导入失败！");
+                    alert(`${window.i18n.dialog.import.fail}`);
                 }
             }
         });

@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.bstek.ureport.definition.Band;
 import com.bstek.ureport.definition.Paper;
-import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.model.Report;
 import com.bstek.ureport.model.Row;
 
@@ -77,9 +76,6 @@ public class FixRowsPagination extends BasePagination implements Pagination {
 					}
 					pageRepeatFooters.remove(index);
 					pageRepeatFooters.add(index,row);
-				}
-				if(index==-1){
-					throw new ReportComputeException("Invalid row["+band+"] with key "+rowKey+".");
 				}
 				continue;
 			}

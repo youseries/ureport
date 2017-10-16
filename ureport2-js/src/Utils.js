@@ -5,7 +5,7 @@ import UndoManager from 'undo-manager';
 import {alert} from './MsgBox.js';
 
 export function showLoading(){
-    const url=window._server+'/res/ureport-asserts/icons/loading.svg';
+    const url=window._server+'/res/ureport-asserts/icons/loading.gif';
     const h=$(window).height()/2,w=$(window).width()/2;
     const cover=$(`<div class="ureport-loading-cover" style="position: absolute;left: 0px;top: 0px;width:${w*2}px;height:${h*2}px;z-index: 1199;background:rgba(222,222,222,.5)"></div>`);
     $(document.body).append(cover);
@@ -164,7 +164,12 @@ export function tableToXml(context){
                     alert(msg);
                     throw msg;
                 }
-                cellXml+=`<dataset-value dataset-name="${encode(value.datasetName)}" aggregate="${value.aggregate}" property="${value.property}" order="${value.order}">`;
+                const mappingType=value.mappingType || 'simple';
+                cellXml+=`<dataset-value dataset-name="${encode(value.datasetName)}" aggregate="${value.aggregate}" property="${value.property}" order="${value.order}" mapping-type="${mappingType}"`;
+                if(mappingType==='dataset'){
+                    cellXml+=` mapping-dataset="${value.mappingDataset}" mapping-key-property="${value.mappingKeyProperty}" mapping-value-property="${value.mappingValueProperty}"`;
+                }
+                cellXml+='>';
                 cellXml+=buildConditions(value.conditions);
                 if(value.aggregate==='customgroup'){
                     const groupItems=value.groupItems;
@@ -183,10 +188,12 @@ export function tableToXml(context){
                         cellXml+='</group-item>';
                     }
                 }
-                const mappingItems=value.mappingItems;
-                if(mappingItems && mappingItems.length>0){
-                    for(let mappingItem of mappingItems){
-                        cellXml+=`<mapping-item value="${encode(mappingItem.value)}" label="${encode(mappingItem.label)}"/>`;
+                if(mappingType==='simple'){
+                    const mappingItems=value.mappingItems;
+                    if(mappingItems && mappingItems.length>0){
+                        for(let mappingItem of mappingItems){
+                            cellXml+=`<mapping-item value="${encode(mappingItem.value)}" label="${encode(mappingItem.label)}"/>`;
+                        }
                     }
                 }
                 cellXml+=`</dataset-value>`;

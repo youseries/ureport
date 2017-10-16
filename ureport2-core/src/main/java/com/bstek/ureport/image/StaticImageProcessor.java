@@ -15,8 +15,12 @@
  ******************************************************************************/
 package com.bstek.ureport.image;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.logging.Logger;
+
+import org.springframework.context.ApplicationContext;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.exception.ReportComputeException;
@@ -27,6 +31,7 @@ import com.bstek.ureport.provider.image.ImageProvider;
  * @since 2017年3月20日
  */
 public class StaticImageProcessor implements ImageProcessor<String> {
+	private Logger log=Logger.getGlobal();
 	@Override
 	public InputStream getImage(String path) {
 		Collection<ImageProvider> imageProviders=Utils.getImageProviders();
@@ -40,7 +45,18 @@ public class StaticImageProcessor implements ImageProcessor<String> {
 		if(targetImageProvider==null){
 			throw new ReportComputeException("Unsupport image path :"+path);
 		}
-		InputStream inputStream=targetImageProvider.getImage(path);
-		return inputStream;
+		try{
+			InputStream inputStream=targetImageProvider.getImage(path);
+			return inputStream;			
+		}catch(Exception ex){
+			ApplicationContext applicationContext=Utils.getApplicationContext();
+			log.warning("Image ["+path+"] not exist,use default picture.");
+			String imageNotExistPath="classpath:com/bstek/ureport/image/image-not-exist.jpg";
+			try {
+				return applicationContext.getResource(imageNotExistPath).getInputStream();
+			} catch (IOException e1) {
+				throw new ReportComputeException(e1);
+			}
+		}
 	}
 }

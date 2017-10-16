@@ -14,7 +14,7 @@ export default class ParameterDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            SQL参数
+                            ${window.i18n.dialog.sqlParam.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -26,14 +26,14 @@ export default class ParameterDialog{
         this.init(body,footer);
     }
     init(body,footer){
-        const nameRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">参数名称：</div></div>`);
+        const nameRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.sqlParam.name}</div></div>`);
         const nameGroup=$(`<div class="col-md-9" style="padding: 0 10px 0 0px"></div>`);
         this.nameEditor=$(`<input type="text" class="form-control">`);
         nameGroup.append(this.nameEditor);
         nameRow.append(nameGroup);
         body.append(nameRow);
 
-        const typeRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">数据类型：</div></div>`);
+        const typeRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.sqlParam.datatype}</div></div>`);
         const typeGroup=$(`<div class="col-md-9" style="padding: 0 10px 0 0px"></div>`);
         this.typeEditor=$(`<select class="form-control">
             <option>String</option>
@@ -47,30 +47,30 @@ export default class ParameterDialog{
         typeRow.append(typeGroup);
         body.append(typeRow);
 
-        const defaultValueRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">默认值：</div></div>`);
+        const defaultValueRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.sqlParam.defaultValue}</div></div>`);
         const defaultValueGroup=$(`<div class="col-md-9" style="padding: 0 10px 0 0px"></div>`);
-        this.defaultValueEditor=$(`<input type="text" placeholder="Date类型默认值为一个格式为yyyy-MM-dd HH:mm:ss的日期值" class="form-control">`);
+        this.defaultValueEditor=$(`<input type="text" placeholder="${window.i18n.dialog.sqlParam.tip}" class="form-control">`);
         defaultValueGroup.append(this.defaultValueEditor);
         defaultValueRow.append(defaultValueGroup);
         body.append(defaultValueRow);
 
         const _this=this;
-        const addButton=$(`<button class="btn btn-primary">确定</button>`);
+        const addButton=$(`<button class="btn btn-primary">${window.i18n.dialog.sqlParam.ok}</button>`);
         footer.append(addButton);
         addButton.click(function(){
             const name=_this.nameEditor.val(),type=_this.typeEditor.val(),defaultValue=_this.defaultValueEditor.val();
             if(name===''){
-                alert("请输入参数名！");
+                alert(`${window.i18n.dialog.sqlParam.nameTip}`);
                 return;
             }
             if(type===''){
-                alert("请选择数据类型！");
+                alert(`${window.i18n.dialog.sqlParam.datatypeTip}`);
                 return;
             }
             if(!_this.editData || name!==_this.editData.name){
                 for(let param of _this.data){
                     if(param.name===name){
-                        alert("参数["+name+"]已存在!");
+                        alert(`${window.i18n.dialog.sqlParam.param}[${name}]${window.i18n.dialog.sqlParam.exist}`);
                         return;
                     }
                 }

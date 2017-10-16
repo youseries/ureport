@@ -20,7 +20,7 @@ export default class Tool{
     checkSelection(){
         const selected=this.context.hot.getSelected();
         if(!selected || selected.length===0){
-            alert("请先选择单元格!");
+            alert(`${window.i18n.selectTargetCellFirst}`);
             return false;
         }else{
             return true;

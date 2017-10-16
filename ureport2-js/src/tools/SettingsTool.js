@@ -14,7 +14,7 @@ export default class SettingsTool extends Tool{
         this.settingsDialog.show(this.context);
     }
     getTitle(){
-        return '设置';
+        return `${window.i18n.setting}`;
     }
     getIcon(){
         return `<i class="ureport ureport-setting" style="color: #0e90d2;"></i>`;

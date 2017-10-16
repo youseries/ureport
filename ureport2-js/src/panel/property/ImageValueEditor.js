@@ -19,10 +19,10 @@ export default class ImageValueEditor extends BaseValueEditor{
         this._initPathEditor();
     }
     _initTypeSelect(){
-        const imageSourceGroup=$(`<div class="form-group"><label>图片来源：</label></div>`);
+        const imageSourceGroup=$(`<div class="form-group"><label>${window.i18n.property.image.source}</label></div>`);
         this.sourceSelect=$(`<select class="form-control" style="display: inline-block;width:295px">
-            <option value="text">路径</option>
-            <option value="expression">表达式</option>
+            <option value="text">${window.i18n.property.image.path}</option>
+            <option value="expression">${window.i18n.property.image.expr}</option>
         </select>`);
         imageSourceGroup.append(this.sourceSelect);
         const _this=this;
@@ -45,8 +45,8 @@ export default class ImageValueEditor extends BaseValueEditor{
 
     _initPathEditor(){
         const _this=this;
-        this.pathEditorGroup=$(`<div><label>路径：</label></div>`);
-        this.pathEditor=$(`<input class="form-control" title="默认支持以classpath:开头位于classpath下的图片文件，或以/开头位于WEB应用根下或某目录下的图片文件" placeholder="默认支持以classpath:开头或以/开头位于WEB应用根下的图片文件" style="display: inline-block;width: 325px;padding: 5px">`);
+        this.pathEditorGroup=$(`<div><label>${window.i18n.property.image.p}</label></div>`);
+        this.pathEditor=$(`<input class="form-control" title="${window.i18n.property.image.tip}" placeholder="${window.i18n.property.image.tip}" style="display: inline-block;width: 325px;padding: 5px">`);
         this.pathEditorGroup.append(this.pathEditor);
         this.pathEditor.change(function(){
             _this.cellDef.value.value=$(this).val();
@@ -57,7 +57,7 @@ export default class ImageValueEditor extends BaseValueEditor{
     }
 
     _initExpressionEditor(){
-        this.expressionEditorGroup=$(`<div><label>表达式</label></div>`);
+        this.expressionEditorGroup=$(`<div><label>${window.i18n.property.image.expr}</label></div>`);
         this.container.append(this.expressionEditorGroup);
         const editorContainer=$(`<div style="border: solid 1px #eeeeee;"></div>`);
         const codeEditor=$(`<textarea></textarea>`);
@@ -89,18 +89,18 @@ export default class ImageValueEditor extends BaseValueEditor{
     }
     _buildExpand(){
         const _this=this;
-        this.expandGroup=$(`<div class="form-group" style="margin-bottom: 10px;"><label>内容展开方向：</label></div>`);
-        this.downExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Down">向下</label>`);
+        this.expandGroup=$(`<div class="form-group" style="margin-bottom: 10px;"><label>${window.i18n.property.image.expand}</label></div>`);
+        this.downExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Down">${window.i18n.property.image.down}</label>`);
         this.expandGroup.append(this.downExpandRadio);
         this.downExpandRadio.children('input').click(function(){
             _this._setExpand('Down');
         });
-        this.rightExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Right">向右</label>`);
+        this.rightExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Right">${window.i18n.property.image.right}</label>`);
         this.expandGroup.append(this.rightExpandRadio);
         this.rightExpandRadio.children('input').click(function(){
             _this._setExpand('Right');
         });
-        this.noneExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="None">不展开</label>`);
+        this.noneExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="None">${window.i18n.property.image.noneExpand}</label>`);
         this.expandGroup.append(this.noneExpandRadio);
         this.noneExpandRadio.children('input').click(function(){
             _this._setExpand('None');

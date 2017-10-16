@@ -19,7 +19,7 @@ export default class ExpressionValueEditor extends BaseValueEditor{
         this._initCodeEditor();
     }
     _initCodeEditor(){
-        this.container.append(`<label>表达式</label>`);
+        this.container.append(`<label>${window.i18n.property.expr.expr}</label>`);
         const editorContainer=$(`<div style="border: solid 1px #eeeeee;"></div>`);
         this.container.append(editorContainer);
         const codeEditor=$(`<textarea></textarea>`);
@@ -47,18 +47,18 @@ export default class ExpressionValueEditor extends BaseValueEditor{
     }
     _buildExpand(){
         const _this=this;
-        const expandGroup=$(`<div class="form-group" style="margin-bottom: 10px;"><label>数据展开方向：</label></div>`);
-        this.downExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Down">向下</label>`);
+        const expandGroup=$(`<div class="form-group" style="margin-bottom: 10px;"><label>${window.i18n.property.expr.expand}</label></div>`);
+        this.downExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Down">${window.i18n.property.expr.down}</label>`);
         expandGroup.append(this.downExpandRadio);
         this.downExpandRadio.children('input').click(function(){
             _this._setExpand('Down');
         });
-        this.rightExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Right">向右</label>`);
+        this.rightExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Right">${window.i18n.property.expr.right}</label>`);
         expandGroup.append(this.rightExpandRadio);
         this.rightExpandRadio.children('input').click(function(){
             _this._setExpand('Right');
         });
-        this.noneExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="None">不展开</label>`);
+        this.noneExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="None">${window.i18n.property.expr.noneExpand}</label>`);
         expandGroup.append(this.noneExpandRadio);
         this.noneExpandRadio.children('input').click(function(){
             _this._setExpand('None');

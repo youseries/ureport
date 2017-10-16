@@ -21,13 +21,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 
+import com.bstek.ureport.Utils;
 import com.bstek.ureport.chart.ChartData;
+import com.bstek.ureport.definition.mapping.MappingType;
 import com.bstek.ureport.definition.value.SimpleValue;
 import com.bstek.ureport.definition.value.Value;
 import com.bstek.ureport.exception.CellDependencyException;
 import com.bstek.ureport.exception.DatasetUndefinitionException;
+import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Column;
 import com.bstek.ureport.model.Report;
@@ -77,6 +81,27 @@ public class Context {
 	public Context(ApplicationContext applicationContext,Map<String,Object> parameters){
 		this.applicationContext=applicationContext;
 		this.parameters=parameters;
+	}
+	
+	public Map<String,String> getMapping(DatasetExpression expr){
+		if(expr.getMappingType().equals(MappingType.simple)){
+			Map<String,String> mapping=expr.getMapping();
+			return mapping;
+		}else if(expr.getMappingType().equals(MappingType.dataset)){
+			if(StringUtils.isNotBlank(expr.getMappingDataset()) && StringUtils.isNotBlank(expr.getMappingKeyProperty()) && StringUtils.isNotBlank(expr.getMappingValueProperty())){
+				Map<String,String> mapping=new HashMap<String,String>();
+				List<?> list=getDatasetData(expr.getMappingDataset());
+				for(Object obj:list){
+					Object key=Utils.getProperty(obj, expr.getMappingKeyProperty());
+					Object value=Utils.getProperty(obj, expr.getMappingValueProperty());
+					if(key!=null && value!=null){
+						mapping.put(key.toString(), value.toString());
+					}
+				}
+				return mapping;
+			}
+		}
+		return null;
 	}
 	
 	public void doHideProcessColumn(Column col) {

@@ -12,6 +12,7 @@ export default class FileInfo{
         if(pos>-1){
             name=name.substring(0,pos);
         }
+        name=decodeURI(decodeURI(name));
         this.fileInfo.html('报表:'+name);
     }
 };

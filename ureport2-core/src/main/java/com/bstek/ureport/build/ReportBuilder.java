@@ -318,9 +318,9 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		pageRepeatHeaders.addAll(headerRows);
 		pageRepeatFooters.addAll(footerRows);
 		if(pagingMode.equals(PagingMode.fitpage)){
-			int height=paper.getHeight()-paper.getBottomMargin()-paper.getTopMargin();
+			int height=paper.getHeight()-paper.getBottomMargin()-paper.getTopMargin()-5;
 			if(paper.getOrientation().equals(Orientation.landscape)){
-				height=paper.getWidth()-paper.getBottomMargin()-paper.getTopMargin();
+				height=paper.getWidth()-paper.getBottomMargin()-paper.getTopMargin()-5;
 			}
 			int repeatHeaderRowHeight=report.getRepeatHeaderRowHeight(),repeatFooterRowHeight=report.getRepeatFooterRowHeight();
 			int titleRowHeight=report.getTitleRowsHeight();
@@ -358,7 +358,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 					} 
 					continue;
 				}
-				rowHeight+=rowRealHeight;
+				rowHeight+=rowRealHeight+1;
 				pageRows.add(row);
 				boolean overflow=false;
 				if((i+1)<rows.size()){
@@ -418,9 +418,6 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 						}
 						pageRepeatFooters.remove(index);
 						pageRepeatFooters.add(index,row);
-					}
-					if(index==-1){
-						throw new ReportComputeException("Invalid row["+band+"] with key "+rowKey+".");
 					}
 					continue;
 				}

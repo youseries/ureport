@@ -47,6 +47,7 @@ public class RightExpandBuilder extends ExpandBuilder {
 			BindData bindData = dataList.get(i);
 			if (i == 0) {
 				cell.setData(bindData.getValue());
+				cell.setFormatData(bindData.getLabel());
 				cell.setBindData(bindData.getDataList());
 				List<ConditionPropertyItem> conditionPropertyItems=cell.getConditionPropertyItems();
 				if(conditionPropertyItems!=null && conditionPropertyItems.size()>0){
@@ -63,6 +64,7 @@ public class RightExpandBuilder extends ExpandBuilder {
 			}
 			Cell newCell = cell.newCell();
 			newCell.setData(bindData.getValue());
+			newCell.setFormatData(bindData.getLabel());
 			newCell.setBindData(bindData.getDataList());
 			newCell.setProcessed(true);
 			Cell topParentCell=cell.getTopParentCell();

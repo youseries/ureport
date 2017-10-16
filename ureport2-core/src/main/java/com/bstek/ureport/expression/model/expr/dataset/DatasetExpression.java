@@ -25,6 +25,8 @@ import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.DatasetUtils;
 import com.bstek.ureport.definition.Order;
+import com.bstek.ureport.definition.mapping.MappingItem;
+import com.bstek.ureport.definition.mapping.MappingType;
 import com.bstek.ureport.definition.value.AggregateType;
 import com.bstek.ureport.definition.value.GroupItem;
 import com.bstek.ureport.expression.model.Condition;
@@ -32,7 +34,6 @@ import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.expr.BaseExpression;
 import com.bstek.ureport.model.Cell;
-import com.bstek.ureport.parser.impl.value.MappingItem;
 
 /**
  * @author Jacky.gao
@@ -47,6 +48,12 @@ public class DatasetExpression extends BaseExpression {
 	 * 当aggregate类型为自定义分组时，采用此属性来存储自定义分组各个项目
 	 */
 	private List<GroupItem> groupItems;
+	
+	private MappingType mappingType=MappingType.simple;
+	
+	private String mappingDataset;
+	private String mappingKeyProperty;
+	private String mappingValueProperty;
 	
 	private List<MappingItem> mappingItems;
 	
@@ -127,16 +134,48 @@ public class DatasetExpression extends BaseExpression {
 	public List<MappingItem> getMappingItems() {
 		return mappingItems;
 	}
-
 	public void setMappingItems(List<MappingItem> mappingItems) {
 		this.mappingItems = mappingItems;
-		if(mappingItems!=null && mappingItems.size()>0){
+		if(mappingItems!=null){
 			mapping=new HashMap<String,String>();
 			for(MappingItem item:mappingItems){
 				mapping.put(item.getValue(),item.getLabel());
-			}
+			}				
 		}
 	}
+	
+	public MappingType getMappingType() {
+		return mappingType;
+	}
+
+	public void setMappingType(MappingType mappingType) {
+		this.mappingType = mappingType;
+	}
+
+	public String getMappingDataset() {
+		return mappingDataset;
+	}
+
+	public void setMappingDataset(String mappingDataset) {
+		this.mappingDataset = mappingDataset;
+	}
+
+	public String getMappingKeyProperty() {
+		return mappingKeyProperty;
+	}
+
+	public void setMappingKeyProperty(String mappingKeyProperty) {
+		this.mappingKeyProperty = mappingKeyProperty;
+	}
+
+	public String getMappingValueProperty() {
+		return mappingValueProperty;
+	}
+
+	public void setMappingValueProperty(String mappingValueProperty) {
+		this.mappingValueProperty = mappingValueProperty;
+	}
+
 	public Map<String, String> getMapping() {
 		return mapping;
 	}

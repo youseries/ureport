@@ -10,14 +10,14 @@ export default class PreviewTool extends Tool{
     }
     buildButton(){
         const group=$(`<div class="btn-group"></div>`);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="预览报表">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.preview.preview}">
             <i class="ureport ureport-preview" style="color: #0e90d2;"></i>
             <span class="caret"></span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu"></ul>`);
         const preview=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-preview" style="color: #0e90d2;"></i> 预览
+                    <i class="ureport ureport-preview" style="color: #0e90d2;"></i> ${window.i18n.tools.preview.view}
                 </a>
             </li>`);
         ul.append(preview);
@@ -27,7 +27,7 @@ export default class PreviewTool extends Tool{
         });
         const pagingPreview=$(`<li>
                 <a href="###">
-                    <i class="glyphicon glyphicon-search" style="color: #0e90d2;"></i> 分页预览
+                    <i class="glyphicon glyphicon-search" style="color: #0e90d2;"></i> ${window.i18n.tools.preview.pagingPreview}
                 </a>
             </li>`);
         ul.append(pagingPreview);
@@ -53,12 +53,12 @@ export default class PreviewTool extends Tool{
                 newWindow.focus();
             },
             error:function(){
-                alert("报表预览操作失败！");
+                alert(`${window.i18n.tools.preview.previewFail}`);
             }
         });
     }
     getTitle(){
-        return '预览报表';
+        return `${window.i18n.tools.preview.preview}`;
     }
     getIcon(){
         return `<i class="ureport ureport-preview" style="color: #0e90d2;"></i>`;

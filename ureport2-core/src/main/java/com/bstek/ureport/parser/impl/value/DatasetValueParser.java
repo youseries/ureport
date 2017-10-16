@@ -22,6 +22,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.Order;
+import com.bstek.ureport.definition.mapping.MappingItem;
+import com.bstek.ureport.definition.mapping.MappingType;
 import com.bstek.ureport.definition.value.AggregateType;
 import com.bstek.ureport.definition.value.DatasetValue;
 import com.bstek.ureport.definition.value.GroupItem;
@@ -47,6 +49,13 @@ public class DatasetValueParser extends ValueParser {
 		if(StringUtils.isNotBlank(order)){
 			value.setOrder(Order.valueOf(order));
 		}
+		String mappingType=element.attributeValue("mapping-type");
+		if(StringUtils.isNotBlank(mappingType)){
+			value.setMappingType(MappingType.valueOf(mappingType));
+		}
+		value.setMappingDataset(element.attributeValue("mapping-dataset"));
+		value.setMappingKeyProperty(element.attributeValue("mapping-key-property"));
+		value.setMappingValueProperty(element.attributeValue("mapping-value-property"));
 		List<GroupItem> groupItems=null;
 		List<MappingItem> mappingItems=null;
 		List<Condition> conditions=new ArrayList<Condition>();

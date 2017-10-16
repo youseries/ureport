@@ -134,7 +134,9 @@ export default class CrossTabWidget{
             type:'slash'
         };
     }
-    doDraw(cellDef){
+    doDraw(cellDef,rowIndex,colIndex){
+        this.rowIndex=rowIndex;
+        this.colIndex=colIndex;
         const slashValue=cellDef.value;
         const cellStyle=cellDef.cellStyle;
         if(!cellStyle.forecolor){

@@ -19,7 +19,7 @@ export default class PropertyConditionDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            条件属性配置
+                            ${window.i18n.dialog.propCondition.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -34,13 +34,13 @@ export default class PropertyConditionDialog{
     initBody(body,footer){
         const _this=this;
         const container=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;width: 160px;display: inline-block;">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">条件项配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.dialog.propCondition.config}</legend></fieldset>`);
         body.append(container);
         const itemGroup=$(`<span></span>`);
         container.append(itemGroup);
         const propertyConditionItemDialog=new PropertyConditionItemDialog();
         const addItemButton=$(`<button type="button" class="btn btn-default">
-        <i class="glyphicon glyphicon-plus-sign" style="color: #49a700;" title="添加新项目"></i></button>`);
+        <i class="glyphicon glyphicon-plus-sign" style="color: #49a700;" title="${window.i18n.dialog.propCondition.addItem}"></i></button>`);
         itemGroup.append(addItemButton);
         addItemButton.click(function(){
             const newItem={name:'',id:uuid.v1()};
@@ -53,12 +53,12 @@ export default class PropertyConditionDialog{
             },'add');
         });
         const editItemButton=$(`<button type="button" class="btn btn-default">
-        <i class="glyphicon glyphicon-edit" style="color: #005fd3;" title="编辑选中项目"></i></button>`);
+        <i class="glyphicon glyphicon-edit" style="color: #005fd3;" title="${window.i18n.dialog.propCondition.editItem}"></i></button>`);
         itemGroup.append(editItemButton);
         editItemButton.click(function(){
             const option=_this.itemSelect.find('option:selected');
             if(option.length===0){
-                alert('请先选中要编辑的项目！');
+                alert(`${window.i18n.dialog.propCondition.editTip}`);
                 return;
             }
             const item=option.data();
@@ -77,16 +77,16 @@ export default class PropertyConditionDialog{
             },'edit');
         });
         const delItemButton=$(`<button type="button" class="btn btn-default">
-        <i class="glyphicon glyphicon-minus-sign" style="color: #d30e00;" title="删除选中项目"></i></button>`);
+        <i class="glyphicon glyphicon-minus-sign" style="color: #d30e00;" title="${window.i18n.dialog.propCondition.delItem}"></i></button>`);
         itemGroup.append(delItemButton);
         delItemButton.click(function(){
             const option=_this.itemSelect.find('option:selected');
             if(option.length===0){
-                alert('请先选中要删除的项目！');
+                alert(`${window.i18n.dialog.propCondition.delTip}`);
                 return;
             }
             const item=option.data();
-            confirm("真的要删除条件项["+item.name+"]?",function(){
+            confirm(`${window.i18n.dialog.propCondition.delConfirm}[${item.name}]?`,function(){
                 let targetItem;
                 for(let target of _this.propertyConditions){
                     if(target.id===item.id){
@@ -105,11 +105,11 @@ export default class PropertyConditionDialog{
         this.itemSelect=$(`<select size="10" class="form-control" style="height: 500px;"></select>`);
         itemGroup.append(this.itemSelect);
         const conditionGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;width: 325px;display: inline-block;height:590px;vertical-align: top;margin-left: 10px">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">条件配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.dialog.propCondition.conditionConfig}</legend></fieldset>`);
         body.append(conditionGroup);
         this._initCondition(conditionGroup);
         this.propGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;width: 455px;display: inline-block;height:590px;vertical-align: top;margin-left: 10px">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">属性配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.dialog.propCondition.propConfig}</legend></fieldset>`);
         body.append(this.propGroup);
         this._initProperty(this.propGroup);
         this.propGroup.hide();
@@ -133,7 +133,7 @@ export default class PropertyConditionDialog{
                 const op=condition.operation;
                 let text=condition.left+' '+op+" "+condition.right;
                 if(!condition.left || condition.left===''){
-                    text='当前值 '+op+" "+(condition.right || condition.expr);
+                    text=`${window.i18n.dialog.propCondition.currentValue} `+op+" "+(condition.right || condition.expr);
                 }
                 if(condition.join){
                     text=condition.join+' '+text;
@@ -150,14 +150,14 @@ export default class PropertyConditionDialog{
         const group=$(`<div class="form-group" style="margin-bottom: 10px;"></div>`);
         const conditionGroup=$(`<span style="float: right"></span>`);
         group.append(conditionGroup);
-        const addButton=$(`<button type="button" class="btn btn-default" title="添加条件"><i class="glyphicon glyphicon-plus-sign"></i></button>`);
+        const addButton=$(`<button type="button" class="btn btn-default" title="${window.i18n.dialog.propCondition.addValue}"><i class="glyphicon glyphicon-plus-sign"></i></button>`);
         conditionGroup.append(addButton);
         this.conditionList=$(`<select class="form-control" size="100" style="height: 500px;padding: 3px;"></select>`);
         addButton.click(function(){
             let fields=_this._buildFields();
             const option=_this.itemSelect.find('option:selected');
             if(option.length===0){
-                alert('请先选择条件项！');
+                alert(`${window.i18n.dialog.propCondition.selectItem}`);
                 return;
             }
             const item=option.data();
@@ -176,7 +176,7 @@ export default class PropertyConditionDialog{
                 conditions.push(c);
                 let text=left+" "+op+" "+right;
                 if(type === 'property' && (!left || left==='')){
-                    text='当前值 '+op+" "+right;
+                    text=`${window.i18n.dialog.propCondition.currentValue} `+op+" "+right;
                 }
                 if(join){
                     text=join+" "+text;
@@ -187,19 +187,19 @@ export default class PropertyConditionDialog{
                 setDirty();
             },fields);
         });
-        const editButton=$(`<button type="button" class="btn btn-default" style="margin-left: 1px;" title="编辑选中的条件"><i class="glyphicon glyphicon-edit"></i></button>`);
+        const editButton=$(`<button type="button" class="btn btn-default" style="margin-left: 1px;" title="${window.i18n.dialog.propCondition.editConditionItem}"><i class="glyphicon glyphicon-edit"></i></button>`);
         conditionGroup.append(editButton);
         editButton.click(function(){
             let fields=_this._buildFields();
             const conditionOption=_this.conditionList.find('option:selected');
             if(conditionOption.length===0){
-                alert('请先选中要编辑的条件！');
+                alert(`${window.i18n.dialog.propCondition.editConditionTip}`);
                 return;
             }
             const condition=conditionOption.data();
             const option=_this.itemSelect.find('option:selected');
             if(option.length===0){
-                alert('请先选择条件项！');
+                alert(`${window.i18n.dialog.propCondition.selectConditionItem}`);
                 return;
             }
             const conditions=option.data().conditions;
@@ -214,7 +214,7 @@ export default class PropertyConditionDialog{
                 targetCondition.join=join;
                 let text=left+" "+op+" "+right;
                 if(type === 'property' && (!left || left==='')){
-                    text='当前值 '+op+" "+right;
+                    text=`${window.i18n.dialog.propCondition.currentValue} `+op+" "+right;
                 }
                 if(join){
                     text=join+" "+text;
@@ -234,18 +234,18 @@ export default class PropertyConditionDialog{
             },fields,condition);
         });
 
-        const delButton=$(`<button type="button" class="btn btn-default" style="margin-left: 1px;" title="删除选中的条件"><i class="glyphicon glyphicon-minus-sign"></i></button>`);
+        const delButton=$(`<button type="button" class="btn btn-default" style="margin-left: 1px;" title="${window.i18n.dialog.propCondition.delCondition}"><i class="glyphicon glyphicon-minus-sign"></i></button>`);
         conditionGroup.append(delButton);
         delButton.click(function(){
             const conditionOption=_this.conditionList.find('option:selected');
             if(conditionOption.length===0){
-                alert('请先选中要删除的条件！');
+                alert(`${window.i18n.dialog.propCondition.delConditionTip}`);
                 return;
             }
             const condition=conditionOption.data();
             const option=_this.itemSelect.find('option:selected');
             if(option.length===0){
-                alert('请先选择条件项！');
+                alert(`${window.i18n.dialog.propCondition.selectDelCondition}`);
                 return;
             }
             const conditions=option.data().conditions;
@@ -282,7 +282,7 @@ export default class PropertyConditionDialog{
         const _this=this;
         const forceGroupContainer=$(`<div class="form-group" style="margin-bottom: 10px;"></div>`);
         container.append(forceGroupContainer);
-        this.forceCheckbox=$(`<label><input type="checkbox">前景色</label>`);
+        this.forceCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.forecolor}</label>`);
         forceGroupContainer.append(this.forceCheckbox);
         this.forceGroup=$(`<span></span>`);
         forceGroupContainer.append(this.forceGroup);
@@ -315,11 +315,11 @@ export default class PropertyConditionDialog{
             _this.item.cellStyle.forecolor=val;
             setDirty();
         });
-        const forceScopeGroup=$(`<span style="margin-left: 5px;">作用范围：</span>`);
-        this.forceScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+        const forceScopeGroup=$(`<span style="margin-left: 5px;">${window.i18n.dialog.propCondition.scope}</span>`);
+        this.forceScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: 120px;display: inline-block;vertical-align: top">
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         forceScopeGroup.append(this.forceScopeSelect);
         this.forceScopeSelect.change(function(){
@@ -346,7 +346,7 @@ export default class PropertyConditionDialog{
 
         const bgcolorGroupContainer=$(`<div class="form-group" style="margin-bottom: 10px;"></div>`);
         container.append(bgcolorGroupContainer);
-        this.bgcolorCheckbox=$(`<label><input type="checkbox">背景色</label>`);
+        this.bgcolorCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.bgcolor}</label>`);
         bgcolorGroupContainer.append(this.bgcolorCheckbox);
         this.bgcolorGroup=$(`<span></span>`);
         this.bgColorEditor=$(`<div class="input-group colorpicker-component" style="width: 170px;height: 26px;display: inline-block;margin-left: 10px;vertical-align: bottom">
@@ -378,11 +378,11 @@ export default class PropertyConditionDialog{
             _this.item.cellStyle.bgcolor=val;
             setDirty();
         });
-        const bgcolorScopeGroup=$(`<span style="margin-left: 5px;">作用范围：</span>`);
+        const bgcolorScopeGroup=$(`<span style="margin-left: 5px;">${window.i18n.dialog.propCondition.scope}</span>`);
         this.bgcolorScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         bgcolorScopeGroup.append(this.bgcolorScopeSelect);
         this.bgcolorScopeSelect.change(function(){
@@ -410,7 +410,7 @@ export default class PropertyConditionDialog{
 
         const fontGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(fontGroupContainer);
-        this.fontCheckbox=$(`<label><input type="checkbox">字体</label>`);
+        this.fontCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.font}</label>`);
         fontGroupContainer.append(this.fontCheckbox);
         this.fontGroup=$(`<span style="margin-left: 10px"></span>`);
         const fonts=[];
@@ -450,11 +450,11 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         this.fontGroup.hide();
-        const fontScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
+        const fontScopeGroup=$(`<span style="margin-left: 15px;">${window.i18n.dialog.propCondition.scope}</span>`);
         this.fontScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         fontScopeGroup.append(this.fontScopeSelect);
         this.fontScopeSelect.change(function(){
@@ -466,7 +466,7 @@ export default class PropertyConditionDialog{
 
         const fontSizeGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(fontSizeGroupContainer);
-        this.fontSizeCheckbox=$(`<label><input type="checkbox">文字尺寸</label>`);
+        this.fontSizeCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.fontSize}</label>`);
         fontSizeGroupContainer.append(this.fontSizeCheckbox);
         this.fontSizeGroup=$(`<span style="padding-left: 10px;;"></span>`);
         this.fontSizeSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top"><option></option></select>`);
@@ -494,11 +494,11 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         this.fontSizeGroup.hide();
-        const fontSizeScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
+        const fontSizeScopeGroup=$(`<span style="margin-left: 15px;">${window.i18n.dialog.propCondition.scope}</span>`);
         this.fontSizeScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         fontSizeScopeGroup.append(this.fontSizeScopeSelect);
         this.fontSizeScopeSelect.change(function(){
@@ -510,13 +510,13 @@ export default class PropertyConditionDialog{
 
         const fontBoldGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(fontBoldGroupContainer);
-        this.fontBoldCheckbox=$(`<label><input type="checkbox">文字加粗</label>`);
+        this.fontBoldCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.bold}</label>`);
         fontBoldGroupContainer.append(this.fontBoldCheckbox);
         this.fontBoldGroup=$(`<span style="padding-left: 10px"></span>`);
         this.fontBoldSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
-            <option value="true">是</option>
-            <option value="false">否</option>
+            <option value="true">${window.i18n.dialog.propCondition.yes}</option>
+            <option value="false">${window.i18n.dialog.propCondition.no}</option>
         </select>`);
         this.fontBoldGroup.append(this.fontBoldSelect);
         this.fontBoldSelect.change(function(){
@@ -539,11 +539,11 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         this.fontBoldGroup.hide();
-        const fontBoldScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
+        const fontBoldScopeGroup=$(`<span style="margin-left: 15px;">${window.i18n.dialog.propCondition.scope}</span>`);
         this.fontBoldScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         fontBoldScopeGroup.append(this.fontBoldScopeSelect);
         this.fontBoldScopeSelect.change(function(){
@@ -555,13 +555,13 @@ export default class PropertyConditionDialog{
 
         const fontItalicGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(fontItalicGroupContainer);
-        this.fontItalicCheckbox=$(`<label><input type="checkbox">文字倾斜</label>`);
+        this.fontItalicCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.italic}</label>`);
         fontItalicGroupContainer.append(this.fontItalicCheckbox);
         this.fontItalicGroup=$(`<span style="padding-left: 10px"></span>`);
         this.fontItalicSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
-            <option value="true">是</option>
-            <option value="false">否</option>
+            <option value="true">${window.i18n.dialog.propCondition.yes}</option>
+            <option value="false">${window.i18n.dialog.propCondition.no}</option>
         </select>`);
         this.fontItalicGroup.append(this.fontItalicSelect);
         this.fontItalicSelect.change(function(){
@@ -584,11 +584,11 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         this.fontItalicGroup.hide();
-        const fontItalicScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
+        const fontItalicScopeGroup=$(`<span style="margin-left: 15px;">${window.i18n.dialog.propCondition.scope}</span>`);
         this.fontItalicScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         fontItalicScopeGroup.append(this.fontItalicScopeSelect);
         this.fontItalicScopeSelect.change(function(){
@@ -600,13 +600,13 @@ export default class PropertyConditionDialog{
 
         const fontUnderlineGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(fontUnderlineGroupContainer);
-        this.fontUnderlineCheckbox=$(`<label><input type="checkbox">文字下划线</label>`);
+        this.fontUnderlineCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.underline}</label>`);
         fontUnderlineGroupContainer.append(this.fontUnderlineCheckbox);
         this.fontUnderlineGroup=$(`<span style="padding-left: 10px"></span>`);
         this.fontUnderlineSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
-            <option value="true">是</option>
-            <option value="false">否</option>
+            <option value="true">${window.i18n.dialog.propCondition.yes}</option>
+            <option value="false">${window.i18n.dialog.propCondition.no}</option>
         </select>`);
         this.fontUnderlineGroup.append(this.fontUnderlineSelect);
         this.fontUnderlineSelect.change(function(){
@@ -629,11 +629,11 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         this.fontUnderlineGroup.hide();
-        const fontUnderlineScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
+        const fontUnderlineScopeGroup=$(`<span style="margin-left: 15px;">${window.i18n.dialog.propCondition.scope}</span>`);
         this.fontUnderlineScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         fontUnderlineScopeGroup.append(this.fontUnderlineScopeSelect);
         this.fontUnderlineScopeSelect.change(function(){
@@ -645,14 +645,14 @@ export default class PropertyConditionDialog{
 
         const alignGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(alignGroupContainer);
-        this.alignCheckbox=$(`<label><input type="checkbox">水平对齐</label>`);
+        this.alignCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.align}</label>`);
         alignGroupContainer.append(this.alignCheckbox);
         this.alignGroup=$(`<span style="margin-left: 10px"></span>`);
         this.alignSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
-            <option value="left">居左</option>
-            <option value="center">居中</option>
-            <option value="right">居右</option>
+            <option value="left">${window.i18n.dialog.propCondition.left}</option>
+            <option value="center">${window.i18n.dialog.propCondition.center}</option>
+            <option value="right">${window.i18n.dialog.propCondition.right}</option>
         </select>`);
         this.alignGroup.append(this.alignSelect);
         this.alignSelect.change(function(){
@@ -675,11 +675,11 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         this.alignGroup.hide();
-        const alignScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
+        const alignScopeGroup=$(`<span style="margin-left: 15px;">${window.i18n.dialog.propCondition.scope}</span>`);
         this.alignScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         alignScopeGroup.append(this.alignScopeSelect);
         this.alignScopeSelect.change(function(){
@@ -691,14 +691,14 @@ export default class PropertyConditionDialog{
 
         const valignGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(valignGroupContainer);
-        this.valignCheckbox=$(`<label><input type="checkbox">竖直对齐</label>`);
+        this.valignCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.valign}</label>`);
         valignGroupContainer.append(this.valignCheckbox);
         this.valignGroup=$(`<span style="margin-left: 10px"></span>`);
         this.valignSelect=$(`<select class="form-control" style="height: 25px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
             <option selected></option>
-            <option value="top">顶部对齐</option>
-            <option value="middle">中部对齐</option>
-            <option value="bottom">下部对齐</option>
+            <option value="top">${window.i18n.dialog.propCondition.top}</option>
+            <option value="middle">${window.i18n.dialog.propCondition.mid}</option>
+            <option value="bottom">${window.i18n.dialog.propCondition.bottom}</option>
         </select>`);
         this.valignGroup.append(this.valignSelect);
         this.valignSelect.change(function(){
@@ -721,11 +721,11 @@ export default class PropertyConditionDialog{
             setDirty();
         });
         this.valignGroup.hide();
-        const valignScopeGroup=$(`<span style="margin-left: 15px;">作用范围：</span>`);
+        const valignScopeGroup=$(`<span style="margin-left: 15px;">${window.i18n.dialog.propCondition.scope}</span>`);
         this.valignScopeSelect=$(`<select class="form-control" style="height: 26px;padding: 3px;width: inherit;display: inline-block;vertical-align: top">
-            <option value="cell">当前单元格</option>
-            <option value="row">当前行</option>
-            <option value="column">当前列</option>
+            <option value="cell">${window.i18n.dialog.propCondition.currentCell}</option>
+            <option value="row">${window.i18n.dialog.propCondition.currentRow}</option>
+            <option value="column">${window.i18n.dialog.propCondition.currentCol}</option>
         </select>`);
         valignScopeGroup.append(this.valignScopeSelect);
         this.valignScopeSelect.change(function(){
@@ -737,11 +737,11 @@ export default class PropertyConditionDialog{
 
         const borderGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(borderGroupContainer);
-        this.borderCheckbox=$(`<label><input type="checkbox">边框</label>`);
+        this.borderCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.border}</label>`);
         borderGroupContainer.append(this.borderCheckbox);
         this.borderGroup=$(`<span style="margin-left: 10px;"></span>`);
         borderGroupContainer.append(this.borderGroup);
-        const configBorderButton=$(`<button type="button" class="btn btn-default" style="padding: 1px 8px;"><i class="ureport ureport-setting"></i> 边框配置</button>`);
+        const configBorderButton=$(`<button type="button" class="btn btn-default" style="padding: 1px 8px;"><i class="ureport ureport-setting"></i> ${window.i18n.dialog.propCondition.borderConfig}</button>`);
         const conditionParameterCustomBorderDialog=new ConditionParameterCustomBorderDialog();
         configBorderButton.click(function(){
             const cellStyle=_this.item.cellStyle;
@@ -780,7 +780,7 @@ export default class PropertyConditionDialog{
 
         const newValueGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(newValueGroupContainer);
-        this.newValueCheckbox=$(`<label><input type="checkbox">新值</label>`);
+        this.newValueCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.newValue}</label>`);
         newValueGroupContainer.append(this.newValueCheckbox);
         this.newValueGroup=$(`<span style="margin-left: 10px;"></span>`);
         newValueGroupContainer.append(this.newValueGroup);
@@ -805,7 +805,7 @@ export default class PropertyConditionDialog{
 
         const formatGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(formatGroupContainer);
-        this.formatCheckbox=$(`<label><input type="checkbox">格式化</label>`);
+        this.formatCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.format}</label>`);
         formatGroupContainer.append(this.formatCheckbox);
         this.formatGroup=$(`<span style="margin-left: 10px;"></span>`);
         formatGroupContainer.append(this.formatGroup);
@@ -858,7 +858,7 @@ export default class PropertyConditionDialog{
 
         const rowHeightGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(rowHeightGroupContainer);
-        this.rowHeightCheckbox=$(`<label><input type="checkbox">行高</label>`);
+        this.rowHeightCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.rowHeight}</label>`);
         rowHeightGroupContainer.append(this.rowHeightCheckbox);
         this.rowHeightGroup=$(`<span style="margin-left: 10px;"></span>`);
         rowHeightGroupContainer.append(this.rowHeightGroup);
@@ -885,14 +885,14 @@ export default class PropertyConditionDialog{
 
         const colWidthGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(colWidthGroupContainer);
-        this.colWidthCheckbox=$(`<label><input type="checkbox">列宽</label>`);
+        this.colWidthCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.colWidth}</label>`);
         colWidthGroupContainer.append(this.colWidthCheckbox);
         this.colWidthGroup=$(`<span style="margin-left: 10px;"></span>`);
         colWidthGroupContainer.append(this.colWidthGroup);
         this.colWidthEditor=$(`<input type="number" class="form-control" style="display: inline-block;height: 25px;padding: 3px;width: 88px;">`);
         this.colWidthGroup.append(this.colWidthEditor);
         this.colWidthEditor.change(function(){
-            _this.item.position.line=$(this).val();
+            _this.item.colWidth=$(this).val();
         });
         this.colWidthCheckbox.children('input').click(function(){
             const checked=$(this).prop('checked');
@@ -911,13 +911,13 @@ export default class PropertyConditionDialog{
 
         const pagingBreakContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(pagingBreakContainer);
-        this.pagingBreakCheckbox=$(`<label><input type="checkbox">分页</label>`);
+        this.pagingBreakCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.paging}</label>`);
         pagingBreakContainer.append(this.pagingBreakCheckbox);
         this.pagingBreakGroup=$(`<span style="margin-left: 10px;"></span>`);
         pagingBreakContainer.append(this.pagingBreakGroup);
         this.pagingBreakSelect=$(`<select class="form-control" style="display: inline-block;height: 25px;padding: 1px;width: 90px;vertical-align: top">
-            <option value="before">当前行前</option>
-            <option value="after" selected>当前行后</option>
+            <option value="before">${window.i18n.dialog.propCondition.rowBefore}</option>
+            <option value="after" selected>${window.i18n.dialog.propCondition.rowAfter}</option>
         </select>`);
         this.pagingBreakGroup.append(this.pagingBreakSelect);
         this.pagingBreakSelect.change(function(){
@@ -926,7 +926,7 @@ export default class PropertyConditionDialog{
         this.pagingLineEditor=$(`<input type="number" class="form-control" value="0" style="display: inline-block;height: 25px;padding: 3px;width: 60px;vertical-align: top;margin-left: 5px">`);
         this.pagingBreakGroup.append(this.pagingLineEditor);
         this.pagingLineEditor.hide();
-        this.pagingBreakGroup.append("<span style='margin-left: 5px'>分页</span>");
+        this.pagingBreakGroup.append(`<span style='margin-left: 5px'>${window.i18n.dialog.propCondition.paging}</span>`);
         this.pagingLineEditor.change(function(){
             _this.item.paging.line=$(this).val();
         });
@@ -947,7 +947,7 @@ export default class PropertyConditionDialog{
 
         const linkGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(linkGroupContainer);
-        this.linkCheckbox=$(`<label><input type="checkbox">链接</label>`);
+        this.linkCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.link}</label>`);
         linkGroupContainer.append(this.linkCheckbox);
         this.linkGroup=$(`<span style="margin-left: 10px"></span>`);
         this.linkEditor=$(`<span>URL：<input type="text" class="form-control" style="height: 25px;padding: 3px;display: inline-block;width:270px;"></span>`);
@@ -956,22 +956,22 @@ export default class PropertyConditionDialog{
             _this.item.linkUrl=$(this).val();
             setDirty();
         });
-        this.linkTargetSelect=$(`<span style="margin-left: 60px;">目标窗口：<select class="form-control" style="height: 25px;display: inline-block;padding: 3px;width: 136px">
+        this.linkTargetSelect=$(`<span style="margin-left: 60px;">${window.i18n.dialog.propCondition.target}<select class="form-control" style="height: 25px;display: inline-block;padding: 3px;width: 136px">
             <option></option>
-            <option value="_blank">新窗口</option>
-            <option value="_self">当前窗口</option>
+            <option value="_blank">${window.i18n.dialog.propCondition.newWindow}</option>
+            <option value="_self">${window.i18n.dialog.propCondition.currentWindow}</option>
         </select></span>`);
         this.linkGroup.append(this.linkTargetSelect);
         this.linkTargetSelect.children('select').change(function(){
             _this.item.linkTargetWindow=$(this).val();
             setDirty();
         });
-        const linkParameterButton=$(`<button type="button" class="btn btn-default" style="margin-left: 5px;padding: 1px 8px;">URL参数配置</button>`);
+        const linkParameterButton=$(`<button type="button" class="btn btn-default" style="margin-left: 5px;padding: 1px 8px;">${window.i18n.dialog.propCondition.urlParameter}</button>`);
         this.linkGroup.append(linkParameterButton);
         const urlParameterDialog=new URLParameterDialog();
         linkParameterButton.click(function(){
             if(!_this.item.linkUrl){
-                alert('请先定义链接URL！');
+                alert(`${window.i18n.dialog.propCondition.linkUrl}`);
                 return;
             }
             if(!_this.item.linkParameters){

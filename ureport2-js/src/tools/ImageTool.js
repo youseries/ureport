@@ -67,7 +67,7 @@ export default class ImageTool extends Tool{
         });
     }
     getTitle(){
-        return '图片';
+        return `${window.i18n.image}`;
     }
     getIcon(){
         return `<i class="ureport ureport-image" style="color: #0e90d2;"></i>`;

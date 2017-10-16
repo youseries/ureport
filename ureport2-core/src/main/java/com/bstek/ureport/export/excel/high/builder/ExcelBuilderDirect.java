@@ -82,6 +82,9 @@ public class ExcelBuilderDirect extends ExcelBuilder {
 	        		row=sheet.createRow(rowNumber);
 	        	}
 	        	Map<Column,com.bstek.ureport.model.Cell> colCell=cellMap.get(r);
+	        	if(colCell==null){
+	        		continue;
+	        	}
 	        	for(int i=0;i<columnSize;i++){
 	        		Column col=columns.get(i);
 	        		int w=col.getWidth();

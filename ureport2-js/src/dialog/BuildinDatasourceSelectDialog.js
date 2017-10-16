@@ -15,7 +15,7 @@ export default class BuildinDatasourceSelectDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            内置数据源选择
+                            ${window.i18n.dialog.buildin.selectDatasource}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -29,7 +29,7 @@ export default class BuildinDatasourceSelectDialog{
     }
     initBody(body,footer){
         const table=$(`<table class="table table-bordered">
-            <thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">数据源名称</td><td style="vertical-align: middle">选择</td></tr></thead>
+            <thead><tr style="background: #f4f4f4;height: 30px;"><td style="vertical-align: middle">${window.i18n.dialog.buildin.datasourceName}</td><td style="vertical-align: middle">${window.i18n.dialog.buildin.select}</td></tr></thead>
         </table>`);
         this.tbody=$(`<tbody></tbody>`);
         table.append(this.tbody);
@@ -50,7 +50,7 @@ export default class BuildinDatasourceSelectDialog{
                     selector.click(function(){
                         for(let ds of _this.datasources){
                             if(ds.name===name){
-                                alert("数据源["+name+"]已存在,请选择其它数据源");
+                                alert(`${window.i18n.dialog.buildin.datasource}["+name+"]${window.i18n.dialog.buildin.datasourceExist}`);
                                 return;
                             }
                         }
@@ -63,7 +63,7 @@ export default class BuildinDatasourceSelectDialog{
                 }
             },
             error:function(){
-                alert("加载内置数据源列表失败！");
+                alert(`${window.i18n.dialog.buildin.loadFail}`);
             }
         });
     }

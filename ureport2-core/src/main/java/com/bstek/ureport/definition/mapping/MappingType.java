@@ -13,25 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.parser.impl.value;
+package com.bstek.ureport.definition.mapping;
 
 /**
  * @author Jacky.gao
- * @since 2017年3月29日
+ * @since 2017年9月13日
  */
-public class MappingItem {
-	private String value;
-	private String label;
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
+public enum MappingType {
+	simple,dataset
 }

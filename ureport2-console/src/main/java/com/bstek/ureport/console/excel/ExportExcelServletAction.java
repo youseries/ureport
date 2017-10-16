@@ -28,6 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import com.bstek.ureport.build.ReportBuilder;
 import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.console.BaseServletAction;
+import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.ReportDefinition;
 import com.bstek.ureport.exception.ReportComputeException;
@@ -65,16 +66,21 @@ public class ExportExcelServletAction extends BaseServletAction {
 	
 	public void buildExcel(HttpServletRequest req, HttpServletResponse resp,boolean withPage,boolean withSheet) throws IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		String fileName=req.getParameter("_n");
 		if(StringUtils.isNotBlank(fileName)){
 			fileName=decode(fileName);
+			if(!fileName.toLowerCase().endsWith(".xlsx")){
+				fileName=fileName+".xlsx";
+			}
 		}else{
 			fileName="ureport.xlsx";
 		}
 		resp.setContentType("application/octet-stream;charset=ISO8859-1");
+		fileName=new String(fileName.getBytes("UTF-8"),"ISO8859-1");
 		resp.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
 		Map<String, Object> parameters = buildParameters(req);
 		String fullName=file+parameters.toString();
@@ -82,7 +88,7 @@ public class ExportExcelServletAction extends BaseServletAction {
 		if(file.equals(PREVIEW_KEY)){
 			Report report=CacheUtils.getReport(fullName);
 			if(report==null){
-				ReportDefinition reportDefinition=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);
+				ReportDefinition reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
 				if(reportDefinition==null){
 					throw new ReportDesignException("Report data has expired,can not do export excel.");
 				}

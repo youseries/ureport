@@ -12,14 +12,14 @@ export default class SaveTool extends Tool{
 
     buildButton(){
         const group=$(`<div class="btn-group"></div>`);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" data-toggle="dropdown" title="保存">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" data-toggle="dropdown" title="${window.i18n.tools.save.save}">
             <i class="ureport ureport-save" style="color: #0e90d2;"></i>
             <span class="caret"></span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu"></ul>`);
         const save=$(`<li id="__save_btn" class="disabled">
                 <a href="###">
-                    <i class="ureport ureport-save" style="color: #0e90d2;"></i> 保存
+                    <i class="ureport ureport-save" style="color: #0e90d2;"></i> ${window.i18n.tools.save.save}
                 </a>
             </li>`);
         ul.append(save);
@@ -33,11 +33,11 @@ export default class SaveTool extends Tool{
                     data:{content,file:window._reportFile},
                     type:'POST',
                     success:function(){
-                        alert('保存成功！');
+                        alert(`${window.i18n.tools.save.successSave}`);
                         resetDirty();
                     },
                     error:function(){
-                        alert('文件保存错误！');
+                        alert(`${window.i18n.tools.save.failSave}`);
                     }
                 });
             }else{
@@ -46,7 +46,7 @@ export default class SaveTool extends Tool{
         });
         const saveAs=$(`<li>
                 <a href="###">
-                    <i class="glyphicon glyphicon-floppy-disk" style="color: #0e90d2;font-size: 16px"></i> 另存为
+                    <i class="glyphicon glyphicon-floppy-disk" style="color: #0e90d2;font-size: 16px"></i> ${window.i18n.tools.save.saveAs}
                 </a>
             </li>`);
         ul.append(saveAs);
@@ -62,7 +62,7 @@ export default class SaveTool extends Tool{
 
 
     getTitle(){
-        return '保存';
+        return `${window.i18n.tools.save.save}`;
     }
     getIcon(){
         return `<i class="ureport ureport-save" style="color: #0e90d2"></i>`;

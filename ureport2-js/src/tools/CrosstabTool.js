@@ -49,7 +49,7 @@ export default class CrosstabTool extends Tool{
     }
 
     getTitle(){
-        return '斜线表头';
+        return `${window.i18n.tools.crosstab.title}`;
     }
     getIcon(){
         return `<i class="ureport ureport-crosstab" style="color: #0e90d2;"></i>`;

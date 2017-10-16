@@ -41,7 +41,7 @@ public class SelectAggregate extends Aggregate {
 
 	protected List<BindData> doAggregate(DatasetExpression expr, Cell cell,Context context, List<?> objList) {
 		List<BindData> list=new ArrayList<BindData>();
-		Map<String,String> mappingMap=expr.getMapping();
+		Map<String,String> mappingMap=context.getMapping(expr);
 		String property=expr.getProperty();
 		for(Object o:objList){
 			boolean conditionResult=doCondition(expr.getCondition(),cell,o,context);
@@ -51,8 +51,12 @@ public class SelectAggregate extends Aggregate {
 			List<Object> bindList=new ArrayList<Object>();
 			bindList.add(o);
 			Object data=Utils.getProperty(o, property);
-			data=mappingData(mappingMap,data);
-			list.add(new BindData(data,bindList));
+			Object mappingData=mappingData(mappingMap,data);
+			if(mappingData==null){
+				list.add(new BindData(data,bindList));				
+			}else{
+				list.add(new BindData(data,mappingData,bindList));								
+			}
 		}
 		if(list.size()==0){
 			List<Object> rowList=new ArrayList<Object>();

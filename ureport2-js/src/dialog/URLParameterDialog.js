@@ -16,7 +16,7 @@ export default class URLParameterDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            URL参数配置
+                            ${window.i18n.dialog.urlParam.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -30,7 +30,7 @@ export default class URLParameterDialog{
     }
     initBody(body,footer){
         const addButton=$(`<button type="button" class="btn btn-default" style="float: right">
-            <i class="glyphicon glyphicon-plus-sign" style="font-size: 12pt;color: #0000C0" title="添加参数"></i>
+            <i class="glyphicon glyphicon-plus-sign" style="font-size: 12pt;color: #0000C0" title="${window.i18n.dialog.urlParam.add}"></i>
         </button>`);
         const _this=this;
         addButton.click(function(){
@@ -55,7 +55,7 @@ export default class URLParameterDialog{
                 const del=$(`<a href="###" style="margin-left: 10px"><i class="glyphicon glyphicon-trash" style="font-size: 12pt;color: #0000C0"></i></a>`);
                 td.append(del);
                 del.click(function(){
-                    confirm('真的要删除？',function(){
+                    confirm(`${window.i18n.dialog.urlParam.delTip}`,function(){
                         const index=_this.parameters.indexOf(param);
                         _this.parameters.splice(index,1);
                         tr.remove();
@@ -66,7 +66,7 @@ export default class URLParameterDialog{
         });
         body.append(addButton);
         const table=$(`<table class="table table-bordered">
-            <thead><tr style="background-color: #eeeeee;height: 30px;"><td style="width: 150px;vertical-align: middle">参数名</td><td style="width: 350px;vertical-align: middle">参数值表达式</td><td style="vertical-align: middle">操作</td></tr></thead>
+            <thead><tr style="background-color: #eeeeee;height: 30px;"><td style="width: 150px;vertical-align: middle">${window.i18n.dialog.urlParam.name}</td><td style="width: 350px;vertical-align: middle">${window.i18n.dialog.urlParam.expr}</td><td style="vertical-align: middle">${window.i18n.dialog.urlParam.op}</td></tr></thead>
         </table>`);
         this.tbody=$(`<tbody></tbody>`);
         table.append(this.tbody);
@@ -96,7 +96,7 @@ export default class URLParameterDialog{
             const del=$(`<a href="###" style="margin-left: 10px"><i class="glyphicon glyphicon-trash" style="font-size: 12pt;color: #0000C0"></i></a>`);
             td.append(del);
             del.click(function(){
-                confirm('真的要删除？',function(){
+                confirm(`${window.i18n.dialog.urlParam.delTip}`,function(){
                     const index=_this.parameters.indexOf(param);
                     _this.parameters.splice(index,1);
                     tr.remove();

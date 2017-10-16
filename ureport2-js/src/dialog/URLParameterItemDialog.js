@@ -13,7 +13,7 @@ export default class URLParameterItemDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            添加参数
+                            ${window.i18n.dialog.paramItem.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -25,22 +25,22 @@ export default class URLParameterItemDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const valueGroup=$(`<div class="form-group"><label>参数名：</label></div>`);
+        const valueGroup=$(`<div class="form-group"><label>${window.i18n.dialog.paramItem.name}</label></div>`);
         body.append(valueGroup);
         this.nameEditor=$(`<input type="text" class="form-control" style="display: inline-block;width:500px;">`);
         valueGroup.append(this.nameEditor);
-        const labelGroup=$(`<div class="form-group"><label>值表达式：</label></div>`);
+        const labelGroup=$(`<div class="form-group"><label>${window.i18n.dialog.paramItem.expr}</label></div>`);
         this.valueEditor=$(`<input type="text" class="form-control" style="display: inline-block;width:485px;">`);
         labelGroup.append(this.valueEditor);
         body.append(labelGroup);
 
-        const saveButton=$(`<button type="button" class="btn btn-primary">保存</button>`);
+        const saveButton=$(`<button type="button" class="btn btn-primary">${window.i18n.dialog.paramItem.save}</button>`);
         footer.append(saveButton);
         const _this=this;
         saveButton.click(function(){
             const name=_this.nameEditor.val(),value=_this.valueEditor.val();
             if(name==='' || value===''){
-                alert("参数项请输入完整！");
+                alert(`${window.i18n.dialog.paramItem.tip}`);
                 return;
             }
             _this.paramItem.name=name;
@@ -54,9 +54,9 @@ export default class URLParameterItemDialog{
         this.paramItem=paramItem;
         this.dialog.modal('show');
         if(op==='add'){
-            this.dialog.find('.modal-title').html('添加参数');
+            this.dialog.find('.modal-title').html(`${window.i18n.dialog.paramItem.add}`);
         }else{
-            this.dialog.find('.modal-title').html('编辑参数');
+            this.dialog.find('.modal-title').html(`${window.i18n.dialog.paramItem.edit}`);
         }
         this.nameEditor.val(paramItem.name);
         this.valueEditor.val(paramItem.value);

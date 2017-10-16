@@ -15,15 +15,15 @@
  ******************************************************************************/
 package com.bstek.ureport.build.assertor;
 
-import java.util.List;
+import java.math.BigDecimal;
 
+import com.bstek.ureport.Utils;
 
 /**
  * @author Jacky.gao
  * @since 2017年1月12日
  */
-public class EqualsAssertor implements Assertor {
-	
+public class EqualsAssertor extends AbstractAssertor {
 	@Override
 	public boolean eval(Object left, Object right) {
 		if(left == null && right==null){
@@ -33,17 +33,29 @@ public class EqualsAssertor implements Assertor {
 			return false;
 		}
 		if(left instanceof Number && right instanceof Number){
-			Number l=(Number)left;
-			Number r=(Number)right;
-			return l.doubleValue()==r.doubleValue();
-		}
-		if(right instanceof List){
-			List<?> rightList=(List<?>)right;
-			if(rightList.size()==1){
-				Object rightObj=rightList.get(0);
-				return left.equals(rightObj);
+			BigDecimal b1=Utils.toBigDecimal(left);
+			BigDecimal b2=Utils.toBigDecimal(right);
+			return b1.compareTo(b2)==0;
+		}else if(left instanceof Number){
+			BigDecimal b1=Utils.toBigDecimal(left);
+			BigDecimal b2=null;
+			try{
+				b2=Utils.toBigDecimal(right);
+			}catch(Exception ex){}
+			if(b2!=null){
+				return b1.compareTo(b2)==0;
+			}
+		}else if(right instanceof Number){
+			BigDecimal b1=Utils.toBigDecimal(right);
+			BigDecimal b2=null;
+			try{
+				b2=Utils.toBigDecimal(left);
+			}catch(Exception ex){}
+			if(b2!=null){
+				return b1.compareTo(b2)==0;
 			}
 		}
+		right=buildObject(right);
 		return left.equals(right);
 	}
 }

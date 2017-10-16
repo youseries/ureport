@@ -49,7 +49,7 @@ export default class BoldTool extends Tool{
     }
 
     getTitle(){
-        return '加粗';
+        return `${window.i18n.tools.bold.bold}`;
     }
     getIcon(){
         return `<i class="ureport ureport-bold" style="color: #0e90d2;"></i>`;

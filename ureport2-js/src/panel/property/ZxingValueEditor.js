@@ -24,27 +24,27 @@ export default class ZxingValueEditor extends BaseValueEditor{
 
     _initSize(){
         const _this=this;
-        const sizeGroup=$(`<div class="form-group"><label>宽：</label></div>`);
+        const sizeGroup=$(`<div class="form-group"><label>${window.i18n.property.zxing.width}</label></div>`);
         this.container.append(sizeGroup);
         this.widthEditor=$(`<input class="form-control" type="number" style="display: inline-block;width: 140px;">`);
         sizeGroup.append(this.widthEditor);
         this.widthEditor.change(function(){
             let value=$(this).val();
             if(!value || isNaN(value)){
-                alert('请输入数字！');
+                alert(`${window.i18n.property.zxing.numberTip}`);
                 return;
             }
             _this.cellDef.value.width=value;
             _this.context.hot.render();
             setDirty();
         });
-        sizeGroup.append(`<label style="margin-left: 20px">高：</label>`);
+        sizeGroup.append(`<label style="margin-left: 20px">${window.i18n.property.zxing.height}</label>`);
         this.heightEditor=$(`<input class="form-control" type="number" style="display: inline-block;width: 148px">`);
         sizeGroup.append(this.heightEditor);
         this.heightEditor.change(function(){
             let value=$(this).val();
             if(!value || isNaN(value)){
-                alert('请输入数字！');
+                alert(`${window.i18n.property.zxing.numberTip}`);
                 return;
             }
             _this.cellDef.value.height=value;
@@ -54,7 +54,7 @@ export default class ZxingValueEditor extends BaseValueEditor{
     }
 
     _initFormat(){
-        this.formatGroup=$(`<div class="form-group"><label>条码格式：</label></div>`);
+        this.formatGroup=$(`<div class="form-group"><label>${window.i18n.property.zxing.format}</label></div>`);
         this.container.append(this.formatGroup);
         this.formatSelect=$(`<select class="form-control" style="display: inline-block;width: 295px;">
             <option>AZTEC</option>
@@ -80,10 +80,10 @@ export default class ZxingValueEditor extends BaseValueEditor{
     }
 
     _initCodeDisplay(){
-        this.codeDisplayGroup=$(`<div class="form-group"><label>显示条码字符：</label></div>`);
+        this.codeDisplayGroup=$(`<div class="form-group"><label>${window.i18n.property.zxing.displayText}</label></div>`);
         this.container.append(this.codeDisplayGroup);
         this.enabledCodeDisplayRadio=$(`<label class="checkbox-inline" style="padding-left: 5px">
-            <input type="radio" name="codeDisplay" value="true"> 是
+            <input type="radio" name="codeDisplay" value="true"> ${window.i18n.property.zxing.yes}
         </label>`);
         const _this=this;
         this.codeDisplayGroup.append(this.enabledCodeDisplayRadio);
@@ -92,7 +92,7 @@ export default class ZxingValueEditor extends BaseValueEditor{
             setDirty();
         });
         this.disabledCodeDisplayRadio=$(`<label class="checkbox-inline" style="padding-left: 5px">
-            <input type="radio" name="codeDisplay" value="true"> 否
+            <input type="radio" name="codeDisplay" value="true"> ${window.i18n.property.zxing.no}
         </label>`);
         this.codeDisplayGroup.append(this.disabledCodeDisplayRadio);
         this.disabledCodeDisplayRadio.children('input').click(function(){
@@ -102,10 +102,10 @@ export default class ZxingValueEditor extends BaseValueEditor{
     }
 
     _initTypeSelect(){
-        const imageSourceGroup=$(`<div class="form-group"><label>数据来源：</label></div>`);
+        const imageSourceGroup=$(`<div class="form-group"><label>${window.i18n.property.zxing.source}</label></div>`);
         this.sourceSelect=$(`<select class="form-control" style="display: inline-block;width:295px">
-            <option value="text">文本</option>
-            <option value="expression">表达式</option>
+            <option value="text">${window.i18n.property.zxing.text}</option>
+            <option value="expression">${window.i18n.property.zxing.expr}</option>
         </select>`);
         imageSourceGroup.append(this.sourceSelect);
         const _this=this;
@@ -128,7 +128,7 @@ export default class ZxingValueEditor extends BaseValueEditor{
 
     _initTextEditor(){
         const _this=this;
-        this.textEditorGroup=$(`<div><label>文本：</label></div>`);
+        this.textEditorGroup=$(`<div><label>${window.i18n.property.zxing.text1}</label></div>`);
         this.textEditor=$(`<input class="form-control" style="display: inline-block;width: 325px;padding: 5px">`);
         this.textEditorGroup.append(this.textEditor);
         this.textEditor.change(function(){
@@ -140,7 +140,7 @@ export default class ZxingValueEditor extends BaseValueEditor{
     }
 
     _initExpressionEditor(){
-        this.expressionEditorGroup=$(`<div><label>表达式</label></div>`);
+        this.expressionEditorGroup=$(`<div><label>${window.i18n.property.zxing.expr}</label></div>`);
         this.container.append(this.expressionEditorGroup);
         const editorContainer=$(`<div style="border: solid 1px #eeeeee;"></div>`);
         const codeEditor=$(`<textarea></textarea>`);
@@ -169,18 +169,18 @@ export default class ZxingValueEditor extends BaseValueEditor{
     }
     _buildExpand(){
         const _this=this;
-        this.expandGroup=$(`<div class="form-group" style="margin-bottom: 10px;"><label>内容展开方向：</label></div>`);
-        this.downExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Down">向下</label>`);
+        this.expandGroup=$(`<div class="form-group" style="margin-bottom: 10px;"><label>${window.i18n.property.zxing.expand}</label></div>`);
+        this.downExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Down">${window.i18n.property.zxing.down}</label>`);
         this.expandGroup.append(this.downExpandRadio);
         this.downExpandRadio.children('input').click(function(){
             _this._setExpand('Down');
         });
-        this.rightExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Right">向右</label>`);
+        this.rightExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="Right">${window.i18n.property.zxing.right}</label>`);
         this.expandGroup.append(this.rightExpandRadio);
         this.rightExpandRadio.children('input').click(function(){
             _this._setExpand('Right');
         });
-        this.noneExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="None">不展开</label>`);
+        this.noneExpandRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__expand_radio" value="None">${window.i18n.property.zxing.noneExpand}</label>`);
         this.expandGroup.append(this.noneExpandRadio);
         this.noneExpandRadio.children('input').click(function(){
             _this._setExpand('None');

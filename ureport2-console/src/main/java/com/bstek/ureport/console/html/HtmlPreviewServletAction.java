@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -37,7 +38,9 @@ import com.bstek.ureport.build.ReportBuilder;
 import com.bstek.ureport.build.paging.Page;
 import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.chart.ChartData;
+import com.bstek.ureport.console.MobileUtils;
 import com.bstek.ureport.console.RenderPageServletAction;
+import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.Paper;
 import com.bstek.ureport.definition.ReportDefinition;
@@ -82,6 +85,12 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				context.put("content", "<div style='color:red'><strong>报表计算错误：</strong>"+errorMsg+"</div>");
 				context.put("error", true);
 			}else{
+				Locale locale=req.getLocale();
+				if(!locale.equals(Locale.CHINA)){
+					context.put("locale", "EN");
+				}else{
+					context.put("locale", "EN");				
+				}
 				context.put("content", htmlReport.getContent());
 				context.put("style", htmlReport.getStyle());
 				context.put("reportAlign", htmlReport.getReportAlign());				
@@ -94,21 +103,26 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				String customParameters=buildCustomParameters(req);
 				context.put("customParameters", customParameters);
 				Tools tools=null;
-				String toolsInfo=req.getParameter("_t");
-				if(StringUtils.isNotBlank(toolsInfo)){
+				if(MobileUtils.isMobile(req)){
 					tools=new Tools(false);
-					if(toolsInfo.equals("0")){
-						tools.setShow(false);
-					}else{
-						String[] infos=toolsInfo.split(",");
-						for(String name:infos){
-							tools.doInit(name);
-						}						
-					}
-					context.put("_t", toolsInfo);
-					context.put("hasTools", true);
+					tools.setShow(false);
 				}else{
-					tools=new Tools(true);
+					String toolsInfo=req.getParameter("_t");
+					if(StringUtils.isNotBlank(toolsInfo)){
+						tools=new Tools(false);
+						if(toolsInfo.equals("0")){
+							tools.setShow(false);
+						}else{
+							String[] infos=toolsInfo.split(",");
+							for(String name:infos){
+								tools.doInit(name);
+							}						
+						}
+						context.put("_t", toolsInfo);
+						context.put("hasTools", true);
+					}else{
+						tools=new Tools(true);
+					}
 				}
 				context.put("tools", tools);
 			}
@@ -142,6 +156,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 
 	public void loadPrintPages(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
@@ -186,12 +201,13 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 	
 	public void loadPagePaper(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("_u");
+		file=decode(file);
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		ReportDefinition report=null;
 		if(file.equals(PREVIEW_KEY)){
-			report=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);	
+			report=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);	
 			if(report==null){
 				throw new ReportDesignException("Report data has expired.");
 			}
@@ -206,6 +222,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		Map<String, Object> parameters = buildParameters(req);
 		HtmlReport htmlReport=null;
 		String file=req.getParameter("_u");
+		file=decode(file);
 		String fullName=file+parameters.toString();
 		String pageIndex=req.getParameter("_i");
 		String reload=req.getParameter("_r");
@@ -217,7 +234,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			if(StringUtils.isNotBlank(pageIndex) && StringUtils.isBlank(reload)){
 				report=CacheUtils.getReport(fullName);
 			}
-			ReportDefinition reportDefinition=(ReportDefinition)req.getSession().getAttribute(PREVIEW_KEY);
+			ReportDefinition reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
 			if(report==null){
 				if(reportDefinition==null){
 					throw new ReportDesignException("Report data has expired,can not do preview.");
