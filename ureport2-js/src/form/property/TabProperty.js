@@ -1,13 +1,15 @@
 /**
  * Created by Jacky.Gao on 2017-10-12.
  */
+import Utils from '../Utils.js';
 import Property from './Property.js';
 
 export default class TabProperty extends Property{
     constructor(){
+        super();
         this.col.append(this.buildVisibleGroup());
     }
-    refreshValue(){
+    refreshValue(editor){
         this.current=editor;
         this.tabs=editor.tabs;
         this.visibleText.val(editor.visible);
@@ -20,7 +22,7 @@ export default class TabProperty extends Property{
             self.formGroup.append(self.addTabEditor(item));
         });
     }
-    addTabEditor(){
+    addTabEditor(tab){
         const inputGroup=$("<div class='input-group'>");
         const input=$("<input type='text' class='form-control'>");
         inputGroup.append(input);
@@ -30,7 +32,7 @@ export default class TabProperty extends Property{
         });
         const inputGroupAddon=$("<span class='input-group-addon'>");
         inputGroup.append(inputGroupAddon);
-        const del=$("<span class='pb-icon-delete'><li class='fa fa-trash'></li></span>");
+        const del=$("<span class='pb-icon-delete'><li class='glyphicon glyphicon-trash'></li></span>");
         const self=this;
         del.click(function(){
             if(self.tabs.length===1){
@@ -51,12 +53,12 @@ export default class TabProperty extends Property{
             self.tabs[0].link.trigger("click");
         });
         inputGroupAddon.append(del);
-        const add=$("<span class='pb-icon-add' style='margin-left: 10px'><li class='fa fa-plus'></span>");
+        const add=$("<span class='pb-icon-add' style='margin-left: 10px'><li class='glyphicon glyphicon-plus'></span>");
         add.click(function(){
-            const seq=UPage.seq("tab_control_component");
+            const seq=Utils.seq("tab_control_component");
             const newTab=self.current.addTab();
             self.formGroup.append(self.addTabEditor(newTab));
-            UPage.attachSortable(newTab.container.container);
+            Utils.attachSortable(newTab.container.container);
         });
         inputGroupAddon.append(add);
         return inputGroup;

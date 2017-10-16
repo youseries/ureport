@@ -4,6 +4,7 @@
 import Property from './Property.js';
 export default class PageProperty extends Property{
     constructor(){
+        super();
         this.init();
     }
     init(){

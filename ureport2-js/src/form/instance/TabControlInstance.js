@@ -1,10 +1,11 @@
 /**
  * Created by Jacky.Gao on 2017-10-12.
  */
-import Instance from './Instance.js';
-export default class TabControlInstance extends Instance{
-    static TYPE="TabControl";
-    constructor(){
+import ContainerInstance from './ContainerInstance.js';
+import Tab from './Tab.js';
+export default class TabControlInstance extends ContainerInstance{
+    constructor(seq){
+        super();
         this.seq=seq;
         this.tabs=[];
         this.tabNum=1;
@@ -20,7 +21,7 @@ export default class TabControlInstance extends Instance{
         this.id=this.element.prop("id");
         this.visible="true";
     }
-    addTab(){
+    addTab(active,json){
         let tabnum=this.tabNum++;
         const tab=new Tab(this.seq,tabnum);
         if(json){
@@ -77,3 +78,4 @@ export default class TabControlInstance extends Instance{
         return json;
     }
 }
+TabControlInstance.TYPE="TabControl";

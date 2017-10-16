@@ -9,13 +9,18 @@ import Utils from '../Utils.js';
 export default class TabControlComponent extends Component{
     constructor(options){
         super(options);
+        this.tool.attr(Component.TAB,"1");
         this.property=new TabProperty();
     }
     newInstance(){
-        const seq=Utils.seq(this.id);
+        const seq=Utils.seq(this.getId());
         return new TabControlInstance(seq);
     }
     getType(){
         return TabControlInstance.TYPE;
+    }
+    getId(){
+        this.id="tab_control_component";
+        return this.id;
     }
 }

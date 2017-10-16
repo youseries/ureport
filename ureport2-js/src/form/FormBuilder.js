@@ -1,11 +1,17 @@
 /**
  * Created by Jacky.Gao on 2017-10-12.
  */
+import './css/iconfont.css';
+import './css/form.css';
+import './external/jquery-ui.css';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../../node_modules/bootstrap/dist/js/bootstrap.js';
 import Utils from './Utils.js';
 import CanvasContainer from './container/CanvasContainer.js';
 import Toolbar from './Toolbar.js';
 import Palette from './Palette.js';
 import PageProperty from './property/PageProperty.js';
+import Component from './component/Component.js';
 
 export default class FormBuilder{
     constructor(container,server){

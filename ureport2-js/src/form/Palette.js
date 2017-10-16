@@ -1,24 +1,60 @@
 /**
  * Created by Jacky.Gao on 2017-10-12.
  */
+import TabControlComponent from './component/TabControlComponent.js';
+import Grid2X2Component from './component/Grid2X2Component.js';
+import GridSingleComponent from './component/GridSingleComponent.js';
+import Grid3x3x3Component from './component/Grid3x3x3Component.js';
+import Grid4x4x4x4Component from './component/Grid4x4x4x4Component.js';
+import GridCustomComponent from './component/GridCustomComponent.js';
+import TextComponent from './component/TextComponent.js';
+import RadioComponent from './component/RadioComponent.js';
+
 export default class Palette{
-    static componentId="pb_component_container_palette";
-    static propertyId="pb_component_property_palette";
     constructor(){
         this.components=[];
         this.initContainer();
         this.initComponents();
     }
     initComponents(){
+        this.addComponent(new TabControlComponent({
+            icon:"form form-tab",
+            label:"标签页"
+        }));
+        this.addComponent(new GridSingleComponent({
+            icon:"form form-1col",
+            label:"一列布局"
+        }));
+        this.addComponent(new Grid2X2Component({
+            icon:"form form-2col",
+            label:"两列布局"
+        }));
+        this.addComponent(new Grid3x3x3Component({
+            icon:"form form-3col",
+            label:"三列布局"
+        }));
+        this.addComponent(new Grid4x4x4x4Component({
+            icon:"form form-4col",
+            label:"四列布局"
+        }));
+        this.addComponent(new GridCustomComponent({
+            icon:"form form-custom-col",
+            label:"自定义列布局"
+        }));
+        this.addComponent(new TextComponent({
+            icon:"form form-textbox",
+            label:"文本框"
+        }));
+        this.addComponent(new RadioComponent({
+            icon:"form form-radio",
+            label:"单选框"
+        }));
+        /*
         this.addComponent(new ButtonGroupComponent({
             icon:"res/material/img/but.png",
             label:"按钮"
         }));
-        /*
-        this.addComponent(new TextComponent({
-            icon:"res/material/img/textbox.png",
-            label:"文本框"
-        }));
+
         this.addComponent(new TableInputComponent({
             icon:"res/material/img/tableinput.png",
             label:"多行数据输入"
@@ -46,38 +82,10 @@ export default class Palette{
             icon:"res/material/img/checkbox.png",
             label:"复选框"
         }));
-        this.addComponent(new RadioComponent({
-            icon:"res/material/img/radio.png",
-            label:"单选框"
-        }));
+
         this.addComponent(new TextAreaComponent({
             icon:"res/material/img/textarea.png",
             label:"多行文本框"
-        }));
-
-        this.addComponent(new GridSingleComponent({
-            icon:"res/material/img/1col.png",
-            label:"一列布局"
-        }));
-        this.addComponent(new Grid2X2Component({
-            icon:"res/material/img/2col.png",
-            label:"两列布局"
-        }));
-        this.addComponent(new Grid3x3x3Component({
-            icon:"res/material/img/3col.png",
-            label:"三列布局"
-        }));
-        this.addComponent(new Grid4x4x4x4Component({
-            icon:"res/material/img/4col.png",
-            label:"四列布局"
-        }));
-        this.addComponent(new GridCustomComponent({
-            icon:"res/material/img/custom-col.png",
-            label:"自定义列布局"
-        }));
-        this.addComponent(new TabControlComponent({
-            icon:"res/material/img/tab.png",
-            label:"标签页"
         }));
         this.addComponent(new HeaderComponent({
             icon:"res/material/img/ico_header.png",
@@ -144,3 +152,5 @@ export default class Palette{
         }
     }
 }
+Palette.componentId="pb_component_container_palette";
+Palette.propertyId="pb_component_property_palette";

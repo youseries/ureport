@@ -1,12 +1,10 @@
 /**
  * Created by Jacky.Gao on 2017-10-12.
  */
+import Component from './component/Component.js';
 import TabControlInstance from './instance/TabControlInstance.js';
-
+import ContainerInstance from './instance/ContainerInstance.js';
 export default class Utils{
-    static SEQUENCE={};
-    static binding=true;
-    static add=false;
     static seq(id){
         var seqValue;
         $.each(Utils.SEQUENCE,function(name,value){
@@ -36,7 +34,7 @@ export default class Utils{
                 ui.item.css("display","block");
             },
             receive:function(e,ui){
-                UPage.add=true;
+                Utils.add=true;
             },
             remove:function(e,ui){
                 var item=ui.item;
@@ -54,18 +52,11 @@ export default class Utils{
                 if(item.hasClass("pb-component")){
                     //new component
                     var targetComponent=formBuilder.getComponent(item);
-                    if(targetComponent instanceof ImportTemplateComponent){
-                        //import template
-                        UPage.importTemplate.selectTemplate(parentContainer);
-                        item.remove();
-                        Utils.add=false;
-                    }else{
-                        var newElement=Utils.attachComponent(targetComponent,parentContainer);
-                        item.replaceWith(newElement);
-                        item=newElement;
-                    }
+                    var newElement=Utils.attachComponent(targetComponent,parentContainer);
+                    item.replaceWith(newElement);
+                    item=newElement;
                 }
-                if(UPage.add){
+                if(Utils.add){
                     var targetInstance=formBuilder.getInstance(item.prop("id"));
                     parentContainer.addChild(targetInstance);
                     Utils.add=false;
@@ -109,7 +100,7 @@ export default class Utils{
         }
         if(childrenContainers){
             childrenContainers.each(function(index,child){
-                UPage.attachSortable($(child));
+                Utils.attachSortable($(child));
             });
         }
         newElement.click(function(event){
@@ -169,3 +160,6 @@ export default class Utils{
         });
     }
 }
+Utils.SEQUENCE={};
+Utils.binding=true;
+Utils.add=false;

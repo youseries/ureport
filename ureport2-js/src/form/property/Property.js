@@ -290,7 +290,7 @@ export default class Property{
         requiredGroup.append(this.requiredSelect);
         return requiredGroup;
     }
-    refreshValue(){
+    refreshValue(instance){
         this.current=instance;
         if(this.bindSlaveTableGroup){
             if(instance.bindMaster){

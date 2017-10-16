@@ -2,9 +2,6 @@
  * Created by Jacky.Gao on 2017-10-12.
  */
 export default class Instance{
-    static LEFT="left";
-    static TOP="top";
-    static POS_CLASSES=["col-md-3","col-md-9"];
     constructor(){
         this.bindMaster=true;
         this.isRequired=false;
@@ -22,7 +19,7 @@ export default class Instance{
         this.enable="true";
         this.visible="true";
     }
-    newElement(){
+    newElement(label){
         this.element=$("<div class='form-group row' style='margin:0px'>");
         this.label=label;
         this.labelElement=$("<label class='control-label'>");
@@ -233,3 +230,6 @@ export default class Instance{
         return null;
     }
 }
+Instance.LEFT="left";
+Instance.TOP="top";
+Instance.POS_CLASSES=["col-md-3","col-md-9"];

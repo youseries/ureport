@@ -1,22 +1,19 @@
 /**
  * Created by Jacky.Gao on 2017-10-12.
  */
+
 export default class Component{
-    static ID="component_id";
-    static GRID="component_grid";
-    static TAB="component_tab";
-    static PANEL="component_panel";
-    static NAVBAR="component_navbar";
-    static ACCORDION="component_accordion";
-    static CAROUSEL="component_carousel";
     constructor(options){
         this.entityList=[];
-        this.tool=$("<div><img src=\""+options.icon+"\" style='margin-right:5px'>"+options.label+"</div>");
+        this.tool=$("<div><i class='"+options.icon+"' style='margin-right:5px'>"+options.label+"</div>");
         this.tool.addClass("pb-component");
-        this.tool.attr(Component.ID,this.id);
+        this.tool.attr(Component.ID,this.getId());
+        /*
         if(this instanceof TabControlComponent){
             this.tool.attr(Component.TAB,"1");
-        }else if(this instanceof PanelComponent){
+        }
+
+        else if(this instanceof PanelComponent){
             this.tool.attr(Component.PANEL,"1");
         }else if(this instanceof NavbarComponent){
             this.tool.attr(Component.NAVBAR,"1");
@@ -25,6 +22,7 @@ export default class Component{
         }else if(this instanceof CarouselComponent){
             this.tool.attr(Component.CAROUSEL,"1");
         }
+        */
         this.tool.draggable({
             revert: false,
             connectToSortable:".pb-dropable-grid",
@@ -37,4 +35,14 @@ export default class Component{
         }
         return false;
     }
+    getId(){
+        return '';
+    }
 }
+Component.ID="component_id";
+Component.GRID="component_grid";
+Component.TAB="component_tab";
+Component.PANEL="component_panel";
+Component.NAVBAR="component_navbar";
+Component.ACCORDION="component_accordion";
+Component.CAROUSEL="component_carousel";

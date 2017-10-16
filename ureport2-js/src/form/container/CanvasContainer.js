@@ -4,6 +4,7 @@
 import Container from './Container.js';
 export default class CanvasContainer extends Container{
     constructor(canvas){
+        super();
         this.container=canvas;
         this.container.uniqueId();
         this.id=this.container.prop("id");
