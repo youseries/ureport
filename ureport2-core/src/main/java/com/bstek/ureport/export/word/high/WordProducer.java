@@ -111,8 +111,8 @@ public class WordProducer implements Producer{
 			pageMar.setTop(BigInteger.valueOf(DxaUtils.points2dxa(paper.getTopMargin())));
 			pageMar.setBottom(BigInteger.valueOf(DxaUtils.points2dxa(paper.getBottomMargin())));
 			List<Column> columns=report.getColumns();
-			int totalColumn=buildColumnSize(columns);
-			int tableWidth=buildTablePCTWidth(columns);
+			int intArr[]=buildColumnSizeAndTotalWidth(columns);
+			int totalColumn=intArr[0],tableWidth=intArr[1];
 			List<Page> pages=report.getPages();
 			Map<Row,Map<Column,Cell>> cellMap=report.getRowColCellMap();
 			int totalPages=pages.size();
@@ -129,12 +129,14 @@ public class WordProducer implements Producer{
 					tableRow.setHeight(DxaUtils.points2dxa(height));
 					Map<Column,Cell> colCell=cellMap.get(row);
 					if(colCell==null)continue;
+					int skipCol=0;
 					for(Column col:columns){
 						int width=col.getWidth();
 						if(width<1){
+							skipCol++;
 							continue;
 						}
-						int colNumber=col.getColumnNumber()-1;
+						int colNumber=col.getColumnNumber()-1-skipCol;
 						Cell cell=colCell.get(col);
 						if(cell==null){
 							continue;
@@ -167,8 +169,8 @@ public class WordProducer implements Producer{
 		}
 	}
 	
-	private int buildColumnSize(List<Column> columns){
-		int count=0;
+	private int[] buildColumnSizeAndTotalWidth(List<Column> columns){
+		int count=0,totalWidth=0;
 		for(int i=0;i<columns.size();i++){
 			Column col=columns.get(i);
 			int width=col.getWidth();
@@ -176,8 +178,9 @@ public class WordProducer implements Producer{
 				continue;
 			}
 			count++;
+			totalWidth+=width;
 		}
-		return count;
+		return new int[]{count,totalWidth};
 	}
 	
 	private void buildTableCellStyle(XWPFTable table,XWPFTableCell tableCell,Cell cell,int rowNumber,int columnNumber){
@@ -562,14 +565,6 @@ public class WordProducer implements Producer{
 		if(StringUtils.isNotBlank(color)){
 			ctborder.setColor(toHex(color.split(",")));
 		}
-	}
-
-	private int buildTablePCTWidth(List<Column> columns){
-		int width=0;
-		for(Column col:columns){
-			width+=col.getWidth();
-		}
-		return width;
 	}
 	
 	

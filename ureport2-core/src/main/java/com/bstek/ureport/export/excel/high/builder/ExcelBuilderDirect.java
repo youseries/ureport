@@ -85,19 +85,22 @@ public class ExcelBuilderDirect extends ExcelBuilder {
 	        	if(colCell==null){
 	        		continue;
 	        	}
+	        	int skipCol=0;
 	        	for(int i=0;i<columnSize;i++){
 	        		Column col=columns.get(i);
 	        		int w=col.getWidth();
 	        		if(w<1){
+	        			skipCol++;
 	        			continue;
 	        		}
 	        		double colWidth=UnitUtils.pointToPixel(w)*37.5;
-	        		sheet.setColumnWidth(i,(short)colWidth);
-	        		org.apache.poi.ss.usermodel.Cell cell = row.getCell(i);
+	        		int colNum=i-skipCol;
+	        		sheet.setColumnWidth(colNum,(short)colWidth);
+	        		org.apache.poi.ss.usermodel.Cell cell = row.getCell(colNum);
 	        		if(cell!=null){
 	        			continue;
 	        		}
-	        		cell=row.createCell(i);
+	        		cell=row.createCell(colNum);
 	        		com.bstek.ureport.model.Cell cellInfo=colCell.get(col);
 	        		if(cellInfo==null){
 	        			continue;
@@ -126,9 +129,9 @@ public class ExcelBuilderDirect extends ExcelBuilder {
 	        				rr=sheet.createRow(j);
 	        			}
 	        			for(int c=colStart;c<colEnd;c++){
-	        				Cell cc=rr.getCell(c);
+	        				Cell cc=rr.getCell(c-skipCol);
 	        				if(cc==null){
-	        					cc=rr.createCell(c);
+	        					cc=rr.createCell(c-skipCol);
 	        				}
 	        				cc.setCellStyle(style);
 	        			}
@@ -140,7 +143,7 @@ public class ExcelBuilderDirect extends ExcelBuilder {
 	        			if(colSpan>0){
 	        				colSpan--;
 	        			}
-	        			CellRangeAddress cellRegion=new CellRangeAddress(rowNumber,(rowNumber+rowSpan),i,(i+colSpan));
+	        			CellRangeAddress cellRegion=new CellRangeAddress(rowNumber,(rowNumber+rowSpan),i-skipCol,(i-skipCol+colSpan));
 	        			sheet.addMergedRegion(cellRegion);
 	        		}
 	        		Object obj=cellInfo.getFormatData();
