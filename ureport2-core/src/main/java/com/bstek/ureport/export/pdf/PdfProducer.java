@@ -284,7 +284,7 @@ public class PdfProducer implements Producer {
 		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getBgcolor())){
 			bgcolor=rowStyle.getBgcolor();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(rowStyle.getBgcolor())){
+		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getBgcolor())){
 			bgcolor=colStyle.getBgcolor();
 		}
 		if(StringUtils.isNotEmpty(bgcolor)){
