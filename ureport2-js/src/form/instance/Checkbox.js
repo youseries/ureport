@@ -15,7 +15,7 @@ export default class Checkbox{
         }
         this.element=$("<label class='"+inlineClass+"'></label>");
         this.element.append(this.checkbox);
-        this.labelElement=$("<span>"+this.label+"</span>");
+        this.labelElement=$("<span style='margin-left: 15px'>"+this.label+"</span>");
         this.element.append(this.labelElement);
     }
     setValue(json){

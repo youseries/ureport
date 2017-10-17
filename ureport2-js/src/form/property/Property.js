@@ -292,17 +292,6 @@ export default class Property{
     }
     refreshValue(instance){
         this.current=instance;
-        if(this.bindSlaveTableGroup){
-            if(instance.bindMaster){
-                this.bindSlaveTableGroup.hide();
-                this.bindMasterRadio.prop("checked",true);
-            }else{
-                this.bindSlaveRadio.prop("checked",true);
-                this.bindSlaveTableGroup.show();
-                this.buildBindTableSelect();
-                this.bindTableSelect.val(instance.bindTableId);
-            }
-        }
         if(this.optionsInlineSelect){
             if(instance.optionsInline){
                 this.optionsInlineSelect.val("1");
@@ -344,9 +333,5 @@ export default class Property{
         }
         this.positionLabelSelect.val(instance.labelPosition);
         this.textLabel.val(instance.label);
-        this.buildBindFieldSelect();
-        if(this.bindFieldSelect){
-            this.bindFieldSelect.val(instance.bindField || "");
-        }
     }
 }

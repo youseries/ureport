@@ -9,6 +9,7 @@ import Grid4x4x4x4Component from './component/Grid4x4x4x4Component.js';
 import GridCustomComponent from './component/GridCustomComponent.js';
 import TextComponent from './component/TextComponent.js';
 import RadioComponent from './component/RadioComponent.js';
+import CheckboxComponent from './component/CheckboxComponent.js';
 
 export default class Palette{
     constructor(){
@@ -49,6 +50,10 @@ export default class Palette{
             icon:"form form-radio",
             label:"单选框"
         }));
+        this.addComponent(new CheckboxComponent({
+            icon:"form form-checkbox",
+            label:"复选框"
+        }));
         /*
         this.addComponent(new ButtonGroupComponent({
             icon:"res/material/img/but.png",
@@ -77,10 +82,6 @@ export default class Palette{
             icon:"res/material/img/dynamic-select.png",
             label:"动态列表",
             multiple:true
-        }));
-        this.addComponent(new CheckboxComponent({
-            icon:"res/material/img/checkbox.png",
-            label:"复选框"
         }));
 
         this.addComponent(new TextAreaComponent({
