@@ -375,6 +375,7 @@
       "tip":"Please enter a number greater than 0",
       "numValidate":"Please enter a valid number! ",
       "colWidth":"Column Width",
+      "ok":"OK",
       "rowHeight":"Row Height"
     },
     "save":{

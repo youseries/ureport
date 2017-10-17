@@ -375,6 +375,7 @@
       "tip":"请输入一个大于0的数字",
       "numValidate":"请输入一个合法的数字!",
       "colWidth":"设置列宽",
+      "ok":"确定",
       "rowHeight":"设置行高"
     },
     "save":{
