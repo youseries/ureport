@@ -219,7 +219,6 @@ export default class ZxingValueEditor extends BaseValueEditor{
         this.heightEditor.val(cellDef.value.height);
         this.sourceSelect.val(source);
         this.textEditor.val('');
-        this.codeMirror.setValue('');
         if(source==='text'){
             this.textEditorGroup.show();
             this.expressionEditorGroup.hide();
