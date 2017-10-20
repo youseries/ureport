@@ -9,9 +9,9 @@ export default class ChartValueEditor{
     initAnimationsOption(container){
         const _this=this;
         const legendGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;margin-top: 10px">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">动画效果配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.chart.motionConfig}</legend></fieldset>`);
         container.append(legendGroup);
-        const g=$(`<div class="form-group" style="margin-bottom: 0"><label>动画延时：</label></div>`);
+        const g=$(`<div class="form-group" style="margin-bottom: 0"><label>${window.i18n.chart.motionDelay}</label></div>`);
         legendGroup.append(g);
         this.durationEditor=$(`<input type="number" class="form-control" style="display: inline-block;width:100px;padding:2px;font-size: 12px;height: 25px" value="1000">`);
         g.append(this.durationEditor);
@@ -20,7 +20,7 @@ export default class ChartValueEditor{
             targetOption.duration=$(this).val();
             setDirty();
         });
-        const easingGroup=$(`<span style="margin-left: 20px">效果：</span>`);
+        const easingGroup=$(`<span style="margin-left: 20px">${window.i18n.chart.effect}</span>`);
         g.append(easingGroup);
         const easingType='linear,easeInQuad,easeOutQuad,easeInOutQuad,easeInCubic,easeOutCubic,easeInOutCubic,easeInQuart,easeOutQuart,easeInOutQuart,easeInQuint,easeOutQuint,easeInOutQuint,easeInSine,easeOutSine,easeInOutSine,easeInExpo,easeOutExpo,easeInOutExpo,easeInCirc,easeOutCirc,easeInOutCirc,easeInElastic,easeOutElastic,easeInOutElastic,easeInBack,easeOutBack,easeInOutBack,easeInBounce,easeOutBounce,easeInOutBounce';
         this.easingSelect=$(`<select class="form-control" style="display: inline-block;width:inherit;padding:2px;font-size: 12px;height: 25px"></select>`);
@@ -41,7 +41,7 @@ export default class ChartValueEditor{
     initPaddingOption(container){
         const _this=this;
         const legendGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">边距配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.chart.margin}</legend></fieldset>`);
         container.append(legendGroup);
         const upGroup=$(`<span>上：</span>`);
         legendGroup.append(upGroup);
@@ -61,7 +61,7 @@ export default class ChartValueEditor{
             setDirty();
         });
 
-        const downGroup=$(`<span style="margin-left: 10px">下：</span>`);
+        const downGroup=$(`<span style="margin-left: 10px">${window.i18n.chart.down}：</span>`);
         legendGroup.append(downGroup);
         this.downPaddingEditor=$(`<input type="number" value="0" class="form-control" style="display: inline-block;width:50px;padding:2px;font-size: 12px;height: 25px">`);
         downGroup.append(this.downPaddingEditor);
@@ -79,7 +79,7 @@ export default class ChartValueEditor{
             setDirty();
         });
 
-        const leftGroup=$(`<span style="margin-left: 10px">左：</span>`);
+        const leftGroup=$(`<span style="margin-left: 10px">${window.i18n.chart.left}：</span>`);
         legendGroup.append(leftGroup);
         this.leftPaddingEditor=$(`<input type="number" value="0" class="form-control" style="display: inline-block;width:50px;padding:2px;font-size: 12px;height: 25px">`);
         leftGroup.append(this.leftPaddingEditor);
@@ -97,7 +97,7 @@ export default class ChartValueEditor{
             setDirty();
         });
 
-        const rightGroup=$(`<span style="margin-left: 10px">右：</span>`);
+        const rightGroup=$(`<span style="margin-left: 10px">${window.i18n.chart.right}：</span>`);
         legendGroup.append(rightGroup);
         this.rightPaddingEditor=$(`<input type="number" value="0" class="form-control" style="display: inline-block;width:50px;padding:2px;font-size: 12px;height: 25px">`);
         rightGroup.append(this.rightPaddingEditor);
@@ -118,13 +118,13 @@ export default class ChartValueEditor{
     initLegendOption(container){
         const _this=this;
         const legendGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;margin-bottom: 10px;">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">图例配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.chart.legendConfig}</legend></fieldset>`);
         container.append(legendGroup);
-        const displayGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>显示：</label></div>`);
+        const displayGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>${window.i18n.chart.display}</label></div>`);
         legendGroup.append(displayGroup);
-        this.showLegendRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_legend_radio_${this.id}" value="asc" checked>是</label>`);
+        this.showLegendRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_legend_radio_${this.id}" value="asc" checked>${window.i18n.chart.yes}</label>`);
         displayGroup.append(this.showLegendRadio);
-        this.hideLegendRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_legend_radio_${this.id}" value="asc">否</label>`);
+        this.hideLegendRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_legend_radio_${this.id}" value="asc">${window.i18n.chart.no}</label>`);
         displayGroup.append(this.hideLegendRadio);
 
         this.showLegendRadio.children('input').change(function(){
@@ -153,13 +153,13 @@ export default class ChartValueEditor{
             setDirty();
         });
 
-        this.legendPositionGroup=$(`<span style="margin-left: 20px">位置：</span>`);
+        this.legendPositionGroup=$(`<span style="margin-left: 20px">${window.i18n.chart.position}</span>`);
         displayGroup.append(this.legendPositionGroup);
         this.legendPositionSelect=$(`<select class="form-control" style="display: inline-block;width:50px;padding:2px;font-size: 12px;height: 25px">
-            <option value="top" selected>上</option>
-            <option value="bottom">下</option>
-            <option value="left">左</option>
-            <option value="right">右</option>
+            <option value="top" selected>${window.i18n.chart.up}</option>
+            <option value="bottom">${window.i18n.chart.down}</option>
+            <option value="left">${window.i18n.chart.left}</option>
+            <option value="right">${window.i18n.chart.right}</option>
         </select>`);
         this.legendPositionGroup.append(this.legendPositionSelect);
         this.legendPositionSelect.change(function(){
@@ -177,13 +177,13 @@ export default class ChartValueEditor{
     initTitleOption(container){
         const _this=this;
         const legendGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;margin-top:10px;margin-bottom: 15px">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">标题配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.chart.titleConfig}</legend></fieldset>`);
         container.append(legendGroup);
-        const displayGroup=$(`<div class="form-group" style="margin-bottom: 0"><label style="margin-bottom: 15px">显示：</label></div>`);
+        const displayGroup=$(`<div class="form-group" style="margin-bottom: 0"><label style="margin-bottom: 15px">${window.i18n.chart.display}</label></div>`);
         legendGroup.append(displayGroup);
-        this.showTitleRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_title_radio_${this.id}" value="asc">是</label>`);
+        this.showTitleRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_title_radio_${this.id}" value="asc">${window.i18n.chart.yes}</label>`);
         displayGroup.append(this.showTitleRadio);
-        this.hideTitleRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_title_radio_${this.id}" value="asc" checked>否</label>`);
+        this.hideTitleRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_title_radio_${this.id}" value="asc" checked>${window.i18n.chart.no}</label>`);
         displayGroup.append(this.hideTitleRadio);
         this.showTitleRadio.children('input').change(function(){
             const targetOption=_this.getTargetOption('title');
@@ -217,13 +217,13 @@ export default class ChartValueEditor{
             setDirty();
         });
 
-        this.titlePositionGroup=$(`<span style="margin-left: 15px">位置：</span>`);
+        this.titlePositionGroup=$(`<span style="margin-left: 15px">${window.i18n.chart.position}</span>`);
         displayGroup.append(this.titlePositionGroup);
         this.titlePositionSelect=$(`<select class="form-control" style="display: inline-block;width:50px;padding:2px;font-size: 12px;height: 25px">
-            <option value="top">上</option>
-            <option value="bottom">下</option>
-            <option value="left">左</option>
-            <option value="right">右</option>
+            <option value="top">${window.i18n.chart.up}</option>
+            <option value="bottom">${window.i18n.chart.down}</option>
+            <option value="left">${window.i18n.chart.left}</option>
+            <option value="right">${window.i18n.chart.right}</option>
         </select>`);
         this.titlePositionGroup.append(this.titlePositionSelect);
         this.titlePositionSelect.change(function(){
@@ -240,7 +240,7 @@ export default class ChartValueEditor{
             setDirty();
         });
 
-        this.titleTextGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>标题内容：</label></div>`);
+        this.titleTextGroup=$(`<div class="form-group" style="margin-bottom: 0"><label>${window.i18n.chart.titleContent}</label></div>`);
         displayGroup.append(this.titleTextGroup);
         this.titleTextEditor=$(`<input type="text" class="form-control" style="display: inline-block;width:280px;padding:2px;font-size: 12px;height: 25px">`);
         this.titleTextGroup.append(this.titleTextEditor);

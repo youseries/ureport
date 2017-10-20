@@ -135,8 +135,12 @@ export default class CrossTabWidget{
         };
     }
     doDraw(cellDef,rowIndex,colIndex){
-        this.rowIndex=rowIndex;
-        this.colIndex=colIndex;
+        if(rowIndex!=null && rowIndex!=undefined){
+            this.rowIndex=rowIndex;
+        }
+        if(colIndex!=null && colIndex!=undefined){
+            this.colIndex=colIndex;
+        }
         const slashValue=cellDef.value;
         const cellStyle=cellDef.cellStyle;
         if(!cellStyle.forecolor){

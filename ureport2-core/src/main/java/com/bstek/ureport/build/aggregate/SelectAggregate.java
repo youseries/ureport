@@ -51,8 +51,12 @@ public class SelectAggregate extends Aggregate {
 			List<Object> bindList=new ArrayList<Object>();
 			bindList.add(o);
 			Object data=Utils.getProperty(o, property);
-			data=mappingData(mappingMap,data);
-			list.add(new BindData(data,bindList));
+			Object mappingData=mappingData(mappingMap,data);
+			if(mappingData==null){
+				list.add(new BindData(data,bindList));				
+			}else{
+				list.add(new BindData(data,mappingData,bindList));								
+			}
 		}
 		if(list.size()==0){
 			List<Object> rowList=new ArrayList<Object>();

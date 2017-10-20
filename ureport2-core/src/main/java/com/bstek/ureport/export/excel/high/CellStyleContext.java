@@ -162,7 +162,17 @@ public class CellStyleContext {
 			}
 		}
 		XSSFFont font=(XSSFFont)wb.createFont();
-		font.setFontHeight(cellStyle.getFontSize());
+		int fontSize=cellStyle.getFontSize();
+		if(customStyle!=null && customStyle.getFontSize()>0){
+			fontSize=customStyle.getFontSize();
+		}
+		if(rowStyle!=null && rowStyle.getFontSize()>0){
+			fontSize=rowStyle.getFontSize();
+		}
+		if(colStyle!=null && colStyle.getFontSize()>0){
+			fontSize=colStyle.getFontSize();
+		}
+		font.setFontHeight(fontSize);
 		Boolean bold=cellStyle.getBold();
 		if(customStyle!=null && customStyle.getBold()!=null){
 			bold=customStyle.getBold();

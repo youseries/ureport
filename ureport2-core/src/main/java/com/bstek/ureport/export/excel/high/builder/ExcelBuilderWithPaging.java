@@ -79,26 +79,33 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 				pageIndex++;
 				Drawing<?> drawing=sheet.createDrawingPatriarch();
 				List<Row> rows=page.getRows();
-				for(Row r:rows){
+				for(int rowIndex=0;rowIndex<rows.size();rowIndex++){
+					Row r=rows.get(rowIndex);
 					org.apache.poi.ss.usermodel.Row row = sheet.getRow(rowNumber);
 		        	if(row==null){
 		        		row=sheet.createRow(rowNumber);
 		        	}
 		        	Map<Column,com.bstek.ureport.model.Cell> colCell=cellMap.get(r);
+		        	int skipCol=0;
 		        	for(int i=0;i<columnSize;i++){
 		        		Column col=columns.get(i);
 		        		int w=col.getWidth();
 		        		if(w<1){
+		        			skipCol++;
 		        			continue;
 		        		}
+		        		int colNum=i-skipCol;
 		        		double colWidth=UnitUtils.pointToPixel(w)*37.5;
-		        		sheet.setColumnWidth(i,(short)colWidth);
-		        		org.apache.poi.ss.usermodel.Cell cell = row.getCell(i);
+		        		sheet.setColumnWidth(colNum,(short)colWidth);
+		        		org.apache.poi.ss.usermodel.Cell cell = row.getCell(colNum);
 		        		if(cell!=null){
 		        			continue;
 		        		}
-		        		cell=row.createCell(i);
-		        		com.bstek.ureport.model.Cell cellInfo=colCell.get(col);
+		        		cell=row.createCell(colNum);
+		        		com.bstek.ureport.model.Cell cellInfo=null;
+		        		if(colCell!=null){
+		        			cellInfo=colCell.get(col);
+		        		}
 		        		if(cellInfo==null){
 		        			continue;
 		        		}
@@ -123,9 +130,9 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 		        				rr=sheet.createRow(j);
 		        			}
 		        			for(int c=colStart;c<colEnd;c++){
-		        				Cell cc=rr.getCell(c);
+		        				Cell cc=rr.getCell(c-skipCol);
 		        				if(cc==null){
-		        					cc=rr.createCell(c);
+		        					cc=rr.createCell(c-skipCol);
 		        				}
 		        				cc.setCellStyle(style);
 		        			}
@@ -137,7 +144,7 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 		        			if(colSpan>0){
 		        				colSpan--;
 		        			}
-		        			CellRangeAddress cellRegion=new CellRangeAddress(rowNumber,(rowNumber+rowSpan),i,(i+colSpan));
+		        			CellRangeAddress cellRegion=new CellRangeAddress(rowNumber,(rowNumber+rowSpan),i-skipCol,(i-skipCol+colSpan));
 		        			sheet.addMergedRegion(cellRegion);
 		        		}
 		        		Object obj=cellInfo.getFormatData();
@@ -163,7 +170,7 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			    				
 			    				int leftMargin=0,topMargin=0;
 			    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
-			    				int wholeHeight=getWholeHeight(rows, rowNumber, cellInfo.getRowSpan());
+			    				int wholeHeight=getWholeHeight(rows, rowIndex, cellInfo.getRowSpan());
 			    				HorizontalAlignment align=style.getAlignmentEnum();
 			    				if(align.equals(HorizontalAlignment.CENTER)){
 			    					leftMargin=(wholeWidth-width)/2;
@@ -208,7 +215,7 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			        				
 				    				int leftMargin=0,topMargin=0;
 				    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
-				    				int wholeHeight=getWholeHeight(rows, rowNumber, cellInfo.getRowSpan());
+				    				int wholeHeight=getWholeHeight(rows, rowIndex, cellInfo.getRowSpan());
 				    				HorizontalAlignment align=style.getAlignmentEnum();
 				    				if(align.equals(HorizontalAlignment.CENTER)){
 				    					leftMargin=(wholeWidth-width)/2;

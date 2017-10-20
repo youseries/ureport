@@ -14,18 +14,18 @@ export default class AlignTopTool extends Tool{
         this.align="middle";
         const group=$(`<div class="btn-group"></div>`);
         const nameButton=$(`<button type="button" class="btn btn-default"
-            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;font-size: 12pt;" title="上下对齐">
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 1px 6px 5px;color: #0e90d2;font-size: 12pt;" title="${window.i18n.tools.alignTop.upDownAlign}">
             <i class="ureport ureport-alignmiddle" id="valign_button" style="color: #0e90d2;"></i>
             </button>`);
         group.append(nameButton);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px" data-toggle="dropdown" title="上下对齐">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px" data-toggle="dropdown" title="${window.i18n.tools.alignTop.upDownAlign}">
             <span class="caret"></span>
-            <span class="sr-only">切换下拉菜单</span>
+            <span class="sr-only">${window.i18n.tools.alignTop.changeMenu}</span>
         </button>`);
         nameButton.click(function(){
             const selectedCells=_this.context.hot.getSelected();
             if(!selectedCells || selectedCells.length===0){
-                alert("请先选择单元格！");
+                alert(`${window.i18n.selectTargetCellFirst}`);
                 return;
             }
             const align=_this.align;
@@ -45,13 +45,13 @@ export default class AlignTopTool extends Tool{
         const ul=$(`<ul class="dropdown-menu" role="menu"></ul>`);
         const top=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-aligntop" style="color: #0e90d2;"></i> 上部对齐
+                    <i class="ureport ureport-aligntop" style="color: #0e90d2;"></i> ${window.i18n.tools.alignTop.topAlign}
                 </a>
             </li>`);
         top.click(function(){
             const selectedCells=_this.context.hot.getSelected();
             if(!selectedCells || selectedCells.length===0){
-                alert("请先选择单元格！");
+                alert(`${window.i18n.selectTargetCellFirst}`);
                 return;
             }
             let oldAligns=_this._buildCellAlign(_this.context,"top");
@@ -70,13 +70,13 @@ export default class AlignTopTool extends Tool{
         ul.append(top);
         const middle=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-alignmiddle" style="color: #0e90d2;"></i> 中部对齐
+                    <i class="ureport ureport-alignmiddle" style="color: #0e90d2;"></i> ${window.i18n.tools.alignTop.middleAlign}
                 </a>
             </li>`);
         middle.click(function(){
             const selectedCells=_this.context.hot.getSelected();
             if(!selectedCells || selectedCells.length===0){
-                alert("请先选择单元格！");
+                alert(`${window.i18n.selectTargetCellFirst}`);
                 return;
             }
             let oldAligns=_this._buildCellAlign(_this.context,"middle");
@@ -95,13 +95,13 @@ export default class AlignTopTool extends Tool{
         ul.append(middle);
         const bottom=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-alignbottom" style="color: #0e90d2;"></i> 下部对齐
+                    <i class="ureport ureport-alignbottom" style="color: #0e90d2;"></i> ${window.i18n.tools.alignTop.bottomAlign}
                 </a>
             </li>`);
         bottom.click(function(){
             const selectedCells=_this.context.hot.getSelected();
             if(!selectedCells || selectedCells.length===0){
-                alert("请先选择单元格！");
+                alert(`${window.i18n.selectTargetCellFirst}`);
                 return;
             }
             let oldAligns=_this._buildCellAlign(_this.context,"bottom");
@@ -185,7 +185,7 @@ export default class AlignTopTool extends Tool{
     }
 
     getTitle(){
-        return '顶部对齐';
+        return `${window.i18n.tools.alignTop.topAlign}`;
     }
     getIcon(){
         return `<i class="ureport ureport-aligntop" style="color: #0e90d2;"></i>`;

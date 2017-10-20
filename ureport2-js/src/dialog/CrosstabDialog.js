@@ -14,7 +14,7 @@ export default class CrosstabDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            斜表头定义
+                            ${window.i18n.dialog.crosstab.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -27,11 +27,11 @@ export default class CrosstabDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const group=$(`<div class="form-group"><label>斜表头(<span style="font-size: 12px;color: #4e4e4e">多个斜表头以|号分隔，为空则表示生成所有斜表头信息</span>)：</label></div>`);
+        const group=$(`<div class="form-group"><label>${window.i18n.dialog.crosstab.crosstab}(<span style="font-size: 12px;color: #4e4e4e">${window.i18n.dialog.crosstab.tip}</span>)：</label></div>`);
         this.nameEditor=$(`<input type="text" class="form-control">`);
         group.append(this.nameEditor);
         body.append(group);
-        const button=$(`<button type="button" class="btn btn-default">确定</button>`);
+        const button=$(`<button type="button" class="btn btn-default">${window.i18n.dialog.crosstab.ok}</button>`);
         footer.append(button);
         const _this=this;
         button.click(function(){

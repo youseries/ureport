@@ -22,7 +22,7 @@ export default class DatasourcePanel{
         const panel=$(`<div style="width:100%;"></div>`);
         const toolbar=$(`<div class="btn-group ud-toolbar"></div>`);
         panel.append(toolbar);
-        const addSqlBtn=$(`<button class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" title="添加数据库连接">
+        const addSqlBtn=$(`<button class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" title="${window.i18n.property.datasource.title}">
             <i class="ureport ureport-database"></i>
         </button>`);
         toolbar.append(addSqlBtn);
@@ -40,7 +40,7 @@ export default class DatasourcePanel{
                 _this.datasources.push(tree);
             });
         });
-        const addSpringBtn=$(`<button class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" title="添加SpringBean连接">
+        const addSpringBtn=$(`<button class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" title="${window.i18n.property.datasource.addBean}">
             <i class="ureport ureport-leaf"></i>
         </button>`);
         toolbar.append(addSpringBtn);
@@ -52,7 +52,7 @@ export default class DatasourcePanel{
                 _this.datasources.push(tree);
             });
         });
-        const addBuildinBtn=$(`<button class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" title="添加内置数据源连接">
+        const addBuildinBtn=$(`<button class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" title="${window.i18n.property.datasource.addBuildin}">
             <i class="ureport ureport-shareconnection"></i>
         </button>`);
         toolbar.append(addBuildinBtn);

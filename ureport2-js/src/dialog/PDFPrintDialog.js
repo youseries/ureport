@@ -9,14 +9,14 @@ export default class PDFPrintDialog{
         const w=$(window).width(),h=$(window).height();
         this.paperSizeList=buildPageSizeList();
         this.dialog=$(`<div class="modal fade" role="dialog" aria-hidden="true" style="z-index: 1110">
-            <div class="modal-dialog modal-lg" style="width: 1150px;">
+            <div class="modal-dialog modal-lg" style="width: 1250px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            PDF在线打印
+                            ${window.i18n.pdfPrint.title}
                         </h4>
                     </div>
                     <div class="modal-body" style="padding-top:5px"></div>
@@ -31,12 +31,12 @@ export default class PDFPrintDialog{
     }
     initBody(){
         const toolbar=$(`<fieldset style="width: 100%;height: 60px;font-size: 12px;border: solid 1px #ddd;border-radius: 5px;padding: 1px 8px;">
-        <legend style="font-size: 12px;width: 50px;border-bottom: none;margin-bottom: 0;">打印配置</legend>
+        <legend style="font-size: 12px;width: 60px;border-bottom: none;margin-bottom: 0;">${window.i18n.pdfPrint.setup}</legend>
         </fieldset>`);
         this.body.append(toolbar);
-        const pageTypeGroup=$(`<div class="form-group" style="display: inline-block"><label>纸张:</label></div>`);
+        const pageTypeGroup=$(`<div class="form-group" style="display: inline-block"><label>${window.i18n.pdfPrint.paper}</label></div>`);
         toolbar.append(pageTypeGroup);
-        this.pageSelect=$(`<select class="form-control" style="display: inline-block;width: 68px;font-size: 12px;padding: 5px;height: 28px;">
+        this.pageSelect=$(`<select class="form-control" style="display: inline-block;width: 68px;font-size: 12px;padding: 1px;height: 28px;">
             <option>A0</option>
             <option>A1</option>
             <option>A2</option>
@@ -59,7 +59,7 @@ export default class PDFPrintDialog{
             <option>B8</option>
             <option>B9</option>
             <option>B10</option>
-            <option value="CUSTOM">自定义</option>
+            <option value="CUSTOM">${window.i18n.pdfPrint.custom}</option>
         </select>`);
         pageTypeGroup.append(this.pageSelect);
         const _this=this;
@@ -80,38 +80,38 @@ export default class PDFPrintDialog{
             _this.paper.paperType=value;
         });
 
-        const pageWidthGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 10px"><span>宽(毫米):</span></div>`);
+        const pageWidthGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 6px"><span>${window.i18n.pdfPrint.width}</span></div>`);
         toolbar.append(pageWidthGroup);
-        this.pageWidthEditor=$(`<input type="number" class="form-control" readonly style="display: inline-block;width: 55px;font-size: 12px;padding: 5px;height: 28px">`);
+        this.pageWidthEditor=$(`<input type="number" class="form-control" readonly style="display: inline-block;width: 40px;font-size: 12px;padding: 1px;height: 28px">`);
         pageWidthGroup.append(this.pageWidthEditor);
         this.pageWidthEditor.change(function(){
             let value=$(this).val();
             if(!value || isNaN(value)){
-                alert('请输入数字！');
+                alert(`${window.i18n.pdfPrint.numberTip}`);
                 return;
             }
             _this.paper.width=mmToPoint(value);
             _this.context.printLine.refresh();
         });
 
-        const pageHeightGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 10px"><span>高(毫米):</span></div>`);
+        const pageHeightGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 6px"><span>${window.i18n.pdfPrint.height}</span></div>`);
         toolbar.append(pageHeightGroup);
-        this.pageHeightEditor=$(`<input type="number" class="form-control" readonly style="display: inline-block;width: 55px;font-size: 12px;padding: 5px;height: 28px">`);
+        this.pageHeightEditor=$(`<input type="number" class="form-control" readonly style="display: inline-block;width: 40px;font-size: 12px;padding: 1px;height: 28px">`);
         pageHeightGroup.append(this.pageHeightEditor);
         this.pageHeightEditor.change(function(){
             let value=$(this).val();
             if(!value || isNaN(value)){
-                alert('请输入数字！');
+                alert(`${window.i18n.pdfPrint.numberTip}`);
                 return;
             }
             _this.paper.height=mmToPoint(value);
         });
 
-        const orientationGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 10px"><label>方向:</label></div>`);
+        const orientationGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 6px"><label>${window.i18n.pdfPrint.orientation}</label></div>`);
         toolbar.append(orientationGroup);
-        this.orientationSelect=$(`<select class="form-control" style="display:inline-block;width: 60px;font-size: 12px;padding: 5px;height: 28px">
-            <option value="portrait">纵向</option>
-            <option value="landscape">横向</option>
+        this.orientationSelect=$(`<select class="form-control" style="display:inline-block;width: 60px;font-size: 12px;padding: 1px;height: 28px">
+            <option value="portrait">${window.i18n.pdfPrint.portrait}</option>
+            <option value="landscape">${window.i18n.pdfPrint.landscape}</option>
         </select>`);
         orientationGroup.append(this.orientationSelect);
         this.orientationSelect.change(function(){
@@ -122,69 +122,62 @@ export default class PDFPrintDialog{
         const marginGroup=$(`<div style="display: inline-block"></div>`);
         toolbar.append(marginGroup);
 
-        const leftMarginGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 10px"><label>左边距(毫米):</label></div>`);
+        const leftMarginGroup=$(`<div class="form-group" style="display: inline-block;margin-left:6px"><label>${window.i18n.pdfPrint.leftMargin}</label></div>`);
         marginGroup.append(leftMarginGroup);
-        this.leftMarginEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 50px;font-size: 12px;padding: 5px;height: 28px">`);
+        this.leftMarginEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 40px;font-size: 12px;padding: 1px;height: 28px">`);
         leftMarginGroup.append(this.leftMarginEditor);
         this.leftMarginEditor.change(function(){
             let value=$(this).val();
             if(!value || isNaN(value)){
-                alert('请输入数字！');
+                alert(`${window.i18n.pdfPrint.numberTip}`);
                 return;
             }
             _this.paper.leftMargin=mmToPoint(value);
             _this.context.printLine.refresh();
         });
 
-        const rightMarginGroup=$(`<div class="form-group" style="display: inline-block;margin-top: 5px;margin-left: 10px""><label>右边距(毫米):</label></div>`);
+        const rightMarginGroup=$(`<div class="form-group" style="display: inline-block;margin-top: 5px;margin-left: 6px""><label>${window.i18n.pdfPrint.rightMargin}</label></div>`);
         marginGroup.append(rightMarginGroup);
-        this.rightMarginEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 50px;font-size: 12px;padding: 5px;height: 28px">`);
+        this.rightMarginEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 40px;font-size: 12px;padding: 1px;height: 28px">`);
         rightMarginGroup.append(this.rightMarginEditor);
         this.rightMarginEditor.change(function(){
             let value=$(this).val();
             if(!value || isNaN(value)){
-                alert('请输入数字！');
+                alert(`${window.i18n.pdfPrint.numberTip}`);
                 return;
             }
             _this.paper.rightMargin=mmToPoint(value);
             _this.context.printLine.refresh();
         });
 
-        const topMarginGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 10px;"><label>上边距(毫米):</label></div>`);
+        const topMarginGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 6px;"><label>${window.i18n.pdfPrint.topMargin}</label></div>`);
         marginGroup.append(topMarginGroup);
-        this.topMarginEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 50px;font-size: 12px;padding: 5px;height: 28px">`);
+        this.topMarginEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 40px;font-size: 12px;padding: 1px;height: 28px">`);
         topMarginGroup.append(this.topMarginEditor);
         this.topMarginEditor.change(function(){
             let value=$(this).val();
             if(!value || isNaN(value)){
-                alert('请输入数字！');
+                alert(`${window.i18n.pdfPrint.numberTip}`);
                 return;
             }
             _this.paper.topMargin=mmToPoint(value);
         });
 
-        const bottomMarginGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 10px""><label>下边距(毫米):</label></div>`);
+        const bottomMarginGroup=$(`<div class="form-group" style="display: inline-block;margin-left: 6px""><label>${window.i18n.pdfPrint.bottomMargin}</label></div>`);
         marginGroup.append(bottomMarginGroup);
-        this.bottomMarginEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 50px;font-size: 12px;padding: 5px;height: 28px">`);
+        this.bottomMarginEditor=$(`<input type="number" class="form-control" style="display: inline-block;width: 40px;font-size: 12px;padding: 1px;height: 28px">`);
         bottomMarginGroup.append(this.bottomMarginEditor);
         this.bottomMarginEditor.change(function(){
             let value=$(this).val();
             if(!value || isNaN(value)){
-                alert('请输入数字！');
+                alert(`${window.i18n.pdfPrint.numberTip}`);
                 return;
             }
             _this.paper.bottomMargin=mmToPoint(value);
         });
         const file=getParameter('_u');
         const urlParameters=window.location.search;
-        const h=$(window).height();
-        const url=window._server+"/pdf/show"+urlParameters+"&_p=1";
-        const iFrame=$(`<iframe name="_iframe_for_pdf_print" style="width: 100%;height:${h}px;margin-top: 5px;border:solid 1px #c2c2c2" frameborder="0" src="${url}"></iframe>`);
-        this.body.append(iFrame);
-        iFrame.on('load',function(){
-            hideLoading();
-        });
-        const button=$(`<button class="btn btn-primary" style="padding-top:5px;height: 30px;margin-left: 10px;">应用</button>`);
+        const button=$(`<button class="btn btn-primary" style="padding-top:5px;height: 30px;margin-left: 10px;">${window.i18n.pdfPrint.apply}</button>`);
         toolbar.append(button);
         let index=0;
         button.click(function(){
@@ -196,19 +189,37 @@ export default class PDFPrintDialog{
                 url:window._server+'/pdf/newPaging'+urlParameters,
                 success:function(){
                     const newUrl=window._server+'/pdf/show'+urlParameters+'&_r='+(index++);
-                    iFrame.prop('src',newUrl);
+                    _this.iFrame.prop('src',newUrl);
                 },
                 error:function(){
                     hideLoading();
-                    alert("操作失败！");
+                    alert(`${window.i18n.pdfPrint.fail}`);
                 }
             })
         });
 
-        const printButton=$(`<button class="btn btn-danger" style="padding-top:5px;height: 30px;margin-left: 10px;">打印</button>`);
+        const printButton=$(`<button class="btn btn-danger" style="padding-top:5px;height: 30px;margin-left: 10px;">${window.i18n.pdfPrint.print}</button>`);
         toolbar.append(printButton);
         printButton.click(function(){
             window.frames['_iframe_for_pdf_print'].window.print();
+        });
+    }
+
+    initIFrame(){
+        if(this.iFrame){
+           return;
+        }
+        const urlParameters=window.location.search;
+        const h=$(window).height();
+        const url=window._server+"/pdf/show"+urlParameters+"&_p=1";
+        this.iFrame=$(`<iframe name="_iframe_for_pdf_print" style="width: 100%;height:${h}px;margin-top: 5px;border:solid 1px #c2c2c2" frameborder="0" src="${url}"></iframe>`);
+        this.body.append(this.iFrame);
+        const iframe=this.iFrame.get(0);
+        if(!iframe.attachEvent){
+            showLoading();
+        }
+        this.iFrame.on('load',function(){
+            hideLoading();
         });
     }
 
@@ -224,5 +235,6 @@ export default class PDFPrintDialog{
         this.bottomMarginEditor.val(pointToMM(this.paper.bottomMargin));
         this.orientationSelect.val(this.paper.orientation);
         this.dialog.modal('show');
+        this.initIFrame();
     }
 };

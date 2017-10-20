@@ -38,6 +38,7 @@ import com.bstek.ureport.build.ReportBuilder;
 import com.bstek.ureport.build.paging.Page;
 import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.chart.ChartData;
+import com.bstek.ureport.console.MobileUtils;
 import com.bstek.ureport.console.RenderPageServletAction;
 import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.console.exception.ReportDesignException;
@@ -102,21 +103,26 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				String customParameters=buildCustomParameters(req);
 				context.put("customParameters", customParameters);
 				Tools tools=null;
-				String toolsInfo=req.getParameter("_t");
-				if(StringUtils.isNotBlank(toolsInfo)){
+				if(MobileUtils.isMobile(req)){
 					tools=new Tools(false);
-					if(toolsInfo.equals("0")){
-						tools.setShow(false);
-					}else{
-						String[] infos=toolsInfo.split(",");
-						for(String name:infos){
-							tools.doInit(name);
-						}						
-					}
-					context.put("_t", toolsInfo);
-					context.put("hasTools", true);
+					tools.setShow(false);
 				}else{
-					tools=new Tools(true);
+					String toolsInfo=req.getParameter("_t");
+					if(StringUtils.isNotBlank(toolsInfo)){
+						tools=new Tools(false);
+						if(toolsInfo.equals("0")){
+							tools.setShow(false);
+						}else{
+							String[] infos=toolsInfo.split(",");
+							for(String name:infos){
+								tools.doInit(name);
+							}						
+						}
+						context.put("_t", toolsInfo);
+						context.put("hasTools", true);
+					}else{
+						tools=new Tools(true);
+					}
 				}
 				context.put("tools", tools);
 			}

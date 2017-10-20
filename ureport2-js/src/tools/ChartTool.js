@@ -13,14 +13,14 @@ export default class ChartTool extends Tool{
     buildButton(){
         const _this=this;
         const group=$(`<div class="btn-group"></div>`);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="图表">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.chart.chart}">
             <i class="ureport ureport-pie" style="color: #0e90d2;"></i>
             <span class="caret"></span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu"></ul>`);
         const pie=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-pie" style="color: #0e90d2;"></i> 饼状图
+                    <i class="ureport ureport-pie" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.pie}
                 </a>
             </li>`);
         ul.append(pie);
@@ -29,7 +29,7 @@ export default class ChartTool extends Tool{
         });
         const doughnut=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-doughnut" style="color: #0e90d2;"></i> 圆环图
+                    <i class="ureport ureport-doughnut" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.doughnut}
                 </a>
             </li>`);
         ul.append(doughnut);
@@ -38,7 +38,7 @@ export default class ChartTool extends Tool{
         });
         const line=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-line" style="color: #0e90d2;"></i> 曲线图
+                    <i class="ureport ureport-line" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.line}
                 </a>
             </li>`);
         ul.append(line);
@@ -47,7 +47,7 @@ export default class ChartTool extends Tool{
         });
         const bar=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-bar" style="color: #0e90d2;"></i> 柱状图
+                    <i class="ureport ureport-bar" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.bar}
                 </a>
             </li>`);
         ul.append(bar);
@@ -56,7 +56,7 @@ export default class ChartTool extends Tool{
         });
         const horBar=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-horizontal-bar" style="color: #0e90d2;"></i> 水平柱状图
+                    <i class="ureport ureport-horizontal-bar" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.horizontalBar}
                 </a>
             </li>`);
         ul.append(horBar);
@@ -65,7 +65,7 @@ export default class ChartTool extends Tool{
         });
         const area=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-area" style="color: #0e90d2;"></i> 面积图
+                    <i class="ureport ureport-area" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.area}
                 </a>
             </li>`);
         ul.append(area);
@@ -74,7 +74,7 @@ export default class ChartTool extends Tool{
         });
         const radar=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-radar" style="color: #0e90d2;"></i> 雷达图
+                    <i class="ureport ureport-radar" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.radar}
                 </a>
             </li>`);
         ul.append(radar);
@@ -83,7 +83,7 @@ export default class ChartTool extends Tool{
         });
         const polar=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-polar" style="color: #0e90d2;"></i> 极坐标图
+                    <i class="ureport ureport-polar" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.polar}
                 </a>
             </li>`);
         ul.append(polar);
@@ -92,7 +92,7 @@ export default class ChartTool extends Tool{
         });
         const scatter=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-scatter" style="color: #0e90d2;"></i> 散点图
+                    <i class="ureport ureport-scatter" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.scatter}
                 </a>
             </li>`);
         ul.append(scatter);
@@ -101,7 +101,7 @@ export default class ChartTool extends Tool{
         });
         const bubble=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-bubble" style="color: #0e90d2;"></i> 气泡图
+                    <i class="ureport ureport-bubble" style="color: #0e90d2;"></i> ${window.i18n.tools.chart.bubble}
                 </a>
             </li>`);
         ul.append(bubble);

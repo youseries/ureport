@@ -14,7 +14,7 @@ export default class PropertyConditionItemDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            新增条件项
+                            ${window.i18n.dialog.conditionItem.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -27,17 +27,17 @@ export default class PropertyConditionItemDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const group=$(`<div class="form-group"><label>条件项名称：</label></div>`);
+        const group=$(`<div class="form-group"><label>${window.i18n.dialog.conditionItem.itemName}</label></div>`);
         this.nameEditor=$(`<input type="text" class="form-control">`);
         group.append(this.nameEditor);
         body.append(group);
-        const button=$(`<button type="button" class="btn btn-default">确定</button>`);
+        const button=$(`<button type="button" class="btn btn-default">${window.i18n.dialog.conditionItem.ok}</button>`);
         footer.append(button);
         const _this=this;
         button.click(function(){
             const value=_this.nameEditor.val();
             if(value===''){
-                alert("请输入条件项名称！");
+                alert(`${window.i18n.dialog.conditionItem.nameTip}`);
                 return;
             }
             _this.conditionItem.name=value;
@@ -52,9 +52,9 @@ export default class PropertyConditionItemDialog{
         this.nameEditor.val(conditionItem.name);
         const title=this.dialog.find(".modal-title");
         if(op==='add'){
-            title.html("添加条件项");
+            title.html(`${window.i18n.dialog.conditionItem.add}`);
         }else if(op==='edit'){
-            title.html("修改条件项");
+            title.html(`${window.i18n.dialog.conditionItem.edit}`);
         }
     }
 }

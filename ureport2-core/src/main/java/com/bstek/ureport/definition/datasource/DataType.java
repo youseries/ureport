@@ -34,18 +34,27 @@ public enum DataType {
 		if(obj==null)return null;
 		switch(this){
 		case Boolean:
+			if(obj.toString().equals("")){
+				return null;
+			}
 			if(obj instanceof Boolean){
 				return (Boolean)obj;
 			}else{
 				return java.lang.Boolean.valueOf(obj.toString());
 			}
 		case Float:
+			if(obj.toString().equals("")){
+				return null;
+			}
 			if(obj instanceof Float){
 				return (Float)obj;
 			}else{
 				return Utils.toBigDecimal(obj).floatValue();
 			}
 		case Integer:
+			if(obj.toString().equals("")){
+				return null;
+			}
 			if(obj instanceof Integer){
 				return (Integer)obj;
 			}else{
@@ -58,6 +67,9 @@ public enum DataType {
 				return obj.toString();
 			}
 		case List:
+			if(obj.toString().equals("")){
+				return null;
+			}
 			if(obj instanceof List){
 				return (List<?>)obj;
 			}else{
@@ -69,6 +81,9 @@ public enum DataType {
 				return list;
 			}
 		case Date:
+			if(obj.toString().equals("")){
+				return null;
+			}
 			if(obj instanceof Date){
 				return (Date)obj;
 			}else{

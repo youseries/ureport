@@ -14,7 +14,7 @@ export default class SimpleValueEditor{
     init(){
         const _this=this;
         this.container.append(this.buildLineHeight());
-        this.container.append(`<div><label>文本内容</label></div>`);
+        this.container.append(`<div><label>${window.i18n.property.simple.content}</label></div>`);
         this.editor=$(`<textarea rows="5" cols="10" class="form-control"></textarea>`);
         this.container.append(this.editor);
         this.editor.change(function(){
@@ -27,8 +27,8 @@ export default class SimpleValueEditor{
 
     buildLineHeight(){
         const _this=this;
-        const group=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;"><label>行高：</label></div>`);
-        this.lineHeightEditor=$(`<input type="number" class="form-control" placeholder="请输入一个数字,为空表示采用默认行高" style="display: inline-block;width: 310px;padding: 3px;font-size: 12px;height: 25px;">`);
+        const group=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;"><label>${window.i18n.property.simple.lineHeight}</label></div>`);
+        this.lineHeightEditor=$(`<input type="number" class="form-control" placeholder="${window.i18n.property.simple.tip}" style="display: inline-block;width: 310px;padding: 3px;font-size: 12px;height: 25px;">`);
         group.append(this.lineHeightEditor);
         this.lineHeightEditor.change(function(){
             const value=$(this).val();

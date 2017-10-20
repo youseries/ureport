@@ -15,7 +15,7 @@ export default class SpringDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            SpringBean数据源配置
+                            ${window.i18n.dialog.springDS.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -28,14 +28,14 @@ export default class SpringDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const dsRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">数据源名称：</div></div>`);
+        const dsRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.springDS.name}</div></div>`);
         const dsNameGroup=$(`<div class="col-md-9" style="padding: 0 10px 0 0px"></div>`);
         this.dsNameEditor=$(`<input type="text" class="form-control">`);
         dsNameGroup.append(this.dsNameEditor);
         dsRow.append(dsNameGroup);
         body.append(dsRow);
 
-        const usernameRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">Bean ID：</div></div>`);
+        const usernameRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-3" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.springDS.bean}</div></div>`);
         const usernameGroup=$(`<div class="col-md-9" style="padding: 0 10px 0 0px"></div>`);
         this.beanIdEditor=$(`<input type="text" class="form-control">`);
         usernameGroup.append(this.beanIdEditor);
@@ -43,16 +43,16 @@ export default class SpringDialog{
         body.append(usernameRow);
 
         const _this=this;
-        const saveButton=$(`<button type="button" class="btn btn-primary">保存</button>`);
+        const saveButton=$(`<button type="button" class="btn btn-primary">${window.i18n.dialog.springDS.save}</button>`);
         footer.append(saveButton);
         saveButton.click(function(){
             const dsName=_this.dsNameEditor.val(),beanId=_this.beanIdEditor.val();
             if(dsName===''){
-                alert("数据源名称不能为空!");
+                alert(`${window.i18n.dialog.springDS.nameTip}`);
                 return;
             }
             if(beanId===''){
-                alert("BeanID不能为空");
+                alert(`${window.i18n.dialog.springDS.beanTip}`);
                 return;
             }
             let check=false;
@@ -62,7 +62,7 @@ export default class SpringDialog{
             if(check){
                 for(let source of _this.datasources){
                     if(source.name===dsName){
-                        alert("数据源["+dsName+"]已存在，请更换当前数据源名称.");
+                        alert(`${window.i18n.dialog.springDS.ds}["+dsName+"]${window.i18n.dialog.springDS.exist}`);
                         return;
                     }
                 }

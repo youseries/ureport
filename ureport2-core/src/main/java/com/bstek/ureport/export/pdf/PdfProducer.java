@@ -17,6 +17,7 @@ package com.bstek.ureport.export.pdf;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,19 +75,13 @@ public class PdfProducer implements Producer {
 			writer.setPageEvent(headerFooterEvent);
 			document.open();
 			List<Column> columns=report.getColumns();
-			int colSize=buildColumnSize(columns);
-			int[] columnsWidth=new int[colSize];
-			int totalWidth=0;
-			for(int i=0;i<columns.size();i++){
-				Column col=columns.get(i);
-				int w=col.getWidth();
-				if(w<1){
-					continue;
-				}
-				columnsWidth[i]=w;
-				totalWidth+=columnsWidth[i];
+			List<Integer> columnsWidthList=new ArrayList<Integer>();
+			int[] intArr=buildColumnSizeAndTotalWidth(columns,columnsWidthList);
+			int colSize=intArr[0],totalWidth=intArr[1];
+			int[] columnsWidth=new int[columnsWidthList.size()];
+			for(int i=0;i<columnsWidthList.size();i++){
+				columnsWidth[i]=columnsWidthList.get(i);
 			}
-			
 			FullPageData pageData=PageBuilder.buildFullPageData(report);
 			List<List<Page>> list=pageData.getPageList();
 			if(list.size()>0){
@@ -284,7 +279,7 @@ public class PdfProducer implements Producer {
 		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getBgcolor())){
 			bgcolor=rowStyle.getBgcolor();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(rowStyle.getBgcolor())){
+		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getBgcolor())){
 			bgcolor=colStyle.getBgcolor();
 		}
 		if(StringUtils.isNotEmpty(bgcolor)){
@@ -294,8 +289,8 @@ public class PdfProducer implements Producer {
 		return cell;
 	}
 	
-	private int buildColumnSize(List<Column> columns){
-		int count=0;
+	private int[] buildColumnSizeAndTotalWidth(List<Column> columns,List<Integer> list){
+		int count=0,totalWidth=0;
 		for(int i=0;i<columns.size();i++){
 			Column col=columns.get(i);
 			int width=col.getWidth();
@@ -303,8 +298,10 @@ public class PdfProducer implements Producer {
 				continue;
 			}
 			count++;
+			list.add(width);
+			totalWidth+=width;
 		}
-		return count;
+		return new int[]{count,totalWidth};
 	}
 	
 	private PdfPCell newPdfCell(Cell cellInfo,int cellHeight) throws Exception{

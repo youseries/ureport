@@ -64,7 +64,7 @@ export default class PropertyPanel{
     _buildLinkConfig(){
         const _this=this;
         this.linkGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">链接配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.property.prop.linkConfig}</legend></fieldset>`);
         const urlGroup=$(`<div class="form-group" style="margin-bottom:8px"><label>URL：</label></div>`);
         this.linkGroup.append(urlGroup);
         this.linkEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 310px;padding: 3px;font-size: 12px;height: 25px;">`);
@@ -73,11 +73,11 @@ export default class PropertyPanel{
             _this.cellDef.linkUrl=$(this).val();
             setDirty();
         });
-        const configGroup=$(`<div class="form-group" style="margin-bottom:0px"><label>目标窗口：</label></div>`);
+        const configGroup=$(`<div class="form-group" style="margin-bottom:0px"><label>${window.i18n.property.prop.target}</label></div>`);
         this.linkGroup.append(configGroup);
         this.targetSelect=$(`<select class="form-control" style="display: inline-block;width: 160px;font-size: 12px;height: 25px;padding: 3px;">
-            <option value="_blank">新窗口</option>
-            <option value="_self">当前窗口</option>
+            <option value="_blank">${window.i18n.property.prop.newWindow}</option>
+            <option value="_self">${window.i18n.property.prop.currentWindow}</option>
         </select>`);
         configGroup.append(this.targetSelect);
         this.targetSelect.change(function(){
@@ -85,11 +85,11 @@ export default class PropertyPanel{
             setDirty();
         });
         const urlParameterDialog=new URLParameterDialog();
-        const parameterButton=$(`<button type="button" class="btn btn-primary" style="margin-left: 10px;font-size: 12px;height: 25px;padding: 4px 10px;">URL参数配置</button>`);
+        const parameterButton=$(`<button type="button" class="btn btn-primary" style="margin-left: 10px;font-size: 12px;height: 25px;padding: 4px 10px;">${window.i18n.property.prop.urlParameterConfig}</button>`);
         configGroup.append(parameterButton);
         parameterButton.click(function(){
             if(!_this.cellDef.linkUrl || _this.cellDef.linkUrl===''){
-                alert('请先定义链接URL！');
+                alert(`${window.i18n.property.prop.urlTip}`);
                 return;
             }
             if(!_this.cellDef.linkParameters){
@@ -103,17 +103,17 @@ export default class PropertyPanel{
     }
 
     _buildCellType(){
-        this.typeGruop=$(`<div class="form-group" style="margin-bottom:10px;margin-top: 10px;"><label>单元格类型：</label></div>`);
+        this.typeGruop=$(`<div class="form-group" style="margin-bottom:10px;margin-top: 10px;"><label>${window.i18n.property.prop.cellType}</label></div>`);
         const radioName="__cell_value_type";
         this.typeSelect=$(`<select class="form-control" style="display: inline-block;width:280px;padding: 3px;font-size: 12px;height: 25px;">
-            <option value="simple">普通文本</option>
-            <option value="expression">表达式</option>
-            <option value="dataset">数据集</option>
-            <option value="image">图片</option>
-            <option value="slash">斜表头</option>
-            <option value="qrcode">二维码</option>
-            <option value="barcode">条码</option>
-            <option value="chart">图表</option>
+            <option value="simple">${window.i18n.property.prop.text}</option>
+            <option value="expression">${window.i18n.property.prop.expr}</option>
+            <option value="dataset">${window.i18n.property.prop.dataset}</option>
+            <option value="image">${window.i18n.property.prop.image}</option>
+            <option value="slash">${window.i18n.property.prop.slash}</option>
+            <option value="qrcode">${window.i18n.property.prop.qrcode}</option>
+            <option value="barcode">${window.i18n.property.prop.barcode}</option>
+            <option value="chart">${window.i18n.property.prop.chart}</option>
         </select>`);
         this.typeGruop.append(this.typeSelect);
         this.panel.append(this.typeGruop);
@@ -197,11 +197,11 @@ export default class PropertyPanel{
 
     _buildParentCell(){
         this.parentGroup=$(`<div></div>`);
-        const leftParentGroup=$(`<div class="form-group" style="margin-bottom:6px"><label>左父格：</label></div>`);
+        const leftParentGroup=$(`<div class="form-group" style="margin-bottom:6px"><label>${window.i18n.property.prop.leftParent}</label></div>`);
         this.parentGroup.append(leftParentGroup);
-        this.defaultLeftRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" class="__left_p_radio" name="__left_p_radio" value="default">默认</label>`);
+        this.defaultLeftRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" class="__left_p_radio" name="__left_p_radio" value="default">${window.i18n.property.prop.default}</label>`);
         leftParentGroup.append(this.defaultLeftRadio);
-        this.customLeftRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" class="__left_p_radio" name="__left_p_radio" value="custom">自定义</label>`);
+        this.customLeftRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" class="__left_p_radio" name="__left_p_radio" value="custom">${window.i18n.property.prop.custom}</label>`);
         leftParentGroup.append(this.customLeftRadio);
 
         this.leftParentCellNameSelect=$(`<select class="form-control" disabled style="width: 90px;display: inline-block;margin-left: 10px;padding: 3px;font-size: 12px;height: 25px"></select>`);
@@ -246,11 +246,11 @@ export default class PropertyPanel{
             setDirty();
         });
 
-        const topParentGroup=$(`<div class="form-group" style="margin-bottom:6px"><label>上父格：</label></div>`);
+        const topParentGroup=$(`<div class="form-group" style="margin-bottom:6px"><label>${window.i18n.property.prop.topParent}</label></div>`);
         this.parentGroup.append(topParentGroup);
-        this.defaultTopRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__top_p_radio" value="default">默认</label>`);
+        this.defaultTopRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__top_p_radio" value="default">${window.i18n.property.prop.default}</label>`);
         topParentGroup.append(this.defaultTopRadio);
-        this.customTopRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__top_p_radio" value="custom">自定义</label>`);
+        this.customTopRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__top_p_radio" value="custom">${window.i18n.property.prop.custom}</label>`);
         topParentGroup.append(this.customTopRadio);
 
         this.topParentCellNameSelect=$(`<select class="form-control" disabled style="width: 90px;display: inline-block;margin-left: 10px;padding: 3px;font-size: 12px;height: 25px;"></select>`);
@@ -331,7 +331,7 @@ export default class PropertyPanel{
         select.empty();
         const hot=this.context.hot;
         const countCols=hot.countCols();
-        select.append(`<option value="root">无</option>`);
+        select.append(`<option value="root">${window.i18n.property.prop.none}</option>`);
         for(let j=0;j<countCols;j++){
             let name=this.context.getCellName(null,j);
             select.append(`<option value="${name}">${name}</option>`);
@@ -347,13 +347,13 @@ export default class PropertyPanel{
         }
     }
     _buildRenderer(){
-        this.rendererGroup=$(`<div class="form-group" style="margin-bottom:6px"><label>渲染Bean：</label></div>`);
+        this.rendererGroup=$(`<div class="form-group" style="margin-bottom:6px"><label>${window.i18n.property.prop.renderBean}</label></div>`);
         const rendererBeanEditorGroup=$(`<div class="input-group" style="width: 290px;display: inline-block;height: 22px;"></div>`);
         this.rendererGroup.append(rendererBeanEditorGroup);
         this.rendererBeanEditor=$(`<input type="text" class="form-control" style="width: 204px">`);
         rendererBeanEditorGroup.append(this.rendererBeanEditor);
         const addon=$(`<span class="input-group-btn"></span>`);
-        const selectButton=$(`<button type="button" class="btn btn-default">选择Bean</button>`);
+        const selectButton=$(`<button type="button" class="btn btn-default">${window.i18n.property.prop.selectBean}</button>`);
         addon.append(selectButton);
         rendererBeanEditorGroup.append(addon);
         const _this=this;
@@ -390,7 +390,7 @@ export default class PropertyPanel{
         }
         this.cellDef=cellDef;
         let currentCellName=this.context.getCellName(rowIndex,colIndex);
-        $('#__prop_tab_link').html(`属性[${currentCellName}]`);
+        $('#__prop_tab_link').html(`${window.i18n.property.prop.prop}[${currentCellName}]`);
         this.rowIndex=rowIndex;
         this.colIndex=colIndex;
         this.row2Index=row2Index;

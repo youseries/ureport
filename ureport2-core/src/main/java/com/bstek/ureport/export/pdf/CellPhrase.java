@@ -54,6 +54,7 @@ public class CellPhrase extends Phrase {
 		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getFontFamily())){
 			fontName=colStyle.getFontFamily();
 		}
+		int fontSize=style.getFontSize();
 		Boolean bold=style.getBold(),italic=style.getItalic(),underline=style.getUnderline();
 		if(customStyle!=null){
 			if(customStyle.getBold()!=null){
@@ -64,6 +65,9 @@ public class CellPhrase extends Phrase {
 			}
 			if(customStyle.getUnderline()!=null){
 				underline=customStyle.getUnderline();
+			}
+			if(customStyle.getFontSize()>0){
+				fontSize=customStyle.getFontSize();
 			}
 		}
 		if(rowStyle!=null){
@@ -76,6 +80,9 @@ public class CellPhrase extends Phrase {
 			if(rowStyle.getUnderline()!=null){
 				underline=rowStyle.getUnderline();
 			}
+			if(rowStyle.getFontSize()>0){
+				fontSize=rowStyle.getFontSize();
+			}
 		}
 		if(colStyle!=null){
 			if(colStyle.getBold()!=null){
@@ -87,11 +94,15 @@ public class CellPhrase extends Phrase {
 			if(colStyle.getUnderline()!=null){
 				underline=colStyle.getUnderline();
 			}
+			if(colStyle.getFontSize()>0){
+				fontSize=colStyle.getFontSize();
+			}
 		}
 		if(bold==null)bold=false;
 		if(italic==null)italic=false;
 		if(underline==null)underline=false;
-		Font font=FontBuilder.getFont(fontName, style.getFontSize(),bold,italic,underline);
+		
+		Font font=FontBuilder.getFont(fontName, fontSize,bold,italic,underline);
 		String fontColor=style.getForecolor();
 		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getForecolor())){
 			fontColor=customStyle.getForecolor();

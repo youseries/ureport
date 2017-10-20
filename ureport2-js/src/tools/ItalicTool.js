@@ -48,7 +48,7 @@ export default class ItalicTool extends Tool{
         setDirty();
     }
     getTitle(){
-        return '倾斜';
+        return `${window.i18n.italic}`;
     }
     getIcon(){
         return `<i class="ureport ureport-italic" style="color: #0e90d2;"></i>`;

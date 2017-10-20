@@ -34,9 +34,17 @@ public class NoneExpandBuilder implements CellBuilder {
 		List<Object> bindData=null;
 		for(BindData data:dataList){
 			if(obj==null){
-				obj=data.getValue();
+				if(data.getLabel()==null){
+					obj=data.getValue();					
+				}else{
+					obj=data.getLabel();										
+				}
 			}else{
-				obj=obj+","+data.getValue();
+				if(data.getLabel()==null){
+					obj=obj+","+data.getValue();					
+				}else{
+					obj=obj+","+data.getLabel();					
+				}
 			}
 			bindData=data.getDataList();
 		}

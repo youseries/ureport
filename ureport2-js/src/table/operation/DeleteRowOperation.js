@@ -8,7 +8,7 @@ import {alert} from '../../MsgBox.js';
 export function doDeleteRow(){
     const selected=this.getSelected(),context=this.context;
     if(!selected){
-        alert("请先选中行!");
+        alert(`${window.i18n.table.rowTip}`);
         return;
     }
     let startRow=selected[0],endRow=selected[2];

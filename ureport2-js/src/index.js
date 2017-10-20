@@ -15,6 +15,9 @@ import './tree/css/tree.css';
 import './jquery.draggable.js';
 import '../node_modules/codemirror/mode/javascript/javascript.js';
 import UReportDesigner from './designer.js';
+import buildLocal from  './i18n/i18n.js';
+
 $(document).ready(function(){
+    buildLocal();
     const designer=new UReportDesigner("container");
 });

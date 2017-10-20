@@ -13,14 +13,14 @@ export default class ZxingTool extends Tool{
 
     buildButton(){
         const group=$(`<div class="btn-group"></div>`);
-        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="二维码/条码">
+        const mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.zxing.title}">
             <i class="ureport ureport-qrcode" style="color: #0e90d2;"></i>
             <span class="caret"></span>
         </button>`);
         const ul=$(`<ul class="dropdown-menu" role="menu"></ul>`);
         const qrcode=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-qrcode" style="color: #0e90d2;"></i> 二维码
+                    <i class="ureport ureport-qrcode" style="color: #0e90d2;"></i> ${window.i18n.tools.zxing.qrcode}
                 </a>
             </li>`);
         ul.append(qrcode);
@@ -80,7 +80,7 @@ export default class ZxingTool extends Tool{
         });
         const barcode=$(`<li>
                 <a href="###">
-                    <i class="ureport ureport-barcode" style="color: #0e90d2;font-size: 16px"></i> 条码
+                    <i class="ureport ureport-barcode" style="color: #0e90d2;font-size: 16px"></i> ${window.i18n.tools.zxing.barcode}
                 </a>
             </li>`);
         ul.append(barcode);
@@ -166,12 +166,5 @@ export default class ZxingTool extends Tool{
             height+=hot.getRowHeight(i);
         }
         return height;
-    }
-
-    getTitle(){
-        return '保存';
-    }
-    getIcon(){
-        return `<i class="ureport ureport-save" style="color: #0e90d2"></i>`;
     }
 }

@@ -15,7 +15,7 @@ export default class DatasourceDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            数据源配置
+                            ${window.i18n.dialog.datasource.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -29,28 +29,28 @@ export default class DatasourceDialog{
     }
 
     initBody(body,footer){
-        const dsRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">数据源名称：</div></div>`);
+        const dsRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.datasource.name}</div></div>`);
         const dsNameGroup=$(`<div class="col-md-10" style="padding: 0 10px 0 0px"></div>`);
         this.dsNameEditor=$(`<input type="text" class="form-control" style="font-size: 13px">`);
         dsNameGroup.append(this.dsNameEditor);
         dsRow.append(dsNameGroup);
         body.append(dsRow);
 
-        const usernameRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">连接用户名：</div></div>`);
+        const usernameRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.datasource.username}</div></div>`);
         const usernameGroup=$(`<div class="col-md-10" style="padding: 0 10px 0 0px"></div>`);
         this.usernameEditor=$(`<input type="text" class="form-control" style="font-size: 13px">`);
         usernameGroup.append(this.usernameEditor);
         usernameRow.append(usernameGroup);
         body.append(usernameRow);
 
-        const passwordRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">连接密码：</div></div>`);
+        const passwordRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.datasource.password}</div></div>`);
         const passwordGroup=$(`<div class="col-md-10" style="padding: 0 10px 0 0px"></div>`);
-        this.passwordEditor=$(`<input type="text" class="form-control" style="font-size: 13px">`);
+        this.passwordEditor=$(`<input type="password" class="form-control" style="font-size: 13px">`);
         passwordGroup.append(this.passwordEditor);
         passwordRow.append(passwordGroup);
         body.append(passwordRow);
 
-        const driverRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">驱动名称：</div></div>`);
+        const driverRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.datasource.driver}</div></div>`);
         const driverGroup=$(`<div class="col-md-10" style="padding: 0 10px 0 0px"></div>`);
         this.driverEditor=$(`<input type="text" class="form-control" style="font-size: 13px">`);
         driverGroup.append(this.driverEditor);
@@ -67,7 +67,7 @@ export default class DatasourceDialog{
             zIndex:200000
         });
 
-        const urlRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">连接URL：</div></div>`);
+        const urlRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.datasource.url}</div></div>`);
         const urlGroup=$(`<div class="col-md-10" style="padding: 0 10px 0 0px"></div>`);
         this.urlEditor=$(`<input type="text" class="form-control" style="font-size: 13px">`);
         urlGroup.append(this.urlEditor);
@@ -85,13 +85,13 @@ export default class DatasourceDialog{
         });
 
         const _this=this;
-        const testButton=$(`<button type="button" class="btn btn-default">测试连接</button>`);
+        const testButton=$(`<button type="button" class="btn btn-default">${window.i18n.dialog.datasource.test}</button>`);
         footer.append(testButton);
         testButton.click(function(){
             const dsName=_this.dsNameEditor.val(),username=_this.usernameEditor.val(),password=_this.passwordEditor.val(),driver=_this.driverEditor.val(),url=_this.urlEditor.val();
             _this.testConnection(dsName,username,password,driver,url);
         });
-        const saveButton=$(`<button type="button" class="btn btn-primary">保存</button>`);
+        const saveButton=$(`<button type="button" class="btn btn-primary">${window.i18n.dialog.datasource.save}</button>`);
         footer.append(saveButton);
         saveButton.click(function(){
             const name=_this.dsNameEditor.val(),username=_this.usernameEditor.val(),password=_this.passwordEditor.val(),driver=_this.driverEditor.val(),url=_this.urlEditor.val();
@@ -105,19 +105,19 @@ export default class DatasourceDialog{
 
     testConnection(dsName,username,password,driver,url,callback){
         if(dsName===''){
-            alert("请输入数据源名称");
+            alert(`${window.i18n.dialog.datasource.nameTip}`);
             return;
         }
         if(username===''){
-            alert("请输入连接用户名");
+            alert(`${window.i18n.dialog.datasource.usernameTip}`);
             return;
         }
         if(driver===''){
-            alert("请输入连接驱动");
+            alert(`${window.i18n.dialog.datasource.driverTip}`);
             return;
         }
         if(url===''){
-            alert("请输入连接URL");
+            alert(`${window.i18n.dialog.datasource.urlTip}`);
             return;
         }
         let check=false;
@@ -127,7 +127,7 @@ export default class DatasourceDialog{
         if(check){
             for(let source of this.datasources){
                 if(source.name===dsName){
-                    alert("数据源["+dsName+"]已存在，请更换当前数据源名称.");
+                    alert(`${window.i18n.dialog.datasource.datasource}[${dsName}]${window.i18n.dialog.datasource.existTip}`);
                     return;
                 }
             }
@@ -142,17 +142,17 @@ export default class DatasourceDialog{
                     callback.call(_this);
                 }else{
                     if(data.result){
-                        alert("连接测试成功！");
+                        alert(`${window.i18n.dialog.datasource.testSuccess}`);
                     }else{
-                        alert("连接测试失败："+data.error);
+                        alert(`${window.i18n.dialog.datasource.testFail}`+data.error);
                     }
                 }
             },
             error:function(){
                 if(callback){
-                    alert("连接测试失败，不能进行后续动作，请确认当前连接信息是否正确。");
+                    alert(`${window.i18n.dialog.datasource.failTip}`);
                 }else{
-                    alert("连接测试操作失败！");
+                    alert(`${window.i18n.dialog.datasource.failTip1}`);
                 }
             }
         });

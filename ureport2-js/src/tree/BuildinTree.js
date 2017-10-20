@@ -54,7 +54,7 @@ export default class BuildinTree extends BaseTree{
                         _this.buildFileds(dataset,fieldsUL);
                     },{parameters:[]});
                 }else if(key==='delete'){
-                    confirm("真的要删除当前数据源["+_this.name+"]？",function(){
+                    confirm(`${window.i18n.tree.delConfirm}[${_this.name}]？`,function(){
                         let index=-1;
                         const datasources=_this.datasources;
                         for(let i=0;i<datasources.length;i++){
@@ -70,8 +70,8 @@ export default class BuildinTree extends BaseTree{
                 }
             },
             items:{
-                "add": {name: "添加数据集", icon: "add"},
-                "delete": {name: "删除", icon: "delete"}
+                "add": {name: `${window.i18n.tree.addDataset}`, icon: "add"},
+                "delete": {name: `${window.i18n.tree.delete}`, icon: "delete"}
             }
         });
     }
@@ -88,7 +88,7 @@ export default class BuildinTree extends BaseTree{
         const _this=this;
         const datasetDialog=new SqlDatasetDialog(this,dataset);
 
-        const newFiledGroup=$(`<div>请输入字段名：</div>`);
+        const newFiledGroup=$(`<div>${window.i18n.tree.inputTip}</div>`);
         const newFieldEditor=$(`<input type="text" class="form-control">`);
         newFiledGroup.append(newFieldEditor);
 
@@ -97,11 +97,11 @@ export default class BuildinTree extends BaseTree{
             callback:function(key,options){
                 if(key==='add'){
                     const span=$(options.selector);
-                    dialog("添加字段",newFiledGroup,function(){
+                    dialog(`${window.i18n.tree.addField}`,newFiledGroup,function(){
                         const newFieldName=newFieldEditor.val();
                         for(let field of dataset.fields){
                             if(field.name===newFieldName){
-                                alert("字段名已存在！");
+                                alert(`${window.i18n.tree.fieldExist}`);
                                 return;
                             }
                         }
@@ -110,7 +110,7 @@ export default class BuildinTree extends BaseTree{
                         _this.addField(dataset.fields,field,fieldsUL);
                     });
                 }else if(key==='delete'){
-                    confirm("真的要删除当前数据集["+dataset.name+"]?",function(){
+                    confirm(`${window.i18n.tree.delDatasetConfirm}[${dataset.name}]?`,function(){
                         let index=-1;
                         for(let i=0;i< _this.datasets.length;i++){
                             const d=_this.datasets[i];
@@ -137,10 +137,10 @@ export default class BuildinTree extends BaseTree{
                 }
             },
             items:{
-                "add": {name: "添加字段", icon: "add"},
-                "edit": {name: "编辑", icon: "edit"},
-                "delete": {name: "删除", icon: "delete"},
-                "refresh": {name: "刷新",icon:'loading'}
+                "add": {name: `${window.i18n.tree.addField}`, icon: "add"},
+                "edit": {name: `${window.i18n.tree.edit}`, icon: "edit"},
+                "delete": {name: `${window.i18n.tree.del}`, icon: "delete"},
+                "refresh": {name: `${window.i18n.tree.refresh}`,icon:'loading'}
             }
         });
         return fieldsUL;
@@ -172,7 +172,7 @@ export default class BuildinTree extends BaseTree{
                 }
             },
             error:function(){
-                alert("加载字段失败!");
+                alert(`${window.i18n.tree.loadFieldFail}`);
             }
         })
     }
@@ -181,7 +181,7 @@ export default class BuildinTree extends BaseTree{
         const _this=this;
         const li=$(`<li></li>`);
         const spanId=uuid.v1();
-        const span=$(`<span id="${spanId}" title="双击添加字段到单元格"><i class="ureport ureport-property"></i> <a href='###'>${field.name}</a></span>`);
+        const span=$(`<span id="${spanId}" title="${window.i18n.tree.doubleClick}"><i class="ureport ureport-property"></i> <a href='###'>${field.name}</a></span>`);
         li.append(span);
         span.dblclick(function(){
             _this._buildClickEvent(dataset,field,_this.context)
@@ -191,7 +191,7 @@ export default class BuildinTree extends BaseTree{
             selector:'#'+spanId,
             callback:function(key,options){
                 if(key==='delete'){
-                    confirm("真的要删除字段["+field.name+"]?",function(){
+                    confirm(`${window.i18n.tree.delFieldConfirm}[${field.name}]?`,function(){
                         const index=fields.indexOf(field);
                         fields.splice(index,1);
                         li.remove();
@@ -199,7 +199,7 @@ export default class BuildinTree extends BaseTree{
                 }
             },
             items:{
-                "delete": {name: "删除", icon: "delete"}
+                "delete": {name: `${window.i18n.tree.del}`, icon: "delete"}
             }
         });
     }

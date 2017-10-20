@@ -15,7 +15,7 @@ export default class FontSettingDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            字体样式配置
+                            ${window.i18n.dialog.fontSetting.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -29,7 +29,7 @@ export default class FontSettingDialog{
     }
     initBody(body,footer){
         const _this=this;
-        const fontFamilyGroup=$(`<div class="form-group" style="margin-top: 10px"><label>字体：</label></div>`);
+        const fontFamilyGroup=$(`<div class="form-group" style="margin-top: 10px"><label>${window.i18n.dialog.fontSetting.font}</label></div>`);
         body.append(fontFamilyGroup);
         const fonts=[];
         fonts.push("宋体");
@@ -51,7 +51,7 @@ export default class FontSettingDialog{
             _this.newStyle.fontFamily=$(this).val();
         });
 
-        const colorGroup=$(`<div class="form-group"><label>颜色：</label></div>`);
+        const colorGroup=$(`<div class="form-group"><label>${window.i18n.dialog.fontSetting.color}</label></div>`);
         body.append(colorGroup);
         this.colorEditor=$(`<div class="input-group colorpicker-component" style="width: 200px;height: 26px;display: inline-block;margin-left: 10px;vertical-align: bottom">
             <input type="text" value="#00AABB" class="form-control" style="width: 150px;height: 29px;"/>
@@ -82,7 +82,7 @@ export default class FontSettingDialog{
             _this.newStyle.forecolor=val;
         });
 
-        const fontSizeGroup=$(`<div class="form-group"><label>尺寸：</label></div>`);
+        const fontSizeGroup=$(`<div class="form-group"><label>${window.i18n.dialog.fontSetting.size}</label></div>`);
         body.append(fontSizeGroup);
         this.fontSizeSelect=$(`<select class="form-control" style="display: inline-block;width: 200px;"></select>`);
         for(let i=1;i<=100;i++){
@@ -93,7 +93,7 @@ export default class FontSettingDialog{
             _this.newStyle.fontSize=$(this).val();
         });
 
-        const boldGroup=$(`<div class="form-group"><label>加粗：</label></div>`);
+        const boldGroup=$(`<div class="form-group"><label>${window.i18n.dialog.fontSetting.bold}</label></div>`);
         body.append(boldGroup);
         this.boldSelect=$(`<select class="form-control" style="display: inline-block;width: 200px;">
             <option value="true">是</option>
@@ -104,7 +104,7 @@ export default class FontSettingDialog{
             _this.newStyle.bold=$(this).val();
         });
 
-        const italicGroup=$(`<div class="form-group"><label>倾斜：</label></div>`);
+        const italicGroup=$(`<div class="form-group"><label>${window.i18n.dialog.fontSetting.italic}</label></div>`);
         body.append(italicGroup);
         this.italicSelect=$(`<select class="form-control" style="display: inline-block;width: 200px;">
             <option value="true">是</option>
@@ -115,7 +115,7 @@ export default class FontSettingDialog{
             _this.newStyle.italic=$(this).val();
         });
 
-        const underlineGroup=$(`<div class="form-group"><label>下划线：</label></div>`);
+        const underlineGroup=$(`<div class="form-group"><label>${window.i18n.dialog.fontSetting.underline}</label></div>`);
         body.append(underlineGroup);
         this.underlineSelect=$(`<select class="form-control" style="display: inline-block;width: 185px;">
             <option value="true">是</option>
@@ -126,7 +126,7 @@ export default class FontSettingDialog{
             _this.newStyle.underline=$(this).val();
         });
 
-        const confirmButton=$(`<button type="button" class="btn btn-primary">确定</button>`);
+        const confirmButton=$(`<button type="button" class="btn btn-primary">${window.i18n.dialog.fontSetting.ok}</button>`);
         footer.append(confirmButton);
         confirmButton.click(function(){
             _this.style=_this.newStyle;

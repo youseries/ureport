@@ -17,7 +17,7 @@ export default class BeanMethodDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            SpringBean数据集配置
+                            ${window.i18n.dialog.bean.beanDatasetConfig}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -31,7 +31,7 @@ export default class BeanMethodDialog{
         this.initButton(footer);
     }
     initBody(body){
-        const nameRow=$(`<div class="row" style="margin: 10px;"><div class="col-md-3" style="text-align: right;margin-top:8px">数据集名称：</div></div>`);
+        const nameRow=$(`<div class="row" style="margin: 10px;"><div class="col-md-3" style="text-align: right;margin-top:8px">${window.i18n.dialog.bean.datasetName}</div></div>`);
         const col=$(`<div class="col-md-9" style="padding: 0px;"></div>`);
         nameRow.append(col);
         this.nameEditor=$(`<input type="text" class="form-control">`);
@@ -39,13 +39,13 @@ export default class BeanMethodDialog{
         body.append(nameRow);
 
         const _this=this;
-        const methodRow=$(`<div class="row" style="margin: 10px;"><div class="col-md-3" style="text-align: right;margin-top:8px">方法名：</div></div>`);
+        const methodRow=$(`<div class="row" style="margin: 10px;"><div class="col-md-3" style="text-align: right;margin-top:8px">${window.i18n.dialog.bean.methodName}</div></div>`);
         const methodCol=$(`<div class="col-md-9" style="padding: 0px;"></div>`);
         const methodGroup=$(`<div class="input-group"></div>`);
         methodCol.append(methodGroup);
-        this.methodEditor=$(`<input type="text" placeholder="方法必须包含三个参数：String,String,Map" class="form-control">`);
+        this.methodEditor=$(`<input type="text" placeholder="${window.i18n.dialog.bean.methodParameters}String,String,Map" class="form-control">`);
         methodGroup.append(this.methodEditor);
-        const selectMethodButton=$(`<span class="input-group-btn"><button type="button" class="btn btn-default">选择方法</button></span>`);
+        const selectMethodButton=$(`<span class="input-group-btn"><button type="button" class="btn btn-default">${window.i18n.dialog.bean.selectMethod}</button></span>`);
         methodGroup.append(selectMethodButton);
         const methodSelectDialog=new MethodSelectDialog();
         selectMethodButton.click(function(){
@@ -56,17 +56,16 @@ export default class BeanMethodDialog{
         methodRow.append(methodCol);
         body.append(methodRow);
 
-        const helpRow=$(`<div class="row" style="margin: 10px;"><div class="col-md-3" style="text-align: right;margin-top:8px">返回对象：</div></div>`);
+        const helpRow=$(`<div class="row" style="margin: 10px;"><div class="col-md-3" style="text-align: right;margin-top:8px">${window.i18n.dialog.bean.returnObject}</div></div>`);
         const helpCol=$(`<div class="col-md-9" style="padding: 0px;"></div>`);
         helpRow.append(helpCol);
-        this.helpEditor=$(`<input type="text" placeholder="指定该方法返回类全名,用于生成字段,如不指定需手工添加字段" class="form-control">`);
+        this.helpEditor=$(`<input type="text" placeholder="${window.i18n.dialog.bean.className}" class="form-control">`);
         helpCol.append(this.helpEditor);
         body.append(helpRow);
-
     }
 
     initButton(footer){
-        const button=$(`<button class="btn btn-primary">确定</button>`);
+        const button=$(`<button class="btn btn-primary">${window.i18n.dialog.bean.ok}</button>`);
         footer.append(button);
         const _this=this;
         button.click(function(){
@@ -80,7 +79,7 @@ export default class BeanMethodDialog{
                     let datasets=datasource.datasets;
                     for(let dataset of datasets){
                         if(dataset.name===name){
-                            alert("数据集["+name+"]已存在，请换一个数据集名称.");
+                            alert(`${window.i18n.dialog.bean.dataset}["+name+"]${window.i18n.dialog.bean.datasetExist}`);
                             return;
                         }
                     }

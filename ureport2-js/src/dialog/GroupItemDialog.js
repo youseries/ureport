@@ -14,7 +14,7 @@ export default class GroupItemDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            自定义分组项
+                            ${window.i18n.dialog.groupItem.title}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -27,17 +27,17 @@ export default class GroupItemDialog{
         this.initBody(body,footer);
     }
     initBody(body,footer){
-        const group=$(`<div class="form-group"><label>分组名称：</label></div>`);
+        const group=$(`<div class="form-group"><label>${window.i18n.dialog.groupItem.name}</label></div>`);
         this.nameEditor=$(`<input type="text" class="form-control">`);
         group.append(this.nameEditor);
         body.append(group);
-        const button=$(`<button type="button" class="btn btn-default">确定</button>`);
+        const button=$(`<button type="button" class="btn btn-default">${window.i18n.dialog.groupItem.ok}</button>`);
         footer.append(button);
         const _this=this;
         button.click(function(){
             const value=_this.nameEditor.val();
             if(value===''){
-                alert("请输入分组项名称！");
+                alert(`${window.i18n.dialog.groupItem.nameTip}`);
                 return;
             }
             _this.groupItem.name=value;
@@ -52,9 +52,9 @@ export default class GroupItemDialog{
         this.nameEditor.val(groupItem.name);
         const title=this.dialog.find(".modal-title");
         if(op==='add'){
-            title.html("添加自定义分组项");
+            title.html(`${window.i18n.dialog.groupItem.addItem}`);
         }else if(op==='edit'){
-            title.html("修改自定义分组项");
+            title.html(`${window.i18n.dialog.groupItem.editItem}`);
         }
     }
 }

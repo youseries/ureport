@@ -12,11 +12,11 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
         parentContainer.append(this.container);
         const tabUL=$(`<ul class="nav nav-tabs"></ul>`);
         this.container.append(tabUL);
-        const dsLI=$(`<li class="active"><a href="#chart_bind_dataset_scatter" data-toggle="tab">数据集绑定</a></li>`);
+        const dsLI=$(`<li class="active"><a href="#chart_bind_dataset_scatter" data-toggle="tab">${window.i18n.chart.datasetBind}</a></li>`);
         tabUL.append(dsLI);
-        const optionLI=$(`<li><a href="#chart_option_scatter" data-toggle="tab">选项</a></li>`);
+        const optionLI=$(`<li><a href="#chart_option_scatter" data-toggle="tab">${window.i18n.chart.option}</a></li>`);
         tabUL.append(optionLI);
-        this.axisLI=$(`<li><a href="#chart_axis_scatter" data-toggle="tab">轴配置</a></li>`);
+        this.axisLI=$(`<li><a href="#chart_axis_scatter" data-toggle="tab">${window.i18n.chart.axisConfig}</a></li>`);
         tabUL.append(this.axisLI);
         const tabContent=$(`<div class="tab-content"></div>`);
         this.container.append(tabContent);
@@ -37,15 +37,15 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
     _initDatasetTab(dsContent){
         const _this=this;
         const legendGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px;margin-bottom: 10px;margin-top: 10px">
-        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">属性绑定配置</legend></fieldset>`);
+        <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.chart.propBindConfig}</legend></fieldset>`);
         dsContent.append(legendGroup);
 
-        const datasetGroup=$(`<div class="form-group" style="margin-top: 10px"><label>数据集：</label></div>`);
+        const datasetGroup=$(`<div class="form-group" style="margin-top: 10px"><label>${window.i18n.chart.dataset}</label></div>`);
         legendGroup.append(datasetGroup);
         this.datasetSelect=$(`<select class="form-control" style="display: inline-block;width:295px;padding:2px;font-size: 12px;height: 25px"></select>`);
         datasetGroup.append(this.datasetSelect);
 
-        const categoryPropertyGroup=$(`<div class="form-group" style="margin-top: 5px;margin-bottom: 5px;"><label>分类属性：</label></div>`);
+        const categoryPropertyGroup=$(`<div class="form-group" style="margin-top: 5px;margin-bottom: 5px;"><label>${window.i18n.chart.categoryProperty}</label></div>`);
         this.categoryPropertySelect=$(`<select class="form-control" style="display: inline-block;width:280px;padding: 2px;font-size: 12px;height: 25px"></select>`);
         categoryPropertyGroup.append(this.categoryPropertySelect);
         datasetGroup.append(categoryPropertyGroup);
@@ -54,7 +54,7 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
             dataset.categoryProperty=$(this).val();
             setDirty();
         });
-        const xPropertyGroup=$(`<div class="form-group" style="margin-bottom: 5px;"><label>X值属性：</label></div>`);
+        const xPropertyGroup=$(`<div class="form-group" style="margin-bottom: 5px;"><label>${window.i18n.chart.xProperty}</label></div>`);
         this.xPropertySelect=$(`<select class="form-control" style="display: inline-block;width:285px;padding: 2px;font-size: 12px;height: 25px"></select>`);
         xPropertyGroup.append(this.xPropertySelect);
         xPropertyGroup.append(xPropertyGroup);
@@ -65,7 +65,7 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
         });
         legendGroup.append(xPropertyGroup);
 
-        const yPropertyGroup=$(`<div class="form-group" style="margin-bottom: 5px;"><label>Y值属性：</label></div>`);
+        const yPropertyGroup=$(`<div class="form-group" style="margin-bottom: 5px;"><label>${window.i18n.chart.yProperty}</label></div>`);
         this.yPropertySelect=$(`<select class="form-control" style="display: inline-block;width:285px;padding: 2px;font-size: 12px;height: 25px"></select>`);
         yPropertyGroup.append(this.yPropertySelect);
         yPropertyGroup.append(yPropertyGroup);

@@ -14,7 +14,7 @@ export default class ConditionDialog{
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            条件配置
+                            ${window.i18n.dialog.condition.config}
                         </h4>
                     </div>
                     <div class="modal-body"></div>
@@ -27,32 +27,32 @@ export default class ConditionDialog{
     }
     init(body,footer){
         const _this=this;
-        this.joinGroup=$(`<div class="form-group"><label>与上一条件关系：</label></div>`);
+        this.joinGroup=$(`<div class="form-group"><label>${window.i18n.dialog.condition.relationship}</label></div>`);
         this.joinSelect=$(`<select class="form-control" style="display: inline-block;width:430px;">
-            <option value="and">与</option>
-            <option value="or">或</option>
+            <option value="and">${window.i18n.dialog.condition.and}</option>
+            <option value="or">${window.i18n.dialog.condition.or}</option>
         </select>`);
         this.joinGroup.append(this.joinSelect);
         body.append(this.joinGroup);
 
-        const propertyGroup=$(`<div class="form-group"><label>属性名：</label></div>`);
+        const propertyGroup=$(`<div class="form-group"><label>${window.i18n.dialog.condition.propertyName}</label></div>`);
         this.propertySelect=$(`<select class="form-control" style="display: inline-block;width:490px;"></select>`);
         propertyGroup.append(this.propertySelect);
         body.append(propertyGroup);
-        const operatorGroup=$(`<div class="form-group"><label>操作符：</label></div>`);
+        const operatorGroup=$(`<div class="form-group"><label>${window.i18n.dialog.condition.op}</label></div>`);
         this.operatorSelect=$(`<select class="form-control" style="display: inline-block;width:490px;">
-            <option value=">">大于</option>
-            <option value=">=">大于等于</option>
-            <option value="<">小于</option>
-            <option value="<=">小于等于</option>
-            <option value="==">等于</option>
-            <option value="!=">不等于</option>
-            <option value="in">在集合中</option>
-            <option value="like">相似</option>
+            <option value=">">${window.i18n.dialog.condition.greatThen}</option>
+            <option value=">=">${window.i18n.dialog.condition.greatEquals}</option>
+            <option value="<">${window.i18n.dialog.condition.lessThen}</option>
+            <option value="<=">${window.i18n.dialog.condition.lessEquals}</option>
+            <option value="==">${window.i18n.dialog.condition.equals}</option>
+            <option value="!=">${window.i18n.dialog.condition.notEquals}</option>
+            <option value="in">${window.i18n.dialog.condition.in}</option>
+            <option value="like">${window.i18n.dialog.condition.like}</option>
         </select>`);
         operatorGroup.append(this.operatorSelect);
         body.append(operatorGroup);
-        const valueGroup=$(`<div class="form-group"><label>值表达式：</label></div>`);
+        const valueGroup=$(`<div class="form-group"><label>${window.i18n.dialog.condition.valueExpr}</label></div>`);
         this.valueEditor=$(`<input type="text" class="form-control" style="display: inline-block;width:477px;">`);
         valueGroup.append(this.valueEditor);
         body.append(valueGroup);
@@ -65,25 +65,25 @@ export default class ConditionDialog{
                 data:{content:val},
                 success:function(errors){
                     if(errors.length>0){
-                        alert(`${val} 存在语法错误！`);
+                        alert(`${val} ${window.i18n.dialog.condition.exprError}`);
                     }
                 }
             });
         });
 
-        const button=$(`<button class="btn btn-default">确定</button>`);
+        const button=$(`<button class="btn btn-default">${window.i18n.dialog.condition.ok}</button>`);
         button.click(function(){
             const property=_this.propertySelect.val(),op=_this.operatorSelect.val(),value=_this.valueEditor.val(),join=_this.joinSelect.val();
             if(property===''){
-                alert("请选择属性!");
+                alert(`${window.i18n.dialog.condition.selectProperty}`);
                 return;
             }
             if(op===''){
-                alert("请选择操作符!");
+                alert(`${window.i18n.dialog.condition.selectOp}`);
                 return;
             }
             if(value===''){
-                alert("请输入表达式值!");
+                alert(`${window.i18n.dialog.condition.inputExpr}`);
                 return;
             }
             if(_this.condition){

@@ -37,7 +37,7 @@ export default class UnderlineTool extends Tool{
         setDirty();
     }
     getTitle(){
-        return '下划线';
+        return `${window.i18n.underline}`;
     }
     getIcon(){
         return `<i class="ureport ureport-underline" style="color: #0e90d2;"></i>`;

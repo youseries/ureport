@@ -10,11 +10,11 @@ export default class RedoTool extends Tool{
         if(undoManager.hasRedo()){
             undoManager.redo();
         }else{
-            alert("当前没有内容可以重做！");
+            alert(`${window.i18n.tools.redo.noRedo}`);
         }
     }
     getTitle(){
-        return '重做';
+        return `${window.i18n.tools.redo.redo}`;
     }
     getIcon(){
         return `<i class="ureport ureport-redo" style="color: #0e90d2;"></i>`;

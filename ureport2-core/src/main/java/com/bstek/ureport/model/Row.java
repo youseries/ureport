@@ -49,6 +49,7 @@ public class Row extends Line{
 		row.setRealHeight(realHeight);
 		row.setBand(band);
 		row.setRowKey(rowKey);
+		row.setCustomCellStyle(getCustomCellStyle());
 		return row;
 	}
 
