@@ -82,9 +82,6 @@ public class ExcelBuilderDirect extends ExcelBuilder {
 	        		row=sheet.createRow(rowNumber);
 	        	}
 	        	Map<Column,com.bstek.ureport.model.Cell> colCell=cellMap.get(r);
-	        	if(colCell==null){
-	        		continue;
-	        	}
 	        	int skipCol=0;
 	        	for(int i=0;i<columnSize;i++){
 	        		Column col=columns.get(i);
@@ -101,7 +98,10 @@ public class ExcelBuilderDirect extends ExcelBuilder {
 	        			continue;
 	        		}
 	        		cell=row.createCell(colNum);
-	        		com.bstek.ureport.model.Cell cellInfo=colCell.get(col);
+	        		com.bstek.ureport.model.Cell cellInfo=null;
+	        		if(colCell!=null){
+	        			cellInfo=colCell.get(col);
+	        		}
 	        		if(cellInfo==null){
 	        			continue;
 	        		}
