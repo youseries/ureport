@@ -1,0 +1,40 @@
+
+@font-face {font-family: "form";
+  src: url('iconfont.eot'); /* IE9*/
+  src: url('iconfont.ttf') format('truetype');
+}
+
+.form {
+  font-family:"form" !important;
+  font-size:13px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.form-3col:before { content: "\e6e7"; }
+
+.form-custom-col:before { content: "\e614"; }
+
+.form-dropdown:before { content: "\e606"; }
+
+.form-checkbox:before { content: "\e60d"; }
+
+.form-datetime:before { content: "\e6cc"; }
+
+.form-radio:before { content: "\e612"; }
+
+.form-tab:before { content: "\e61f"; }
+
+.form-danye-:before { content: "\e603"; }
+
+.form-textarea:before { content: "\e6ea"; }
+
+.form-textbox:before { content: "\e6eb"; }
+
+.form-2col:before { content: "\e64b"; }
+
+.form-4col:before { content: "\e602"; }
+
+.form-1col:before { content: "\e649"; }
+
