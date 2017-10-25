@@ -25,6 +25,9 @@ public class HideRowColumnBuilder {
 		Map<Row, Map<Column, Cell>> cellMap=report.getRowColCellMap();
 		List<Row> rows=report.getRows();
 		for(Row row:rows){
+			if(row.getRealHeight()==0){
+				continue;
+			}
 			Map<Column,Cell> rowMap=cellMap.get(row);
 			if(rowMap==null){
 				return;
@@ -72,6 +75,9 @@ public class HideRowColumnBuilder {
 		List<Column> columns=report.getColumns();
 		int rowNumber=row.getRowNumber();
 		for(Column col:columns){
+			if(col.getWidth()==0){
+				continue;
+			}
 			Cell cell=map.get(col);
 			if(cell!=null){
 				int rowSpan=cell.getRowSpan();
