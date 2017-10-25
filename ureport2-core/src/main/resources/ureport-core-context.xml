@@ -38,6 +38,14 @@
 	
 	<bean id="ureport.reportParser" class="com.bstek.ureport.parser.ReportParser"></bean>
 	
+	<bean id="ureport.formParserUtils" class="com.bstek.ureport.parser.impl.searchform.FormParserUtils"></bean>
+	<bean id="ureport.checkboxParser" class="com.bstek.ureport.parser.impl.searchform.CheckboxParser"></bean>
+	<bean id="ureport.gridParser" class="com.bstek.ureport.parser.impl.searchform.GridParser"></bean>
+	<bean id="ureport.radioInputParser" class="com.bstek.ureport.parser.impl.searchform.RadioInputParser"></bean>
+	<bean id="ureport.rextInputParser" class="com.bstek.ureport.parser.impl.searchform.TextInputParser"></bean>
+	<bean id="ureport.resetButtonParser" class="com.bstek.ureport.parser.impl.searchform.ResetButtonParser"></bean>
+	<bean id="ureport.submitButtonParser" class="com.bstek.ureport.parser.impl.searchform.SubmitButtonParser"></bean>
+	
 	<bean id="ureport.classpathReportProvider" class="com.bstek.ureport.provider.report.classpath.ClasspathReportProvider"></bean>
 	
 	<bean id="ureport.fontBuilder" class="com.bstek.ureport.export.pdf.font.FontBuilder"></bean>

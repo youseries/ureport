@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.ureport.definition.datasource.DatasourceDefinition;
+import com.bstek.ureport.definition.searchform.SearchForm;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Column;
 import com.bstek.ureport.model.Report;
@@ -41,6 +42,7 @@ public class ReportDefinition implements Serializable{
 	private CellDefinition rootCell;
 	private HeaderFooterDefinition header;
 	private HeaderFooterDefinition footer;
+	private SearchForm searchForm;
 	private List<CellDefinition> cells;
 	private List<RowDefinition> rows;
 	private List<ColumnDefinition> columns;
@@ -262,6 +264,14 @@ public class ReportDefinition implements Serializable{
 
 	public void setFooter(HeaderFooterDefinition footer) {
 		this.footer = footer;
+	}
+
+	public SearchForm getSearchForm() {
+		return searchForm;
+	}
+
+	public void setSearchForm(SearchForm searchForm) {
+		this.searchForm = searchForm;
 	}
 
 	public List<RowDefinition> getRows() {

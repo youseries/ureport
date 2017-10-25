@@ -10,9 +10,127 @@
 				<element name="footer" type="tns:header-footer" minOccurs="0" maxOccurs="1"></element>
 				<element name="paper" type="tns:paper" minOccurs="1" maxOccurs="1"></element>
 				<element name="datasource" type="tns:datasource" minOccurs="0" maxOccurs="unbounded"></element>
+				<element name="search-form" type="tns:search-form" minOccurs="0" maxOccurs="1"></element>
 			</sequence>
 		</complexType>
 	</element>
+	
+	<complexType name="search-form">
+		<sequence>
+			<element name="input-text" type="tns:input-text" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-radio" type="tns:input-radio" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-checkbox" type="tns:input-checkbox" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-select" type="tns:input-select" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="button-submit" type="tns:button-submit" maxOccurs="1" minOccurs="1"></element>
+			<element name="button-reset" type="tns:button-reset" maxOccurs="1" minOccurs="0"></element>
+			<element name="grid" type="tns:grid" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="col" type="tns:col" maxOccurs="unbounded" minOccurs="0"></element>		
+		</sequence>
+		<attribute name="top-toolbar" type="boolean"></attribute>
+	</complexType>
+	
+	<complexType name="col">
+		<sequence>
+			<element name="input-text" type="tns:input-text" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-radio" type="tns:input-radio" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-checkbox" type="tns:input-checkbox" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-select" type="tns:input-select" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="button-submit" type="tns:button-submit" maxOccurs="1" minOccurs="1"></element>
+			<element name="button-reset" type="tns:button-reset" maxOccurs="1" minOccurs="0"></element>
+			<element name="grid" type="tns:grid" maxOccurs="unbounded" minOccurs="0"></element>		
+			<element name="col" type="tns:col" maxOccurs="unbounded" minOccurs="0"></element>		
+		</sequence>
+		<attribute name="size" type="int" use="required"></attribute>
+	</complexType>
+	
+	<complexType name="grid">
+		<sequence>
+			<element name="input-text" type="tns:input-text" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-radio" type="tns:input-radio" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-checkbox" type="tns:input-checkbox" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-select" type="tns:input-select" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="button-submit" type="tns:button-submit" maxOccurs="1" minOccurs="1"></element>
+			<element name="button-reset" type="tns:button-reset" maxOccurs="1" minOccurs="0"></element>
+			<element name="grid" type="tns:grid" maxOccurs="unbounded" minOccurs="0"></element>		
+			<element name="col" type="tns:col" maxOccurs="unbounded" minOccurs="0"></element>		
+		</sequence>
+		<attribute name="show-border" type="boolean"></attribute>
+		<attribute name="border-width" type="int"></attribute>
+		<attribute name="border-color" type="string"></attribute>
+	</complexType>
+	
+	<complexType name="button-submit">
+		<attribute name="label" type="string" use="required"></attribute>
+		<attribute name="style" type="string"></attribute>
+	</complexType>
+	<complexType name="button-reset">
+		<attribute name="label" type="string" use="required"></attribute>
+		<attribute name="style" type="string" use="required"></attribute>
+	</complexType>
+	
+	<complexType name="input" abstract="true">
+		<attribute name="label" type="string" use="required"></attribute>
+		<attribute name="label-position" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="left"></enumeration>
+					<enumeration value="top"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="bind-parameter" type="string" use="required"></attribute>
+	</complexType>
+	
+	<complexType name="input-text">
+		<complexContent>
+			<extension base="tns:input"></extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="input-datetime">
+		<complexContent>
+			<extension base="tns:input">
+				<attribute name="format" type="string" use="required"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="input-radio">
+		<complexContent>
+			<extension base="tns:input">
+				<sequence>
+					<element name="option" type="tns:input-option" maxOccurs="unbounded" minOccurs="1"></element>
+				</sequence>
+				<attribute name="options-inline" type="boolean"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="input-checkbox">
+		<complexContent>
+			<extension base="tns:input">
+				<sequence>
+					<element name="option" type="tns:input-option" maxOccurs="unbounded" minOccurs="1"></element>
+				</sequence>
+				<attribute name="options-inline" type="boolean"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="input-select">
+		<complexContent>
+			<extension base="tns:input">
+				<sequence>
+					<element name="option" type="tns:input-option" maxOccurs="unbounded" minOccurs="1"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="input-option">
+		<attribute name="label" type="string" use="required"></attribute>
+		<attribute name="value" type="string" use="required"></attribute>
+	</complexType>
 
 	<complexType name="header-footer">
 		<sequence>

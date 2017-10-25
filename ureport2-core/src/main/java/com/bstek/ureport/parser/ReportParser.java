@@ -34,6 +34,7 @@ import com.bstek.ureport.definition.Paper;
 import com.bstek.ureport.definition.ReportDefinition;
 import com.bstek.ureport.definition.RowDefinition;
 import com.bstek.ureport.definition.datasource.DatasourceDefinition;
+import com.bstek.ureport.definition.searchform.SearchForm;
 import com.bstek.ureport.exception.ReportException;
 import com.bstek.ureport.exception.ReportParseException;
 import com.bstek.ureport.parser.impl.CellParser;
@@ -42,6 +43,7 @@ import com.bstek.ureport.parser.impl.DatasourceParser;
 import com.bstek.ureport.parser.impl.HeaderFooterParser;
 import com.bstek.ureport.parser.impl.PaperParser;
 import com.bstek.ureport.parser.impl.RowParser;
+import com.bstek.ureport.parser.impl.searchform.SearchFormParser;
 
 /**
  * @author Jacky.gao
@@ -57,6 +59,7 @@ public class ReportParser {
 		parsers.put("paper",new PaperParser());
 		parsers.put("header",new HeaderFooterParser());
 		parsers.put("footer",new HeaderFooterParser());
+		parsers.put("search-form",new SearchFormParser());
 	}
 	public ReportDefinition parse(InputStream inputStream,String file) {
 		ReportDefinition report=new ReportDefinition();
@@ -102,6 +105,9 @@ public class ReportParser {
 						}else{
 							report.setFooter(hf);
 						}
+					}else if(target instanceof SearchForm){
+						SearchForm form=(SearchForm)target;
+						report.setSearchForm(form);
 					}
 				}else{
 					throw new ReportParseException("Unknow element :"+ele.getName());
