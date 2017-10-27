@@ -14,6 +14,7 @@
     "tip":"点击显示/隐藏属性面板"
   },
   "tools":{
+    "searchFormSwitch":"切换到查询表单设计页",
     "alignLeft":{
       "upDownAlign":"上下对齐",
       "leftRightAlign":"左右对齐",
@@ -359,6 +360,8 @@
       "target":"目标窗口：",
       "newWindow":"新窗口",
       "currentWindow":"当前窗口",
+      "parentWindow":"父窗口",
+      "topWindow":"顶层窗口",
       "urlParameter":"URL参数配置",
       "linkUrl":"请先定义链接URL！"
     },
@@ -513,6 +516,8 @@
       "target":"目标窗口：",
       "newWindow":"新窗口",
       "currentWindow":"当前窗口",
+      "parentWindow":"父窗口",
+      "topWindow":"顶层窗口",
       "urlParameterConfig":"URL参数配置",
       "urlTip":"请先定义链接URL！",
       "cellType":"单元格类型：",

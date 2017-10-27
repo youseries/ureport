@@ -78,6 +78,8 @@ export default class PropertyPanel{
         this.targetSelect=$(`<select class="form-control" style="display: inline-block;width: 160px;font-size: 12px;height: 25px;padding: 3px;">
             <option value="_blank">${window.i18n.property.prop.newWindow}</option>
             <option value="_self">${window.i18n.property.prop.currentWindow}</option>
+            <option value="_parent">${window.i18n.property.prop.parentWindow}</option>
+            <option value="_top">${window.i18n.property.prop.topWindow}</option>
         </select>`);
         configGroup.append(this.targetSelect);
         this.targetSelect.change(function(){

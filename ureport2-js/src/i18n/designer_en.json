@@ -14,6 +14,7 @@
     "tip":"Click display/hide Panel"
   },
   "tools":{
+    "searchFormSwitch":"Switch to search form designer",
     "alignLeft":{
       "upDownAlign":"Align Top and Bottom",
       "leftRightAlign":"Align Left and Right",
@@ -359,6 +360,8 @@
       "target":"Target:",
       "newWindow":"New Window",
       "currentWindow":"Current Window",
+      "parentWindow":"Parent Window",
+      "topWindow":"Top Window",
       "urlParameter":"URL Parameters Config",
       "linkUrl":"Please config url first!"
     },
@@ -514,6 +517,8 @@
       "newWindow":"New Window",
       "currentWindow":"Current Window",
       "urlParameterConfig":"URL Parameters",
+      "parentWindow":"Parent Window",
+      "topWindow":"Top Window",
       "urlTip":"Please config link first!",
       "cellType":"Cell Type:",
       "text":"Text",
