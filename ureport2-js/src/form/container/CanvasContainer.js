@@ -13,13 +13,11 @@ export default class CanvasContainer extends Container{
         this.container.append(element);
     }
     toJSON(){
-        var json={};
         var children=[];
         $.each(this.getChildren(),function(index,child){
-            children.push(child.toJSON());
+            children.push(child.toJson());
         });
-        json.children=children;
-        return json;
+        return children;
     }
     getType(){
         return "Canvas";

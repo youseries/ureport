@@ -20,15 +20,26 @@ export default class Grid3x3x3Instance extends ContainerInstance{
         this.borderWidth=1;
         this.borderColor="#cccccc";
     }
-    toJSON(){
-        var json={type:Grid3x3x3Instance.TYPE, showBorder: this.showBorder,borderWidth:this.borderWidth,borderColor:this.borderColor};
-        json.visible=this.visible;
-        var cols=[];
-        $.each(this.containers,function(index,col){
-            cols.push(col.toJSON());
-        });
-        json.cols=cols;
+    toJson(){
+        const json={
+            showBorder:this.showBorder,
+            borderWidth:this.borderWidth,
+            borderColor:this.borderColor,
+            type:Grid3x3x3Instance.TYPE,
+            cols:[]
+        };
+        for(let container of this.containers){
+            json.cols.push(container.toJson());
+        }
         return json;
+    }
+    toXml(){
+        let xml=`<grid show-border="${this.showBorder}" border-width="${this.borderWidth}" border-color="${this.borderColor}">`;
+        for(let container of this.containers){
+            xml+=container.toXml();
+        }
+        xml+=`</grid>`;
+        return xml;
     }
     setBorderWidth(){
         var self=this;

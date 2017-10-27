@@ -14,36 +14,26 @@ export default class TextInstance extends Instance{
         this.id=this.element.prop("id");
         this.editorType="text";
     }
-    setType(type){
-        if(this.editorType===type){
-            return;
-        }
-        this.editorType=type;
-        this.isDigits=false;
-        this.isEmail=false;
-        if(type==="digits"){
-            this.isDigits=true;
-        }else if(type==="email"){
-            this.isEmail=true;
-        }else if(type==="numeric"){
-            this.isNumeric=true;
-        }
-    }
     initFromJson(json){
-        Instance.prototype.fromJson.call(this,json);
+        super.initFromJson(json);
         this.editorType=json.editorType;
         if(json.searchOperator){
             this.searchOperator=json.searchOperator;
         }
     }
-    toJSON(){
-        var json=Instance.prototype.toJSON.call(this);
-        json.editorType=this.editorType;
-        json.type=TextInstance.TYPE;
-        if(this.searchOperator){
-            json.searchOperator=this.searchOperator;
-        }
+    toJson(){
+        const json={
+            label:this.label,
+            optionsInline:this.optionsInline,
+            labelPosition:this.labelPosition,
+            bindParameter:this.bindParameter,
+            type:TextInstance.TYPE
+        };
         return json;
+    }
+    toXml(){
+        const xml=`<input-text label="${this.label}" label-position="${this.labelPosition}" bind-parameter="${this.bindParameter}"></input-text>`;
+        return xml;
     }
 }
 TextInstance.TYPE="Text";

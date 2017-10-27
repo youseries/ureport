@@ -27,7 +27,7 @@ export default class Radio{
     initFromJson(json){
         this.setValue(json);
     }
-    toJSON(){
+    toJson(){
         return {label:this.label,value:this.value};
     }
 }

@@ -66,23 +66,34 @@ export default class RadioInstance extends Instance{
             item.element.remove();
         });
         this.options.splice(0,this.options.length);
-        Instance.prototype.fromJson.call(this,json);
-        var radios=json.radios;
-        for(var i=0;i<radios.length;i++){
-            this.addOption(radios[i]);
+        super.fromJson(json);
+        var options=json.options;
+        for(var i=0;i<options.length;i++){
+            this.addOption(options[i]);
         }
         this.setOptionsInline(json.optionsInline);
     }
-    toJSON(){
-        var json=Instance.prototype.toJSON.call(this);
-        json.type=RadioInstance.TYPE;
-        json.optionsInline=this.optionsInline;
-        var radios=[];
-        $.each(this.options,function(index,item){
-            radios.push(item.toJSON());
-        });
-        json.radios=radios;
+    toJson(){
+        const json={
+            label:this.label,
+            optionsInline:this.optionsInline,
+            labelPosition:this.labelPosition,
+            bindParameter:this.bindParameter,
+            type:RadioInstance.TYPE,
+            options:[]
+        };
+        for(let option of this.options){
+            json.options.push(option.toJson());
+        }
         return json;
+    }
+    toXml(){
+        let xml=`<input-radio label="${this.label}" options-inline="${this.optionsInline}" label-position="${this.labelPosition}" bind-parameter="${this.bindParameter}">`;
+        for(let option of this.options){
+            xml+=`<option label="${option.label}" value="${option.value}"></option>`;
+        }
+        xml+=`</input-radio>`;
+        return xml;
     }
 }
 RadioInstance.TYPE="Radio";

@@ -9,7 +9,7 @@ export default class TabControlInstance extends ContainerInstance{
         this.seq=seq;
         this.tabs=[];
         this.tabNum=1;
-        this.element=$("<div style='min-height: 100px;'>");
+        this.element=$("<div style='min-height: 100px;' class='tabcontainer'>");
         this.ul=$("<ul class='nav nav-tabs'>");
         this.element.append(this.ul);
         this.tabContent=$("<div class='tab-content'>");

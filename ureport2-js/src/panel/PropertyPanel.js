@@ -65,9 +65,9 @@ export default class PropertyPanel{
         const _this=this;
         this.linkGroup=$(`<fieldset style="padding: 10px;border:solid 1px #dddddd;border-radius: 8px">
         <legend style="width: auto;margin-bottom: 1px;border-bottom:none;font-size: inherit;color: #4b4b4b;">${window.i18n.property.prop.linkConfig}</legend></fieldset>`);
-        const urlGroup=$(`<div class="form-group" style="margin-bottom:8px"><label>URL：</label></div>`);
+        const urlGroup=$(`<div class="form-group" style="margin-bottom:8px"><label>URL(<span style="font-size: 12px;color: #747474" title="如:$\{# == '1' ? 'a.jsp' : 'b.jsp'}">支持表达式,表达式定义在$\{...}中</span>)：</label></div>`);
         this.linkGroup.append(urlGroup);
-        this.linkEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 310px;padding: 3px;font-size: 12px;height: 25px;">`);
+        this.linkEditor=$(`<input type="text" placeholder="如:$\{# == '1' ? 'a.jsp' : 'b.jsp'}" class="form-control" style="width: 360px;padding: 3px;font-size: 12px;height: 25px;">`);
         urlGroup.append(this.linkEditor);
         this.linkEditor.change(function(){
             _this.cellDef.linkUrl=$(this).val();

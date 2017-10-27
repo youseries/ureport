@@ -7,12 +7,10 @@ import Property from './Property.js';
 export default class TabProperty extends Property{
     constructor(){
         super();
-        this.col.append(this.buildVisibleGroup());
     }
     refreshValue(editor){
         this.current=editor;
         this.tabs=editor.tabs;
-        this.visibleText.val(editor.visible);
         this.col.empty();
         this.formGroup=$("<div class='form-group'>");
         this.col.append(this.formGroup);

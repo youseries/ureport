@@ -25,6 +25,7 @@ import FontFamilyTool from './tools/FontFamilyTool.js';
 import FontSizeTool from './tools/FontSizeTool.js';
 import ZxingTool from './tools/ZxingTool.js';
 import SettingsTool from './tools/SettingsTool.js';
+import SearchFormSwitchTool from './tools/SearchFormSwitchTool.js';
 import DatasourcePanel from './panel/DatasourcePanel.js';
 import PropertyPanel from './panel/PropertyPanel.js';
 
@@ -34,7 +35,7 @@ import FileInfo from './FileInfo.js';
 import {renderRowHeader} from './table/HeaderUtils.js';
 
 export default class UReportDesigner{
-    constructor(containerId){
+    constructor(containerId,searchFormContainerId){
         undoManager.setLimit(100);
         const _this=this;
         this.container=$('#'+containerId);
@@ -140,6 +141,7 @@ export default class UReportDesigner{
         this.tools.push(new ZxingTool(context));
         this.tools.push(new ChartTool(context));
         this.tools.push(new SettingsTool(context));
+        this.tools.push(new SearchFormSwitchTool(context));
         for(const tool of this.tools){
             toolbar.append(tool.buildButton());
         }

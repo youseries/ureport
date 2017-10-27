@@ -8,7 +8,6 @@ export default class GridProperty extends Property{
         this.init();
     }
     init(){
-        this.col.append(this.buildVisibleGroup());
         var showBorderGroup=$("<div class='form-group'><label>显示边线</label></div>");
         this.col.append(showBorderGroup);
         var showLineRadioGroup=$("<div class='checkbox-inline'>");
@@ -71,6 +70,5 @@ export default class GridProperty extends Property{
             this.hideBorderRadio.find("input").prop("checked",true);
             this.borderPropGroup.hide();
         }
-        this.visibleText.val(current.visible);
     }
 }

@@ -10,14 +10,22 @@ export default class ColContainer extends Container{
         this.container.addClass("col-md-"+colsize+"");
         this.container.addClass("pb-dropable-grid");
     }
-    toJSON(){
-        var json={type:this.getType(),size:this.colsize};
-        var children=[];
-        $.each(this.getChildren(),function(index,child){
-            children.push(child.toJSON());
-        });
-        json.children=children;
+    toJson(){
+        const json={
+            size:this.colsize,
+            children:[]
+        };
+        for(let child of this.getChildren()){
+            json.children.push(child.toJson());
+        }
         return json;
+    }
+    toXml(){
+        let xml=`<col size="${this.colsize}">`;
+        for(let child of this.getChildren()){
+            xml+=child.toXml();
+        }
+        xml+=`</xml>`;
     }
     addElement(element){
         this.container.append(element);

@@ -4,6 +4,7 @@
 import './css/iconfont.css';
 import './css/form.css';
 import './external/jquery-ui.css';
+import './external/bootstrap-datetimepicker.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../../node_modules/bootstrap/dist/js/bootstrap.js';
 import Utils from './Utils.js';
@@ -14,12 +15,10 @@ import PageProperty from './property/PageProperty.js';
 import Component from './component/Component.js';
 
 export default class FormBuilder{
-    constructor(container,server){
-        this.pageName="";
-        this.pageTitle="";
+    constructor(container){
         window.formBuilder=this;
-        this.container=$(container);
-        this.server=server || "http://localhost:8080/upage-test";
+        this.container=container;
+        this.formPosition="top";
         this.toolbar=new Toolbar();
         this.container.append(this.toolbar.toolbar);
 
@@ -33,17 +32,7 @@ export default class FormBuilder{
         this.container.append(palette.tabControl);
         this.containers=[];
         this.instances=[];
-        this.registeredActions=[];
-        /*
-        this.registeredActions.push(new OpenUrlAction());
-        this.registeredActions.push(new AlertAction());
-        this.registeredActions.push(new PromptAction());
-        this.registeredActions.push(new ConfirmAction());
-        this.registeredActions.push(new SubmitFormAction());
-        this.registeredActions.push(new ValidateFormAction());
-        */
         this.initRootContainer();
-        this.initPage();
     }
     initRootContainer(){
         const body=$("<div style='width:auto;margin-left:300px;margin-right:10px'>");
@@ -60,59 +49,35 @@ export default class FormBuilder{
         this.containers.push(this.rootContainer);
         Utils.attachSortable(canvas);
     }
-    initPage(){
-        /*
-        var page=_getParameter("p");
-        if(!page || page.length<1){
-            return;
+    initData(reportDef){
+        this.reportDef=reportDef;
+        reportDef._formBuilder=this;
+        let datasources=reportDef.datasources;
+        if(!datasources){
+            datasources=[];
         }
-        var self=this;
-        var loadPageJsonUrl=this.server + "/upage/page/"+page;
-        $.ajax({
-            url:loadPageJsonUrl,
-            success:function(data){
-                self.initPageData(data);
-            },
-            error:function(){
-                bootbox.alert("加载页面信息失败");
-            }
-        });
-        */
-    }
-    initPageData(data){
-        /*
-        if(data){
-            this.name=data.name;
-            this.pageTitle=data.title;
-            this.bindTableId=data.bindTableId;
-            var url=this.server+"/upage/loadmastertable?tableId="+this.bindTableId+"";
-            var self=this;
-            $.ajax({
-                url:url,
-                success:function(data){
-                    self.bindTable=data;
-                    self.pageProperty.refreshValue();
-                    if(UPage.binding && !data){
-                        var wizard=new BindTableWizard();
-                        wizard.show();
-                    }
-                },
-                error:function(code,xmlCode,errorInfo){
-                    bootbox.alert("加载绑定表失败:"+errorInfo);
-                }
-            });
-        }else{
-            if(UPage.binding && !this.bindTable){
-                var wizard=new BindTableWizard();
-                wizard.show();
+        let params=[];
+        for(let ds of datasources){
+            const datasets=ds.datasets || [];
+            for(let dataset of datasets){
+                const parameters=dataset.parameters || [];
+                params=params.concat(parameters);
             }
         }
-        if(data.content){
-            var content= ($.parseJSON(data.content)).children;
-            this.buildPageElements(content,this.rootContainer);
+        this.reportParameters=params;
+        const form=reportDef.searchForm || {};
+        if(form){
+            this.formPosition=form.formPosition;
+            const components= form.components;
+            this.buildPageElements(components,this.rootContainer);
         }
-        */
     }
+
+    buildData(){
+        this.reportDef.searchFormXml=this.toXml();
+        this.reportDef.searchForm=this.toJson();
+    }
+
     buildPageElements(elements,parentContainer){
         if(!elements || elements.length===0){
             return;
@@ -133,18 +98,8 @@ export default class FormBuilder{
             Utils.attachComponent(targetComponent,parentContainer,element);
         }
     }
-    getRegisteredAction(actionId){
-        var action;
-        $.each(this.registeredActions,function(index,actionDef){
-            if(actionDef.getId()===actionId){
-                action=actionDef;
-                return false;
-            }
-        });
-        return action;
-    }
     getInstance(id){
-        var target;
+        let target;
         $.each(this.instances,function(index,item){
             if(item.id===id){
                 target=item.instance;
@@ -152,6 +107,19 @@ export default class FormBuilder{
             }
         });
         return target;
+    }
+    toJson(){
+        const json={formPosition:this.formPosition};
+        json.components=this.rootContainer.toJSON();
+        return json;
+    }
+    toXml(){
+        let xml=`<search-form form-position="${this.formPosition}">`;
+        for(let ins of this.instances){
+            xml+=ins.instance.toXml();
+        }
+        xml+='</search-form>';
+        return xml;
     }
     getContainer(containerId){
         var targetContainer;
@@ -230,13 +198,4 @@ export default class FormBuilder{
         });
         return target;
     }
-    registerAction(action){
-        this.registeredActions.push(action);
-    }
 }
-function _getParameter(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null)return unescape(r[2]);
-    return null;
-};

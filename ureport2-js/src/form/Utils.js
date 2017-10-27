@@ -91,12 +91,14 @@ export default class Utils{
         var childrenContainers;
         if(newElement.hasClass("row")){
             childrenContainers=newElement.children(".pb-dropable-grid");
-        }else if(newInstance instanceof TabControlInstance){
+        }else if(newElement.hasClass("tabcontainer")){
             childrenContainers=newElement.find(".pb-tab-grid");
         }else if(newElement.hasClass("panel-group") || newElement.hasClass("panel-default")){
             childrenContainers=newElement.find(".panel-body");
         }else if(newElement.hasClass("carousel")){
             childrenContainers=newElement.find(".pb-carousel-container");
+        }else if(newElement.hasClass('btn')){
+            childrenContainers=newElement;
         }
         if(childrenContainers){
             childrenContainers.each(function(index,child){
@@ -126,14 +128,6 @@ export default class Utils{
             var tabs=ins.tabs;
             $.each(tabs,function(index,tab){
                 var children=tab.container.children;
-                childrenInstances=childrenInstances.concat(children);
-            });
-        }else  if(ins instanceof PanelInstance){
-            var children=ins.body.children;
-            childrenInstances=childrenInstances.concat(children);
-        }else if(ins instanceof AccordionInstance){
-            $.each(ins.containers,function(index,container){
-                var children=container.children;
                 childrenInstances=childrenInstances.concat(children);
             });
         }else if(ins instanceof ContainerInstance){

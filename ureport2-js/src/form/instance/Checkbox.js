@@ -27,7 +27,7 @@ export default class Checkbox{
     initFromJson(json){
         this.setValue(json);
     }
-    toJSON(){
+    toJson(){
         var json={
             value:this.value,
             label:this.label

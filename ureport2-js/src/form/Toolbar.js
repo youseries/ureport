@@ -6,7 +6,7 @@ import Instance from './instance/Instance.js';
 
 export default class Toolbar{
     constructor(){
-        this.toolbar=$("<nav class=\"navbar navbar-default pb-toolbar\" style='background: #ffffff' role=\"navigation\">");
+        this.toolbar=$("<nav class=\"navbar navbar-default pb-toolbar\" style='background: #ffffff;min-height:40px' role=\"navigation\">");
         var ul=$("<ul class=\"nav navbar-nav\">");
         this.toolbar.append(ul);
 
@@ -14,15 +14,15 @@ export default class Toolbar{
         this.toolbar.append(this.tip);
         this.tip.hide();
 
-        ul.append(this.buildSave());
+        //ul.append(this.buildSave());
         ul.append(this.buildRemove());
     }
     buildSave(){
-        this.save=$("<div class='btn btn-info' style='margin-top:10px;margin-left: 10px;margin-bottom: 10px;'><i class='fa fa-floppy-o'></i> 保存</div>");
+        this.save=$("<i class='glyphicon glyphicon-floppy-save' style='color:#2196F3;font-size: 22px;margin: 10px;' title='保存'></i>");
         return this.save;
     }
     buildRemove(){
-        this.remove=$("<div class='btn btn-danger' style='margin-top:10px;margin-left: 5px;margin-bottom: 10px;'><i class=\"fa fa-remove\"></i>&nbsp;删除选中的元素</div>");
+        this.remove=$("<button type='button' style='margin: 5px' class='btn btn-default btn-small'><i style='color: red' class='glyphicon glyphicon-remove'></i> 删除选中的元素</button>");
         var self=this;
         this.remove.click(function(){
             self.deleteElement();

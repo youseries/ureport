@@ -960,6 +960,8 @@ export default class PropertyConditionDialog{
             <option></option>
             <option value="_blank">${window.i18n.dialog.propCondition.newWindow}</option>
             <option value="_self">${window.i18n.dialog.propCondition.currentWindow}</option>
+            <option value="_parent">${window.i18n.dialog.propCondition.parentWindow}</option>
+            <option value="_top">${window.i18n.dialog.propCondition.topWindow}</option>
         </select></span>`);
         this.linkGroup.append(this.linkTargetSelect);
         this.linkTargetSelect.children('select').change(function(){

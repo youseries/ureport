@@ -21,6 +21,5 @@ export default class ContainerInstance extends Instance{
             this.borderColor=json.borderColor;
             this.setBorderWidth(this.borderWidth);
         }
-        this.visible=json.visible || "true";
     }
 }

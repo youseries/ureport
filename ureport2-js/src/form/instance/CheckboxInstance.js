@@ -65,23 +65,34 @@ export default class CheckboxInstance extends Instance{
             item.element.remove();
         });
         this.options.splice(0,this.options.length);
-        Instance.prototype.fromJson.call(this,json);
+        super.fromJson(json);
         var options=json.options;
         for(var i=0;i<options.length;i++){
             this.addOption(options[i]);
         }
         this.setOptionsInline(json.optionsInline);
     }
-    toJSON(){
-        var json=Instance.prototype.toJSON.call(this);
-        json.type=CheckboxInstance.TYPE;
-        json.optionsInline=this.optionsInline;
-        var options=[];
-        $.each(this.options,function(index,option){
-            options.push(option.toJSON());
-        });
-        json.options=options;
+    toJson(){
+        const json={
+            label:this.label,
+            optionsInline:this.optionsInline,
+            labelPosition:this.labelPosition,
+            bindParameter:this.bindParameter,
+            type:CheckboxInstance.TYPE,
+            options:[]
+        };
+        for(let option of this.options){
+            json.options.push(option.toJson());
+        }
         return json;
+    }
+    toXml(){
+        let xml=`<input-checkbox label="${this.label}" options-inline="${this.optionsInline}" label-position="${this.labelPosition}" bind-parameter="${this.bindParameter}">`;
+        for(let option of this.options){
+            xml+=`<option label="${option.label}" value="${option.value}"></option>`;
+        }
+        xml+=`</input-checkbox>`;
+        return xml;
     }
 }
 CheckboxInstance.TYPE="Checkbox";

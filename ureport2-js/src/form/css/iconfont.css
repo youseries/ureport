@@ -28,6 +28,8 @@
 
 .form-danye-:before { content: "\e603"; }
 
+.form-submit:before { content: "\e670"; }
+
 .form-textarea:before { content: "\e6ea"; }
 
 .form-textbox:before { content: "\e6eb"; }
@@ -35,6 +37,8 @@
 .form-2col:before { content: "\e64b"; }
 
 .form-4col:before { content: "\e602"; }
+
+.form-reset:before { content: "\e6e8"; }
 
 .form-1col:before { content: "\e649"; }
 

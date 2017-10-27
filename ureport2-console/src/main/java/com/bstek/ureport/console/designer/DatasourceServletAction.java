@@ -276,7 +276,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 	
 	private String parseSql(String sql,Map<String,Object> parameters){
 		sql=sql.trim();
-		if(sql.startsWith(ExpressionUtils.SQL_EXPR_PREFIX) && sql.endsWith(ExpressionUtils.SQL_EXPR_SUFFIX)){
+		if(sql.startsWith(ExpressionUtils.EXPR_PREFIX) && sql.endsWith(ExpressionUtils.EXPR_SUFFIX)){
 			sql=sql.substring(2, sql.length()-1);
 			Expression expr=ExpressionUtils.parseExpression(sql);
 			Context context=new Context(applicationContext, parameters);

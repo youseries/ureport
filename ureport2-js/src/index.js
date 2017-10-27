@@ -13,6 +13,7 @@ import '../css/iconfont.css';
 import '../css/designer.css';
 import './tree/css/tree.css';
 import './jquery.draggable.js';
+import '../node_modules/bootstrap/dist/js/bootstrap.js';
 import '../node_modules/codemirror/mode/javascript/javascript.js';
 import UReportDesigner from './designer.js';
 import buildLocal from  './i18n/i18n.js';

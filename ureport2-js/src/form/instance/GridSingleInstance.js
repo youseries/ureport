@@ -7,24 +7,35 @@ export default class GridSingleInstance extends ContainerInstance{
     constructor(){
         super();
         this.element=$("<div class=\"row\" style=\"margin: 0px;min-width:100px;\">");
-        var col1=new ColContainer(12);
-        this.containers.push(col1);
-        this.element.append(col1.getContainer());
+        this.col1=new ColContainer(12);
+        this.containers.push(this.col1);
+        this.element.append(this.col1.getContainer());
         this.element.uniqueId();
         this.id=this.element.prop("id");
         this.showBorder=false;
         this.borderWidth=1;
         this.borderColor="#cccccc";
     }
-    toJSON(){
-        var json = {type: GridSingleInstance.TYPE, showBorder: this.showBorder,borderWidth:this.borderWidth,borderColor:this.borderColor};
-        json.visible=this.visible;
-        var cols=[];
-        $.each(this.containers,function(index,col){
-            cols.push(col.toJSON());
-        });
-        json.cols=cols;
+    toJson(){
+        const json={
+            showBorder:this.showBorder,
+            borderWidth:this.borderWidth,
+            borderColor:this.borderColor,
+            type:GridSingleInstance.TYPE,
+            cols:[]
+        };
+        for(let container of this.containers){
+            json.cols.push(container.toJson());
+        }
         return json;
+    }
+    toXml(){
+        let xml=`<grid show-border="${this.showBorder}" border-width="${this.borderWidth}" border-color="${this.borderColor}">`;
+        for(let container of this.containers){
+            xml+=container.toXml();
+        }
+        xml+=`</grid>`;
+        return xml;
     }
     setBorderWidth(width){
         var self=this;

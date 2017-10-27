@@ -8,25 +8,20 @@ export default class PageProperty extends Property{
         this.init();
     }
     init(){
-        var titleGroup=$("<div class='form-group'>");
-        titleGroup.append($("<label>页面标题</label>"));
-        this.titleText=$("<input type='text' class='form-control'>");
-        titleGroup.append(this.titleText);
+        var positionGroup=$("<div class='form-group'>");
+        positionGroup.append($("<label>查询表单位置</label>"));
+        this.positionSelect=$(`<select class='form-control'>
+            <option value="up">预览工具栏之上</option>
+            <option value="down">预览工具栏之下</option>
+        </select>`);
+        positionGroup.append(this.positionSelect);
         var self=this;
-        this.titleText.change(function(){
-            formBuilder.pageTitle=$(this).val();
+        this.positionSelect.change(function(){
+            window.formBuilder.formPosition=$(this).val();
         });
-        this.col.append(titleGroup);
-
-        var bindGroup=$("<div class='form-group'><label>与当前页面绑定的表</label></div>");
-        this.col.append(bindGroup);
-        this.bindTableLabel=$("<div></div>");
-        bindGroup.append(this.bindTableLabel);
+        this.col.append(positionGroup);
     }
     refreshValue(current){
-        this.titleText.val(formBuilder.pageTitle);
-        if(formBuilder.bindTable){
-            this.bindTableLabel.html(formBuilder.bindTable.desc+"("+formBuilder.bindTable.name+")");
-        }
+        this.positionSelect.val(window.formBuilder.formPosition);
     }
 }

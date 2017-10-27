@@ -4,5 +4,5 @@
 import FormBuilder from './FormBuilder.js';
 
 $(document).ready(function(){
-    new FormBuilder("#container");
+    new FormBuilder($("#container"));
 });
