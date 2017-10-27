@@ -14,6 +14,8 @@
 		<property name="reportParser" ref="ureport.reportParser"></property>
 	</bean>
 	
+	<bean id="ureport.searchFormDesignerAction" class="com.bstek.ureport.console.designer.SearchFormDesignerAction"></bean>
+	
 	<bean id="ureport.htmlPreviewServletAction" class="com.bstek.ureport.console.html.HtmlPreviewServletAction">
 		<property name="exportManager" ref="ureport.exportManager"></property>
 		<property name="reportBuilder" ref="ureport.reportBuilder"></property>
