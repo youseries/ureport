@@ -157,6 +157,9 @@ public abstract class CategoryDataset extends BaseDataset {
 	
 	protected double collectData(List<Object> list){
 		double result=0;
+		if(list.size()==0){
+			return result;
+		}
 		switch(collectType){
 		case select:
 			result = Utils.toBigDecimal(list.get(0)).doubleValue();

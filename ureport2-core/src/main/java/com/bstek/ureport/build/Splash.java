@@ -23,7 +23,7 @@ public class Splash {
 		sb.append(".  uReport, is a Chinese style report engine");
 		sb.append(" licensed under the Apache License 2.0,                 .");
 		sb.append("\n");
-		sb.append(".  which is opensource, free of charge, easy to use,");
+		sb.append(".  which is opensource, easy to use,");
 		sb.append("high-performance, with browser-based-designer.  .");
 		sb.append("\n");
 		sb.append(".....................................................................................................");
