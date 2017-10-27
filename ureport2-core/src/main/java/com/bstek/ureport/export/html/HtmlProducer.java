@@ -21,12 +21,18 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.paging.Page;
 import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.definition.Alignment;
 import com.bstek.ureport.definition.Border;
 import com.bstek.ureport.definition.CellStyle;
+import com.bstek.ureport.expression.model.Expression;
+import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
+import com.bstek.ureport.expression.model.data.ExpressionData;
+import com.bstek.ureport.expression.model.data.ObjectExpressionData;
+import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Column;
 import com.bstek.ureport.model.Image;
@@ -147,6 +153,35 @@ public class HtmlProducer{
 				boolean hasLink=false;
 				String linkURL=cell.getLinkUrl();
 				if(StringUtils.isNotBlank(linkURL)){
+					Expression urlExpression=cell.getLinkUrlExpression();
+					if(urlExpression!=null){
+						ExpressionData<?> exprData=urlExpression.execute(cell, cell, context);
+						if(exprData instanceof BindDataListExpressionData){
+							BindDataListExpressionData listExprData=(BindDataListExpressionData)exprData;
+							List<BindData> bindDataList=listExprData.getData();
+							if(bindDataList!=null && bindDataList.size()>0){
+								Object data=bindDataList.get(0).getValue();
+								if(data!=null){
+									linkURL=data.toString();
+								}
+							}
+						}else if(exprData instanceof ObjectExpressionData){
+							ObjectExpressionData objExprData=(ObjectExpressionData)exprData;
+							Object data=objExprData.getData();
+							if(data!=null){
+								linkURL=data.toString();
+							}
+						}else if(exprData instanceof ObjectListExpressionData){
+							ObjectListExpressionData objListExprData=(ObjectListExpressionData)exprData;
+							List<?> list=objListExprData.getData();
+							if(list!=null && list.size()>0){
+								Object data=list.get(0);
+								if(data!=null){
+									linkURL=data.toString();
+								}
+							}
+						}
+					}
 					hasLink=true;
 					String urlParameter=cell.buildLinkParameters(context);
 					if(linkURL.indexOf("?")==-1){

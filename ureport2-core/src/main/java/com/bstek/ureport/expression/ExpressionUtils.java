@@ -66,8 +66,8 @@ import com.bstek.ureport.expression.parse.builder.StringExpressionBuilder;
  * @since 2016年12月24日
  */
 public class ExpressionUtils implements ApplicationContextAware{
-	public static final String SQL_EXPR_PREFIX="${";
-	public static final String SQL_EXPR_SUFFIX="}";
+	public static final String EXPR_PREFIX="${";
+	public static final String EXPR_SUFFIX="}";
 	private static ExpressionVisitor exprVisitor;
 	private static Map<String,Function> functions=new HashMap<String,Function>();
 	private static Map<Op,Assertor> assertorsMap=new HashMap<Op,Assertor>();

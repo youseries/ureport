@@ -32,6 +32,8 @@ import com.bstek.ureport.definition.LinkParameter;
 import com.bstek.ureport.definition.value.Value;
 import com.bstek.ureport.exception.ReportException;
 import com.bstek.ureport.exception.ReportParseException;
+import com.bstek.ureport.expression.ExpressionUtils;
+import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.parser.Parser;
 import com.bstek.ureport.parser.impl.value.ChartValueParser;
 import com.bstek.ureport.parser.impl.value.DatasetValueParser;
@@ -88,7 +90,15 @@ public class CellParser implements Parser<CellDefinition>{
 			}
 		}
 		cell.setLinkTargetWindow(element.attributeValue("link-target-window"));
-		cell.setLinkUrl(element.attributeValue("link-url"));
+		String linkUrl=element.attributeValue("link-url");
+		cell.setLinkUrl(linkUrl);
+		if(StringUtils.isNotBlank(linkUrl)){
+			if(linkUrl.startsWith(ExpressionUtils.EXPR_PREFIX) && linkUrl.endsWith(ExpressionUtils.EXPR_SUFFIX)){
+				String expr=linkUrl.substring(2,linkUrl.length()-1);
+				Expression urlExpression=ExpressionUtils.parseExpression(expr);
+				cell.setLinkUrlExpression(urlExpression);
+			}
+		}
 		List<LinkParameter> linkParameters=null;
 		List<ConditionPropertyItem> conditionPropertyItems=null;
 		for(Object obj:element.elements()){
@@ -124,6 +134,7 @@ public class CellParser implements Parser<CellDefinition>{
 		}
 		return cell;
 	}
+	
 	private Object parseValue(Element element){
 		Parser<?> parser=parsers.get(element.getName());
 		if(parser!=null){

@@ -137,7 +137,7 @@ public class DatasourceParser implements Parser<DatasourceDefinition> {
 			Element ele=(Element)obj;
 			if(ele.getName().equals("sql")){
 				String sql=ele.getText().trim();
-				if(sql.startsWith(ExpressionUtils.SQL_EXPR_PREFIX) && sql.endsWith(ExpressionUtils.SQL_EXPR_SUFFIX)){
+				if(sql.startsWith(ExpressionUtils.EXPR_PREFIX) && sql.endsWith(ExpressionUtils.EXPR_SUFFIX)){
 					String s=sql.substring(2,sql.length()-1);
 					Expression expr=ExpressionUtils.parseExpression(s);
 					dataset.setSqlExpression(expr);

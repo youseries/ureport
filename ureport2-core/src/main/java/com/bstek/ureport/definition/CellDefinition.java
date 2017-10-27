@@ -26,6 +26,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.ureport.Range;
 import com.bstek.ureport.definition.value.Value;
+import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.model.Cell;
 
 
@@ -46,6 +47,9 @@ public class CellDefinition implements Serializable{
 	private String linkUrl;
 	private String linkTargetWindow;
 	private List<LinkParameter> linkParameters;
+	
+	@JsonIgnore
+	private Expression linkUrlExpression;
 	
 	private boolean fillBlankRows;
 	/**
@@ -113,6 +117,7 @@ public class CellDefinition implements Serializable{
 		cell.setConditionPropertyItems(conditionPropertyItems);
 		cell.setFillBlankRows(fillBlankRows);
 		cell.setMultiple(multiple);
+		cell.setLinkUrlExpression(linkUrlExpression);
 		return cell;
 	}
 
@@ -281,5 +286,11 @@ public class CellDefinition implements Serializable{
 	public void setConditionPropertyItems(
 			List<ConditionPropertyItem> conditionPropertyItems) {
 		this.conditionPropertyItems = conditionPropertyItems;
+	}
+	public Expression getLinkUrlExpression() {
+		return linkUrlExpression;
+	}
+	public void setLinkUrlExpression(Expression linkUrlExpression) {
+		this.linkUrlExpression = linkUrlExpression;
 	}
 }

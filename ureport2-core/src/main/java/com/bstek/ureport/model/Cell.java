@@ -103,6 +103,8 @@ public class Cell implements ReportCell {
 	
 	private Map<String,String> linkParameterMap;
 	
+	private Expression linkUrlExpression;
+	
 	private List<ConditionPropertyItem> conditionPropertyItems;
 	
 	private boolean fillBlankRows;
@@ -198,6 +200,7 @@ public class Cell implements ReportCell {
 		cell.setConditionPropertyItems(conditionPropertyItems);
 		cell.setFillBlankRows(fillBlankRows);
 		cell.setMultiple(multiple);
+		cell.setLinkUrlExpression(linkUrlExpression);
 		return cell;
 	}
 	
@@ -933,6 +936,13 @@ public class Cell implements ReportCell {
 
 	public void setMultiple(int multiple) {
 		this.multiple = multiple;
+	}
+	
+	public Expression getLinkUrlExpression() {
+		return linkUrlExpression;
+	}
+	public void setLinkUrlExpression(Expression linkUrlExpression) {
+		this.linkUrlExpression = linkUrlExpression;
 	}
 
 	private String buildExpression(Context context, String name, Expression expr) {
