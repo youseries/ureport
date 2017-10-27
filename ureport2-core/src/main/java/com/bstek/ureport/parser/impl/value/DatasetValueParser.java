@@ -61,6 +61,7 @@ public class DatasetValueParser extends ValueParser {
 		List<MappingItem> mappingItems=null;
 		List<Condition> conditions=new ArrayList<Condition>();
 		PropertyExpressionCondition topCondition=null;
+		PropertyExpressionCondition prevCondition=null;
 		value.setConditions(conditions);
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -72,9 +73,11 @@ public class DatasetValueParser extends ValueParser {
 				conditions.add(condition);
 				if(topCondition==null){
 					topCondition=condition;
+					prevCondition=topCondition;
 				}else{
-					topCondition.setNextCondition(condition);
-					topCondition.setJoin(condition.getJoin());
+					prevCondition.setNextCondition(condition);
+					prevCondition.setJoin(condition.getJoin());
+					prevCondition=condition;
 				}				
 			}else if(ele.getName().equals("group-item")){
 				if(groupItems==null){
