@@ -37,6 +37,7 @@ import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Column;
 import com.bstek.ureport.model.Report;
 import com.bstek.ureport.model.Row;
+import com.bstek.ureport.utils.ElCalculator;
 
 /**
  * @author Jacky.gao
@@ -48,6 +49,7 @@ public class Context {
 	private int pageIndex;
 	private int totalPages;
 	private boolean doPaging;
+	private ElCalculator elCalculator;
 	private List<Row> currentPageRows;
 	private Map<String,Dataset> datasetMap;
 	private ApplicationContext applicationContext;
@@ -62,6 +64,7 @@ public class Context {
 		this.reportBuilder=reportBuilder;
 		this.report = report;
 		report.setContext(this);
+		this.elCalculator=new ElCalculator();
 		this.datasetMap=datasetMap;
 		this.applicationContext=applicationContext;
 		this.parameters=parameters;
@@ -259,6 +262,10 @@ public class Context {
 			unprocessedCellsMap.remove(targetCellName);
 		}
 		return targetCellsList;
+	}
+	
+	public Object evalExpr(String expression){
+		return elCalculator.eval(expression);
 	}
 	
 	public boolean isCellPocessed(String cellName){

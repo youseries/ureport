@@ -40,7 +40,7 @@ public class ArithUtils {
 	public static Object add(Object first,Object second) {
 		BigDecimal a=Utils.toBigDecimal(first);
 		BigDecimal b=Utils.toBigDecimal(second);
-		return a.add(b).doubleValue();
+		return a.add(b);
 	}
 	/**
 	 * @param first 第一个参数
@@ -50,7 +50,7 @@ public class ArithUtils {
 	public static Object sub(Object first,Object second) {
 		BigDecimal a=Utils.toBigDecimal(first);
 		BigDecimal b=Utils.toBigDecimal(second);			
-		return a.subtract(b).doubleValue();
+		return a.subtract(b);
 	}
 	/**
 	 * @param first 第一个参数
@@ -60,7 +60,7 @@ public class ArithUtils {
 	public static Object mul(Object first,Object second) {
 		BigDecimal a=Utils.toBigDecimal(first);
 		BigDecimal b=Utils.toBigDecimal(second);
-		return a.multiply(b).doubleValue();
+		return a.multiply(b);
 	}
 	/**
 	 * @param first 第一个参数
@@ -70,7 +70,7 @@ public class ArithUtils {
 	public static Object div(Object first,Object second) {
 		BigDecimal a=Utils.toBigDecimal(first);
 		BigDecimal b=Utils.toBigDecimal(second);
-		return a.divide(b,8,BigDecimal.ROUND_HALF_UP).doubleValue();
+		return a.divide(b,8,BigDecimal.ROUND_HALF_UP);
 	}
 	/**
 	 * @param first 第一个参数

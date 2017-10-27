@@ -23,18 +23,19 @@ import java.util.Stack;
  * @author Jacky.gao
  * @since 2017年4月25日
  */
-public class ElUtils {
-    private static int[] operatPriority = new int[] { 0, 3, 2, 1, -1, 1, 0, 2 };// 运用运算符ASCII码-40做索引的运算符优先级
+public class ElCalculator {
+    private static int[] PRIORITY = new int[] { 0, 3, 2, 1, -1, 1, 0, 2 };// 运用运算符ASCII码-40做索引的运算符优先级
     
-    public static void main(String[] args) {
+    public void main(String[] args) {
     	try{
-    		System.out.println(100/0);    		
+    		String expr="'gaojie:'+5%26";
+    		System.out.println(eval(expr));    		
     	}catch(Exception ex){
     		System.out.println("="+ex.getMessage()+"=");
     	}
 	}
 
-    public static Object eval(String expression) {
+    public Object eval(String expression) {
     	expression = transform(expression);
     	Object result = calculate(expression);
         return result;
@@ -45,7 +46,7 @@ public class ElUtils {
      * @param expression 例如-2+-1*(-3E-2)-(-1) 被转为 ~2+~1*(~3E~2)-(~1)
      * @return 返回转换结果
      */
-    private static String transform(String expression) {
+    private String transform(String expression) {
         char[] arr = expression.toCharArray();
         for (int i = 0; i < arr.length; i++) {
         	char cc=arr[i];
@@ -73,7 +74,7 @@ public class ElUtils {
      * @param expression 要计算的表达式例如:5+12*(3+5)/7
      * @return 返回计算结果
      */
-    private static Object calculate(String expression) {
+    private Object calculate(String expression) {
     	Stack<String> postfixStack = new Stack<String>();
         Stack<Object> resultStack = new Stack<Object>();
         prepare(expression,postfixStack);
@@ -101,7 +102,7 @@ public class ElUtils {
         return resultStack.pop();
     }
 
-    private static void prepare(String expression,Stack<String> postfixStack) {
+    private void prepare(String expression,Stack<String> postfixStack) {
     	Stack<Character> opStack = new Stack<Character>();
         opStack.push(',');// 运算符放入栈底元素逗号，此符号优先级最低
         char[] arr = expression.toCharArray();
@@ -167,24 +168,24 @@ public class ElUtils {
         }
     }
     
-    private static boolean isInvertedComma(char c){
+    private boolean isInvertedComma(char c){
     	return c=='"';
     }
     
-    private static boolean isOperator(char c) {
+    private boolean isOperator(char c) {
         return c == '+' || c == '-' || c == '*' || c == '/' || c == '%' || c == '(' || c == ')';
     }
-    public static boolean compare(char cur, char peek) {// 如果是peek优先级高于cur，返回true，默认都是peek优先级要低
+    public boolean compare(char cur, char peek) {// 如果是peek优先级高于cur，返回true，默认都是peek优先级要低
     	if(cur=='%')cur='*';
     	if(peek=='%')peek='*';
         boolean result = false;
-        if (operatPriority[(peek) - 40] >= operatPriority[(cur) - 40]) {
+        if (PRIORITY[(peek) - 40] >= PRIORITY[(cur) - 40]) {
             result = true;
         }
         return result;
     }
 
-    private static Object calculate(String firstValue, String secondValue, char currentOp) {
+    private Object calculate(String firstValue, String secondValue, char currentOp) {
         Object result = null;
         try{
         	switch (currentOp) {
