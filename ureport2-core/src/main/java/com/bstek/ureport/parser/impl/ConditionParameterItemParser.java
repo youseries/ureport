@@ -68,6 +68,7 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 		List<Condition> conditions=new ArrayList<Condition>();
 		item.setConditions(conditions);
 		BaseCondition topCondition=null;
+		BaseCondition prevCondition=null;
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
 				continue;
@@ -79,8 +80,9 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 				conditions.add(condition);
 				if(topCondition==null){
 					topCondition=condition;
+					prevCondition=condition;
 				}else{
-					topCondition.setNextCondition(condition);
+					prevCondition.setNextCondition(condition);
 				}
 				continue;
 			}
