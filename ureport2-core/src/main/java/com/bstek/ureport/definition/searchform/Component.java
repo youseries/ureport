@@ -23,4 +23,5 @@ package com.bstek.ureport.definition.searchform;
 public interface Component {
 	String toHtml(RenderContext context);
 	String initJs(RenderContext context);
+	String getType();
 }

@@ -30,6 +30,7 @@ public class ResetButtonParser implements FormParser<ResetButtonComponent>{
 		ResetButtonComponent btn=new ResetButtonComponent();
 		btn.setLabel(element.attributeValue("label"));
 		btn.setStyle(element.attributeValue("style"));
+		btn.setType(element.attributeValue("type"));
 		return btn;
 	}
 	@Override

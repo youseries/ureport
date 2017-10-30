@@ -31,6 +31,7 @@ public class DatetimeInputParser implements FormParser<DateInputComponent> {
 		DateInputComponent component=new DateInputComponent();
 		component.setBindParameter(element.attributeValue("bind-parameter"));
 		component.setLabel(element.attributeValue("label"));
+		component.setType(element.attributeValue("type"));
 		component.setLabelPosition(LabelPosition.valueOf(element.attributeValue("label-position")));
 		component.setFormat(element.attributeValue("format"));
 		return component;

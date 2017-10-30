@@ -30,6 +30,7 @@ public class SubmitButtonParser implements FormParser<SubmitButtonComponent> {
 		SubmitButtonComponent btn=new SubmitButtonComponent();
 		btn.setLabel(element.attributeValue("label"));
 		btn.setStyle(element.attributeValue("style"));
+		btn.setType(element.attributeValue("type"));
 		return btn;
 	}
 	@Override

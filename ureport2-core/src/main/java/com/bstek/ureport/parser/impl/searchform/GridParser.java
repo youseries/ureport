@@ -33,6 +33,7 @@ public class GridParser implements FormParser<GridComponent> {
 	@Override
 	public GridComponent parse(Element element) {
 		GridComponent grid=new GridComponent();
+		grid.setType(element.attributeValue("type"));
 		grid.setShowBorder(Boolean.valueOf(element.attributeValue("show-border")));
 		if(grid.isShowBorder()){
 			grid.setBorderColor(element.attributeValue("border-color"));

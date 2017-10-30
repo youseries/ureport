@@ -48,4 +48,8 @@ public class ColComponent extends ContainerComponent{
 	public void setSize(int size) {
 		this.size = size;
 	}
+	@Override
+	public String getType() {
+		return null;
+	}
 }

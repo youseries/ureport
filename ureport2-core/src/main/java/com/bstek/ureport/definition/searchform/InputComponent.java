@@ -24,6 +24,7 @@ package com.bstek.ureport.definition.searchform;
 public abstract class InputComponent implements Component{
 	private String label;
 	private String bindParameter;
+	private String type;
 	protected LabelPosition labelPosition=LabelPosition.top;
 	
 	abstract String inputHtml(RenderContext context);
@@ -63,5 +64,12 @@ public abstract class InputComponent implements Component{
 	}
 	public void setBindParameter(String bindParameter) {
 		this.bindParameter = bindParameter;
+	}
+	@Override
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

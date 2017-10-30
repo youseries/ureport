@@ -31,6 +31,7 @@ public class TextInputParser implements FormParser<TextInputComponent> {
 		TextInputComponent component=new TextInputComponent();
 		component.setBindParameter(element.attributeValue("bind-parameter"));
 		component.setLabel(element.attributeValue("label"));
+		component.setType(element.attributeValue("type"));
 		component.setLabelPosition(LabelPosition.valueOf(element.attributeValue("label-position")));
 		return component;
 	}

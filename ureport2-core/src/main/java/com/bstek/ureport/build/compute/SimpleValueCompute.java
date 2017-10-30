@@ -33,7 +33,7 @@ public class SimpleValueCompute implements ValueCompute {
 	@Override
 	public List<BindData> compute(Cell cell, Context context) {
 		List<BindData> list=new ArrayList<BindData>();
-		list.add(new BindData(cell.getValue().getValue(),null));
+		list.add(new BindData(cell.getValue().getValue(),null,null));
 		return list;
 	}
 

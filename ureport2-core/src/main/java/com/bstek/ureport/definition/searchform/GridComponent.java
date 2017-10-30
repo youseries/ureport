@@ -26,6 +26,7 @@ public class GridComponent implements Component{
 	private boolean showBorder;
 	private int borderWidth;
 	private String borderColor;
+	private String type;
 	private List<ColComponent> cols;
 	public static final String KEY="grid_component";
 	@Override
@@ -65,5 +66,12 @@ public class GridComponent implements Component{
 	}
 	public void setCols(List<ColComponent> cols) {
 		this.cols = cols;
+	}
+	@Override
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

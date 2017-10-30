@@ -23,6 +23,7 @@ package com.bstek.ureport.definition.searchform;
 public abstract class ButtonComponent implements Component{
 	private String label;
 	private String style;
+	private String type;
 	@Override
 	public String toHtml(RenderContext context) {
 		return "<button type=\"button\" id=\""+context.buildComponentId(this)+"\" class=\""+style+"\">"+label+"</button>";
@@ -38,5 +39,12 @@ public abstract class ButtonComponent implements Component{
 	}
 	public void setStyle(String style) {
 		this.style = style;
+	}
+	@Override
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

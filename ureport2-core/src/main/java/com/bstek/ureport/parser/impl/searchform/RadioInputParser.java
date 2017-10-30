@@ -36,6 +36,7 @@ public class RadioInputParser implements FormParser<RadioInputComponent> {
 		radio.setBindParameter(element.attributeValue("bind-parameter"));
 		radio.setOptionsInline(Boolean.valueOf(element.attributeValue("options-inline")));
 		radio.setLabel(element.attributeValue("label"));
+		radio.setType(element.attributeValue("type"));
 		radio.setLabelPosition(LabelPosition.valueOf(element.attributeValue("label-position")));
 		List<Option> options=new ArrayList<Option>();
 		for(Object obj:element.elements()){

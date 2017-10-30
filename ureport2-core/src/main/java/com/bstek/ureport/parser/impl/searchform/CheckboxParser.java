@@ -36,6 +36,7 @@ public class CheckboxParser implements FormParser<CheckboxInputComponent> {
 		checkbox.setBindParameter(element.attributeValue("bind-parameter"));
 		checkbox.setOptionsInline(Boolean.valueOf(element.attributeValue("options-inline")));
 		checkbox.setLabel(element.attributeValue("label"));
+		checkbox.setType(element.attributeValue("type"));
 		checkbox.setLabelPosition(LabelPosition.valueOf(element.attributeValue("label-position")));
 		List<Option> options=new ArrayList<Option>();
 		for(Object obj:element.elements()){
