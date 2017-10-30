@@ -46,7 +46,6 @@ import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.Paper;
 import com.bstek.ureport.definition.ReportDefinition;
 import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.exception.ReportException;
 import com.bstek.ureport.export.ExportManager;
 import com.bstek.ureport.export.FullPageData;
 import com.bstek.ureport.export.PageBuilder;
@@ -165,7 +164,16 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		String fullName=file+parameters.toString();
 		Report report=CacheUtils.getReport(fullName);
 		if(report==null){
-			throw new ReportException("Report preview data has expired,can not do load pages for print.");
+			ReportDefinition reportDefinition=null;
+			if(fullName.equals(PREVIEW_KEY)){
+				reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
+				if(reportDefinition==null){
+					throw new ReportDesignException("Report data has expired,can not do export excel.");
+				}
+			}else{
+				reportDefinition=reportRender.getReportDefinition(file);
+			}
+			report=reportBuilder.buildReport(reportDefinition, parameters);					
 		}
 		FullPageData pageData=PageBuilder.buildFullPageData(report);
 		StringBuilder sb=new StringBuilder();
