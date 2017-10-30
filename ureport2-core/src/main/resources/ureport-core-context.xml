@@ -45,6 +45,8 @@
 	<bean id="ureport.rextInputParser" class="com.bstek.ureport.parser.impl.searchform.TextInputParser"></bean>
 	<bean id="ureport.resetButtonParser" class="com.bstek.ureport.parser.impl.searchform.ResetButtonParser"></bean>
 	<bean id="ureport.submitButtonParser" class="com.bstek.ureport.parser.impl.searchform.SubmitButtonParser"></bean>
+	<bean id="ureport.selectInputParser" class="com.bstek.ureport.parser.impl.searchform.SelectInputParser"></bean>
+	<bean id="ureport.datetimeInputParser" class="com.bstek.ureport.parser.impl.searchform.DatetimeInputParser"></bean>
 	
 	<bean id="ureport.classpathReportProvider" class="com.bstek.ureport.provider.report.classpath.ClasspathReportProvider"></bean>
 	

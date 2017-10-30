@@ -50,6 +50,9 @@ public class RadioInputComponent extends InputComponent {
 	public void setOptions(List<Option> options) {
 		this.options = options;
 	}
+	public List<Option> getOptions() {
+		return options;
+	}
 	@Override
 	public String toHtml(RenderContext context) {
 		StringBuilder sb=new StringBuilder();

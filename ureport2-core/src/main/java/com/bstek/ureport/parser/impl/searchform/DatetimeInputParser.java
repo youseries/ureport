@@ -38,6 +38,6 @@ public class DatetimeInputParser implements FormParser<DateInputComponent> {
 	}
 	@Override
 	public boolean support(String name) {
-		return name.equals("input-text");
+		return name.equals("input-datetime");
 	}
 }

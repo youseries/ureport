@@ -41,4 +41,7 @@ public class SelectInputComponent extends InputComponent {
 	public void setOptions(List<Option> options) {
 		this.options = options;
 	}
+	public List<Option> getOptions() {
+		return options;
+	}
 }

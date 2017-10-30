@@ -23,21 +23,20 @@ import org.dom4j.Element;
 
 import com.bstek.ureport.definition.searchform.LabelPosition;
 import com.bstek.ureport.definition.searchform.Option;
-import com.bstek.ureport.definition.searchform.RadioInputComponent;
+import com.bstek.ureport.definition.searchform.SelectInputComponent;
 
 /**
  * @author Jacky.gao
- * @since 2017年10月24日
+ * @since 2017年10月30日
  */
-public class RadioInputParser implements FormParser<RadioInputComponent> {
+public class SelectInputParser implements FormParser<SelectInputComponent> {
 	@Override
-	public RadioInputComponent parse(Element element) {
-		RadioInputComponent radio=new RadioInputComponent();
-		radio.setBindParameter(element.attributeValue("bind-parameter"));
-		radio.setOptionsInline(Boolean.valueOf(element.attributeValue("options-inline")));
-		radio.setLabel(element.attributeValue("label"));
-		radio.setType(element.attributeValue("type"));
-		radio.setLabelPosition(LabelPosition.valueOf(element.attributeValue("label-position")));
+	public SelectInputComponent parse(Element element) {
+		SelectInputComponent select=new SelectInputComponent();
+		select.setBindParameter(element.attributeValue("bind-parameter"));
+		select.setLabel(element.attributeValue("label"));
+		select.setType(element.attributeValue("type"));
+		select.setLabelPosition(LabelPosition.valueOf(element.attributeValue("label-position")));
 		List<Option> options=new ArrayList<Option>();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -52,11 +51,11 @@ public class RadioInputParser implements FormParser<RadioInputComponent> {
 			option.setLabel(ele.attributeValue("label"));
 			option.setValue(ele.attributeValue("value"));
 		}
-		radio.setOptions(options);
-		return radio;
+		select.setOptions(options);
+		return select;
 	}
 	@Override
 	public boolean support(String name) {
-		return name.equals("input-radio");
+		return name.equals("input-select");
 	}
 }

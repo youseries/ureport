@@ -52,6 +52,7 @@ public class CheckboxParser implements FormParser<CheckboxInputComponent> {
 			option.setLabel(ele.attributeValue("label"));
 			option.setValue(ele.attributeValue("value"));
 		}
+		checkbox.setOptions(options);
 		return checkbox;
 	}
 	@Override
