@@ -27,6 +27,7 @@ import com.bstek.ureport.definition.Paper;
 import com.bstek.ureport.definition.ReportDefinition;
 import com.bstek.ureport.definition.RowDefinition;
 import com.bstek.ureport.definition.datasource.DatasourceDefinition;
+import com.bstek.ureport.definition.searchform.SearchForm;
 
 /**
  * @author Jacky.gao
@@ -36,6 +37,7 @@ public class ReportDefinitionWrapper {
 	private Paper paper;
 	private HeaderFooterDefinition header;
 	private HeaderFooterDefinition footer;
+	private SearchForm searchForm;
 	private List<RowDefinition> rows;
 	private List<ColumnDefinition> columns;
 	private List<DatasourceDefinition> datasources;
@@ -44,6 +46,7 @@ public class ReportDefinitionWrapper {
 		this.paper=report.getPaper();
 		this.header=report.getHeader();
 		this.footer=report.getFooter();
+		this.searchForm=report.getSearchForm();
 		this.rows=report.getRows();
 		this.columns=report.getColumns();
 		this.datasources=report.getDatasources();
@@ -65,6 +68,12 @@ public class ReportDefinitionWrapper {
 	}
 	public Paper getPaper() {
 		return paper;
+	}
+	public SearchForm getSearchForm() {
+		return searchForm;
+	}
+	public void setSearchForm(SearchForm searchForm) {
+		this.searchForm = searchForm;
 	}
 	public Map<String, CellDefinition> getCellsMap() {
 		return cellsMap;
