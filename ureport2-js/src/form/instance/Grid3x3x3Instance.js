@@ -34,7 +34,7 @@ export default class Grid3x3x3Instance extends ContainerInstance{
         return json;
     }
     toXml(){
-        let xml=`<grid show-border="${this.showBorder}" border-width="${this.borderWidth}" border-color="${this.borderColor}">`;
+        let xml=`<grid show-border="${this.showBorder}" type="${Grid3x3x3Instance.TYPE}" border-width="${this.borderWidth}" border-color="${this.borderColor}">`;
         for(let container of this.containers){
             xml+=container.toXml();
         }

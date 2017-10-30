@@ -18,7 +18,7 @@ export default class FormBuilder{
     constructor(container){
         window.formBuilder=this;
         this.container=container;
-        this.formPosition="top";
+        this.formPosition="up";
         this.toolbar=new Toolbar();
         this.container.append(this.toolbar.toolbar);
 
@@ -110,14 +110,12 @@ export default class FormBuilder{
     }
     toJson(){
         const json={formPosition:this.formPosition};
-        json.components=this.rootContainer.toJSON();
+        json.components=this.rootContainer.toJson();
         return json;
     }
     toXml(){
-        let xml=`<search-form form-position="${this.formPosition}">`;
-        for(let ins of this.instances){
-            xml+=ins.instance.toXml();
-        }
+        let xml=`<search-form form-position="${this.formPosition || 'up'}">`;
+        xml+=this.rootContainer.toXml();
         xml+='</search-form>';
         return xml;
     }

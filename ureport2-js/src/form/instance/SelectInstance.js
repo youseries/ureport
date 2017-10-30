@@ -45,7 +45,7 @@ export default class SelectInstance extends Instance{
             item.element.remove();
         });
         this.options.splice(0,this.options.length);
-        Instance.prototype.fromJson.call(this,json);
+        super.fromJson(json);
         if(json.searchOperator){
             this.searchOperator=json.searchOperator;
         }
@@ -69,7 +69,7 @@ export default class SelectInstance extends Instance{
         return json;
     }
     toXml(){
-        let xml=`<input-select label="${this.label}" label-position="${this.labelPosition}" bind-parameter="${this.bindParameter}">`;
+        let xml=`<input-select label="${this.label}" type="${SelectInstance.TYPE}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}">`;
         for(let option of this.options){
             xml+=`<option label="${option.label}" value="${option.value}"></option>`;
         }

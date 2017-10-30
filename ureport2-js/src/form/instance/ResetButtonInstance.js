@@ -16,7 +16,7 @@ export default class ResetButtonInstance extends ButtonInstance{
         };
     }
     toXml(){
-        return `<button-reset label="${this.label}" style="${this.style}"></button-reset>`;
+        return `<button-reset label="${this.label}" type="${ResetButtonInstance.TYPE}" style="${this.style}"></button-reset>`;
     }
 }
 ResetButtonInstance.TYPE='Reset-button';

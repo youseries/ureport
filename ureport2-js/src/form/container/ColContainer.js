@@ -25,7 +25,8 @@ export default class ColContainer extends Container{
         for(let child of this.getChildren()){
             xml+=child.toXml();
         }
-        xml+=`</xml>`;
+        xml+=`</col>`;
+        return xml;
     }
     addElement(element){
         this.container.append(element);

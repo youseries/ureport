@@ -15,7 +15,7 @@ export default class TextInstance extends Instance{
         this.editorType="text";
     }
     initFromJson(json){
-        super.initFromJson(json);
+        super.fromJson(json);
         this.editorType=json.editorType;
         if(json.searchOperator){
             this.searchOperator=json.searchOperator;
@@ -32,7 +32,7 @@ export default class TextInstance extends Instance{
         return json;
     }
     toXml(){
-        const xml=`<input-text label="${this.label}" label-position="${this.labelPosition}" bind-parameter="${this.bindParameter}"></input-text>`;
+        const xml=`<input-text label="${this.label}" type="${TextInstance.TYPE}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}"></input-text>`;
         return xml;
     }
 }

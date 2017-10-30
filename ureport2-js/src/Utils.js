@@ -507,6 +507,9 @@ export function tableToXml(context){
         xml+=` column-count="${paper.columnCount}" column-margin="${paper.columnMargin}"`;
     }
     xml+=`></paper>`;
+    if(context.reportDef.searchFormXml){
+        xml+=context.reportDef.searchFormXml;
+    }
     xml+=`</ureport>`;
     return xml;
 };

@@ -36,7 +36,7 @@ export default class DatetimeInstance extends Instance{
         });
     }
     initFromJson(json){
-        Instance.prototype.fromJson.call(this,json);
+        super.fromJson(json);
         this.setDateFormat(json.format);
         if(json.searchOperator){
             this.searchOperator=json.searchOperator;
@@ -52,7 +52,7 @@ export default class DatetimeInstance extends Instance{
         };
     }
     toXml(){
-        let xml=`<input-datetime label="${this.label}" label-position="${this.labelPosition}" bind-parameter="${this.bindParameter}" format="${this.format}"></input-datetime>`;
+        let xml=`<input-datetime label="${this.label}" type="${DatetimeInstance.TYPE}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}" format="${this.format}"></input-datetime>`;
         return xml;
     }
 }

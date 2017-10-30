@@ -12,12 +12,19 @@ export default class CanvasContainer extends Container{
     addElement(element){
         this.container.append(element);
     }
-    toJSON(){
+    toJson(){
         var children=[];
         $.each(this.getChildren(),function(index,child){
             children.push(child.toJson());
         });
         return children;
+    }
+    toXml(){
+        let xml='';
+        $.each(this.getChildren(),function(index,child){
+            xml+=child.toXml();
+        });
+        return xml;
     }
     getType(){
         return "Canvas";

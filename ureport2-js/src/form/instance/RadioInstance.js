@@ -88,7 +88,7 @@ export default class RadioInstance extends Instance{
         return json;
     }
     toXml(){
-        let xml=`<input-radio label="${this.label}" options-inline="${this.optionsInline}" label-position="${this.labelPosition}" bind-parameter="${this.bindParameter}">`;
+        let xml=`<input-radio label="${this.label}" type="${RadioInstance.TYPE}" options-inline="${this.optionsInline}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}">`;
         for(let option of this.options){
             xml+=`<option label="${option.label}" value="${option.value}"></option>`;
         }

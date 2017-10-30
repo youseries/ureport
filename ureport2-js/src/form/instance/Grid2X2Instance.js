@@ -32,7 +32,7 @@ export default class Grid2X2Instance extends ContainerInstance{
         return json;
     }
     toXml(){
-        let xml=`<grid show-border="${this.showBorder}" border-width="${this.borderWidth}" border-color="${this.borderColor}">`;
+        let xml=`<grid show-border="${this.showBorder}" type="${Grid2X2Instance.TYPE}" border-width="${this.borderWidth}" border-color="${this.borderColor}">`;
         for(let container of this.containers){
             xml+=container.toXml();
         }
