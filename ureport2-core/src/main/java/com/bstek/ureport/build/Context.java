@@ -49,13 +49,13 @@ public class Context {
 	private int pageIndex;
 	private int totalPages;
 	private boolean doPaging;
-	private ElCalculator elCalculator;
 	private List<Row> currentPageRows;
 	private Map<String,Dataset> datasetMap;
 	private ApplicationContext applicationContext;
 	private ReportBuilder reportBuilder;
 	private Map<String,Object> parameters;
 	private HideRowColumnBuilder hideRowColumnBuilder;
+	private ElCalculator elCalculator=new ElCalculator();
 	private Map<String,List<Cell>> unprocessedCellsMap = new HashMap<String,List<Cell>>();
 	private Map<Row,Map<Column,Cell>> blankCellsMap=new HashMap<Row,Map<Column,Cell>>();
 	private Map<Row,Integer> fillBlankRowsMap=new HashMap<Row,Integer>();
@@ -64,7 +64,6 @@ public class Context {
 		this.reportBuilder=reportBuilder;
 		this.report = report;
 		report.setContext(this);
-		this.elCalculator=new ElCalculator();
 		this.datasetMap=datasetMap;
 		this.applicationContext=applicationContext;
 		this.parameters=parameters;
