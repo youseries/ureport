@@ -14,37 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package com.bstek.ureport.definition.searchform;
+package com.bstek.ureport.export.html;
+
+import com.bstek.ureport.definition.searchform.FormPosition;
 
 /**
  * @author Jacky.gao
- * @since 2017年10月24日
+ * @since 2017年10月31日
  */
-public abstract class ButtonComponent implements Component{
-	private String label;
-	private String style;
-	private String type;
-	@Override
-	public String toHtml(RenderContext context) {
-		return "<button type=\"button\" id=\""+context.buildComponentId(this)+"\" class=\"btn "+style+"\">"+label+"</button>";
+public class SearchFormData {
+	private String html;
+	private String js;
+	private FormPosition formPosition;
+	public String getHtml() {
+		return html;
 	}
-	public String getLabel() {
-		return label;
+	public void setHtml(String html) {
+		this.html = html;
 	}
-	public void setLabel(String label) {
-		this.label = label;
+	public String getJs() {
+		return js;
 	}
-	public String getStyle() {
-		return style;
+	public void setJs(String js) {
+		this.js = js;
 	}
-	public void setStyle(String style) {
-		this.style = style;
+	public FormPosition getFormPosition() {
+		return formPosition;
 	}
-	@Override
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
+	public void setFormPosition(FormPosition formPosition) {
+		this.formPosition = formPosition;
 	}
 }

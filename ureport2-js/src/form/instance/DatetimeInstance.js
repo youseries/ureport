@@ -26,7 +26,7 @@ export default class DatetimeInstance extends Instance{
         this.id=this.element.prop("id");
     }
     setDateFormat(format){
-        if(this.dateFormat===format || format===''){
+        if(this.dateFormat===format || format==='' || format===undefined){
             return;
         }
         this.dateFormat=format;

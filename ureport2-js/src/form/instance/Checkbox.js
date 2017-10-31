@@ -13,7 +13,7 @@ export default class Checkbox{
         if(optionsInline){
             inlineClass=CheckboxInstance.LABEL_POSITION[1];
         }
-        this.element=$("<label class='"+inlineClass+"'></label>");
+        this.element=$("<span class='"+inlineClass+"'></span>");
         this.element.append(this.checkbox);
         this.labelElement=$("<span style='margin-left: 15px'>"+this.label+"</span>");
         this.element.append(this.labelElement);

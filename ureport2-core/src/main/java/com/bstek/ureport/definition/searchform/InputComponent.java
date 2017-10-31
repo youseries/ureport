@@ -38,10 +38,10 @@ public abstract class InputComponent implements Component{
 		}
 		sb.append("<div class='form-group' style='margin:0px 0px 10px 0px'>");
 		if(this.labelPosition.equals(LabelPosition.top)){		
-			sb.append("<label>"+this.label+"</label>");			
+			sb.append("<span>"+this.label+"</span>");			
 			sb.append(inputHtml(context));
 		}else{					
-			sb.append("<label class='col-md-3 control-label' style='text-align:right;padding-right:1px'>"+this.label+"</label>");			
+			sb.append("<span class='col-md-3' style='text-align:right;padding-right:1px'>"+this.label+"</span>");			
 			sb.append("<div class='col-md-9' style='padding-left:1px;'>");
 			sb.append(inputHtml(context));
 			sb.append("</div>");
@@ -58,6 +58,9 @@ public abstract class InputComponent implements Component{
 	}
 	public void setLabelPosition(LabelPosition labelPosition) {
 		this.labelPosition = labelPosition;
+	}
+	public LabelPosition getLabelPosition() {
+		return labelPosition;
 	}
 	public String getBindParameter() {
 		return bindParameter;

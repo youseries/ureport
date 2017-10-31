@@ -31,9 +31,9 @@ public class CheckboxInputComponent extends InputComponent {
 		String name=getBindParameter();
 		for(Option option:options){
 			if(this.optionsInline){
-				sb.append("<label class='checkbox-inline'><input value='"+option.getValue()+"' type='checkbox' name='"+name+"'>"+option.getLabel()+"</label>");
+				sb.append("<span class='checkbox-inline'><input value='"+option.getValue()+"' type='checkbox' name='"+name+"'>"+option.getLabel()+"</span>");
 			}else{
-				sb.append("<label class='checkbox'><input type='checkbox' value='"+option.getValue()+"' name='"+name+"' style='margin-left: auto'>"+option.getLabel()+"</label>");
+				sb.append("<span class='checkbox'><input type='checkbox' value='"+option.getValue()+"' name='"+name+"' style='margin-left: auto'><span style=\"margin-left:15px\">"+option.getLabel()+"</span></span>");
 			}				
 		}
 		return sb.toString();

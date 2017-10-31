@@ -23,7 +23,7 @@ package com.bstek.ureport.definition.searchform;
 public class TextInputComponent extends InputComponent {
 	@Override
 	String inputHtml(RenderContext context) {
-		return "<input type='text' id='"+context.buildComponentId(this)+"' name='"+getBindParameter()+"' class='form-control'>";	
+		return "<input type='text' style=\"padding:3px;height:28px\" id='"+context.buildComponentId(this)+"' name='"+getBindParameter()+"' class='form-control'>";	
 	}
 	@Override
 	public String initJs(RenderContext context) {

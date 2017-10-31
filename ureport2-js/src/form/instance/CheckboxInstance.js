@@ -70,7 +70,9 @@ export default class CheckboxInstance extends Instance{
         for(var i=0;i<options.length;i++){
             this.addOption(options[i]);
         }
-        this.setOptionsInline(json.optionsInline);
+        if(json.optionsInline!==undefined){
+            this.setOptionsInline(json.optionsInline);
+        }
     }
     toJson(){
         const json={
@@ -87,7 +89,7 @@ export default class CheckboxInstance extends Instance{
         return json;
     }
     toXml(){
-        let xml=`<input-checkbox label="${this.label}" type="${CheckboxInstance.TYPE}" options-inline="${this.optionsInline}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}">`;
+        let xml=`<input-checkbox label="${this.label}" type="${CheckboxInstance.TYPE}" options-inline="${this.optionsInline === undefined ? false : this.optionsInline}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}">`;
         for(let option of this.options){
             xml+=`<option label="${option.label}" value="${option.value}"></option>`;
         }

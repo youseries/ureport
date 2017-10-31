@@ -27,7 +27,7 @@ public class SelectInputComponent extends InputComponent {
 	@Override
 	String inputHtml(RenderContext context) {
 		StringBuilder sb=new StringBuilder();
-		sb.append("<select id='"+context.buildComponentId(this)+"' name='"+getBindParameter()+"' class='form-control'>");			
+		sb.append("<select style=\"padding:3px;height:28px\" id='"+context.buildComponentId(this)+"' name='"+getBindParameter()+"' class='form-control'>");			
 		for(Option option:options){
 			sb.append("<option value='"+option.getValue()+"'>"+option.getLabel()+"</option>");
 		}

@@ -39,10 +39,10 @@ export default class FormBuilder{
         this.container.append(body);
         const shadowContainer=$("<div class='pb-shadow'>");
         body.append(shadowContainer);
-        const container=$("<div class='container pb-canvas-container form-horizontal' style='width: auto'>");
+        const container=$("<div class='container pb-canvas-container form-horizontal' style='width: auto;padding: 0;'>");
         shadowContainer.append(container);
         const row=$("<div class='row'>");
-        const canvas=$("<div class='col-md-12 pb-dropable-grid' style='min-height: 100px'>");
+        const canvas=$("<div class='col-md-12 pb-dropable-grid' style='min-height: 100px;border: none;padding: 0;;'>");
         row.append(canvas);
         container.append(row);
         this.rootContainer=new CanvasContainer(canvas);

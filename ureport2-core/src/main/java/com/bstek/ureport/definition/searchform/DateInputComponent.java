@@ -26,7 +26,9 @@ public class DateInputComponent extends InputComponent {
 	public void setFormat(String format) {
 		this.format = format;
 	}
-	
+	public String getFormat() {
+		return format;
+	}
 	@Override
 	public String initJs(RenderContext context) {
 		StringBuffer sb=new StringBuffer();
@@ -41,8 +43,8 @@ public class DateInputComponent extends InputComponent {
 	public String inputHtml(RenderContext context) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("<div id='"+context.buildComponentId(this)+"' class='input-group date'>");
-		sb.append("<input type='text' name='"+getBindParameter()+"' class='form-control'>");			
-		sb.append("<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>");
+		sb.append("<input type='text' style=\"padding:3px;height:28px\" name='"+getBindParameter()+"' class='form-control'>");			
+		sb.append("<span class='input-group-addon' style=\"font-size:12px\"><span class='glyphicon glyphicon-calendar'></span></span>");
 		sb.append("</div>");
 		return sb.toString();
 	}

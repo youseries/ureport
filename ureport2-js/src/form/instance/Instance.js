@@ -12,7 +12,7 @@ export default class Instance{
     newElement(label){
         this.element=$("<div class='form-group row' style='margin:0px'>");
         this.label=label;
-        this.labelElement=$("<label class='control-label'>");
+        this.labelElement=$("<span class='control-label'></span>");
         this.element.append(this.labelElement);
         this.labelElement.text(label);
         return this.element;

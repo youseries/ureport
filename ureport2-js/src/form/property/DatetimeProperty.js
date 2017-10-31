@@ -10,6 +10,7 @@ export default class DatetimeProperty extends Property{
     init(){
         this.positionLabelGroup=this.buildPositionLabelGroup();
         this.col.append(this.positionLabelGroup);
+        this.col.append(this.buildBindParameter());
         this.col.append(this.buildLabelGroup());
         var formatGroup=$("<div class='form-group'><label class='control-label'>日期格式</label></div>");
         this.col.append(formatGroup);

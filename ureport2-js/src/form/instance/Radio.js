@@ -13,7 +13,7 @@ export default class Radio{
         if(optionsInline){
             inlineClass=CheckboxInstance.LABEL_POSITION[1];
         }
-        this.element=$("<label class='"+inlineClass+"'></label>");
+        this.element=$("<span class='"+inlineClass+"'></span>");
         this.element.append(this.radio);
         this.labelElement=$("<span>"+this.label+"</span>");
         this.element.append(this.labelElement);

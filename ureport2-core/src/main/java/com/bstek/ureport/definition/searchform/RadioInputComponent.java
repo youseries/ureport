@@ -32,9 +32,9 @@ public class RadioInputComponent extends InputComponent {
 		sb.append("<div>");
 		for(Option option:options){
 			if(this.optionsInline){
-				sb.append("<label class='checkbox-inline' style='padding-left:0px'><input value='"+option.getValue()+"' type='radio' name='"+name+"'> "+option.getLabel()+"</label>");
+				sb.append("<span class='checkbox-inline' style='padding-top:0px;padding-left:2px'><input value='"+option.getValue()+"' type='radio' name='"+name+"'> "+option.getLabel()+"</span>");
 			}else{
-				sb.append("<label class='checkbox'><input value='"+option.getValue()+"' type='radio' name='"+name+"' style='margin-left: auto'> "+option.getLabel()+"</label>");
+				sb.append("<span class='checkbox'><input value='"+option.getValue()+"' type='radio' name='"+name+"' style='margin-left: auto'> <span style=\"margin-left:15px\">"+option.getLabel()+"</span></span>");
 			}
 		}
 		sb.append("</div>");
@@ -47,15 +47,13 @@ public class RadioInputComponent extends InputComponent {
 	public void setOptionsInline(boolean optionsInline) {
 		this.optionsInline = optionsInline;
 	}
+	public boolean isOptionsInline() {
+		return optionsInline;
+	}
 	public void setOptions(List<Option> options) {
 		this.options = options;
 	}
 	public List<Option> getOptions() {
 		return options;
-	}
-	@Override
-	public String toHtml(RenderContext context) {
-		StringBuilder sb=new StringBuilder();
-		return sb.toString();
 	}
 }

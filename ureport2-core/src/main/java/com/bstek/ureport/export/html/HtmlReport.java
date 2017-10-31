@@ -32,6 +32,7 @@ public class HtmlReport {
 	private String reportAlign;
 	private Collection<ChartData> chartDatas;
 	private int htmlIntervalRefreshValue;
+	private SearchFormData searchFormData;
 	public String getContent() {
 		return content;
 	}
@@ -73,5 +74,11 @@ public class HtmlReport {
 	}
 	public void setHtmlIntervalRefreshValue(int htmlIntervalRefreshValue) {
 		this.htmlIntervalRefreshValue = htmlIntervalRefreshValue;
+	}
+	public SearchFormData getSearchFormData() {
+		return searchFormData;
+	}
+	public void setSearchFormData(SearchFormData searchFormData) {
+		this.searchFormData = searchFormData;
 	}
 }

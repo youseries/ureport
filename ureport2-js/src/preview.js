@@ -3,6 +3,8 @@
  */
 import Chart from "chart.js";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './form/external/bootstrap-datetimepicker.css';
+import './form/external/bootstrap-datetimepicker.js';
 import {getParameter,pointToMM,showLoading,hideLoading} from './Utils.js';
 import {alert} from './MsgBox.js';
 import PDFPrintDialog from './dialog/PDFPrintDialog.js';

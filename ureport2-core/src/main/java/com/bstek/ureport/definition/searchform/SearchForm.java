@@ -33,6 +33,14 @@ public class SearchForm {
 		}
 		return sb.toString();
 	}
+	public String toJs(){
+		RenderContext context=new RenderContext();
+		StringBuilder sb=new StringBuilder();
+		for(Component component:components){
+			sb.append(component.initJs(context));
+		}
+		return sb.toString();
+	}
 	public List<Component> getComponents() {
 		return components;
 	}

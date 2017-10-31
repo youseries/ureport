@@ -71,7 +71,9 @@ export default class RadioInstance extends Instance{
         for(var i=0;i<options.length;i++){
             this.addOption(options[i]);
         }
-        this.setOptionsInline(json.optionsInline);
+        if(json.optionsInline!==undefined){
+            this.setOptionsInline(json.optionsInline);
+        }
     }
     toJson(){
         const json={

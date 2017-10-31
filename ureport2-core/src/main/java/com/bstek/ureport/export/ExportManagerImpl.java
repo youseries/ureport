@@ -51,6 +51,7 @@ public class ExportManagerImpl implements ExportManager {
 		String content=htmlProducer.produce(report);
 		htmlReport.setContent(content);
 		htmlReport.setStyle(reportDefinition.getStyle());
+		htmlReport.setSearchFormData(reportDefinition.buildSearchFormData());
 		htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
 		htmlReport.setChartDatas(report.getContext().getChartDataMap().values());
 		htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
@@ -76,6 +77,7 @@ public class ExportManagerImpl implements ExportManager {
 		HtmlReport htmlReport=new HtmlReport();
 		htmlReport.setContent(content);
 		htmlReport.setStyle(reportDefinition.getStyle());
+		htmlReport.setSearchFormData(reportDefinition.buildSearchFormData());
 		htmlReport.setPageIndex(pageIndex);
 		htmlReport.setTotalPage(pageData.getTotalPages());
 		htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());

@@ -27,6 +27,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.ureport.definition.datasource.DatasourceDefinition;
 import com.bstek.ureport.definition.searchform.SearchForm;
+import com.bstek.ureport.export.html.SearchFormData;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Column;
 import com.bstek.ureport.model.Report;
@@ -211,6 +212,17 @@ public class ReportDefinition implements Serializable{
 			sb.append("}");
 		}
 		return sb.toString();
+	}
+	
+	public SearchFormData buildSearchFormData(){
+		if(searchForm==null){
+			return null;
+		}
+		SearchFormData data=new SearchFormData();
+		data.setFormPosition(searchForm.getFormPosition());
+		data.setHtml(searchForm.toHtml());
+		data.setJs(searchForm.toJs());
+		return data;
 	}
 	
 	private int getColumnWidth(int columnNumber,int colSpan){

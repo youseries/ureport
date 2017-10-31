@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -45,6 +44,7 @@ import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.console.exception.ReportDesignException;
 import com.bstek.ureport.definition.Paper;
 import com.bstek.ureport.definition.ReportDefinition;
+import com.bstek.ureport.definition.searchform.FormPosition;
 import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.export.ExportManager;
 import com.bstek.ureport.export.FullPageData;
@@ -53,6 +53,7 @@ import com.bstek.ureport.export.ReportRender;
 import com.bstek.ureport.export.SinglePageData;
 import com.bstek.ureport.export.html.HtmlProducer;
 import com.bstek.ureport.export.html.HtmlReport;
+import com.bstek.ureport.export.html.SearchFormData;
 import com.bstek.ureport.model.Report;
 
 /**
@@ -85,11 +86,20 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				context.put("content", "<div style='color:red'><strong>报表计算错误：</strong>"+errorMsg+"</div>");
 				context.put("error", true);
 			}else{
-				Locale locale=req.getLocale();
-				if(!locale.equals(Locale.CHINA)){
-					context.put("locale", "EN");
+				SearchFormData formData=htmlReport.getSearchFormData();
+				if(formData!=null){
+					context.put("searchFormJs", formData.getJs());
+					if(formData.getFormPosition().equals(FormPosition.up)){
+						context.put("upSearchFormHtml", formData.getHtml());						
+						context.put("downSearchFormHtml", "");						
+					}else{
+						context.put("downSearchFormHtml", formData.getHtml());						
+						context.put("upSearchFormHtml", "");						
+					}
 				}else{
-					context.put("locale", "EN");				
+					context.put("searchFormJs", "");
+					context.put("downSearchFormHtml", "");
+					context.put("upSearchFormHtml", "");	
 				}
 				context.put("content", htmlReport.getContent());
 				context.put("style", htmlReport.getStyle());
@@ -272,6 +282,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			htmlReport.setChartDatas(report.getContext().getChartDataMap().values());			
 			htmlReport.setContent(html);
 			htmlReport.setStyle(reportDefinition.getStyle());
+			htmlReport.setSearchFormData(reportDefinition.buildSearchFormData());
 			htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
 			htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
 		}else{
