@@ -4,7 +4,7 @@ UReport2 is a high-performance pure Java report engine based on Spring architect
 
 UReport2 provides the brand new web-based report designer that runs in mainstream browsers including Chrome, Firefox and Edge etc. \(other than IE\). You can complete the design and preparation of complex statements and reports with UReport2 by simply opening the browser.
 
-UReport2 is the first Chinese-style report engine based on GPL-3.0 License with free open source.
+UReport2 is the first Chinese-style report engine based on GPL-3.0 License.
 
 [中文 README](README-zh_CN.md)
 
