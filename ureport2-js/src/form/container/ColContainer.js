@@ -6,7 +6,7 @@ export default class ColContainer extends Container{
     constructor(colsize){
         super();
         this.colsize=colsize;
-        this.container=$("<div style='min-height:80px'>");
+        this.container=$("<div style='min-height:80px;padding: 1px'>");
         this.container.addClass("col-md-"+colsize+"");
         this.container.addClass("pb-dropable-grid");
     }

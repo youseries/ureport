@@ -38,6 +38,7 @@ public class ReportDefinitionWrapper {
 	private HeaderFooterDefinition header;
 	private HeaderFooterDefinition footer;
 	private SearchForm searchForm;
+	private String searchFormXml;
 	private List<RowDefinition> rows;
 	private List<ColumnDefinition> columns;
 	private List<DatasourceDefinition> datasources;
@@ -47,6 +48,7 @@ public class ReportDefinitionWrapper {
 		this.header=report.getHeader();
 		this.footer=report.getFooter();
 		this.searchForm=report.getSearchForm();
+		this.searchFormXml=report.getSearchFormXml();
 		this.rows=report.getRows();
 		this.columns=report.getColumns();
 		this.datasources=report.getDatasources();
@@ -80,5 +82,11 @@ public class ReportDefinitionWrapper {
 	}
 	public List<RowDefinition> getRows() {
 		return rows;
+	}
+	public String getSearchFormXml() {
+		return searchFormXml;
+	}
+	public void setSearchFormXml(String searchFormXml) {
+		this.searchFormXml = searchFormXml;
 	}
 }

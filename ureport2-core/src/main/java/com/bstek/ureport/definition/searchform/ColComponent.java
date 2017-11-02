@@ -25,7 +25,7 @@ public class ColComponent extends ContainerComponent{
 	@Override
 	public String toHtml(RenderContext context) {
 		StringBuffer sb=new StringBuffer();
-		sb.append("<div class='col-md-"+size+"'");
+		sb.append("<div class='col-md-"+size+"' style='padding-left:2px;padding-right:2px'");
 		Object gridComponent=context.getMetadata(GridComponent.KEY);
 		if(gridComponent!=null){
 			GridComponent gc=(GridComponent)gridComponent;
@@ -43,7 +43,11 @@ public class ColComponent extends ContainerComponent{
 	}
 	@Override
 	public String initJs(RenderContext context) {
-		return "";
+		StringBuilder sb=new StringBuilder();
+		for(Component c:children){
+			sb.append(c.initJs(context));
+		}
+		return sb.toString();
 	}
 	public void setSize(int size) {
 		this.size = size;

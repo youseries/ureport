@@ -25,9 +25,7 @@ public class SubmitButtonComponent extends ButtonComponent{
 	public String initJs(RenderContext context) {
 		StringBuilder sb=new StringBuilder();
 		sb.append("$('#"+context.buildComponentId(this)+"').click(function(){");
-		sb.append("alert('reset')");
-		sb.append("");
-		sb.append("");
+		sb.append("doSearch();");
 		sb.append("});");
 		return sb.toString();
 	}

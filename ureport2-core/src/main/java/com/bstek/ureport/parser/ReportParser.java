@@ -109,6 +109,7 @@ public class ReportParser {
 					}else if(target instanceof SearchForm){
 						SearchForm form=(SearchForm)target;
 						report.setSearchForm(form);
+						report.setSearchFormXml(ele.asXML());
 					}
 				}else{
 					throw new ReportParseException("Unknow element :"+ele.getName());

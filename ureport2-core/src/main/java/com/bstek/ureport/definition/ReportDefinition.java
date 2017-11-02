@@ -26,6 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.ureport.definition.datasource.DatasourceDefinition;
+import com.bstek.ureport.definition.searchform.RenderContext;
 import com.bstek.ureport.definition.searchform.SearchForm;
 import com.bstek.ureport.export.html.SearchFormData;
 import com.bstek.ureport.model.Cell;
@@ -49,6 +50,7 @@ public class ReportDefinition implements Serializable{
 	private List<RowDefinition> rows;
 	private List<ColumnDefinition> columns;
 	private List<DatasourceDefinition> datasources;
+	private String searchFormXml;
 	@JsonIgnore
 	private String style;
 
@@ -218,10 +220,12 @@ public class ReportDefinition implements Serializable{
 		if(searchForm==null){
 			return null;
 		}
+		RenderContext context=new RenderContext();
 		SearchFormData data=new SearchFormData();
 		data.setFormPosition(searchForm.getFormPosition());
-		data.setHtml(searchForm.toHtml());
-		data.setJs(searchForm.toJs());
+		data.setHtml(searchForm.toHtml(context));
+		data.setJs(searchForm.toJs(context));
+		data.setSearchFormXml(searchFormXml);
 		return data;
 	}
 	
@@ -315,5 +319,11 @@ public class ReportDefinition implements Serializable{
 	}
 	public List<DatasourceDefinition> getDatasources() {
 		return datasources;
+	}
+	public String getSearchFormXml() {
+		return searchFormXml;
+	}
+	public void setSearchFormXml(String searchFormXml) {
+		this.searchFormXml = searchFormXml;
 	}
 }

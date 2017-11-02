@@ -32,7 +32,7 @@ public class RadioInputComponent extends InputComponent {
 		sb.append("<div>");
 		for(Option option:options){
 			if(this.optionsInline){
-				sb.append("<span class='checkbox-inline' style='padding-top:0px;padding-left:2px'><input value='"+option.getValue()+"' type='radio' name='"+name+"'> "+option.getLabel()+"</span>");
+				sb.append("<span class='checkbox-inline' style='padding-top:0px;padding-left:2px;padding-top:0px'><input value='"+option.getValue()+"' type='radio' name='"+name+"'> "+option.getLabel()+"</span>");
 			}else{
 				sb.append("<span class='checkbox'><input value='"+option.getValue()+"' type='radio' name='"+name+"' style='margin-left: auto'> <span style=\"margin-left:15px\">"+option.getLabel()+"</span></span>");
 			}
@@ -42,7 +42,21 @@ public class RadioInputComponent extends InputComponent {
 	}
 	@Override
 	public String initJs(RenderContext context) {
-		return "";
+		String name=getBindParameter();
+		StringBuilder sb=new StringBuilder();
+		sb.append("formElements.push(");
+		sb.append("function(){");
+		sb.append("if(''==='"+name+"'){");
+		sb.append("alert('单选框未绑定查询参数名，不能进行查询操作!');");
+		sb.append("throw '单选框未绑定查询参数名，不能进行查询操作!'");
+		sb.append("}");
+		sb.append("return {");
+		sb.append("\""+name+"\":");
+		sb.append("$(\"input[name='"+getBindParameter()+"']:checked\").val()");
+		sb.append("}");
+		sb.append("}");
+		sb.append(");");
+		return sb.toString();
 	}
 	public void setOptionsInline(boolean optionsInline) {
 		this.optionsInline = optionsInline;

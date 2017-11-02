@@ -12,9 +12,11 @@
 </style>
  	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/jquery.min.js"></script>
  	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/bootstrap.min.js"></script>
+ 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/bootstrap-datetimepicker.js"></script>
  	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/js/preview.bundle.js"></script>
 </head>
 <body style="margin:5px">
+${upSearchFormHtml}
 #if($tools.show)
 <div style="border:solid 1px #ddd;border-radius:5px;height:35px;width:100%;margin-bottom:5px;background:#f8f8f8">
 	<div style="text-align:${reportAlign}">
@@ -95,6 +97,7 @@
 	</div>
 </div>
 #end
+${downSearchFormHtml}
 <div id="_ureport_table" style="float:${reportAlign}">
 	${content}
 </div>
@@ -102,7 +105,7 @@
 <iframe name="_print_pdf_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 <script type="text/javascript">
 window._server="${contextPath}/ureport";
-window._locale="${locale}";
+window.formElements=[];
 $(document).ready(function(){
 	#if($totalPage>0)
 			$('#pageSelector').change(function(){
@@ -119,6 +122,10 @@ $(document).ready(function(){
 		_intervalRefresh($intervalRefreshValue,"${file}",$totalPage,"${customParameters}");
 	#end
 	_buildChartDatas($chartDatas);
+	${searchFormJs}
+	function doSearch(){
+		submitSearchForm("${file}","${customParameters}");
+	}
 });
 </script>
 </body>

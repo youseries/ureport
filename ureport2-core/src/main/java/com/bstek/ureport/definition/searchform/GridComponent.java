@@ -33,6 +33,7 @@ public class GridComponent implements Component{
 	public String toHtml(RenderContext context) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("<div class='row'>");
+		context.putMetadata(KEY, this);
 		for(ColComponent c:cols){
 			sb.append(c.toHtml(context));
 		}
@@ -41,7 +42,11 @@ public class GridComponent implements Component{
 	}
 	@Override
 	public String initJs(RenderContext context) {
-		return "";
+		StringBuffer sb=new StringBuffer();
+		for(ColComponent c:cols){
+			sb.append(c.initJs(context));
+		}
+		return sb.toString();
 	}
 	public void setBorderColor(String borderColor) {
 		this.borderColor = borderColor;

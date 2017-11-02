@@ -23,10 +23,11 @@ package com.bstek.ureport.definition.searchform;
 public abstract class ButtonComponent implements Component{
 	private String label;
 	private String style;
+	private Align align=Align.left;
 	private String type;
 	@Override
 	public String toHtml(RenderContext context) {
-		return "<button type=\"button\" id=\""+context.buildComponentId(this)+"\" class=\"btn "+style+"\">"+label+"</button>";
+		return "<div style='text-align:"+this.align+"'><button type=\"button\" id=\""+context.buildComponentId(this)+"\" class=\"btn "+style+" btn-sm\">"+label+"</button></div>";
 	}
 	public String getLabel() {
 		return label;
@@ -46,5 +47,11 @@ public abstract class ButtonComponent implements Component{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public Align getAlign() {
+		return align;
+	}
+	public void setAlign(Align align) {
+		this.align = align;
 	}
 }

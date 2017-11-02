@@ -15,8 +15,8 @@ export default class DatetimeProperty extends Property{
         var formatGroup=$("<div class='form-group'><label class='control-label'>日期格式</label></div>");
         this.col.append(formatGroup);
         this.formatSelect=$("<select class='form-control'>");
-        this.formatSelect.append($("<option>YYYY-MM-DD</option>"));
-        this.formatSelect.append($("<option>YYYY-MM-DD HH:mm:ss</option>"));
+        this.formatSelect.append($("<option>yyyy-mm-dd</option>"));
+        this.formatSelect.append($("<option>yyyy-mm-dd hh:ii:ss</option>"));
         var self=this;
         this.formatSelect.change(function(){
             self.current.setDateFormat($(this).val());

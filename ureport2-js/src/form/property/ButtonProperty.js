@@ -32,6 +32,17 @@ export default class ButtonProperty extends Property{
             const style=$(this).children("option:selected").val();
             _this.current.setStyle(style);
         });
+
+        const alignGroup=$(`<div class="form-group"><label>对齐方式</label></div>`);
+        this.col.append(alignGroup);
+        this.alignSelect=$(`<select class="form-control">
+            <option value="left">左对齐</option>
+            <option value="right">右对齐</option>
+        </select>`);
+        alignGroup.append(this.alignSelect);
+        this.alignSelect.change(function(){
+            _this.current.setAlign($(this).val());
+        });
     }
     refreshValue(current){
         this.current=current;

@@ -76,6 +76,10 @@ export default class Property{
         for(let param of formBuilder.reportParameters || []){
             this.bindFieldSelect.append(`<option>${param.name}</option>`);
         }
-        this.bindFieldSelect.append(`<option selected></option>`);
+        if(!instance.bindParameter){
+            this.bindFieldSelect.append(`<option selected></option>`);
+        }else{
+            this.bindFieldSelect.val(instance.bindParameter);
+        }
     }
 }

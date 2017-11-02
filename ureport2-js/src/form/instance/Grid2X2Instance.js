@@ -16,7 +16,7 @@ export default class Grid2X2Instance extends ContainerInstance{
         this.id=this.element.prop("id");
         this.showBorder=false;
         this.borderWidth=1;
-        this.borderColor="#cccccc";
+        this.borderColor="#eee";
     }
     toJson(){
         const json={

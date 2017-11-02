@@ -4,7 +4,6 @@
 import Chart from "chart.js";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './form/external/bootstrap-datetimepicker.css';
-import './form/external/bootstrap-datetimepicker.js';
 import {getParameter,pointToMM,showLoading,hideLoading} from './Utils.js';
 import {alert} from './MsgBox.js';
 import PDFPrintDialog from './dialog/PDFPrintDialog.js';
@@ -200,4 +199,32 @@ window._buildChart=function(canvasId,chartJson){
         });
     };
     const chart=new Chart(ctx,chartJson);
+};
+
+window.submitSearchForm=function(file,customParameters){
+    const formData={};
+    for(let fun of window.formElements){
+        const json=fun.call(this);
+        for(let key in json){
+            formData[key]=json[key];
+        }
+    }
+    let url=window._server+"/preview/loadData?_u="+file+"";
+    if(customParameters){
+        url+=customParameters;
+    }
+    $.ajax({
+        url,
+        type:'POST',
+        data:formData,
+        success:function(report){
+            const tableContainer=$(`#_ureport_table`);
+            tableContainer.empty();
+            tableContainer.append(report.content);
+            _buildChartDatas(report.chartDatas);
+        },
+        error:function(){
+            alert('查询操作失败！');
+        }
+    });
 };

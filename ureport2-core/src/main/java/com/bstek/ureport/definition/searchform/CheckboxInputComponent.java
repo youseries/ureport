@@ -31,7 +31,7 @@ public class CheckboxInputComponent extends InputComponent {
 		String name=getBindParameter();
 		for(Option option:options){
 			if(this.optionsInline){
-				sb.append("<span class='checkbox-inline'><input value='"+option.getValue()+"' type='checkbox' name='"+name+"'>"+option.getLabel()+"</span>");
+				sb.append("<span class='checkbox-inline' style='padding-top:0px'><input value='"+option.getValue()+"' type='checkbox' name='"+name+"'>"+option.getLabel()+"</span>");
 			}else{
 				sb.append("<span class='checkbox'><input type='checkbox' value='"+option.getValue()+"' name='"+name+"' style='margin-left: auto'><span style=\"margin-left:15px\">"+option.getLabel()+"</span></span>");
 			}				
@@ -40,7 +40,24 @@ public class CheckboxInputComponent extends InputComponent {
 	}
 	@Override
 	public String initJs(RenderContext context) {
-		return "";
+		String name=getBindParameter();
+		StringBuilder sb=new StringBuilder();
+		sb.append("formElements.push(");
+		sb.append("function(){");
+		sb.append("if(''==='"+name+"'){");
+		sb.append("alert('复选框未绑定查询参数名，不能进行查询操作!');");
+		sb.append("throw '复选框未绑定查询参数名，不能进行查询操作!'");
+		sb.append("}");
+		sb.append("var names='';");
+		sb.append("$(\"input[name='"+getBindParameter()+"']:checked\").each(function(index,item){");
+		sb.append("if(names===''){names+=$(item).val();}else{names+=','+$(item).val();}");
+		sb.append("});");
+		sb.append("return {");
+		sb.append("\""+name+"\":names");
+		sb.append("}");
+		sb.append("}");
+		sb.append(");");
+		return sb.toString();
 	}
 	public void setOptionsInline(boolean optionsInline) {
 		this.optionsInline = optionsInline;

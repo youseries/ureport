@@ -27,6 +27,20 @@ public class TextInputComponent extends InputComponent {
 	}
 	@Override
 	public String initJs(RenderContext context) {
-		return "";
+		String name=getBindParameter();
+		StringBuilder sb=new StringBuilder();
+		sb.append("formElements.push(");
+		sb.append("function(){");
+		sb.append("if(''==='"+name+"'){");
+		sb.append("alert('文本框未绑定查询参数名，不能进行查询操作!');");
+		sb.append("throw '文本框未绑定查询参数名，不能进行查询操作!'");
+		sb.append("}");
+		sb.append("return {");
+		sb.append("\""+name+"\":");		
+		sb.append("$('#"+context.buildComponentId(this)+"').val()");
+		sb.append("}");
+		sb.append("}");
+		sb.append(");");
+		return sb.toString();
 	}
 }

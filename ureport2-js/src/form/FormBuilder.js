@@ -71,6 +71,7 @@ export default class FormBuilder{
             const components= form.components;
             this.buildPageElements(components,this.rootContainer);
         }
+        this.pageProperty.refreshValue();
     }
 
     buildData(){

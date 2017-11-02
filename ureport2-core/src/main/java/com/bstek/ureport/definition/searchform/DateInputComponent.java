@@ -36,6 +36,20 @@ public class DateInputComponent extends InputComponent {
 		sb.append("format:'"+this.format+"'");
 		sb.append("");
 		sb.append("});");
+		
+		String name=getBindParameter();
+		sb.append("formElements.push(");
+		sb.append("function(){");
+		sb.append("if(''==='"+name+"'){");
+		sb.append("alert('日期输入框未绑定查询参数名，不能进行查询操作!');");
+		sb.append("throw '日期输入框未绑定查询参数名，不能进行查询操作!'");
+		sb.append("}");
+		sb.append("return {");
+		sb.append("\""+name+"\":");		
+		sb.append("$(\"input[name='"+name+"']\").val()");
+		sb.append("}");
+		sb.append("}");
+		sb.append(");");
 		return sb.toString();
 	}
 	

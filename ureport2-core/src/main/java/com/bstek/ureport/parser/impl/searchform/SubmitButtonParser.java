@@ -18,6 +18,7 @@ package com.bstek.ureport.parser.impl.searchform;
 
 import org.dom4j.Element;
 
+import com.bstek.ureport.definition.searchform.Align;
 import com.bstek.ureport.definition.searchform.SubmitButtonComponent;
 
 /**
@@ -31,6 +32,10 @@ public class SubmitButtonParser implements FormParser<SubmitButtonComponent> {
 		btn.setLabel(element.attributeValue("label"));
 		btn.setStyle(element.attributeValue("style"));
 		btn.setType(element.attributeValue("type"));
+		String align=element.attributeValue("align");
+		if(align!=null){
+			btn.setAlign(Align.valueOf(align));
+		}
 		return btn;
 	}
 	@Override

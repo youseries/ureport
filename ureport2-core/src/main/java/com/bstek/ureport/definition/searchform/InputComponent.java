@@ -38,10 +38,10 @@ public abstract class InputComponent implements Component{
 		}
 		sb.append("<div class='form-group' style='margin:0px 0px 10px 0px'>");
 		if(this.labelPosition.equals(LabelPosition.top)){		
-			sb.append("<span>"+this.label+"</span>");			
+			sb.append("<span style='font-size:13px'>"+this.label+"</span>");			
 			sb.append(inputHtml(context));
 		}else{					
-			sb.append("<span class='col-md-3' style='text-align:right;padding-right:1px'>"+this.label+"</span>");			
+			sb.append("<span class='col-md-3' style='text-align:right;padding-right:1px;font-size:13px'>"+this.label+"</span>");			
 			sb.append("<div class='col-md-9' style='padding-left:1px;'>");
 			sb.append(inputHtml(context));
 			sb.append("</div>");

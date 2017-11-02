@@ -12,11 +12,12 @@ export default class SubmitButtonInstance extends ButtonInstance{
         return {
             label:this.label,
             style:this.style,
+            align:this.align,
             type:SubmitButtonInstance.TYPE
         };
     }
     toXml(){
-        return `<button-submit label="${this.label}" type="${SubmitButtonInstance.TYPE}" style="${this.style}"></button-submit>`;
+        return `<button-submit label="${this.label}" align="${this.align}" type="${SubmitButtonInstance.TYPE}" style="${this.style}"></button-submit>`;
     }
 }
 SubmitButtonInstance.TYPE="Submit-button";

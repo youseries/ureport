@@ -10,7 +10,7 @@ export default class DatetimeInstance extends Instance{
         var seq=Utils.seq(DatetimeInstance.ID);
         var label="日期选择"+seq;
         this.element=this.newElement(label);
-        this.dateFormat="YYYY-MM-DD";
+        this.dateFormat="yyyy-mm-dd";
         this.inputElement=$("<div>");
         this.element.append(this.inputElement);
         this.datePickerinputGroup=$("<div class='input-group date'>");
@@ -52,7 +52,7 @@ export default class DatetimeInstance extends Instance{
         };
     }
     toXml(){
-        let xml=`<input-datetime label="${this.label}" type="${DatetimeInstance.TYPE}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}" format="${this.format}"></input-datetime>`;
+        let xml=`<input-datetime label="${this.label}" type="${DatetimeInstance.TYPE}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}" format="${this.dateFormat}"></input-datetime>`;
         return xml;
     }
 }

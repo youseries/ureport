@@ -12,11 +12,12 @@ export default class ResetButtonInstance extends ButtonInstance{
         return {
             label:this.label,
             style:this.style,
+            align:this.align,
             type:ResetButtonInstance.TYPE
         };
     }
     toXml(){
-        return `<button-reset label="${this.label}" type="${ResetButtonInstance.TYPE}" style="${this.style}"></button-reset>`;
+        return `<button-reset label="${this.label}" align="${this.align}" type="${ResetButtonInstance.TYPE}" style="${this.style}"></button-reset>`;
     }
 }
 ResetButtonInstance.TYPE='Reset-button';

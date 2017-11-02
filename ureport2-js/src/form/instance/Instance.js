@@ -12,7 +12,7 @@ export default class Instance{
     newElement(label){
         this.element=$("<div class='form-group row' style='margin:0px'>");
         this.label=label;
-        this.labelElement=$("<span class='control-label'></span>");
+        this.labelElement=$("<span class='control-label' style='font-size: 13px'></span>");
         this.element.append(this.labelElement);
         this.labelElement.text(label);
         return this.element;
@@ -57,6 +57,7 @@ export default class Instance{
     fromJson(json){
         this.setLabel(json.label);
         this.setLabelPosition(json.labelPosition);
+        this.setBindParameter(json.bindParameter);
     }
     initFromJson(json){
 
