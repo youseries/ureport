@@ -13,6 +13,7 @@ UReport2是第一款基于GPL-3.0协议开源的中式报表引擎。
 
 群号：423339793
 
-#### ![](https://github.com/youseries/assets/blob/master/images/qq-qrcode.png)
+#### ![](/docs/images/qq-qrcode.png)
+
 
 
