@@ -46,9 +46,12 @@ public class Chart {
 		sb.append("\"data\":"+dataset.buildDataJson(context, cell)+",");
 		sb.append("\"options\":{");
 		if(options!=null && options.size()>0){
-			for(Option option:options){
-				sb.append(option.buildOptionJson());					
-				sb.append(",");
+			for(int i=0;i<options.size();i++){
+				Option option=options.get(i);
+				if(i>0){
+					sb.append(",");
+				}
+				sb.append(option.buildOptionJson());
 			}
 		}
 		if(xaxes!=null || yaxes!=null){
