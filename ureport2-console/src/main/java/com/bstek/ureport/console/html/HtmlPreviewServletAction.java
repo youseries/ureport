@@ -112,6 +112,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				context.put("intervalRefreshValue",htmlReport.getHtmlIntervalRefreshValue());
 				String customParameters=buildCustomParameters(req);
 				context.put("customParameters", customParameters);
+				context.put("_t", "");
 				Tools tools=null;
 				if(MobileUtils.isMobile(req)){
 					tools=new Tools(false);
