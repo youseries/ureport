@@ -63,7 +63,7 @@ ${upSearchFormHtml}
 		#if($tools.paging)
 		<div class="btn-group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background:#f8f8f8;border:none;color:#337ab7">
-				#if($totalPage>0)
+				#if($pageIndex>0)
 					分页预览
 				#else
 					预览
@@ -84,14 +84,15 @@ ${upSearchFormHtml}
 			</ul>
 		</div>
 		#end 
-		#if($totalPage>0) 
+		#if($pageIndex>0) 
 		<span id='pagingContainer' style="font-size:14px;margin-left:1px;color:#337ab7">
-			共${totalPage}页
+			共<span id='totalPageLabel'>${totalPage}</span>页
 			<select id="pageSelector" class="form-control" style="display:inline-block;width:inherit;font-size:13px;height:28px;margin-top:2px">
 				#foreach($index in [1..$totalPage])
 				<option>${index}</option>
 				#end
 			</select>
+			<span id='pageLinkContainer'></span>
 		</span>
 		#end
 	</div>

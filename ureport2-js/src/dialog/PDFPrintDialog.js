@@ -209,7 +209,7 @@ export default class PDFPrintDialog{
         if(this.iFrame){
            return;
         }
-        const urlParameters=window.location.search;
+        const urlParameters=buildLocationSearchParameters();
         const h=$(window).height();
         const url=window._server+"/pdf/show"+urlParameters+"&_p=1";
         this.iFrame=$(`<iframe name="_iframe_for_pdf_print" style="width: 100%;height:${h}px;margin-top: 5px;border:solid 1px #c2c2c2" frameborder="0" src="${url}"></iframe>`);

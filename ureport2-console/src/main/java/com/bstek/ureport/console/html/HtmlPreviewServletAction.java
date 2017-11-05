@@ -284,6 +284,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}
 			htmlReport.setChartDatas(report.getContext().getChartDataMap().values());			
 			htmlReport.setContent(html);
+			htmlReport.setTotalPage(report.getPages().size());
 			htmlReport.setStyle(reportDefinition.getStyle());
 			htmlReport.setSearchFormData(reportDefinition.buildSearchFormData());
 			htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());

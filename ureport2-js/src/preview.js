@@ -20,8 +20,8 @@ $(document).ready(function(){
     if(language!=='zh-cn'){
         window.i18n=en18nJsonData;
     }
-    const urlParameters=window.location.search;
     $('.ureport-print').click(function(){
+        const urlParameters=buildLocationSearchParameters();
         const url=window._server+'/preview/loadPrintPages'+urlParameters;
         showLoading();
         $.ajax({
@@ -50,12 +50,14 @@ $(document).ready(function(){
     let directPrintPdf=false,index=0;
     const pdfPrintDialog=new PDFPrintDialog();
     $(`.ureport-pdf-print`).click(function(){
+        const urlParameters=buildLocationSearchParameters();
         $.get(window._server+'/preview/loadPagePaper'+urlParameters,function(paper){
             pdfPrintDialog.show(paper);
         });
     });
     $(`.ureport-pdf-direct-print`).click(function(){
         showLoading();
+        const urlParameters=buildLocationSearchParameters();
         const url=window._server+'/pdf/show'+urlParameters+`&_i=${index++}`;
         const iframe=window.frames['_print_pdf_frame'];
         if(!directPrintPdf){
@@ -70,26 +72,68 @@ $(document).ready(function(){
         iframe.location.href=url;
     });
     $(`.ureport-export-pdf`).click(function(){
+        const urlParameters=buildLocationSearchParameters();
         const url=window._server+'/pdf'+urlParameters;
         window.open(url,'_blank');
     });
     $(`.ureport-export-word`).click(function(){
+        const urlParameters=buildLocationSearchParameters();
         const url=window._server+'/word'+urlParameters;
         window.open(url,'_blank');
     });
     $(`.ureport-export-excel`).click(function(){
+        const urlParameters=buildLocationSearchParameters();
         const url=window._server+'/excel'+urlParameters;
         window.open(url,'_blank');
     });
     $(`.ureport-export-excel-paging`).click(function(){
+        const urlParameters=buildLocationSearchParameters();
         const url=window._server+'/excel/paging'+urlParameters;
         window.open(url,'_blank');
     });
     $(`.ureport-export-excel-paging-sheet`).click(function(){
+        const urlParameters=buildLocationSearchParameters();
         const url=window._server+'/excel/sheet'+urlParameters;
         window.open(url,'_blank');
     });
 });
+
+window.buildLocationSearchParameters=function(exclude){
+    let urlParameters=window.location.search;
+    if(urlParameters.length>0){
+        urlParameters=urlParameters.substring(1,urlParameters.length);
+    }
+    let parameters={};
+    const pairs=urlParameters.split('&');
+    for(let item of pairs){
+        if(item===''){
+            continue;
+        }
+        const param=item.split('=');
+        let key=param[0];
+        if(key===exclude){
+            continue;
+        }
+        let value=param[1];
+        parameters[key]=value;
+    }
+    if(window.searchFormParameters){
+        for(let key in window.searchFormParameters){
+            if(key===exclude){
+                continue;
+            }
+            const value=window.searchFormParameters[key];
+            if(value){
+                parameters[key]=value;
+            }
+        }
+    }
+    let p='?';
+    for(let key in parameters){
+        p+='&'+key+'='+parameters[key];
+    }
+    return p;
+};
 
 function buildPrintStyle(paper){
     const marginLeft=pointToMM(paper.leftMargin);
@@ -118,6 +162,44 @@ function buildPrintStyle(paper){
     `;
     return style;
 };
+
+window.buildPaging=function(file,pageIndex,totalPage,customParameters,tools){
+    if(totalPage===0){
+        return;
+    }
+    const pageSelector=$('#pageSelector');
+    pageSelector.change(function(){
+        const parameters=window.buildLocationSearchParameters('_i');
+        //let url=window._server+`/preview?_u=${file}&_i=${$(this).val()}&_t=${tools}&${customParameters}`;
+        let url=window._server+`/preview${parameters}&_i=${$(this).val()}`;
+        window.open(url,'_self');
+    });
+    pageSelector.val(pageIndex);
+
+    if(totalPage===1){
+        return;
+    }
+    const pagingContainer=$('#pageLinkContainer');
+    if(pageIndex>1){
+        let url=window._server+`/preview?_u=${file}&_t=${tools}`;
+        url+=`&_i=${pageIndex-1}&${customParameters}`;
+        const prevPage=$(`<button type="button" class="btn btn-link btn-sm">上一页</button>`);
+        pagingContainer.append(prevPage);
+        prevPage.click(function(){
+            window.open(url,'_self');
+        });
+    }
+    if(pageIndex<totalPage){
+        let url=window._server+`/preview?_u=${file}&_t=${tools}`;
+        url+=`&_i=${pageIndex+1}&${customParameters}`;
+        const nextPage=$(`<button type="button" class="btn btn-link btn-sm">下一页</button>`);
+        pagingContainer.append(nextPage);
+        nextPage.click(function(){
+            window.open(url,'_self');
+        });
+    }
+};
+
 window._intervalRefresh=function(value,file,totalPage,customParameters){
     if(!value){
         return;
@@ -202,26 +284,61 @@ window._buildChart=function(canvasId,chartJson){
 };
 
 window.submitSearchForm=function(file,customParameters){
-    const formData={};
+    window.searchFormParameters={};
     for(let fun of window.formElements){
         const json=fun.call(this);
         for(let key in json){
-            formData[key]=json[key];
+            let value=json[key];
+            value=encodeURI(value);
+            value=encodeURI(value);
+            window.searchFormParameters[key]=value;
         }
     }
-    let url=window._server+"/preview/loadData?_u="+file+"";
-    if(customParameters){
-        url+=customParameters;
+    const parameters=window.buildLocationSearchParameters('_i');
+    let url=window._server+"/preview/loadData"+parameters;
+    const pageSelector=$(`#pageSelector`);
+    if(pageSelector.length>0){
+        url+='&_i=1';
     }
     $.ajax({
         url,
         type:'POST',
-        data:formData,
         success:function(report){
             const tableContainer=$(`#_ureport_table`);
             tableContainer.empty();
             tableContainer.append(report.content);
             _buildChartDatas(report.chartDatas);
+            const totalPage=report.totalPage;
+            if(pageSelector.length>0){
+                pageSelector.empty();
+                for(let i=1;i<=totalPage;i++){
+                    pageSelector.append(`<option>${i}</option>`);
+                }
+                const pageIndex=report.pageIndex || 1;
+                pageSelector.val(pageIndex);
+                $('#totalPageLabel').html(totalPage);
+                const urlParameters=window.buildLocationSearchParameters('_i');
+                const pagingContainer=$('#pageLinkContainer');
+                pagingContainer.empty();
+                if(pageIndex>1){
+                    let url=window._server+`/preview`+urlParameters;
+                    url+=`&_i=${pageIndex-1}`;
+                    const prevPage=$(`<button type="button" class="btn btn-link btn-sm">上一页</button>`);
+                    pagingContainer.append(prevPage);
+                    prevPage.click(function(){
+                        window.open(url,'_self');
+                    });
+                }
+                if(pageIndex<totalPage){
+                    let url=window._server+`/preview`+urlParameters;
+                    url+=`&_i=${pageIndex+1}`;
+                    const nextPage=$(`<button type="button" class="btn btn-link btn-sm">下一页</button>`);
+                    pagingContainer.append(nextPage);
+                    nextPage.click(function(){
+                        window.open(url,'_self');
+                    });
+                }
+            }
         },
         error:function(){
             alert('查询操作失败！');
