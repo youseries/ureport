@@ -17,6 +17,7 @@ package com.bstek.ureport.console.html;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -79,10 +80,10 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				if(!(ex instanceof ReportDesignException)){
 					ex.printStackTrace();					
 				}
-				errorMsg=ex.toString();
+				errorMsg=buildExceptionMessage(ex);
 			}
 			if(htmlReport==null){
-				context.put("content", "<div style='color:red'><strong>报表计算错误：</strong>"+errorMsg+"</div>");
+				context.put("content", "<div style='color:red'><strong>报表计算出错，错误信息如下：</strong><br><div style=\"margin:10px\">"+errorMsg+"</div></div>");
 				context.put("error", true);
 				context.put("searchFormJs", "");
 				context.put("downSearchFormHtml", "");
@@ -322,6 +323,25 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			sb.append(value);
 		}
 		return sb.toString();
+	}
+	
+	private String buildExceptionMessage(Throwable throwable){
+		Throwable root=buildRootException(throwable);
+		StringWriter sw=new StringWriter();
+		PrintWriter pw=new PrintWriter(sw);
+		root.printStackTrace(pw);
+		StringBuffer sb=sw.getBuffer();
+		String trace=sb.toString();
+		trace=trace.replaceAll("\n", "<br>");
+		pw.close();
+		return trace;
+	}
+	
+	private Throwable buildRootException(Throwable throwable){
+		if(throwable.getCause()==null){
+			return throwable;
+		}
+		return buildRootException(throwable.getCause());
 	}
 
 	public void setExportManager(ExportManager exportManager) {
