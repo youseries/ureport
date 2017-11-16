@@ -36,8 +36,12 @@ export default class SaveTool extends Tool{
                         alert(`${window.i18n.tools.save.successSave}`);
                         resetDirty();
                     },
-                    error:function(){
-                        alert(`${window.i18n.tools.save.failSave}`);
+                    error:function(response){
+                        if(response && response.responseText){
+                            alert("服务端错误："+response.responseText+"");
+                        }else{
+                            alert(`${window.i18n.tools.save.failSave}`);
+                        }
                     }
                 });
             }else{

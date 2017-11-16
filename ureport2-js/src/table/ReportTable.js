@@ -124,8 +124,12 @@ export default class ReportTable{
                     $('.ht_master').css('background','transparent');
                 }
             },
-            error:function(){
-                alert(`${window.i18n.table.report.load}${file}${window.i18n.table.report.fail}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert(`${window.i18n.table.report.load}${file}${window.i18n.table.report.fail}`);
+                }
             }
         });
     }

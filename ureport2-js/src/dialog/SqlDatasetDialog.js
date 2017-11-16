@@ -117,8 +117,12 @@ export default class SqlDatasetDialog{
                         updateLinting(editor,[]);
                     }
                 },
-                error:function(){
-                    alert(`${window.i18n.dialog.sql.syntaxCheckError}`);
+                error:function(response){
+                    if(response && response.responseText){
+                        alert("服务端错误："+response.responseText+"");
+                    }else{
+                        alert(`${window.i18n.dialog.sql.syntaxCheckError}`);
+                    }
                 }
             });
         };
@@ -162,8 +166,12 @@ export default class SqlDatasetDialog{
                 success:function(data){
                     previewDialog.showData(data);
                 },
-                error:function(){
-                    previewDialog.showError(`<div style='color: #d30e00;'>${window.i18n.dialog.sql.previewFail}</div>`);
+                error:function(response){
+                    if(response && response.responseText){
+                        alert("服务端错误："+response.responseText+"");
+                    }else{
+                        previewDialog.showError(`<div style='color: #d30e00;'>${window.i18n.dialog.sql.previewFail}</div>`);
+                    }
                 }
             });
         });
@@ -263,8 +271,12 @@ export default class SqlDatasetDialog{
                     _this.tableBody.append(tr);
                 }
             },
-            error:function(){
-                alert(`${window.i18n.dialog.sql.loadFail}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert(`${window.i18n.dialog.sql.loadFail}`);
+                }
             }
         })
     }

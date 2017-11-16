@@ -74,8 +74,12 @@ export default class SaveDialog{
                                 let index=reportFiles.indexOf(file);
                                 reportFiles.splice(index,1);
                             },
-                            error:function(){
-                                alert(`${window.i18n.dialog.save.delFail}`);
+                            error:function(response){
+                                if(response && response.responseText){
+                                    alert("服务端错误："+response.responseText+"");
+                                }else{
+                                    alert(`${window.i18n.dialog.save.delFail}`);
+                                }
                             }
                         });
                     });
@@ -121,8 +125,12 @@ export default class SaveDialog{
                     resetDirty();
                     _this.dialog.modal('hide');
                 },
-                error:function(){
-                    alert(`${window.i18n.dialog.save.fail}`);
+                error:function(response){
+                    if(response && response.responseText){
+                        alert("服务端错误："+response.responseText+"");
+                    }else{
+                        alert(`${window.i18n.dialog.save.fail}`);
+                    }
                 }
             });
         });
@@ -146,8 +154,12 @@ export default class SaveDialog{
                 }
                 _this.providerSelect.trigger('change');
             },
-            error:function(){
-                alert(`${window.i18n.dialog.save.loadFail}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert(`${window.i18n.dialog.save.loadFail}`);
+                }
             }
         });
         this.dialog.modal('show');

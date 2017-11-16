@@ -33,7 +33,13 @@ import com.bstek.ureport.exception.ReportComputeException;
  * @since 2016年6月3日
  */
 public abstract class BaseServletAction implements ServletAction {
-	
+	protected Throwable buildRootException(Throwable throwable){
+		if(throwable.getCause()==null){
+			return throwable;
+		}
+		return buildRootException(throwable.getCause());
+	}
+
 	protected String decode(String value){
 		if(value==null){
 			return value;

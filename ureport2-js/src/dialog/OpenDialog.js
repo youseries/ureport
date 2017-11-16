@@ -88,8 +88,12 @@ export default class OpenDialog{
                                 let index=reportFiles.indexOf(file);
                                 reportFiles.splice(index,1);
                             },
-                            error:function(){
-                                alert(`${window.i18n.dialog.open.delFail}`);
+                            error:function(response){
+                                if(response && response.responseText){
+                                    alert("服务端错误："+response.responseText+"");
+                                }else{
+                                    alert(`${window.i18n.dialog.open.delFail}`);
+                                }
                             }
                         });
                     });
@@ -114,8 +118,12 @@ export default class OpenDialog{
                 }
                 _this.providerSelect.trigger('change');
             },
-            error:function(){
-                alert(`${window.i18n.dialog.open.loadFail}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert(`${window.i18n.dialog.open.loadFail}`);
+                }
             }
         });
         this.dialog.modal('show');

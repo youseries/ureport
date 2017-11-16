@@ -148,11 +148,11 @@ export default class DatasourceDialog{
                     }
                 }
             },
-            error:function(){
-                if(callback){
-                    alert(`${window.i18n.dialog.datasource.failTip}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
                 }else{
-                    alert(`${window.i18n.dialog.datasource.failTip1}`);
+                    alert(`${window.i18n.dialog.datasource.failTip}`);
                 }
             }
         });

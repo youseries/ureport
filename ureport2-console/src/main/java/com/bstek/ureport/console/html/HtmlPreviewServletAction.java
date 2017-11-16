@@ -330,20 +330,12 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		StringWriter sw=new StringWriter();
 		PrintWriter pw=new PrintWriter(sw);
 		root.printStackTrace(pw);
-		StringBuffer sb=sw.getBuffer();
-		String trace=sb.toString();
+		String trace=sw.getBuffer().toString();
 		trace=trace.replaceAll("\n", "<br>");
 		pw.close();
 		return trace;
 	}
 	
-	private Throwable buildRootException(Throwable throwable){
-		if(throwable.getCause()==null){
-			return throwable;
-		}
-		return buildRootException(throwable.getCause());
-	}
-
 	public void setExportManager(ExportManager exportManager) {
 		this.exportManager = exportManager;
 	}

@@ -41,9 +41,13 @@ $(document).ready(function(){
                     iFrame.window.print();
                 });
             },
-            error:function(){
+            error:function(response){
                 hideLoading();
-                alert("服务端出错！");
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert("服务端出错！");
+                }
             }
         });
     });
@@ -238,8 +242,12 @@ function _refreshData(customParameters,file,totalPage,second){
                 _refreshData(customParameters,file,totalPage,second);
             },second);
         },
-        error:function(){
-            alert('加载数据失败！');
+        error:function(response){
+            if(response && response.responseText){
+                alert("服务端错误："+response.responseText+"");
+            }else{
+                alert('加载数据失败！');
+            }
         }
     });
 };
@@ -340,8 +348,12 @@ window.submitSearchForm=function(file,customParameters){
                 }
             }
         },
-        error:function(){
-            alert('查询操作失败！');
+        error:function(response){
+            if(response && response.responseText){
+                alert("服务端错误："+response.responseText+"");
+            }else{
+                alert('查询操作失败！');
+            }
         }
     });
 };

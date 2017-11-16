@@ -171,8 +171,12 @@ export default class BuildinTree extends BaseTree{
                     _this.addField(dataset,fields,field,ul);
                 }
             },
-            error:function(){
-                alert(`${window.i18n.tree.loadFieldFail}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert(`${window.i18n.tree.loadFieldFail}`);
+                }
             }
         })
     }

@@ -62,8 +62,12 @@ export default class BuildinDatasourceSelectDialog{
                     _this.tbody.append(tr);
                 }
             },
-            error:function(){
-                alert(`${window.i18n.dialog.buildin.loadFail}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert(`${window.i18n.dialog.buildin.loadFail}`);
+                }
             }
         });
     }

@@ -53,8 +53,12 @@ export default class MethodSelectDialog{
                     _this.tbody.append(tr);
                 }
             },
-            error:function(){
-                alert(`${window.i18n.dialog.methodSelect.load}["+beanId+"]${window.i18n.dialog.methodSelect.fail}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert(`${window.i18n.dialog.methodSelect.load}["+beanId+"]${window.i18n.dialog.methodSelect.fail}`);
+                }
             }
         });
     }

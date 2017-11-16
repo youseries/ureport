@@ -76,7 +76,7 @@ export default class DatabaseTree extends BaseTree{
                 }
             },
             items:{
-                "add": {name: `${window.i18n.tree.addField}`, icon: "add"},
+                "add": {name: `${window.i18n.tree.addDataset}`, icon: "add"},
                 "edit": {name: `${window.i18n.tree.edit}`, icon: "edit"},
                 "delete": {name: `${window.i18n.tree.del}`, icon: "delete"}
             }
@@ -166,8 +166,12 @@ export default class DatabaseTree extends BaseTree{
                     _this.addField(dataset,fields,field,ul);
                 }
             },
-            error:function(){
-                alert(`${window.i18n.tree.loadFieldFail}`);
+            error:function(response){
+                if(response && response.responseText){
+                    alert("服务端错误："+response.responseText+"");
+                }else{
+                    alert(`${window.i18n.tree.loadFieldFail}`);
+                }
             }
         })
     }
