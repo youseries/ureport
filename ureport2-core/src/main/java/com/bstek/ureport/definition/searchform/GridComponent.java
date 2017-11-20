@@ -31,7 +31,7 @@ public class GridComponent implements Component{
 	@Override
 	public String toHtml(RenderContext context) {
 		StringBuffer sb=new StringBuffer();
-		sb.append("<div class='row'>");
+		sb.append("<div class='row' style='margin:0'>");
 		context.putMetadata(KEY, this);
 		for(ColComponent c:cols){
 			sb.append(c.toHtml(context));
