@@ -75,6 +75,7 @@ public abstract class BasePagination {
 						continue;
 					}else{
 						Cell newCell=cell.newCell();
+						newCell.setFormatData(cell.getFormatData());
 						newCell.setForPaging(true);
 						int leftSpan=rowSize-pageRowNumber;
 						if(leftSpan>0){
@@ -191,6 +192,7 @@ public abstract class BasePagination {
 			}
 			Cell newCell=cell.newCell();
 			newCell.setRow(newRow);
+			newCell.setFormatData(cell.getFormatData());
 			newCell.setData(cell.getData());
 			newCell.setCustomCellStyle(cell.getCustomCellStyle());
 			newCell.setFormatData(cell.getFormatData());
