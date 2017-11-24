@@ -17,11 +17,13 @@ package com.bstek.ureport.expression.model.expr.ifelse;
 
 import java.util.List;
 
+import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.expression.ExpressionUtils;
 import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.expression.model.Op;
+import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.NoneExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
@@ -66,6 +68,21 @@ public class ExpressionCondition {
 			return sb.toString();
 		}else if(data instanceof NoneExpressionData){
 			return null;
+		}else if(data instanceof BindDataListExpressionData){
+			BindDataListExpressionData bindDataList=(BindDataListExpressionData)data;
+			List<BindData> list=bindDataList.getData();
+			if(list.size()==1){
+				return list.get(0).getValue();
+			}else{
+				StringBuffer sb=new StringBuffer();
+				for(BindData bindData:list){
+					if(sb.length()>0){
+						sb.append(",");
+					}
+					sb.append(bindData.getValue());
+				}
+				return sb.toString();
+			}
 		}else{
 			throw new ReportComputeException("Unknow data : "+data);
 		}
