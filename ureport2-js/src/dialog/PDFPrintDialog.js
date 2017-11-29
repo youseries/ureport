@@ -215,7 +215,9 @@ export default class PDFPrintDialog{
         this.iFrame=$(`<iframe name="_iframe_for_pdf_print" style="width: 100%;height:${h}px;margin-top: 5px;border:solid 1px #c2c2c2" frameborder="0" src="${url}"></iframe>`);
         this.body.append(this.iFrame);
         const iframe=this.iFrame.get(0);
-        if(!iframe.attachEvent){
+        const msie = window.navigator.appName.indexOf("Internet Explorer");
+        const ie11=!!window.MSInputMethodContext && !!document.documentMode;
+        if(msie===-1 && !ie11){
             showLoading();
         }
         this.iFrame.on('load',function(){

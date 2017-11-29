@@ -109,13 +109,14 @@ window.buildLocationSearchParameters=function(exclude){
     }
     let parameters={};
     const pairs=urlParameters.split('&');
-    for(let item of pairs){
+    for(let i=0;i<pairs.length;i++){
+        const item=pairs[i];
         if(item===''){
             continue;
         }
         const param=item.split('=');
         let key=param[0];
-        if(key===exclude){
+        if(exclude && key===exclude){
             continue;
         }
         let value=param[1];
