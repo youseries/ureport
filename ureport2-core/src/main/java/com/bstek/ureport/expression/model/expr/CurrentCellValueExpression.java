@@ -29,6 +29,6 @@ public class CurrentCellValueExpression extends BaseExpression {
 
 	@Override
 	protected ExpressionData<?> compute(Cell cell, Cell currentCell,Context context) {
-		return new ObjectExpressionData(cell.getData());
+		return new ObjectExpressionData(cell.getFormatData());
 	}
 }
