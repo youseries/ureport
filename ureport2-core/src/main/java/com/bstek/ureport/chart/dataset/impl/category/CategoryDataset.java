@@ -20,7 +20,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +55,7 @@ public abstract class CategoryDataset extends BaseDataset {
 	protected String buildDatasetJson(Context context,Cell cell,String props){
 		List<?> dataList=DataUtils.fetchData(cell, context, datasetName);
 		List<Object> categoryList=new ArrayList<Object>();
-		Map<Object,Map<Object,List<Object>>> seriesDataMap=new HashMap<Object,Map<Object,List<Object>>>();
+		Map<Object,Map<Object,List<Object>>> seriesDataMap=new LinkedHashMap<Object,Map<Object,List<Object>>>();
 		for(Object obj:dataList){
 			Object category=Utils.getProperty(obj, categoryProperty);
 			if(category==null){
