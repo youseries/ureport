@@ -18,6 +18,7 @@ package com.bstek.ureport.export.html;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.bstek.ureport.build.BindData;
@@ -224,6 +225,7 @@ public class HtmlProducer{
 					sb.append("</div>");
 				}else{
 					String text=obj.toString();
+					text=StringEscapeUtils.escapeHtml4(text);
 					text=text.replaceAll("\r\n", "<br>");
 					text=text.replaceAll("\n", "<br>");
 					text=text.replaceAll(" ", "&nbsp;");
