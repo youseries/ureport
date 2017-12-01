@@ -193,7 +193,7 @@ public class HtmlProducer{
 					if(StringUtils.isBlank(target))target="_self";
 					sb.append("<a href=\""+linkURL+"\" target=\""+target+"\">");
 				}
-				Object obj=(cell.getFormatData()== null) ? "&nbsp;" : cell.getFormatData();
+				Object obj=(cell.getFormatData()== null) ? "" : cell.getFormatData();
 				if(obj instanceof Image){
 					Image img=(Image)obj;
 					String path=img.getPath();
@@ -229,6 +229,9 @@ public class HtmlProducer{
 					text=text.replaceAll("\r\n", "<br>");
 					text=text.replaceAll("\n", "<br>");
 					text=text.replaceAll(" ", "&nbsp;");
+					if(text.equals("")){
+						text="&nbsp;";
+					}
 					sb.append(text);					
 				}
 				if(hasLink){

@@ -35,7 +35,10 @@ import com.bstek.ureport.definition.value.ValueType;
 import com.bstek.ureport.definition.value.ZxingValue;
 import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.expression.model.Expression;
+import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
 import com.bstek.ureport.expression.model.data.ExpressionData;
+import com.bstek.ureport.expression.model.data.ObjectExpressionData;
+import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Image;
 import com.google.zxing.BarcodeFormat;
@@ -70,26 +73,44 @@ public class ZxingValueCompute implements ValueCompute {
 		}else{
 			Expression expression=value.getExpression();
 			ExpressionData<?> data=expression.execute(cell,cell, context);
-			Object obj=data.getData();
-			if(obj instanceof List){
-				List<?> listData=(List<?>)obj;
-				for(Object o:listData){
-					if(o!=null){
-						Image image=buildImage(barcodeForamt,o.toString(),w,h);
-						list.add(new BindData(image));						
-					}
-				}
-			}else if(obj instanceof String){
-				String text=obj.toString();
-				if(text.startsWith("\"") && text.endsWith("\"")){
-					text=text.substring(1,text.length()-1);
-				}
-				Image image=buildImage(barcodeForamt,text,w,h);
-				list.add(new BindData(image));			
-			}else{
-				if(obj!=null){
+			if(data instanceof BindDataListExpressionData){
+				BindDataListExpressionData listData=(BindDataListExpressionData)data;
+				List<BindData> bindDataList=listData.getData();
+				for(BindData bindData:bindDataList){
+					Object obj=bindData.getValue();
+					if(obj==null)obj="";
 					Image image=buildImage(barcodeForamt,obj.toString(),w,h);
-					list.add(new BindData(image));					
+					list.add(new BindData(image));
+				}
+			}else if(data instanceof ObjectExpressionData){
+				ObjectExpressionData exprData=(ObjectExpressionData)data;
+				Object obj=exprData.getData();
+				if(obj==null){
+					obj="";
+				}else if(obj instanceof String){
+					String text=obj.toString();
+					if(text.startsWith("\"") && text.endsWith("\"")){
+						text=text.substring(1,text.length()-1);
+					}
+					obj=text;
+				}
+				Image image=buildImage(barcodeForamt,obj.toString(),w,h);
+				list.add(new BindData(image));
+			}else if(data instanceof ObjectListExpressionData){
+				ObjectListExpressionData listExprData=(ObjectListExpressionData)data;
+				List<?> listData=listExprData.getData();
+				for(Object obj:listData){
+					if(obj==null){
+						obj="";
+					}else if(obj instanceof String){
+						String text=obj.toString();
+						if(text.startsWith("\"") && text.endsWith("\"")){
+							text=text.substring(1,text.length()-1);
+						}
+						obj=text;
+					}
+					Image image=buildImage(barcodeForamt,obj.toString(),w,h);
+					list.add(new BindData(image));
 				}
 			}
 		}
