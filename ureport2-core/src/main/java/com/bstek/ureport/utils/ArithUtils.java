@@ -59,7 +59,8 @@ public class ArithUtils {
 	public static Object mul(Object first,Object second) {
 		BigDecimal a=Utils.toBigDecimal(first);
 		BigDecimal b=Utils.toBigDecimal(second);
-		return a.multiply(b);
+		BigDecimal c=a.multiply(b);
+		return c.doubleValue();
 	}
 	/**
 	 * @param first 第一个参数
@@ -69,7 +70,8 @@ public class ArithUtils {
 	public static Object div(Object first,Object second) {
 		BigDecimal a=Utils.toBigDecimal(first);
 		BigDecimal b=Utils.toBigDecimal(second);
-		return a.divide(b,8,BigDecimal.ROUND_HALF_UP);
+		BigDecimal c=a.divide(b,8,BigDecimal.ROUND_HALF_UP);
+		return c.doubleValue();
 	}
 	/**
 	 * @param first 第一个参数
