@@ -241,10 +241,15 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				colSpan--;
 				index+=colSpan;
 			}
-			Cell newCell=newBlankCell(currentCell, column, report);
-			newCell.setRow(newRow);
-			newRow.getCells().add(newCell);
-			newCellMap.put(newCell.getColumn(), newCell);
+			int rowSpan=currentCell.getRowSpan();
+			if(rowSpan>1){
+				currentCell.setRowSpan(rowSpan+1);
+			}else{
+				Cell newCell=newBlankCell(currentCell, column, report);
+				newCell.setRow(newRow);
+				newRow.getCells().add(newCell);
+				newCellMap.put(newCell.getColumn(), newCell);
+			}
 		}
 		return newRow;
 	}
