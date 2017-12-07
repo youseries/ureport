@@ -111,6 +111,7 @@
 	<bean id="ureport.pageSumFunction" class="com.bstek.ureport.expression.function.page.PageSumFunction"></bean>
 	
 	<bean id="ureport.parameterFunction" class="com.bstek.ureport.expression.function.ParameterFunction"></bean>
+	<bean id="ureport.parameterIsEmptyFunction" class="com.bstek.ureport.expression.function.ParameterIsEmptyFunction"></bean>
 	<bean id="ureport.jsonFunction" class="com.bstek.ureport.expression.function.JsonFunction"></bean>
 	
 	<bean id="ureport.rowFunction" class="com.bstek.ureport.expression.function.RowFunction"></bean>
