@@ -221,7 +221,7 @@ window._currentPageIndex=1;
 function _refreshData(customParameters,file,totalPage,second){
     let url=window._server+"/preview/loadData?_u="+file+"";
     if(customParameters){
-        url+=customParameters;
+        url+="&"+customParameters;
     }
     if(totalPage>0){
         if(window._currentPageIndex>totalPage){

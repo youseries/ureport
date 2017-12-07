@@ -310,7 +310,7 @@ export function tableToXml(context){
                         if(option.position){
                             cellXml+=` position="${option.position}"`;
                         }
-                        if(option.display){
+                        if(option.display!==undefined && option.display!==null){
                             cellXml+=` display="${option.display}"`;
                         }
                         if(option.duration){
