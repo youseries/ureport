@@ -44,6 +44,7 @@ public class Chart {
 		sb.append("\"type\":\""+dataset.getType()+"\",");
 		sb.append("\"data\":"+dataset.buildDataJson(context, cell)+",");
 		sb.append("\"options\":{");
+		boolean withoption=false;
 		if(options!=null && options.size()>0){
 			for(int i=0;i<options.size();i++){
 				Option option=options.get(i);
@@ -51,9 +52,14 @@ public class Chart {
 					sb.append(",");
 				}
 				sb.append(option.buildOptionJson());
+				withoption=true;
 			}
 		}
 		if(xaxes!=null || yaxes!=null){
+			if(withoption){
+				sb.append(",");
+			}
+			withoption=true;
 			sb.append("\"scales\":{");
 			if(xaxes!=null){
 				sb.append("\"xAxes\":[");
@@ -75,6 +81,9 @@ public class Chart {
 			}
 			sb.append("}");
 		}else{
+			if(withoption){
+				sb.append(",");
+			}
 			if(hasYAxes(dataset)){
 				sb.append("\"scales\":{\"yAxes\":[{\"ticks\":{\"min\":0}}]}");				
 			}
