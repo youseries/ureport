@@ -312,7 +312,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}
 			String name=obj.toString();
 			String value=req.getParameter(name);
-			if(name==null || value==null || name.startsWith("_")){
+			if(name==null || value==null || (name.startsWith("_") && !name.equals("_n"))){
 				continue;
 			}
 			if(sb.length()>0){
