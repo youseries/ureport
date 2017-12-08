@@ -82,6 +82,8 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				}
 				errorMsg=buildExceptionMessage(ex);
 			}
+			String title=buildTitle(req);
+			context.put("title", title);
 			if(htmlReport==null){
 				context.put("content", "<div style='color:red'><strong>报表计算出错，错误信息如下：</strong><br><div style=\"margin:10px\">"+errorMsg+"</div></div>");
 				context.put("error", true);
@@ -148,6 +150,24 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			template.merge(context, writer);
 			writer.close();
 		}
+	}
+	
+	private String buildTitle(HttpServletRequest req){
+		String title=req.getParameter("_title");
+		if(StringUtils.isBlank(title)){
+			title=req.getParameter("_u");
+			title=decode(title);
+			int point=title.lastIndexOf(".ureport.xml");
+			if(point>-1){
+				title=title.substring(0,point);
+			}
+			if(title.equals("p")){
+				title="设计中报表";
+			}
+		}else{
+			title=decode(title);
+		}
+		return title+"--UReport";
 	}
 	
 	private String convertJson(Collection<ChartData> data){
