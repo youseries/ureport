@@ -88,12 +88,15 @@ conditions : condition (join condition)* ;
 		
 condition : Cell OP expr 				#cellNameExprCondition
 		  | property OP expr			#propertyCondition
+		  | currentValue OP expr			#currentValueCondition
 		  | expr OP expr				#exprCondition
 		  ;	  
 
 property : Identifier 
 		 | property '.' property
 		 ;
+
+currentValue : '@' ;
 
 simpleValue : INTEGER|NUMBER|STRING|BOOLEAN|NULL;
 

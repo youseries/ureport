@@ -276,6 +276,13 @@ public interface ReportParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPropertyCondition(ReportParserParser.PropertyConditionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code currentValueCondition}
+	 * labeled alternative in {@link ReportParserParser#condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCurrentValueCondition(ReportParserParser.CurrentValueConditionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code exprCondition}
 	 * labeled alternative in {@link ReportParserParser#condition}.
 	 * @param ctx the parse tree
@@ -288,6 +295,12 @@ public interface ReportParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProperty(ReportParserParser.PropertyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ReportParserParser#currentValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCurrentValue(ReportParserParser.CurrentValueContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ReportParserParser#simpleValue}.
 	 * @param ctx the parse tree

@@ -20,5 +20,5 @@ package com.bstek.ureport.expression.model.condition;
  * @since 2017年4月24日
  */
 public enum ConditionType {
-	property,expression,cell;
+	property,expression,cell,current;
 }
