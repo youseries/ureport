@@ -61,7 +61,7 @@ export default function buildMenuConfigure(){
                     undo:function(){
                         undoCleanCells(_this.context,startRow,endRow,startCol,endCol,removeCellsMap,'all');
                     }
-                })
+                });
             }else if(key==='repeat_row_header'){
                 const selected=this.getSelected();
                 const startRow=selected[0],endRow=selected[2];
@@ -135,6 +135,31 @@ export default function buildMenuConfigure(){
                     });
                 },colWidth,true);
                 setDirty();
+            }else if(key==='copy_style'){
+                const selected=this.getSelected();
+                const startRow=selected[0],endRow=selected[2],startCol=selected[1],endCol=selected[3];
+                let cell=_this.context.getCell(startRow,startCol);
+                if(!cell){
+                    alert("请先选中目标单元格！");
+                    return;
+                }
+                window.__copy_cell_style__=cell.cellStyle;
+            }else if(key==='paste_style'){
+                if(!window.__copy_cell_style__){
+                    alert('请先复制目标单元格样式');
+                    return;
+                }
+                const selected=this.getSelected();
+                const startRow=selected[0],endRow=selected[2],startCol=selected[1],endCol=selected[3];
+                let oldCellsStyleMap=pasteStyle(_this.context,startRow,endRow,startCol,endCol);
+                undoManager.add({
+                    redo:function(){
+                        oldCellsStyleMap=pasteStyle(_this.context,startRow,endRow,startCol,endCol);
+                    },
+                    undo:function(){
+                        undoPasteStyle(_this.context,startRow,endRow,startCol,endCol,oldCellsStyleMap);
+                    }
+                });
             }
         },
         items: {
@@ -185,6 +210,14 @@ export default function buildMenuConfigure(){
             "repeat_cancel": {
                 name: `<i class="glyphicon glyphicon-remove-circle" style="color: #d30e00;font-size: 13px"></i>  ${window.i18n.table.contextMenu.cancel}`,
                 disabled:checkRowDeleteOperationDisabled
+            },
+            "copy_style": {
+                name: `<i class="ureport ureport-copy" style="color: #d30e00;font-size: 13px"></i>  ${window.i18n.table.contextMenu.copy}`,
+                disabled:checkCopyOperationDisabled
+            },
+            "paste_style": {
+                name: `<i class="ureport ureport-paste" style="color: #d30e00;font-size: 13px"></i>  ${window.i18n.table.contextMenu.paste}`,
+                disabled:checkPasteOperationDisabled
             },
             "clean_content": {
                 name: `<i class="ureport ureport-clean-content" style="color: #007471;font-size: 13px"></i>  ${window.i18n.table.contextMenu.clearContent}`,
@@ -253,6 +286,59 @@ export default function buildMenuConfigure(){
         hot.render();
     };
 
+
+    function undoPasteStyle(context,startRow,endRow,startCol,endCol,oldStyleMap){
+        const style=window.__copy_cell_style__;
+        let cellsMap=new Map(),hot=context.hot;
+        for(let i=startRow;i<=endRow;i++){
+            for(let j=startCol;j<=endCol;j++){
+                let cell=context.getCell(i,j);
+                if(!cell){
+                    continue;
+                }
+                let key=cell.rowNumber+","+cell.columnNumber;
+                const oldStyle=oldStyleMap.get(key);
+                if(oldStyle){
+                    cell.cellStyle=oldStyle;
+                }
+            }
+        }
+        Handsontable.hooks.run(hot, 'afterSelectionEnd',startRow,startCol,endRow,endCol);
+        hot.render();
+        return cellsMap;
+    };
+
+    function pasteStyle(context,startRow,endRow,startCol,endCol){
+        const style=window.__copy_cell_style__;
+        let cellsMap=new Map(),hot=context.hot;
+        for(let i=startRow;i<=endRow;i++){
+            for(let j=startCol;j<=endCol;j++){
+                let cell=context.getCell(i,j);
+                if(!cell){
+                    continue;
+                }
+                let key=cell.rowNumber+","+cell.columnNumber;
+                if(!cell.cellStyle){
+                    cell.cellStyle={};
+                }
+                const oldStyle=JSON.parse(JSON.stringify(cell.cellStyle));
+                cellsMap.set(key,oldStyle);
+                cell.cellStyle.fontSize=style.fontSize;
+                cell.cellStyle.forecolor=style.forecolor;
+                cell.cellStyle.fontFamily=style.fontFamily;
+                cell.cellStyle.valign=style.valign;
+                cell.cellStyle.align=style.align;
+                cell.cellStyle.bgcolor=style.bgcolor;
+                cell.cellStyle.bold=style.bold;
+                cell.cellStyle.italic=style.italic;
+                cell.cellStyle.underline=style.underline;
+            }
+        }
+        Handsontable.hooks.run(hot, 'afterSelectionEnd',startRow,startCol,endRow,endCol);
+        hot.render();
+        return cellsMap;
+    };
+
     function cleanCells(context,startRow,endRow,startCol,endCol,type){
         let removeCellsMap=new Map(),hot=context.hot;
         for(let i=startRow;i<=endRow;i++){
@@ -298,6 +384,23 @@ export default function buildMenuConfigure(){
         return removeCellsMap;
     };
 
+    function checkCopyOperationDisabled(){
+        const selected=this.getSelected();
+        if(!selected){
+            return true;
+        }
+        return false;
+    };
+    function checkPasteOperationDisabled(){
+        const selected=this.getSelected();
+        if(!selected){
+            return true;
+        }
+        if(window.__copy_cell_style__){
+            return false;
+        }
+        return true;
+    };
     function checkRowDeleteOperationDisabled(){
         const selected=this.getSelected();
         if(!selected){

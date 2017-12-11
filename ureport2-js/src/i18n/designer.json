@@ -711,6 +711,8 @@
       "repeatFooter":"重复表尾",
       "summary":"总结行",
       "cancel":"取消行类型",
+      "copy":"复制单元格样式",
+      "paste":"粘贴单元格样式",
       "clearContent":"清空内容",
       "clearStyle":"清空格式",
       "clearAll":"清空所有",

@@ -711,6 +711,8 @@
       "repeatFooter":"Repeat Footer",
       "summary":"Summary Row",
       "cancel":"Cancel",
+      "copy":"Copy Style",
+      "paste":"Paste Style",
       "clearContent":"Empty Content",
       "clearStyle":"Empty Style",
       "clearAll":"Empty All",
