@@ -167,7 +167,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		}else{
 			title=decode(title);
 		}
-		return title+"--UReport";
+		return title+"-ureport";
 	}
 	
 	private String convertJson(Collection<ChartData> data){
