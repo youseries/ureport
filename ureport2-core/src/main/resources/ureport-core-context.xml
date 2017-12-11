@@ -30,6 +30,8 @@
 		<property name="disabled" value="${ureport.disableFileProvider}"></property>
 	</bean>
 	
+	<bean id="ureport.httpImageProvider" class="com.bstek.ureport.provider.image.HttpImageProvider"></bean>
+	
 	<bean id="ureport.reportBuilder" class="com.bstek.ureport.build.ReportBuilder">
 		<property name="hideRowColumnBuilder" ref="ureport.hideRowColumnBuilder"></property>
 	</bean>
