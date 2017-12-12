@@ -43,7 +43,7 @@ public class UReportServlet extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+		WebApplicationContext applicationContext = getWebApplicationContext(config);
 		Collection<ServletAction> handlers = applicationContext.getBeansOfType(ServletAction.class).values();
 		for (ServletAction handler : handlers) {
 			String url = handler.url();
@@ -52,6 +52,10 @@ public class UReportServlet extends HttpServlet {
 			}
 			actionMap.put(url, handler);
 		}
+	}
+	
+	protected WebApplicationContext getWebApplicationContext(ServletConfig config){
+		return WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 	}
 
 	@Override
