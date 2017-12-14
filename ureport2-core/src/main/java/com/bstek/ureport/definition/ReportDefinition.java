@@ -24,6 +24,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.bstek.ureport.build.Dataset;
 import com.bstek.ureport.definition.datasource.DatasourceDefinition;
 import com.bstek.ureport.definition.searchform.RenderContext;
 import com.bstek.ureport.definition.searchform.SearchForm;
@@ -215,11 +216,11 @@ public class ReportDefinition implements Serializable{
 		return sb.toString();
 	}
 	
-	public SearchFormData buildSearchFormData(){
+	public SearchFormData buildSearchFormData(Map<String,Dataset> datasetMap){
 		if(searchForm==null){
 			return null;
 		}
-		RenderContext context=new RenderContext();
+		RenderContext context=new RenderContext(datasetMap);
 		SearchFormData data=new SearchFormData();
 		data.setFormPosition(searchForm.getFormPosition());
 		data.setHtml(searchForm.toHtml(context));

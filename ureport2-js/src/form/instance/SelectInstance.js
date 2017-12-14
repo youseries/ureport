@@ -53,6 +53,10 @@ export default class SelectInstance extends Instance{
         for(var i=0;i<options.length;i++){
             this.addOption(options[i]);
         }
+        this.useDataset=json.useDataset;
+        this.dataset=json.dataset;
+        this.labelField=json.labelField;
+        this.valueField=json.valueField;
     }
     toJson(){
         const json={
@@ -61,6 +65,10 @@ export default class SelectInstance extends Instance{
             labelPosition:this.labelPosition,
             bindParameter:this.bindParameter,
             type:SelectInstance.TYPE,
+            useDataset:this.useDataset,
+            dataset:this.dataset,
+            labelField:this.labelField,
+            valueField:this.valueField,
             options:[]
         };
         for(let option of this.options){
@@ -69,8 +77,12 @@ export default class SelectInstance extends Instance{
         return json;
     }
     toXml(){
-        let xml=`<input-select label="${this.label}" type="${SelectInstance.TYPE}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}">`;
-        for(let option of this.options){
+        let xml=`<input-select label="${this.label}" type="${SelectInstance.TYPE}" label-position="${this.labelPosition || 'top'}" bind-parameter="${this.bindParameter || ''}"`;
+        if(this.useDataset){
+            xml+=` use-dataset="${this.useDataset}" dataset="${this.dataset}" label-field="${this.labelField}" value-field="${this.valueField}"`;
+        }
+        xml+='>';
+        for(let option of this.options || []){
             xml+=`<option label="${option.label}" value="${option.value}"></option>`;
         }
         xml+=`</input-select>`;

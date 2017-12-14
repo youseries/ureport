@@ -123,6 +123,7 @@
 				<sequence>
 					<element name="option" type="tns:input-option" maxOccurs="unbounded" minOccurs="1"></element>
 				</sequence>
+				<attribute name="useDataset" type="boolean"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>

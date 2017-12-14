@@ -230,6 +230,10 @@ public class Context {
 		throw new DatasetUndefinitionException(name);
 	}
 	
+	public Map<String, Dataset> getDatasetMap() {
+		return datasetMap;
+	}
+	
 	public List<Cell> nextUnprocessedCells(){
 		if(unprocessedCellsMap.size()==0){
 			return null;

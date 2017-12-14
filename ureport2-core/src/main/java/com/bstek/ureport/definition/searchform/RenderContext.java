@@ -18,15 +18,23 @@ package com.bstek.ureport.definition.searchform;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.bstek.ureport.build.Dataset;
+
 /**
  * @author Jacky.gao
  * @since 2017年10月23日
  */
 public class RenderContext {
 	private int id=0;
+	private Map<String,Dataset> datasetMap;
 	private Map<Component,String> componentMap=new HashMap<Component,String>();
 	private Map<String,Object> metadata=new HashMap<String,Object>();
-	
+	public RenderContext(Map<String,Dataset> datasetMap) {
+		this.datasetMap=datasetMap;
+	}
+	public Dataset getDataset(String datasetName) {
+		return datasetMap.get(datasetName);
+	}
 	public String buildComponentId(Component component){
 		if(componentMap.containsKey(component)){
 			return componentMap.get(component);
@@ -41,5 +49,4 @@ public class RenderContext {
 	public void putMetadata(String key,Object value){
 		metadata.put(key, value);
 	}
-	
 }

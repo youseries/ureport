@@ -57,14 +57,17 @@ export default class FormBuilder{
             datasources=[];
         }
         let params=[];
+        let datasetMap=new Map();
         for(let ds of datasources){
             const datasets=ds.datasets || [];
             for(let dataset of datasets){
                 const parameters=dataset.parameters || [];
                 params=params.concat(parameters);
+                datasetMap.set(dataset.name,dataset.fields);
             }
         }
         this.reportParameters=params;
+        this.datasetMap=datasetMap;
         const form=reportDef.searchForm || {};
         if(form){
             this.formPosition=form.formPosition;
