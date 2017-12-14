@@ -227,6 +227,9 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				for(int i=start;i>-1;i--){
 					Row currentRow=rows.get(i);
 					Map<Column, Cell> prevColMap=rowMap.get(currentRow);
+					if(prevColMap==null){
+						continue;
+					}
 					if(prevColMap.containsKey(column)){
 						currentCell=prevColMap.get(column);
 						break;

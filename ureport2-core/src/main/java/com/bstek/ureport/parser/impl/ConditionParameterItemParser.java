@@ -82,6 +82,8 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 					prevCondition=condition;
 				}else{
 					prevCondition.setNextCondition(condition);
+					prevCondition.setJoin(condition.getJoin());
+					prevCondition=condition;
 				}
 				continue;
 			}

@@ -47,9 +47,6 @@ public abstract class BaseCondition implements Condition {
 	public final boolean filter(Cell cell,Cell currentCell,Object obj,Context context) {
 		Object left=computeLeft(cell,currentCell,obj,context);
 		Object right=computeRight(cell,currentCell,obj,context);
-		if(left==null || right==null){
-			return false;
-		}
 		boolean result=ExpressionUtils.conditionEval(op, left, right);		
 		if(join!=null && nextCondition!=null){
 			if(result){
