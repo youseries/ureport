@@ -19,6 +19,8 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
@@ -26,6 +28,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.Dataset;
 import com.bstek.ureport.definition.datasource.DataType;
+import com.bstek.ureport.expression.ExpressionUtils;
 import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
@@ -42,20 +45,20 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 	private List<Parameter> parameters;
 	private List<Field> fields;
 	private Expression sqlExpression;
-	
 	public Dataset buildDataset(Map<String,Object> parameterMap,Connection conn){
 		String sqlForUse=sql;
+		Context context=new Context(null,parameterMap);
 		if(sqlExpression!=null){
-			Context context=new Context(null,parameterMap);
-			ExpressionData<?> exprData=sqlExpression.execute(null, null, context);
-			if(exprData instanceof ObjectExpressionData){
-				ObjectExpressionData data=(ObjectExpressionData)exprData;
-				Object obj=data.getData();
-				if(obj!=null){
-					String s=obj.toString();
-					s=s.replaceAll("\\\\", "");
-					sqlForUse=s;
-				}
+			sqlForUse=executeSqlExpr(sqlExpression, context);
+		}else{
+			Pattern pattern=Pattern.compile("\\$\\{.*?\\}");
+			Matcher matcher=pattern.matcher(sqlForUse);
+			while(matcher.find()){
+				String substr=matcher.group();
+				String sqlExpr=substr.substring(2,substr.length()-1);
+				Expression expr=ExpressionUtils.parseExpression(sqlExpr);
+				String result=executeSqlExpr(expr, context);
+				sqlForUse=sqlForUse.replace(substr, result);
 			}
 		}
 		Map<String, Object> pmap = buildParameters(parameterMap);
@@ -64,6 +67,22 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 		List<Map<String,Object>> list= jdbcTemplate.queryForList(sqlForUse, pmap);
 		return new Dataset(name,list);
 	}
+	
+	private String executeSqlExpr(Expression sqlExpr,Context context){
+		String sqlForUse=null;
+		ExpressionData<?> exprData=sqlExpr.execute(null, null, context);
+		if(exprData instanceof ObjectExpressionData){
+			ObjectExpressionData data=(ObjectExpressionData)exprData;
+			Object obj=data.getData();
+			if(obj!=null){
+				String s=obj.toString();
+				s=s.replaceAll("\\\\", "");
+				sqlForUse=s;
+			}
+		}
+		return sqlForUse;
+	}
+
 	
 	private Map<String,Object> buildParameters(Map<String,Object> params){
 		Map<String,Object> map=new HashMap<String,Object>();
