@@ -67,6 +67,8 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
     if(valueType==="simple"){
         let text=$td.text();
         if(text && text!==""){
+            text=text.replace(new RegExp('<','gm'),'&lt;');
+            text=text.replace(new RegExp('>','gm'),'&gt;');
             text=text.replace(new RegExp('\r\n','gm'),'<br>');
             text=text.replace(new RegExp('\n','gm'),'<br>');
             text=text.replace(new RegExp(' ','gm'),'&nbsp;');
