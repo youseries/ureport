@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
+import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.Dataset;
 import com.bstek.ureport.definition.datasource.DataType;
@@ -61,6 +62,7 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 				sqlForUse=sqlForUse.replace(substr, result);
 			}
 		}
+		Utils.logToConsole("RUNTIME SQL:"+sqlForUse);
 		Map<String, Object> pmap = buildParameters(parameterMap);
 		SingleConnectionDataSource datasource=new SingleConnectionDataSource(conn,false);
 		NamedParameterJdbcTemplate jdbcTemplate=new NamedParameterJdbcTemplate(datasource);

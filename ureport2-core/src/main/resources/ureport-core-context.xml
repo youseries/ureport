@@ -55,7 +55,9 @@
 	<bean id="ureport.fontBuilder" class="com.bstek.ureport.export.pdf.font.FontBuilder"></bean>
 	
 	<bean id="ureport.expressionUtils" class="com.bstek.ureport.expression.ExpressionUtils"></bean>
-	<bean id="ureport.utils" class="com.bstek.ureport.Utils"></bean>
+	<bean id="ureport.utils" class="com.bstek.ureport.Utils">
+		<property name="debug" value="${ureport.debug}"></property>
+	</bean>
 	<bean id="ureport.cacheUtils" class="com.bstek.ureport.cache.CacheUtils"></bean>
 	
 	<bean id="ureport.countFunction" class="com.bstek.ureport.expression.function.CountFunction"></bean>

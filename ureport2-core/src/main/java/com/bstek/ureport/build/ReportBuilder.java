@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -60,7 +59,6 @@ import com.bstek.ureport.model.Row;
  */
 public class ReportBuilder extends BasePagination implements ApplicationContextAware{
 	public static final String BEAN_ID="ureport.reportBuilder";
-	private static final Logger log=Logger.getGlobal();
 	private ApplicationContext applicationContext;
 	private Map<String,DatasourceProvider> datasourceProviderMap=new HashMap<String,DatasourceProvider>();
 	private Map<Expand,CellBuilder> cellBuildersMap=new HashMap<Expand,CellBuilder>();
@@ -85,7 +83,8 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		doFillBlankRows(report,context);
 		recomputeCells(report,context);
 		long end=System.currentTimeMillis();
-		log.info("Report compute completed:"+(end-start)+"ms");
+		String msg="~~~ Report compute completed:"+(end-start)+"ms";
+		Utils.logToConsole(msg);
 		return report;
 	}
 	

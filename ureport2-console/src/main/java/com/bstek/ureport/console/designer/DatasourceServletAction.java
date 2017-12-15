@@ -30,6 +30,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -275,22 +277,41 @@ public class DatasourceServletAction extends RenderPageServletAction {
 	
 	private String parseSql(String sql,Map<String,Object> parameters){
 		sql=sql.trim();
+		Context context=new Context(applicationContext, parameters);
 		if(sql.startsWith(ExpressionUtils.EXPR_PREFIX) && sql.endsWith(ExpressionUtils.EXPR_SUFFIX)){
 			sql=sql.substring(2, sql.length()-1);
 			Expression expr=ExpressionUtils.parseExpression(sql);
-			Context context=new Context(applicationContext, parameters);
-			ExpressionData<?> exprData=expr.execute(null,null, context);
-			if(exprData instanceof ObjectExpressionData){
-				ObjectExpressionData objExprData=(ObjectExpressionData)exprData;
-				Object obj=objExprData.getData();
-				if(obj!=null){
-					sql=obj.toString();
-					sql=sql.replaceAll("\\\\", "");
-					return sql;
-				}
+			sql=executeSqlExpr(expr,context);
+			return sql;
+		}else{
+			String sqlForUse=sql;
+			Pattern pattern=Pattern.compile("\\$\\{.*?\\}");
+			Matcher matcher=pattern.matcher(sqlForUse);
+			while(matcher.find()){
+				String substr=matcher.group();
+				String sqlExpr=substr.substring(2,substr.length()-1);
+				Expression expr=ExpressionUtils.parseExpression(sqlExpr);
+				String result=executeSqlExpr(expr, context);
+				sqlForUse=sqlForUse.replace(substr, result);
+			}
+			Utils.logToConsole("DESIGN SQL:"+sqlForUse);
+			return sqlForUse;
+		}
+	}
+	
+	private String executeSqlExpr(Expression sqlExpr,Context context){
+		String sqlForUse=null;
+		ExpressionData<?> exprData=sqlExpr.execute(null, null, context);
+		if(exprData instanceof ObjectExpressionData){
+			ObjectExpressionData data=(ObjectExpressionData)exprData;
+			Object obj=data.getData();
+			if(obj!=null){
+				String s=obj.toString();
+				s=s.replaceAll("\\\\", "");
+				sqlForUse=s;
 			}
 		}
-		return sql;
+		return sqlForUse;
 	}
 	
 	public void testConnection(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

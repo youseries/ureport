@@ -46,6 +46,18 @@ public class Utils implements ApplicationContextAware{
 	private static ApplicationContext applicationContext;
 	private static Collection<BuildinDatasource> buildinDatasources;
 	private static Collection<ImageProvider> imageProviders;
+	private static boolean debug;
+	
+	public static boolean isDebug() {
+		return Utils.debug;
+	}
+	
+	public static void logToConsole(String msg){
+		if(Utils.debug){
+			System.out.println(msg);
+		}
+	}
+	
 	public static ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}
@@ -196,6 +208,10 @@ public class Utils implements ApplicationContextAware{
 			return new BigDecimal(n.doubleValue());
 		}
 		throw new ConvertException("Can not convert "+obj+" to BigDecimal.");
+	}
+	
+	public void setDebug(boolean debug) {
+		Utils.debug = debug;
 	}
 	
 	@Override
