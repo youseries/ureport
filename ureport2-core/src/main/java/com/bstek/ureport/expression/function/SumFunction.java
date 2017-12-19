@@ -66,7 +66,7 @@ public class SumFunction implements Function {
 				List<BindData> bindDataList=data.getData();
 				for(BindData bindData:bindDataList){
 					Object obj=bindData.getValue();
-					if(obj==null){
+					if(obj==null || StringUtils.isBlank(obj.toString())){
 						continue;
 					}
 					singleData=obj;
