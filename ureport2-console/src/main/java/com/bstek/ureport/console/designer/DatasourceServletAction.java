@@ -368,6 +368,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 					}else{
 						map.put(name, "null");						
 					}
+					break;
 				case List:
 					map.put(name, new ArrayList<Object>());
 				}				
