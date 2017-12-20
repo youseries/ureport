@@ -27,13 +27,18 @@ import com.bstek.ureport.build.Dataset;
 public class RenderContext {
 	private int id=0;
 	private Map<String,Dataset> datasetMap;
+	private Map<String, Object> parameters;
 	private Map<Component,String> componentMap=new HashMap<Component,String>();
 	private Map<String,Object> metadata=new HashMap<String,Object>();
-	public RenderContext(Map<String,Dataset> datasetMap) {
+	public RenderContext(Map<String,Dataset> datasetMap,Map<String, Object> parameters) {
 		this.datasetMap=datasetMap;
+		this.parameters=parameters;
 	}
 	public Dataset getDataset(String datasetName) {
 		return datasetMap.get(datasetName);
+	}
+	public Object getParameter(String name){
+		return parameters.get(name);
 	}
 	public String buildComponentId(Component component){
 		if(componentMap.containsKey(component)){

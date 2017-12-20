@@ -216,11 +216,11 @@ public class ReportDefinition implements Serializable{
 		return sb.toString();
 	}
 	
-	public SearchFormData buildSearchFormData(Map<String,Dataset> datasetMap){
+	public SearchFormData buildSearchFormData(Map<String,Dataset> datasetMap,Map<String, Object> parameters){
 		if(searchForm==null){
 			return null;
 		}
-		RenderContext context=new RenderContext(datasetMap);
+		RenderContext context=new RenderContext(datasetMap,parameters);
 		SearchFormData data=new SearchFormData();
 		data.setFormPosition(searchForm.getFormPosition());
 		data.setHtml(searchForm.toHtml(context));

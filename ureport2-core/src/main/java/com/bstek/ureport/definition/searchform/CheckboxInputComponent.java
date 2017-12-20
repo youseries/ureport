@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.definition.searchform;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,11 +29,17 @@ public class CheckboxInputComponent extends InputComponent {
 	String inputHtml(RenderContext context) {
 		StringBuilder sb=new StringBuilder();
 		String name=getBindParameter();
+		Object pvalue=context.getParameter(name)==null ? "" : context.getParameter(name);
+		String[] data=pvalue.toString().split(",");
+		List<String> list=Arrays.asList(data);
 		for(Option option:options){
+			String value=option.getValue();
+			String label=option.getLabel();
+			String checked=list.contains(value) ? "checked" : "";
 			if(this.optionsInline){
-				sb.append("<span class='checkbox-inline' style='padding-top:0px'><input value='"+option.getValue()+"' type='checkbox' name='"+name+"'>"+option.getLabel()+"</span>");
+				sb.append("<span class='checkbox-inline' style='padding-top:0px'><input value='"+value+"' type='checkbox' "+checked+" name='"+name+"'>"+label+"</span>");
 			}else{
-				sb.append("<span class='checkbox'><input type='checkbox' value='"+option.getValue()+"' name='"+name+"' style='margin-left: auto'><span style=\"margin-left:15px\">"+option.getLabel()+"</span></span>");
+				sb.append("<span class='checkbox'><input type='checkbox' value='"+value+"' name='"+name+"' "+checked+" style='margin-left: auto'><span style=\"margin-left:15px\">"+label+"</span></span>");
 			}				
 		}
 		return sb.toString();

@@ -54,9 +54,11 @@ public class DateInputComponent extends InputComponent {
 	
 	@Override
 	public String inputHtml(RenderContext context) {
+		String name=getBindParameter();
+		Object value=context.getParameter(name)==null ? "" : context.getParameter(name);
 		StringBuffer sb=new StringBuffer();
 		sb.append("<div id='"+context.buildComponentId(this)+"' class='input-group date'>");
-		sb.append("<input type='text' style=\"padding:3px;height:28px\" name='"+getBindParameter()+"' class='form-control'>");			
+		sb.append("<input type='text' style=\"padding:3px;height:28px\" name='"+name+"' value=\""+value+"\" class='form-control'>");			
 		sb.append("<span class='input-group-addon' style=\"font-size:12px\"><span class='glyphicon glyphicon-calendar'></span></span>");
 		sb.append("</div>");
 		return sb.toString();

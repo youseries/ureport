@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.definition.searchform;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,12 +29,18 @@ public class RadioInputComponent extends InputComponent {
 	String inputHtml(RenderContext context) {
 		StringBuilder sb=new StringBuilder();
 		String name=getBindParameter();
+		Object pvalue=context.getParameter(name)==null ? "" : context.getParameter(name);
+		String[] data=pvalue.toString().split(",");
+		List<String> list=Arrays.asList(data);
 		sb.append("<div>");
 		for(Option option:options){
+			String value=option.getValue();
+			String label=option.getLabel();
+			String checked=list.contains(value) ? "checked" : "";
 			if(this.optionsInline){
-				sb.append("<span class='checkbox-inline' style='padding-top:0px;padding-left:2px;padding-top:0px'><input value='"+option.getValue()+"' type='radio' name='"+name+"'> "+option.getLabel()+"</span>");
+				sb.append("<span class='checkbox-inline' style='padding-top:0px;padding-left:2px;padding-top:0px'><input value='"+value+"' "+checked+" type='radio' name='"+name+"'> "+label+"</span>");
 			}else{
-				sb.append("<span class='checkbox'><input value='"+option.getValue()+"' type='radio' name='"+name+"' style='margin-left: auto'> <span style=\"margin-left:15px\">"+option.getLabel()+"</span></span>");
+				sb.append("<span class='checkbox'><input value='"+value+"' type='radio' "+checked+" name='"+name+"' style='margin-left: auto'> <span style=\"margin-left:15px\">"+label+"</span></span>");
 			}
 		}
 		sb.append("</div>");

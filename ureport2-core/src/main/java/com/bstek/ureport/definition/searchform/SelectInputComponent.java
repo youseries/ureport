@@ -35,8 +35,10 @@ public class SelectInputComponent extends InputComponent {
 	private List<Option> options;
 	@Override
 	String inputHtml(RenderContext context) {
+		String name=getBindParameter();
+		Object pvalue=context.getParameter(name)==null ? "" : context.getParameter(name);
 		StringBuilder sb=new StringBuilder();
-		sb.append("<select style=\"padding:3px;height:28px\" id='"+context.buildComponentId(this)+"' name='"+getBindParameter()+"' class='form-control'>");
+		sb.append("<select style=\"padding:3px;height:28px\" id='"+context.buildComponentId(this)+"' name='"+name+"' class='form-control'>");
 		if(useDataset && StringUtils.isNotBlank(dataset)){
 			Dataset ds=context.getDataset(dataset);
 			if(ds==null){
@@ -45,11 +47,14 @@ public class SelectInputComponent extends InputComponent {
 			for(Object obj:ds.getData()){
 				Object label=Utils.getProperty(obj, labelField);
 				Object value=Utils.getProperty(obj, valueField);
-				sb.append("<option value='"+value+"'>"+label+"</option>");		
+				String selected=value.equals(pvalue) ? "selected" : "";
+				sb.append("<option value='"+value+"' "+selected+">"+label+"</option>");		
 			}
 		}else{
 			for(Option option:options){
-				sb.append("<option value='"+option.getValue()+"'>"+option.getLabel()+"</option>");
+				String value=option.getValue();
+				String selected=value.equals(pvalue) ? "selected" : "";
+				sb.append("<option value='"+value+"' "+selected+">"+option.getLabel()+"</option>");
 			}			
 		}
 		sb.append("</select>");
