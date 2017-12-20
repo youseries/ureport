@@ -18,6 +18,8 @@ package com.bstek.ureport.expression.function;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
@@ -45,7 +47,7 @@ public class AvgFunction implements Function {
 				ObjectListExpressionData listExpr=(ObjectListExpressionData)exprData;
 				List<?> list=listExpr.getData();
 				for(Object obj:list){
-					if(obj==null){
+					if(obj==null || StringUtils.isBlank(obj.toString())){
 						continue;
 					}
 					singleData=obj;
@@ -55,6 +57,10 @@ public class AvgFunction implements Function {
 				}
 			}else if(exprData instanceof ObjectExpressionData){
 				ObjectExpressionData data=(ObjectExpressionData)exprData;
+				Object obj=data.getData();
+				if(obj==null || StringUtils.isBlank(obj.toString())){
+					continue;
+				}
 				BigDecimal bigData=Utils.toBigDecimal(data.getData());
 				singleData=data.getData();
 				total=total.add(bigData);
@@ -64,7 +70,7 @@ public class AvgFunction implements Function {
 				List<BindData> bindDataList=data.getData();
 				for(BindData bindData:bindDataList){
 					Object obj=bindData.getValue();
-					if(obj==null){
+					if(obj==null || StringUtils.isBlank(obj.toString())){
 						continue;
 					}
 					singleData=obj;
