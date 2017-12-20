@@ -101,7 +101,9 @@ public class CellPhrase extends Phrase {
 		if(bold==null)bold=false;
 		if(italic==null)italic=false;
 		if(underline==null)underline=false;
-		
+		if(StringUtils.isBlank(fontName)){
+			fontName="宋体";
+		}
 		Font font=FontBuilder.getFont(fontName, fontSize,bold,italic,underline);
 		String fontColor=style.getForecolor();
 		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getForecolor())){
