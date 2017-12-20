@@ -31,9 +31,9 @@ import com.bstek.ureport.Utils;
 public class CellStyle implements Serializable{
 	private static final long serialVersionUID = 8327688051735343849L;
 	private String bgcolor;
-	private String forecolor="0,0,0";
+	private String forecolor;
 	private int fontSize=10;
-	private String fontFamily="宋体";
+	private String fontFamily;
 	private String format;
 	private float lineHeight;
 	private Alignment align;
