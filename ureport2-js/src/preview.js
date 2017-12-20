@@ -102,6 +102,9 @@ $(document).ready(function(){
     });
 });
 
+window._currentPageIndex=null;
+window._totalPage=null;
+
 window.buildLocationSearchParameters=function(exclude){
     let urlParameters=window.location.search;
     if(urlParameters.length>0){
@@ -135,7 +138,11 @@ window.buildLocationSearchParameters=function(exclude){
     }
     let p='?';
     for(let key in parameters){
-        p+='&'+key+'='+parameters[key];
+        if(p==='?'){
+            p+=key+'='+parameters[key];
+        }else{
+            p+='&'+key+'='+parameters[key];
+        }
     }
     return p;
 };
@@ -168,14 +175,21 @@ function buildPrintStyle(paper){
     return style;
 };
 
-window.buildPaging=function(file,pageIndex,totalPage,customParameters,tools){
+window.buildPaging=function(pageIndex,totalPage){
     if(totalPage===0){
         return;
     }
+    if(!window._currentPageIndex){
+        window._currentPageIndex=pageIndex;
+    }
+    pageIndex=window._currentPageIndex;
+    if(!window._totalPage){
+        window._totalPage=totalPage;
+    }
+
     const pageSelector=$('#pageSelector');
     pageSelector.change(function(){
         const parameters=window.buildLocationSearchParameters('_i');
-        //let url=window._server+`/preview?_u=${file}&_i=${$(this).val()}&_t=${tools}&${customParameters}`;
         let url=window._server+`/preview${parameters}&_i=${$(this).val()}`;
         window.open(url,'_self');
     });
@@ -184,10 +198,11 @@ window.buildPaging=function(file,pageIndex,totalPage,customParameters,tools){
     if(totalPage===1){
         return;
     }
+    const parameters=window.buildLocationSearchParameters('_i');
     const pagingContainer=$('#pageLinkContainer');
+    pagingContainer.empty();
     if(pageIndex>1){
-        let url=window._server+`/preview?_u=${file}&_t=${tools}`;
-        url+=`&_i=${pageIndex-1}&${customParameters}`;
+        let url=window._server+`/preview${parameters}&_i=${pageIndex-1}`;
         const prevPage=$(`<button type="button" class="btn btn-link btn-sm">上一页</button>`);
         pagingContainer.append(prevPage);
         prevPage.click(function(){
@@ -195,8 +210,7 @@ window.buildPaging=function(file,pageIndex,totalPage,customParameters,tools){
         });
     }
     if(pageIndex<totalPage){
-        let url=window._server+`/preview?_u=${file}&_t=${tools}`;
-        url+=`&_i=${pageIndex+1}&${customParameters}`;
+        let url=window._server+`/preview${parameters}&_i=${pageIndex+1}`;
         const nextPage=$(`<button type="button" class="btn btn-link btn-sm">下一页</button>`);
         pagingContainer.append(nextPage);
         nextPage.click(function(){
@@ -205,31 +219,27 @@ window.buildPaging=function(file,pageIndex,totalPage,customParameters,tools){
     }
 };
 
-window._intervalRefresh=function(value,file,totalPage,customParameters){
+window._intervalRefresh=function(value,totalPage){
     if(!value){
         return;
     }
+    window._totalPage=totalPage;
     const second=value*1000;
     setTimeout(function(){
-        _refreshData(customParameters,file,totalPage,second);
+        _refreshData(second);
     },second);
 };
 
-
-window._currentPageIndex=1;
-
-function _refreshData(customParameters,file,totalPage,second){
-    let url=window._server+"/preview/loadData?_u="+file+"";
-    if(customParameters){
-        url+="&"+customParameters;
-    }
+function _refreshData(second){
+    const params=buildLocationSearchParameters('_i');
+    let url=window._server+`/preview/loadData${params}`;
+    const totalPage=window._totalPage;
     if(totalPage>0){
         if(window._currentPageIndex>totalPage){
             window._currentPageIndex=1;
         }
         url+="&_i="+window._currentPageIndex+"";
         $("#pageSelector").val(window._currentPageIndex);
-        window._currentPageIndex++;
     }
     $.ajax({
         url,
@@ -237,10 +247,13 @@ function _refreshData(customParameters,file,totalPage,second){
         success:function(report){
             const tableContainer=$(`#_ureport_table`);
             tableContainer.empty();
+            window._totalPage=report.totalPage;
             tableContainer.append(report.content);
             _buildChartDatas(report.chartDatas);
+            buildPaging(window._currentPageIndex,window._totalPage);
+            window._currentPageIndex++;
             setTimeout(function(){
-                _refreshData(customParameters,file,totalPage,second);
+                _refreshData(second);
             },second);
         },
         error:function(response){
@@ -313,11 +326,13 @@ window.submitSearchForm=function(file,customParameters){
         url,
         type:'POST',
         success:function(report){
+            window._currentPageIndex=1;
             const tableContainer=$(`#_ureport_table`);
             tableContainer.empty();
             tableContainer.append(report.content);
             _buildChartDatas(report.chartDatas);
             const totalPage=report.totalPage;
+            window._totalPage=totalPage;
             if(pageSelector.length>0){
                 pageSelector.empty();
                 for(let i=1;i<=totalPage;i++){
@@ -326,27 +341,7 @@ window.submitSearchForm=function(file,customParameters){
                 const pageIndex=report.pageIndex || 1;
                 pageSelector.val(pageIndex);
                 $('#totalPageLabel').html(totalPage);
-                const urlParameters=window.buildLocationSearchParameters('_i');
-                const pagingContainer=$('#pageLinkContainer');
-                pagingContainer.empty();
-                if(pageIndex>1){
-                    let url=window._server+`/preview`+urlParameters;
-                    url+=`&_i=${pageIndex-1}`;
-                    const prevPage=$(`<button type="button" class="btn btn-link btn-sm">上一页</button>`);
-                    pagingContainer.append(prevPage);
-                    prevPage.click(function(){
-                        window.open(url,'_self');
-                    });
-                }
-                if(pageIndex<totalPage){
-                    let url=window._server+`/preview`+urlParameters;
-                    url+=`&_i=${pageIndex+1}`;
-                    const nextPage=$(`<button type="button" class="btn btn-link btn-sm">下一页</button>`);
-                    pagingContainer.append(nextPage);
-                    nextPage.click(function(){
-                        window.open(url,'_self');
-                    });
-                }
+                buildPaging(pageIndex,totalPage);
             }
         },
         error:function(response){

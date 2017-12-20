@@ -50,12 +50,18 @@ public class SelectInputComponent extends InputComponent {
 				String selected=value.equals(pvalue) ? "selected" : "";
 				sb.append("<option value='"+value+"' "+selected+">"+label+"</option>");		
 			}
+			if(pvalue.equals("")){
+				sb.append("<option value='' selected></option>");
+			}
 		}else{
 			for(Option option:options){
 				String value=option.getValue();
 				String selected=value.equals(pvalue) ? "selected" : "";
 				sb.append("<option value='"+value+"' "+selected+">"+option.getLabel()+"</option>");
-			}			
+			}
+			if(pvalue.equals("")){
+				sb.append("<option value='' selected></option>");
+			}
 		}
 		sb.append("</select>");
 		return sb.toString();

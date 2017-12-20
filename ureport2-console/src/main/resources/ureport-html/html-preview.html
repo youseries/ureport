@@ -109,10 +109,10 @@ window._server="${contextPath}/ureport";
 window.formElements=[];
 $(document).ready(function(){
 	
-	buildPaging("${file}",${pageIndex},${totalPage},"${customParameters}","${_t}");
+	buildPaging(${pageIndex},${totalPage});
 	
 	#if($intervalRefreshValue>0)
-		_intervalRefresh($intervalRefreshValue,"${file}",$totalPage,"${customParameters}");
+		_intervalRefresh($intervalRefreshValue,$totalPage);
 	#end
 	_buildChartDatas($chartDatas);
 	${searchFormJs}
