@@ -31,6 +31,7 @@
 	</bean>
 	
 	<bean id="ureport.httpImageProvider" class="com.bstek.ureport.provider.image.HttpImageProvider"></bean>
+	<bean id="ureport.httpsImageProvider" class="com.bstek.ureport.provider.image.HttpsImageProvider"></bean>
 	
 	<bean id="ureport.reportBuilder" class="com.bstek.ureport.build.ReportBuilder">
 		<property name="hideRowColumnBuilder" ref="ureport.hideRowColumnBuilder"></property>
