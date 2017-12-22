@@ -41,8 +41,8 @@ public class CellRightDuplicateUnit {
 	public void duplicate(Cell cell,int index){
 		rightDuplicate.setIndex(index);
 		for(CellRightDuplicator childDuplicator:rightDuplocatorWrapper.getMainCellChildren()){
-			Cell newCell=childDuplicator.duplicateChildrenCell(rightDuplicate,cell,mainCell,false);
-			processChildrenCells(newCell,childDuplicator.getCell(),rightDuplicate,context,childDuplicator.isNonChild());
+			Cell newCell=childDuplicator.duplicateChildrenCell(rightDuplicate,cell,mainCell,mainCell,cell,false);
+			processChildrenCells(newCell,childDuplicator.getCell(),cell,rightDuplicate,context,childDuplicator.isNonChild());
 			childDuplicator.setNonChild(false);
 		}
 		for(CellRightDuplicator cellRightDuplicator:rightDuplocatorWrapper.getCellDuplicators()){
@@ -60,14 +60,14 @@ public class CellRightDuplicateUnit {
 		rightDuplicate.complete();
 	}
 	
-	private void processChildrenCells(Cell cell,Cell originalCell,RightDuplicate rightDuplicate,Context context,boolean parentNonChild){
+	private void processChildrenCells(Cell cell,Cell originalCell,Cell newMainCell,RightDuplicate rightDuplicate,Context context,boolean parentNonChild){
 		List<CellRightDuplicator> childCellRightDuplicators=rightDuplocatorWrapper.fetchChildrenDuplicator(originalCell);
 		if(childCellRightDuplicators==null){
 			return;
 		}
 		for(CellRightDuplicator duplicator:childCellRightDuplicators){				
-			Cell newCell=duplicator.duplicateChildrenCell(rightDuplicate,cell,originalCell,parentNonChild);
-			processChildrenCells(newCell,duplicator.getCell(),rightDuplicate,context,duplicator.isNonChild());
+			Cell newCell=duplicator.duplicateChildrenCell(rightDuplicate,cell,originalCell,mainCell,newMainCell,parentNonChild);
+			processChildrenCells(newCell,duplicator.getCell(),newMainCell,rightDuplicate,context,duplicator.isNonChild());
 			duplicator.setNonChild(false);
 		}
 	}

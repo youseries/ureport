@@ -87,7 +87,7 @@ public class CellRightDuplicator {
 		context.addBlankCell(newBlankCell);
 	}
 	
-	public Cell duplicateChildrenCell(RightDuplicate rightDuplicate,Cell topParent,Cell originalCell,boolean parentNonChild){
+	public Cell duplicateChildrenCell(RightDuplicate rightDuplicate,Cell topParent,Cell originalCell,Cell mainCell,Cell newMainCell,boolean parentNonChild){
 		Cell newCell=cell.newCell();
 		Column newCol=rightDuplicate.newColumn(newCell.getColumn(),cellColNumber);
 		newCol.getCells().add(newCell);
@@ -103,6 +103,8 @@ public class CellRightDuplicator {
 		}
 		if(newCell.getLeftParentCell()==originalCell){
 			newCell.setLeftParentCell(topParent);
+		}else if(newCell.getLeftParentCell()==mainCell){
+			newCell.setLeftParentCell(newMainCell);
 		}
 		Cell leftParentCell=newCell.getLeftParentCell();
 		if(leftParentCell!=null){
