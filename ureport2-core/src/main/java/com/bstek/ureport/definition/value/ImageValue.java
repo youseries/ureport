@@ -26,6 +26,8 @@ public class ImageValue implements Value {
 	private String expr;
 	private Expression expression;
 	private Source source;
+	private int width;
+	private int height;
 	@Override
 	public ValueType getType() {
 		return ValueType.image;
@@ -58,5 +60,17 @@ public class ImageValue implements Value {
 	}
 	public void setExpression(Expression expression) {
 		this.expression = expression;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

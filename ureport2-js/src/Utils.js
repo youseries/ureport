@@ -211,7 +211,14 @@ export function tableToXml(context){
                 cellXml+=`<![CDATA[${value.value || ''}]]>`;
                 cellXml+=`</simple-value>`;
             }else if(value.type==='image'){
-                cellXml+=`<image-value source="${value.source}">`;
+                cellXml+=`<image-value source="${value.source}"`;
+                if(value.width){
+                    cellXml+=` width="${value.width}"`
+                }
+                if(value.height){
+                    cellXml+=` height="${value.height}"`;
+                }
+                cellXml+=`>`;
                 cellXml+=`<text>`;
                 cellXml+=`<![CDATA[${value.value}]]>`;
                 cellXml+=`</text>`;

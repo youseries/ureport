@@ -15,10 +15,15 @@
  ******************************************************************************/
 package com.bstek.ureport.utils;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.util.Base64Utils;
@@ -41,14 +46,6 @@ public class ImageUtils {
 		ChartImageProcessor chartImageProcessor=new ChartImageProcessor();
 		imageProcessorMap.put(ImageType.chart, chartImageProcessor);
 	}
-	@SuppressWarnings("unchecked")
-	public static InputStream getImage(ImageType type,Object data){
-		ImageProcessor<Object> targetProcessor=(ImageProcessor<Object>)imageProcessorMap.get(type);
-		if(targetProcessor==null){
-			throw new ReportComputeException("Unknow image type :"+type);
-		}
-		return targetProcessor.getImage(data);
-	}
 	
 	public static InputStream base64DataToInputStream(String base64Data){
 		byte[] bytes=Base64Utils.decodeFromString(base64Data);
@@ -57,13 +54,23 @@ public class ImageUtils {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static String getImageBase64Data(ImageType type,Object data){
+	public static String getImageBase64Data(ImageType type,Object data,int width,int height){
 		ImageProcessor<Object> targetProcessor=(ImageProcessor<Object>)imageProcessorMap.get(type);
 		if(targetProcessor==null){
 			throw new ReportComputeException("Unknow image type :"+type);
 		}
 		InputStream inputStream = targetProcessor.getImage(data);
 		try{
+			if(width>0 && height>0){
+				BufferedImage inputImage=ImageIO.read(inputStream);
+				BufferedImage outputImage = new BufferedImage(width,height,BufferedImage.TYPE_USHORT_565_RGB);
+				Graphics2D g = outputImage.createGraphics();
+		        g.drawImage(inputImage, 0, 0, width,height, null);
+		        g.dispose();
+		        ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
+		        ImageIO.write(outputImage, "png", outputStream);
+		        inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+			}
 			byte[] bytes=IOUtils.toByteArray(inputStream);
 			return Base64Utils.encodeToString(bytes);
 		}catch(Exception ex){

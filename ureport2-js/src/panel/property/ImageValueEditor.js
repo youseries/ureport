@@ -13,10 +13,28 @@ export default class ImageValueEditor extends BaseValueEditor{
         this.context=context;
         this.container=$(`<div></div>`);
         parentContainer.append(this.container);
+        this._initSizeGroup();
         this._initTypeSelect();
         this._buildExpand();
         this._initExpressionEditor();
         this._initPathEditor();
+    }
+    _initSizeGroup(){
+        const _this=this;
+        const widthGroup=$(`<div class="form-group"><label>宽：</label></div>`);
+        this.widthEditor=$(`<input class="form-control" type="number" placeholder="为0或空表示采用图片默认宽度" style="display: inline-block;width:335px">`);
+        widthGroup.append(this.widthEditor);
+        this.widthEditor.change(function(){
+            _this.cellDef.value.width=$(this).val();
+        });
+        this.container.append(widthGroup);
+        const heightGroup=$(`<div class="form-group"><label>高：</label></div>`);
+        this.heightEditor=$(`<input class="form-control" type="number" placeholder="为0或空表示采用图片默认高度" style="display: inline-block;width:335px">`);
+        heightGroup.append(this.heightEditor);
+        this.heightEditor.change(function(){
+            _this.cellDef.value.height=$(this).val();
+        });
+        this.container.append(heightGroup);
     }
     _initTypeSelect(){
         const imageSourceGroup=$(`<div class="form-group"><label>${window.i18n.property.image.source}</label></div>`);
@@ -135,6 +153,8 @@ export default class ImageValueEditor extends BaseValueEditor{
         this.row2Index=row2Index;
         this.col2Index=col2Index;
         this.container.show();
+        this.widthEditor.val(cellDef.value.width);
+        this.heightEditor.val(cellDef.value.height);
         const source=cellDef.value.source;
         this.sourceSelect.val(source);
         this.pathEditor.val('');
