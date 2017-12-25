@@ -15,7 +15,9 @@
  ******************************************************************************/
 package com.bstek.ureport.build.cell.down;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.model.Cell;
@@ -39,10 +41,13 @@ public class CellDownDuplicateUnit {
 		this.downDuplicate=new DownDuplicate(mainCell,rowSize,context);
 	}
 	public void duplicate(Cell cell,int index){
+		Map<Cell,Cell> newCellMap=new HashMap<Cell,Cell>();
+		newCellMap.put(mainCell, cell);
 		downDuplicate.setIndex(index);
 		for(CellDownDuplicator childDuplicator:downDuplocatorWrapper.getMainCellChildren()){
-			Cell newCell=childDuplicator.duplicateChildrenCell(downDuplicate, cell, mainCell,mainCell,cell,false);
-			processChildrenCells(newCell,childDuplicator.getCell(),cell,downDuplicate,childDuplicator.isNonChild());
+			Cell newCell=childDuplicator.duplicateChildrenCell(downDuplicate, cell, mainCell,false);
+			newCellMap.put(childDuplicator.getCell(), newCell);
+			processChildrenCells(newCell,childDuplicator.getCell(),newCellMap,downDuplicate,childDuplicator.isNonChild());
 			childDuplicator.setNonChild(false);
 		}
 		for(CellDownDuplicator cellDownDuplicator:downDuplocatorWrapper.getCellDuplicators()){
@@ -54,20 +59,27 @@ public class CellDownDuplicateUnit {
 		cell.getColumn().getCells().add(cell);
 		context.addReportCell(cell);
 		downDuplicate.reset();
+		for(Cell newCell:newCellMap.values()){
+			Cell originTopCell=newCell.getTopParentCell();
+			if(originTopCell!=null && newCellMap.containsKey(originTopCell)){
+				newCell.setTopParentCell(newCellMap.get(originTopCell));
+			}
+		}
 	}
 	
 	public void complete(){
 		downDuplicate.complete();
 	}
 	
-	private void processChildrenCells(Cell cell,Cell originalCell,Cell newMainCell,DownDuplicate downDuplicate,boolean parentNonChild){
+	private void processChildrenCells(Cell cell,Cell originalCell,Map<Cell,Cell> newCellMap,DownDuplicate downDuplicate,boolean parentNonChild){
 		List<CellDownDuplicator> childCellDownDuplicators=downDuplocatorWrapper.fetchChildrenDuplicator(originalCell);
 		if(childCellDownDuplicators==null){
 			return;
 		}
 		for(CellDownDuplicator duplicator:childCellDownDuplicators){				
-			Cell newCell=duplicator.duplicateChildrenCell(downDuplicate, cell, originalCell,mainCell,newMainCell,parentNonChild);
-			processChildrenCells(newCell,duplicator.getCell(),newMainCell,downDuplicate,duplicator.isNonChild());
+			Cell newCell=duplicator.duplicateChildrenCell(downDuplicate, cell, originalCell,parentNonChild);
+			newCellMap.put(duplicator.getCell(), newCell);
+			processChildrenCells(newCell,duplicator.getCell(),newCellMap,downDuplicate,duplicator.isNonChild());
 			duplicator.setNonChild(false);
 		}
 	}

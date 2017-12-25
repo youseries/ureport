@@ -15,7 +15,9 @@
  ******************************************************************************/
 package com.bstek.ureport.build.cell.right;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.model.Cell;
@@ -39,10 +41,13 @@ public class CellRightDuplicateUnit {
 		this.rightDuplicate=new RightDuplicate(mainCell,colSize,context);
 	}
 	public void duplicate(Cell cell,int index){
+		Map<Cell,Cell> newCellMap=new HashMap<Cell,Cell>();
+		newCellMap.put(mainCell, cell);
 		rightDuplicate.setIndex(index);
 		for(CellRightDuplicator childDuplicator:rightDuplocatorWrapper.getMainCellChildren()){
-			Cell newCell=childDuplicator.duplicateChildrenCell(rightDuplicate,cell,mainCell,mainCell,cell,false);
-			processChildrenCells(newCell,childDuplicator.getCell(),cell,rightDuplicate,context,childDuplicator.isNonChild());
+			Cell newCell=childDuplicator.duplicateChildrenCell(rightDuplicate,cell,mainCell,false);
+			newCellMap.put(childDuplicator.getCell(), newCell);
+			processChildrenCells(newCell,childDuplicator.getCell(),newCellMap,rightDuplicate,childDuplicator.isNonChild());
 			childDuplicator.setNonChild(false);
 		}
 		for(CellRightDuplicator cellRightDuplicator:rightDuplocatorWrapper.getCellDuplicators()){
@@ -54,20 +59,27 @@ public class CellRightDuplicateUnit {
 		cell.getRow().getCells().add(cell);
 		context.addReportCell(cell);
 		rightDuplicate.reset();
+		for(Cell newCell:newCellMap.values()){
+			Cell originLeftCell=newCell.getLeftParentCell();
+			if(originLeftCell!=null && newCellMap.containsKey(originLeftCell)){
+				newCell.setLeftParentCell(newCellMap.get(originLeftCell));
+			}
+		}
 	}
 	
 	public void complete(){
 		rightDuplicate.complete();
 	}
 	
-	private void processChildrenCells(Cell cell,Cell originalCell,Cell newMainCell,RightDuplicate rightDuplicate,Context context,boolean parentNonChild){
+	private void processChildrenCells(Cell cell,Cell originalCell,Map<Cell,Cell> newCellMap,RightDuplicate rightDuplicate,boolean parentNonChild){
 		List<CellRightDuplicator> childCellRightDuplicators=rightDuplocatorWrapper.fetchChildrenDuplicator(originalCell);
 		if(childCellRightDuplicators==null){
 			return;
 		}
 		for(CellRightDuplicator duplicator:childCellRightDuplicators){				
-			Cell newCell=duplicator.duplicateChildrenCell(rightDuplicate,cell,originalCell,mainCell,newMainCell,parentNonChild);
-			processChildrenCells(newCell,duplicator.getCell(),newMainCell,rightDuplicate,context,duplicator.isNonChild());
+			Cell newCell=duplicator.duplicateChildrenCell(rightDuplicate,cell,originalCell,parentNonChild);
+			newCellMap.put(duplicator.getCell(), newCell);
+			processChildrenCells(newCell,duplicator.getCell(),newCellMap,rightDuplicate,duplicator.isNonChild());
 			duplicator.setNonChild(false);
 		}
 	}

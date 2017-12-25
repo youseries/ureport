@@ -67,7 +67,7 @@ public class CellDownDuplicator {
 		return null;
 	}
 	
-	public Cell duplicateChildrenCell(DownDuplicate downDuplicate,Cell leftParent,Cell originalCell,Cell mainCell,Cell newMainCell,boolean parentNonChild){
+	public Cell duplicateChildrenCell(DownDuplicate downDuplicate,Cell leftParent,Cell originalCell,boolean parentNonChild){
 		Cell newCell=cell.newCell();
 		Row newRow=downDuplicate.newRow(newCell.getRow(),cellRowNumber);
 		newRow.getCells().add(newCell);
@@ -80,11 +80,6 @@ public class CellDownDuplicator {
 			}
 		}else{
 			nonChild=true;
-		}
-		if(newCell.getTopParentCell()==originalCell){
-			newCell.setTopParentCell(leftParent);
-		}else if(newCell.getTopParentCell()==mainCell){
-			newCell.setTopParentCell(newMainCell);
 		}
 		Cell leftParentCell=newCell.getLeftParentCell();
 		if(leftParentCell!=null){
