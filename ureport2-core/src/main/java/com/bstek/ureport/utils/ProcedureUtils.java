@@ -95,7 +95,10 @@ public class ProcedureUtils {
 			Map<String,Object> paramMap=new LinkedHashMap<String,Object>();
 			int leftParnPos=sql.indexOf("(");
 			int rightParnPos=sql.indexOf(")");
-			String paramStr=sql.substring(leftParnPos+1,rightParnPos);
+			String paramStr="";
+			if(leftParnPos>-1 || rightParnPos>-1){
+				paramStr=sql.substring(leftParnPos+1,rightParnPos);				
+			}
 			String[] str=paramStr.split(",");
 			for(String param:str){
 				param=param.trim();
