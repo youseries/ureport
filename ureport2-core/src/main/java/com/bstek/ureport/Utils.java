@@ -217,7 +217,9 @@ public class Utils implements ApplicationContextAware{
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)throws BeansException {
 		Utils.applicationContext=applicationContext;
-		buildinDatasources=applicationContext.getBeansOfType(BuildinDatasource.class).values();
-		imageProviders=applicationContext.getBeansOfType(ImageProvider.class).values();
+		buildinDatasources=new ArrayList<BuildinDatasource>();
+		buildinDatasources.addAll(applicationContext.getBeansOfType(BuildinDatasource.class).values());
+		imageProviders=new ArrayList<ImageProvider>();
+		imageProviders.addAll(applicationContext.getBeansOfType(ImageProvider.class).values());
 	}
 }
