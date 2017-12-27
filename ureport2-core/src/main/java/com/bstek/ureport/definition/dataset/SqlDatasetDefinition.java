@@ -65,7 +65,7 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 		}
 		Utils.logToConsole("RUNTIME SQL:"+sqlForUse);
 		Map<String, Object> pmap = buildParameters(parameterMap);
-		if(sqlForUse.trim().toLowerCase().startsWith("call ")){
+		if(ProcedureUtils.isProcedure(sqlForUse)){
 			List<Map<String,Object>> result = ProcedureUtils.procedureQuery(sqlForUse,pmap,conn);
 			return new Dataset(name,result);
 		}

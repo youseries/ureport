@@ -175,7 +175,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 			conn=buildConnection(req);
 			Map<String, Object> map = buildParameters(parameters);
 			sql=parseSql(sql, map);
-			if(sql.trim().toLowerCase().startsWith("call ")){
+			if(ProcedureUtils.isProcedure(sql)){
 				List<Field> fieldsList = ProcedureUtils.procedureColumnsQuery(sql, map, conn);
 				fields.addAll(fieldsList);
 			}else{
@@ -227,7 +227,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		try{
 			conn=buildConnection(req);
 			List<Map<String,Object>> list=null;
-			if(sql.trim().toLowerCase().startsWith("call ")){
+			if(ProcedureUtils.isProcedure(sql)){
 				list=ProcedureUtils.procedureQuery(sql, map, conn);
 			}else{
 				DataSource dataSource=new SingleConnectionDataSource(conn,false);

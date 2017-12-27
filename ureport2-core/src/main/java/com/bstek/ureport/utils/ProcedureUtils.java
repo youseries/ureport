@@ -36,6 +36,11 @@ import com.bstek.ureport.exception.ReportException;
  * @since 2017年12月27日
  */
 public class ProcedureUtils {
+	public static boolean isProcedure(String sql){
+		sql=sql.trim().toLowerCase();
+		return sql.startsWith("call ");
+	}
+	
 	public static List<Field> procedureColumnsQuery(String sql,Map<String, Object> pmap,Connection conn){
 		CallableStatement cs=buildProcedureCallableStatement(sql, pmap, conn);
 		ResultSet rs=null;
