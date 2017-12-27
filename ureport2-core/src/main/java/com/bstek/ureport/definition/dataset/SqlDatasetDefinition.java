@@ -33,6 +33,7 @@ import com.bstek.ureport.expression.ExpressionUtils;
 import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
+import com.bstek.ureport.utils.ProcedureUtils;
 
 
 /**
@@ -64,6 +65,10 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 		}
 		Utils.logToConsole("RUNTIME SQL:"+sqlForUse);
 		Map<String, Object> pmap = buildParameters(parameterMap);
+		if(sqlForUse.trim().toLowerCase().startsWith("call ")){
+			List<Map<String,Object>> result = ProcedureUtils.procedureQuery(sqlForUse,pmap,conn);
+			return new Dataset(name,result);
+		}
 		SingleConnectionDataSource datasource=new SingleConnectionDataSource(conn,false);
 		NamedParameterJdbcTemplate jdbcTemplate=new NamedParameterJdbcTemplate(datasource);
 		List<Map<String,Object>> list= jdbcTemplate.queryForList(sqlForUse, pmap);

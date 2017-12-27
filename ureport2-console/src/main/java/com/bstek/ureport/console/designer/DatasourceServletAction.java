@@ -67,6 +67,7 @@ import com.bstek.ureport.expression.ExpressionUtils;
 import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
+import com.bstek.ureport.utils.ProcedureUtils;
 
 /**
  * @author Jacky.gao
@@ -79,15 +80,6 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		String method=retriveMethod(req);
 		if(method!=null){
 			invokeMethod(method, req, resp);
-		}else{
-			/*VelocityContext context = new VelocityContext();
-			context.put("contextPath", req.getContextPath());
-			resp.setContentType("text/html");
-			resp.setCharacterEncoding("utf-8");
-			Template template=ve.getTemplate("html/designer.html","utf-8");
-			PrintWriter writer=resp.getWriter();
-			template.merge(context, writer);
-			writer.close();*/
 		}
 	}
 	
@@ -169,16 +161,8 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		}catch(Exception ex){
 			throw new ServletException(ex);
 		}finally{
-			try {
-				if(rs!=null){
-					rs.close();
-				}
-				if(conn!=null){
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			JdbcUtils.closeResultSet(rs);
+			JdbcUtils.closeConnection(conn);
 		}
 	}
 	
@@ -191,27 +175,32 @@ public class DatasourceServletAction extends RenderPageServletAction {
 			conn=buildConnection(req);
 			Map<String, Object> map = buildParameters(parameters);
 			sql=parseSql(sql, map);
-			DataSource dataSource=new SingleConnectionDataSource(conn,false);
-			NamedParameterJdbcTemplate jdbc=new NamedParameterJdbcTemplate(dataSource);
-			PreparedStatementCreator statementCreator=getPreparedStatementCreator(sql,new MapSqlParameterSource(map));
-			jdbc.getJdbcOperations().execute(statementCreator, new PreparedStatementCallback<Object>() {
-				@Override
-				public Object doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-					ResultSet rs = null;
-					try {
-						rs = ps.executeQuery();
-						ResultSetMetaData metadata=rs.getMetaData();
-						int columnCount=metadata.getColumnCount();
-						for(int i=0;i<columnCount;i++){
-							String columnName=metadata.getColumnLabel(i+1);
-							fields.add(new Field(columnName));
+			if(sql.trim().toLowerCase().startsWith("call ")){
+				List<Field> fieldsList = ProcedureUtils.procedureColumnsQuery(sql, map, conn);
+				fields.addAll(fieldsList);
+			}else{
+				DataSource dataSource=new SingleConnectionDataSource(conn,false);
+				NamedParameterJdbcTemplate jdbc=new NamedParameterJdbcTemplate(dataSource);
+				PreparedStatementCreator statementCreator=getPreparedStatementCreator(sql,new MapSqlParameterSource(map));
+				jdbc.getJdbcOperations().execute(statementCreator, new PreparedStatementCallback<Object>() {
+					@Override
+					public Object doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+						ResultSet rs = null;
+						try {
+							rs = ps.executeQuery();
+							ResultSetMetaData metadata=rs.getMetaData();
+							int columnCount=metadata.getColumnCount();
+							for(int i=0;i<columnCount;i++){
+								String columnName=metadata.getColumnLabel(i+1);
+								fields.add(new Field(columnName));
+							}
+							return null;
+						}finally {
+							JdbcUtils.closeResultSet(rs);
 						}
-						return null;
-					}finally {
-						JdbcUtils.closeResultSet(rs);
 					}
-				}
-			});
+				});
+			}
 			writeObjectToJson(resp, fields);
 		}catch(Exception ex){
 			throw new ReportDesignException(ex);
@@ -237,9 +226,14 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		Connection conn=null;
 		try{
 			conn=buildConnection(req);
-			DataSource dataSource=new SingleConnectionDataSource(conn,false);
-			NamedParameterJdbcTemplate jdbc=new NamedParameterJdbcTemplate(dataSource);
-			List<Map<String,Object>> list=jdbc.queryForList(sql, map);
+			List<Map<String,Object>> list=null;
+			if(sql.trim().toLowerCase().startsWith("call ")){
+				list=ProcedureUtils.procedureQuery(sql, map, conn);
+			}else{
+				DataSource dataSource=new SingleConnectionDataSource(conn,false);
+				NamedParameterJdbcTemplate jdbc=new NamedParameterJdbcTemplate(dataSource);
+				list=jdbc.queryForList(sql, map);				
+			}
 			int size=list.size();
 			int currentTotal=size;
 			if(currentTotal>500){
