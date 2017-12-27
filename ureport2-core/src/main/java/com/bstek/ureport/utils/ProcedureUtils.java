@@ -96,7 +96,7 @@ public class ProcedureUtils {
 			int leftParnPos=sql.indexOf("(");
 			int rightParnPos=sql.indexOf(")");
 			String paramStr="";
-			if(leftParnPos>-1 || rightParnPos>-1){
+			if(leftParnPos>-1 && rightParnPos>-1){
 				paramStr=sql.substring(leftParnPos+1,rightParnPos);				
 			}
 			String[] str=paramStr.split(",");
