@@ -42,10 +42,16 @@ public class ProcedureUtils {
 	}
 	
 	public static List<Field> procedureColumnsQuery(String sql,Map<String, Object> pmap,Connection conn){
-		CallableStatement cs=buildProcedureCallableStatement(sql, pmap, conn);
+		StatementWrapper wrapper=buildProcedureCallableStatement(sql, pmap, conn);
+		CallableStatement cs=wrapper.getCallableStatement();
+		int oracleCursorIndex=wrapper.getOracleCursorIndex();
 		ResultSet rs=null;
 		try {
-			rs=cs.executeQuery();
+			if(oracleCursorIndex==-1){
+				rs=cs.executeQuery();				
+			}else{
+				rs=(ResultSet)cs.getObject(oracleCursorIndex);
+			}
 			ResultSetMetaData metadata=rs.getMetaData();
 			int columnCount=metadata.getColumnCount();
 			List<Field> fields=new ArrayList<Field>();
@@ -65,10 +71,16 @@ public class ProcedureUtils {
 	
 	
 	public static List<Map<String,Object>> procedureQuery(String sql,Map<String, Object> pmap,Connection conn){
-		CallableStatement cs=buildProcedureCallableStatement(sql, pmap, conn);
+		StatementWrapper wrapper=buildProcedureCallableStatement(sql, pmap, conn);
+		CallableStatement cs=wrapper.getCallableStatement();
+		int oracleCursorIndex=wrapper.getOracleCursorIndex();
 		ResultSet rs=null;
 		try {
-			rs=cs.executeQuery();
+			if(oracleCursorIndex==-1){
+				rs=cs.executeQuery();				
+			}else{
+				rs=(ResultSet)cs.getObject(oracleCursorIndex);
+			}
 			ResultSetMetaData metadata=rs.getMetaData();
 			int columnCount=metadata.getColumnCount();
 			List<Map<String,Object>> result=new ArrayList<Map<String,Object>>();
@@ -90,7 +102,7 @@ public class ProcedureUtils {
 		}
 	}
 	
-	private static CallableStatement buildProcedureCallableStatement(String sql,Map<String, Object> pmap,Connection conn){
+	private static StatementWrapper buildProcedureCallableStatement(String sql,Map<String, Object> pmap,Connection conn){
 		try {
 			Map<String,Object> paramMap=new LinkedHashMap<String,Object>();
 			int leftParnPos=sql.indexOf("(");
@@ -99,10 +111,16 @@ public class ProcedureUtils {
 			if(leftParnPos>-1 && rightParnPos>-1){
 				paramStr=sql.substring(leftParnPos+1,rightParnPos);				
 			}
+			int oracleCursorIndex=-1,paramIndex=0;
 			String[] str=paramStr.split(",");
 			for(String param:str){
+				paramIndex++;
 				param=param.trim();
-				if(!param.startsWith(":")){
+				if(param.toLowerCase().equals("oracle")){
+					sql=sql.replaceFirst(param, "?");
+					oracleCursorIndex=paramIndex;
+					continue;
+				}else if(!param.startsWith(":")){
 					continue;
 				}
 				sql=sql.replaceFirst(param, "?");
@@ -117,9 +135,26 @@ public class ProcedureUtils {
 				cs.setObject(index, paramMap.get(name));				
 				index++;
 			}
-			return cs;
+			if(oracleCursorIndex>-1){
+				cs.registerOutParameter(oracleCursorIndex, -10);
+			}
+			return new StatementWrapper(cs,oracleCursorIndex);
 		} catch (SQLException e) {
 			throw new ReportException(e);
 		}
+	}
+}
+class StatementWrapper{
+	private CallableStatement callableStatement;
+	private int oracleCursorIndex;
+	public StatementWrapper(CallableStatement callableStatement,int oracleCursorIndex) {
+		this.callableStatement=callableStatement;
+		this.oracleCursorIndex=oracleCursorIndex;
+	}
+	public CallableStatement getCallableStatement() {
+		return callableStatement;
+	}
+	public int getOracleCursorIndex() {
+		return oracleCursorIndex;
 	}
 }
