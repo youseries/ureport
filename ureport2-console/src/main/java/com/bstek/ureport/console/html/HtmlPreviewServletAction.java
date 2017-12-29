@@ -110,6 +110,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				context.put("style", htmlReport.getStyle());
 				context.put("reportAlign", htmlReport.getReportAlign());				
 				context.put("totalPage", htmlReport.getTotalPage()); 
+				context.put("totalPageWithCol", htmlReport.getTotalPageWithCol()); 
 				context.put("pageIndex", htmlReport.getPageIndex());
 				context.put("chartDatas", convertJson(htmlReport.getChartDatas()));
 				context.put("error", false);
@@ -302,6 +303,9 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				htmlReport.setPageIndex(index);
 			}else{
 				html=htmlProducer.produce(report);				
+			}
+			if(report.getPaper().isColumnEnabled()){
+				htmlReport.setColumn(report.getPaper().getColumnCount());				
 			}
 			htmlReport.setChartDatas(report.getContext().getChartDataMap().values());			
 			htmlReport.setContent(html);

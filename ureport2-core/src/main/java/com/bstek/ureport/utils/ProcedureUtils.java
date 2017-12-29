@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -132,7 +133,21 @@ public class ProcedureUtils {
 			CallableStatement cs= conn.prepareCall(procedure);
 			int index=1;
 			for(String name:paramMap.keySet()){
-				cs.setObject(index, paramMap.get(name));				
+				Object value=paramMap.get(name);
+				if(value instanceof String){
+					cs.setString(index,(String)value);									
+				}else if(value instanceof Date){
+					Date date=(Date)value;
+					cs.setDate(index, new java.sql.Date(date.getTime()));
+				}else if(value instanceof Integer){
+					cs.setInt(index, (Integer)value);
+				}else if(value instanceof Float){
+					cs.setFloat(index, (Float)value);
+				}else if(value instanceof Double){
+					cs.setDouble(index, (Double)value);
+				}else{
+					cs.setObject(index, value);
+				}
 				index++;
 			}
 			if(oracleCursorIndex>-1){

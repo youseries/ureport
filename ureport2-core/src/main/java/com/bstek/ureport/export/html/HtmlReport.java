@@ -28,6 +28,7 @@ public class HtmlReport {
 	private String style;
 	private int totalPage;
 	private int pageIndex;
+	private int column;
 	private String reportAlign;
 	private Collection<ChartData> chartDatas;
 	private int htmlIntervalRefreshValue;
@@ -55,6 +56,21 @@ public class HtmlReport {
 	}
 	public void setPageIndex(int pageIndex) {
 		this.pageIndex = pageIndex;
+	}
+	public int getColumn() {
+		return column;
+	}
+	public void setColumn(int column) {
+		this.column = column;
+	}
+	
+	public int getTotalPageWithCol() {
+		int totalPageWithCol=totalPage / column;
+		int m=totalPage % column;
+		if(m>0){
+			totalPageWithCol++;
+		}
+		return totalPageWithCol;
 	}
 	public String getReportAlign() {
 		return reportAlign;

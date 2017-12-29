@@ -194,7 +194,6 @@ window.buildPaging=function(pageIndex,totalPage){
         window.open(url,'_self');
     });
     pageSelector.val(pageIndex);
-
     if(totalPage===1){
         return;
     }
@@ -247,7 +246,7 @@ function _refreshData(second){
         success:function(report){
             const tableContainer=$(`#_ureport_table`);
             tableContainer.empty();
-            window._totalPage=report.totalPage;
+            window._totalPage=report.totalPageWithCol;
             tableContainer.append(report.content);
             _buildChartDatas(report.chartDatas);
             buildPaging(window._currentPageIndex,window._totalPage);

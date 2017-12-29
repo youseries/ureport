@@ -86,9 +86,9 @@ ${upSearchFormHtml}
 		#end 
 		#if($pageIndex>0) 
 		<span id='pagingContainer' style="font-size:14px;margin-left:1px;color:#337ab7">
-			共<span id='totalPageLabel'>${totalPage}</span>页
+			共<span id='totalPageLabel'>${totalPageWithCol}</span>页
 			<select id="pageSelector" class="form-control" style="display:inline-block;width:inherit;font-size:13px;height:28px;margin-top:2px">
-				#foreach($index in [1..$totalPage])
+				#foreach($index in [1..$totalPageWithCol])
 				<option>${index}</option>
 				#end
 			</select>
@@ -109,10 +109,10 @@ window._server="${contextPath}/ureport";
 window.formElements=[];
 $(document).ready(function(){
 	
-	buildPaging(${pageIndex},${totalPage});
+	buildPaging(${pageIndex},${totalPageWithCol});
 	
 	#if($intervalRefreshValue>0)
-		_intervalRefresh($intervalRefreshValue,$totalPage);
+		_intervalRefresh($intervalRefreshValue,$totalPageWithCol);
 	#end
 	_buildChartDatas($chartDatas);
 	${searchFormJs}
