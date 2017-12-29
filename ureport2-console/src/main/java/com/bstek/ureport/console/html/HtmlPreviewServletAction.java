@@ -275,7 +275,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		}
 		if(file.equals(PREVIEW_KEY)){
 			Report report=null;
-			if(StringUtils.isNotBlank(pageIndex) && StringUtils.isBlank(reload)){
+			if(StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0") && StringUtils.isBlank(reload)){
 				report=CacheUtils.getReport(fullName);
 			}
 			ReportDefinition reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
@@ -288,7 +288,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}
 			htmlReport=new HtmlReport();
 			String html=null;
-			if(StringUtils.isNotBlank(pageIndex)){
+			if(StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")){
 				Context context=report.getContext();
 				int index=Integer.valueOf(pageIndex);
 				SinglePageData pageData=PageBuilder.buildSinglePageData(index, report);
@@ -315,7 +315,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
 			htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
 		}else{
-			if(StringUtils.isNotBlank(pageIndex)){
+			if(StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")){
 				int index=Integer.valueOf(pageIndex);
 				htmlReport=exportManager.exportHtml(file,req.getContextPath(),parameters,index);								
 			}else{

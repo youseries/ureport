@@ -179,6 +179,9 @@ window.buildPaging=function(pageIndex,totalPage){
     if(totalPage===0){
         return;
     }
+    if(!pageIndex){
+        return;
+    }
     if(!window._currentPageIndex){
         window._currentPageIndex=pageIndex;
     }
@@ -234,10 +237,12 @@ function _refreshData(second){
     let url=window._server+`/preview/loadData${params}`;
     const totalPage=window._totalPage;
     if(totalPage>0){
-        if(window._currentPageIndex>totalPage){
-            window._currentPageIndex=1;
+        if(window._currentPageIndex){
+            if(window._currentPageIndex>totalPage){
+                window._currentPageIndex=1;
+            }
+            url+="&_i="+window._currentPageIndex+"";
         }
-        url+="&_i="+window._currentPageIndex+"";
         $("#pageSelector").val(window._currentPageIndex);
     }
     $.ajax({
@@ -250,7 +255,9 @@ function _refreshData(second){
             tableContainer.append(report.content);
             _buildChartDatas(report.chartDatas);
             buildPaging(window._currentPageIndex,window._totalPage);
-            window._currentPageIndex++;
+            if(window._currentPageIndex){
+                window._currentPageIndex++;
+            }
             setTimeout(function(){
                 _refreshData(second);
             },second);

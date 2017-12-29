@@ -70,14 +70,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		String fileName=req.getParameter("_n");
-		if(StringUtils.isNotBlank(fileName)){
-			fileName=decode(fileName);
-			if(!fileName.toLowerCase().endsWith(".pdf")){
-				fileName=fileName+".pdf";
-			}
-		}else{
-			fileName="ureport.pdf";
-		}
+		fileName=buildDownloadFileName(file, fileName, ".pdf");
 		fileName=new String(fileName.getBytes("UTF-8"),"ISO8859-1");
 		if(forPrint){
 			resp.setContentType("application/pdf");

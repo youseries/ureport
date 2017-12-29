@@ -65,10 +65,13 @@ public class HtmlReport {
 	}
 	
 	public int getTotalPageWithCol() {
-		int totalPageWithCol=totalPage / column;
-		int m=totalPage % column;
-		if(m>0){
-			totalPageWithCol++;
+		int totalPageWithCol=totalPage;
+		if(column>0){
+			totalPageWithCol=totalPage / column;
+			int m=totalPage % column;
+			if(m>0){
+				totalPageWithCol++;
+			}			
 		}
 		return totalPageWithCol;
 	}
