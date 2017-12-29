@@ -20,7 +20,10 @@ export default class DatetimeInstance extends Instance{
         var pickerIcon=$("<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>");
         this.datePickerinputGroup.append(pickerIcon);
         this.datePickerinputGroup.datetimepicker({
-            format:this.dateFormat
+            format:this.dateFormat,
+            autoclose:1,
+            startView:2,
+            minView:2
         });
         this.element.uniqueId();
         this.id=this.element.prop("id");
@@ -31,9 +34,15 @@ export default class DatetimeInstance extends Instance{
         }
         this.dateFormat=format;
         this.datePickerinputGroup.datetimepicker('remove');
-        this.datePickerinputGroup.datetimepicker({
-            format:this.dateFormat
-        });
+        const options={
+            format:this.dateFormat,
+            autoclose:1
+        };
+        if(this.dateFormat==='yyyy-mm-dd'){
+            options.startView=2;
+            options.minView=2;
+        }
+        this.datePickerinputGroup.datetimepicker(options);
     }
     initFromJson(json){
         super.fromJson(json);
@@ -47,7 +56,7 @@ export default class DatetimeInstance extends Instance{
             label:this.label,
             labelPosition:this.labelPosition,
             bindParameter:this.bindParameter,
-            format:this.format,
+            format:this.dateFormat,
             type:DatetimeInstance.TYPE
         };
     }

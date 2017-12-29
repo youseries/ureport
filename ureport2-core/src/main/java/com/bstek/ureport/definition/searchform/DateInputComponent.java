@@ -32,8 +32,12 @@ public class DateInputComponent extends InputComponent {
 	public String initJs(RenderContext context) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("$('#"+context.buildComponentId(this)+"').datetimepicker({");
-		sb.append("format:'"+this.format+"'");
-		sb.append("");
+		sb.append("format:'"+this.format+"',");
+		sb.append("autoclose:1");
+		if(this.format.equals("yyyy-mm-dd")){		
+			sb.append(",startView:2,");
+			sb.append("minView:2");
+		}
 		sb.append("});");
 		
 		String name=getBindParameter();
