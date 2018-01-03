@@ -32,7 +32,7 @@ public class CellStyle implements Serializable{
 	private static final long serialVersionUID = 8327688051735343849L;
 	private String bgcolor;
 	private String forecolor;
-	private int fontSize=10;
+	private int fontSize;
 	private String fontFamily;
 	private String format;
 	private float lineHeight;
