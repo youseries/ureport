@@ -69,6 +69,7 @@ import com.bstek.ureport.model.Image;
 import com.bstek.ureport.model.Report;
 import com.bstek.ureport.model.Row;
 import com.bstek.ureport.utils.ImageUtils;
+import com.bstek.ureport.utils.UnitUtils;
 
 /**
  * @author Jacky.gao
@@ -330,6 +331,8 @@ public class WordProducer implements Producer{
 				int height=bufferedImage.getHeight();
 				IOUtils.closeQuietly(inputStream);
 				inputStream=ImageUtils.base64DataToInputStream(base64Data);
+				width=UnitUtils.pixelToPoint(width);
+				height=UnitUtils.pixelToPoint(height);
 				if(imageType.equals("jpeg")){
 					run.addPicture(inputStream, XWPFDocument.PICTURE_TYPE_JPEG, "ureport-"+rowNumber+"-"+columnNumber+".jpg", Units.toEMU(width), Units.toEMU(height));					
 				}else if(imageType.equals("png")){
