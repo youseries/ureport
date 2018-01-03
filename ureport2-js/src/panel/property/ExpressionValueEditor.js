@@ -13,6 +13,7 @@ export default class ExpressionValueEditor extends BaseValueEditor{
         this.context=context;
         this.container=$(`<div></div>`);
         parentContainer.append(this.container);
+        this._buildWrapCompute(this.container);
         this._buildExpand();
         this._buildFormat();
         this._buildConditionProperty();
@@ -106,6 +107,11 @@ export default class ExpressionValueEditor extends BaseValueEditor{
             this.formatEditor.val(cellStyle.format);
         }else{
             this.formatEditor.val('');
+        }
+        if(cellStyle.wrapCompute){
+            this.enableWrapComput.children('input').prop('checked',true);
+        }else{
+            this.disableWrapComput.children('input').prop('checked',true);
         }
     }
     hide(){
