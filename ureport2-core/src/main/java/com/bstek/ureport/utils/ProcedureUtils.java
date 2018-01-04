@@ -121,13 +121,12 @@ public class ProcedureUtils {
 					sql=sql.replaceFirst(param, "?");
 					oracleCursorIndex=paramIndex;
 					continue;
-				}else if(!param.startsWith(":")){
-					continue;
+				}else if(param.startsWith(":")){
+					sql=sql.replaceFirst(param, "?");
+					String paramName=param.substring(1,param.length());
+					Object paramValue=pmap.get(paramName);
+					paramMap.put(paramName, (paramValue==null ? "" : paramValue));
 				}
-				sql=sql.replaceFirst(param, "?");
-				String paramName=param.substring(1,param.length());
-				Object paramValue=pmap.get(paramName);
-				paramMap.put(paramName, (paramValue==null ? "" : paramValue));
 			}
 			String procedure="{"+sql+"}";
 			CallableStatement cs= conn.prepareCall(procedure);
