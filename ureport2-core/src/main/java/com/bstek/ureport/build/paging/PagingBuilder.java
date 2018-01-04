@@ -19,8 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bstek.ureport.build.BindData;
+import com.bstek.ureport.build.Context;
 import com.bstek.ureport.definition.PagingMode;
 import com.bstek.ureport.definition.Paper;
+import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Report;
 
 /**
@@ -37,6 +40,22 @@ public class PagingBuilder {
 		Paper paper = report.getPaper();
 		Pagination pagination=paginationMap.get(paper.getPagingMode());
 		List<Page> pages=pagination.doPaging(report);
+		computeExistPageFunctionCells(report);
 		return pages;
+	}
+	public static void computeExistPageFunctionCells(Report report) {
+		Context context=report.getContext();
+		List<Cell> existPageFunctionCells=context.getExistPageFunctionCells();
+		for(Cell cell:existPageFunctionCells){
+			List<BindData> dataList=context.buildCellData(cell);
+			if(dataList==null || dataList.size()==0){
+				continue;
+			}
+			BindData bindData=dataList.get(0);
+			cell.setData(bindData.getValue());
+			cell.setBindData(bindData.getDataList());
+			cell.doFormat();
+			cell.doDataWrapCompute(context);
+		}
 	}
 }

@@ -53,6 +53,7 @@ public class ExpressionValueCompute implements ValueCompute {
 			boolean hasPageFun=hasPageFunction(expr);
 			if(hasPageFun){
 				cell.setExistPageFunction(true);
+				context.addExistPageFunctionCells(cell);
 				return list;
 			}			
 		}

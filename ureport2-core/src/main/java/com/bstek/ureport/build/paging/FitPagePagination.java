@@ -88,6 +88,7 @@ public class FitPagePagination extends BasePagination implements Pagination {
 			}
 			rowHeight+=rowRealHeight+1;
 			pageRows.add(row);
+			row.setPageIndex(pageIndex);
 			boolean overflow=false;
 			if((i+1)<rows.size()){
 				Row nextRow=rows.get(i+1);
@@ -116,6 +117,7 @@ public class FitPagePagination extends BasePagination implements Pagination {
 			Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
 			pages.add(newPage);
 		}
+		report.getContext().setTotalPages(pages.size());
 		buildPageHeaderFooter(pages, report);
 		buildSummaryRows(summaryRows, pages);
 		return pages;

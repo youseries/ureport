@@ -33,6 +33,7 @@ public class Row extends Line{
 	 */
 	private int tempRowNumber;
 	private Band band;
+	private int pageIndex;
 	private boolean forPaging;
 	private boolean pageBreak;
 	private boolean hide;
@@ -70,6 +71,15 @@ public class Row extends Line{
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	
+	public int getPageIndex() {
+		return pageIndex;
+	}
+
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
+
 	public Band getBand() {
 		return band;
 	}

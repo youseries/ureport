@@ -50,7 +50,7 @@ public class HeaderFooterDefinition implements Serializable{
 	private Expression centerExpression;
 	@JsonIgnore
 	private Expression rightExpression;
-	public HeaderFooter buildHeaderFooter(int pageIndex,int totalPages,Context context){
+	public HeaderFooter buildHeaderFooter(int pageIndex,Context context){
 		HeaderFooter hf=new HeaderFooter();
 		hf.setBold(bold);
 		hf.setFontFamily(fontFamily);
@@ -61,7 +61,6 @@ public class HeaderFooterDefinition implements Serializable{
 		hf.setUnderline(underline);
 		hf.setMargin(margin);
 		context.setPageIndex(pageIndex);
-		context.setTotalPages(totalPages);
 		if(leftExpression!=null){
 			Object obj = buildExpression(context,leftExpression);
 			if(obj!=null){

@@ -28,7 +28,11 @@ import com.bstek.ureport.model.Cell;
 public class PageNumberFunction extends PageFunction {
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList,Context context,Cell currentCell) {
-		return context.getPageIndex();
+		if(currentCell!=null && currentCell.getRow()!=null){
+			return currentCell.getRow().getPageIndex();		
+		}else{
+			return context.getPageIndex();
+		}
 	}
 	@Override
 	public String name() {

@@ -55,6 +55,7 @@ public class Context {
 	private Map<String,Object> parameters;
 	private HideRowColumnBuilder hideRowColumnBuilder;
 	private ElCalculator elCalculator=new ElCalculator();
+	private List<Cell> existPageFunctionCells=new ArrayList<Cell>();
 	private Map<String,List<Cell>> unprocessedCellsMap = new HashMap<String,List<Cell>>();
 	private Map<Row,Map<Column,Cell>> blankCellsMap=new HashMap<Row,Map<Column,Cell>>();
 	private Map<Row,Integer> fillBlankRowsMap=new HashMap<Row,Integer>();
@@ -294,6 +295,15 @@ public class Context {
 	public List<Row> getCurrentPageRows() {
 		return currentPageRows;
 	}
+	
+	public void addExistPageFunctionCells(Cell cell) {
+		existPageFunctionCells.add(cell);
+	}
+	
+	public List<Cell> getExistPageFunctionCells() {
+		return existPageFunctionCells;
+	}
+	
 	public int getTotalPages() {
 		return totalPages;
 	}

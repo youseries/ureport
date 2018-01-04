@@ -34,6 +34,7 @@ import com.bstek.ureport.build.cell.down.DownExpandBuilder;
 import com.bstek.ureport.build.cell.right.RightExpandBuilder;
 import com.bstek.ureport.build.paging.BasePagination;
 import com.bstek.ureport.build.paging.Page;
+import com.bstek.ureport.build.paging.PagingBuilder;
 import com.bstek.ureport.definition.Band;
 import com.bstek.ureport.definition.Expand;
 import com.bstek.ureport.definition.Orientation;
@@ -367,6 +368,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				}
 				rowHeight+=rowRealHeight+1;
 				pageRows.add(row);
+				row.setPageIndex(pageIndex);
 				boolean overflow=false;
 				if((i+1)<rows.size()){
 					Row nextRow=rows.get(i+1);
@@ -389,6 +391,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
 				pages.add(newPage);
 			}
+			report.getContext().setTotalPages(pages.size());
 			buildPageHeaderFooter(pages, report);
 		}else{
 			int fixRows=paper.getFixRows()-headerRows.size()-footerRows.size();
@@ -428,6 +431,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 					}
 					continue;
 				}
+				row.setPageIndex(pageIndex);
 				pageRows.add(row);
 				if((pageRows.size()+footerRows.size()) >= fixRows){
 					Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
@@ -440,9 +444,11 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
 				pages.add(newPage);
 			}
+			report.getContext().setTotalPages(pages.size());
 			buildPageHeaderFooter(pages, report);
 		}
 		buildSummaryRows(summaryRows, pages);
+		PagingBuilder.computeExistPageFunctionCells(report);
 		report.setPages(pages);
 	}
 	

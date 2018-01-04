@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.definition.HeaderFooterDefinition;
 import com.bstek.ureport.model.Cell;
@@ -39,6 +38,7 @@ public abstract class BasePagination {
 		int summaryRowSize=summaryRows.size()-1;
 		for(int i=summaryRowSize;i>-1;i--){
 			Row row=summaryRows.get(i);
+			row.setPageIndex(pages.size());
 			lastPageRows.add(row);
 		}
 	}
@@ -63,7 +63,6 @@ public abstract class BasePagination {
 				if(cell==null){
 					continue;
 				}
-				buildExistPageFunctionCell(context, cell);
 				int rowSpan=cell.getPageRowSpan();
 				if(rowSpan==0){
 					continue;
@@ -112,7 +111,9 @@ public abstract class BasePagination {
 		int headerRowSize=headerRows.size()-1;
 		for(int i=headerRowSize;i>-1;i--){
 			Row row=headerRows.get(i);
+			row.setPageIndex(pageIndex);
 			Row newRow=duplicateRepeateRow(row, context);
+			newRow.setPageIndex(pageIndex);
 			rows.add(0,newRow);
 			Map<Column,Cell> colMap=rowColCellsMap.get(newRow);
 			if(colMap==null){
@@ -123,7 +124,6 @@ public abstract class BasePagination {
 				if(cell==null){
 					continue;
 				}
-				buildExistPageFunctionCell(context, cell);
 			}
 		}
 		if(pageIndex==1){
@@ -140,12 +140,12 @@ public abstract class BasePagination {
 					if(cell==null){
 						continue;
 					}
-					buildExistPageFunctionCell(context, cell);
 				}
 			}
 		}
 		for(Row row:footerRows){
 			Row newRow=duplicateRepeateRow(row, context);
+			newRow.setPageIndex(pageIndex);
 			rows.add(newRow);
 			Map<Column,Cell> colMap=rowColCellsMap.get(newRow);
 			if(colMap==null){
@@ -156,7 +156,6 @@ public abstract class BasePagination {
 				if(cell==null){
 					continue;
 				}
-				buildExistPageFunctionCell(context, cell);
 			}
 		}
 		Page page=new Page(rows,columns);
@@ -177,6 +176,7 @@ public abstract class BasePagination {
 
 	private Row duplicateRepeateRow(Row row,Context context){
 		Row newRow=row.newRow();
+		newRow.setPageIndex(row.getPageIndex());
 		Map<Row, Map<Column, Cell>> cellMap=context.getReport().getRowColCellMap();
 		Map<Column, Cell> map=cellMap.get(row);
 		if(map==null){
@@ -197,25 +197,13 @@ public abstract class BasePagination {
 			newCell.setCustomCellStyle(cell.getCustomCellStyle());
 			newCell.setFormatData(cell.getFormatData());
 			newCell.setExistPageFunction(cell.isExistPageFunction());
+			if(cell.isExistPageFunction()){
+				context.addExistPageFunctionCells(newCell);				
+			}
 			newMap.put(col, newCell);
 		}
 		return newRow;
 	}
-	
-	private void buildExistPageFunctionCell(Context context, Cell cell) {
-		if(cell.isExistPageFunction()){
-			List<BindData> dataList=context.buildCellData(cell);
-			if(dataList==null || dataList.size()==0){
-				return;
-			}
-			BindData bindData=dataList.get(0);
-			cell.setData(bindData.getValue());
-			cell.setBindData(bindData.getDataList());
-			cell.doFormat();
-			cell.doDataWrapCompute(context);
-		}
-	}
-	
 	protected void buildPageHeaderFooter(List<Page> pages,Report report){
 		int totalPages=pages.size();
 		for(int i=0;i<totalPages;i++){
@@ -223,12 +211,12 @@ public abstract class BasePagination {
 			HeaderFooterDefinition headerDef=report.getHeader();
 			int pageIndex=i+1;
 			if(headerDef!=null){
-				HeaderFooter hf=headerDef.buildHeaderFooter(pageIndex, totalPages, report.getContext());
+				HeaderFooter hf=headerDef.buildHeaderFooter(pageIndex, report.getContext());
 				page.setHeader(hf);
 			}
 			HeaderFooterDefinition footerDef=report.getFooter();
 			if(footerDef!=null){
-				HeaderFooter hf=footerDef.buildHeaderFooter(pageIndex, totalPages, report.getContext());
+				HeaderFooter hf=footerDef.buildHeaderFooter(pageIndex, report.getContext());
 				page.setFooter(hf);
 			}
 		}
