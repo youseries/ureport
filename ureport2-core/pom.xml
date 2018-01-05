@@ -103,6 +103,7 @@
 		<connection>scm:git:git://github.com/youseries/ureport.git</connection>
 		<developerConnection>scm:git:git@github.com:youseries/ureport.git</developerConnection>
 		<url>https://github.com/youseries/ureport</url>
+    <tag>ureport2-core-2.2.4</tag>
   </scm>
 	<organization>
 		<name>Bstek</name>
