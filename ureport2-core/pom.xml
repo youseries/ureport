@@ -110,4 +110,7 @@
 	</organization>	
 	<name>UReport2 Core Project</name>
 	<url>https://github.com/youseries/ureport/tree/master/ureport2-core</url>
+	<properties>
+		<project.scm.id>ossrh</project.scm.id>
+	</properties>
 </project>
