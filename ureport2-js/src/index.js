@@ -21,4 +21,36 @@ import buildLocal from  './i18n/i18n.js';
 $(document).ready(function(){
     buildLocal();
     const designer=new UReportDesigner("container");
+    let prevTop=0;
+    $(window).scroll(function(){
+        const top=$(window).scrollTop();
+        const toolbar=$('.ud-toolbar');
+        if(top>0){
+            toolbar.css({
+                "position":"absolute",
+                "top":top+"px",
+                "z-index":5
+            });
+            $('.ht_clone_top').css({
+                "top":'40px'
+            });
+        }else{
+            toolbar.css({
+                position:"relative",
+                top:"auto"
+            });
+            $('.ht_clone_top').css({
+                "top":0
+            });
+        }
+        const propPanel=$('.ud-property-panel');
+        let orgTop=parseInt(propPanel.css('top'));
+        let newTop=parseInt(orgTop+(top-prevTop)+0.5)+"px";
+        propPanel.css('top',newTop);
+        const printLine=$('.ureport-right-hr-for-print');
+        orgTop=parseInt(printLine.css('top'));
+        newTop=parseInt(orgTop+(top-prevTop)+0.5)+"px";
+        printLine.css('top',newTop);
+        prevTop=top;
+    });
 });
