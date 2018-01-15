@@ -275,11 +275,16 @@ function _refreshData(second){
             },second);
         },
         error:function(response){
+            const tableContainer=$(`#_ureport_table`);
+            tableContainer.empty();
             if(response && response.responseText){
-                alert("服务端错误："+response.responseText+"");
+                tableContainer.append("<h3 style='color: #d30e00;'>服务端错误："+response.responseText+"</h3>");
             }else{
-                alert('加载数据失败！');
+                tableContainer.append("<h3 style='color: #d30e00;'>加载数据失败</h3>");
             }
+            setTimeout(function(){
+                _refreshData(second);
+            },second);
         }
     });
 };
@@ -296,6 +301,9 @@ window._buildChartDatas=function(chartData){
 };
 window._buildChart=function(canvasId,chartJson){
     const ctx=document.getElementById(canvasId);
+    if(!ctx){
+        return;
+    }
     let options=chartJson.options;
     if(!options){
         options={};
