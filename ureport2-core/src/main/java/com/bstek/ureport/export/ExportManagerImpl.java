@@ -20,6 +20,7 @@ import java.util.Map;
 
 import com.bstek.ureport.build.paging.Page;
 import com.bstek.ureport.cache.CacheUtils;
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.definition.ReportDefinition;
 import com.bstek.ureport.export.excel.high.ExcelProducer;
 import com.bstek.ureport.export.excel.low.Excel97Producer;
@@ -44,8 +45,10 @@ public class ExportManagerImpl implements ExportManager {
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 		Report report=reportRender.render(reportDefinition, parameters);
-		String fullName=file+parameters.toString();
-		CacheUtils.storeReport(fullName, report);
+		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
+		if(chartMap.size()>0){
+			CacheUtils.storeChartDataMap(chartMap);				
+		}
 		HtmlReport htmlReport=new HtmlReport();
 		String content=htmlProducer.produce(report);
 		htmlReport.setContent(content);
@@ -63,10 +66,10 @@ public class ExportManagerImpl implements ExportManager {
 	@Override
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters, int pageIndex) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			report = reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters);
+		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
+		if(chartMap.size()>0){
+			CacheUtils.storeChartDataMap(chartMap);				
 		}
 		SinglePageData pageData=PageBuilder.buildSinglePageData(pageIndex, report);
 		List<Page> pages=pageData.getPages();
@@ -94,36 +97,24 @@ public class ExportManagerImpl implements ExportManager {
 	public void exportPdf(ExportConfigure config) {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report = reportRender.render(reportDefinition, parameters);
-		}
+		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+		Report report=reportRender.render(reportDefinition, parameters);
 		pdfProducer.produce(report, config.getOutputStream());
 	}
 	@Override
 	public void exportWord(ExportConfigure config) {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report = reportRender.render(reportDefinition, parameters);
-		}
+		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+		Report report=reportRender.render(reportDefinition, parameters);
 		wordProducer.produce(report, config.getOutputStream());
 	}
 	@Override
 	public void exportExcel(ExportConfigure config) {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report = reportRender.render(reportDefinition, parameters);
-		}
+		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+		Report report=reportRender.render(reportDefinition, parameters);
 		excelProducer.produce(report, config.getOutputStream());
 	}
 	
@@ -131,12 +122,8 @@ public class ExportManagerImpl implements ExportManager {
 	public void exportExcel97(ExportConfigure config) {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report = reportRender.render(reportDefinition, parameters);
-		}
+		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+		Report report=reportRender.render(reportDefinition, parameters);
 		excel97Producer.produce(report, config.getOutputStream());
 	}
 	
@@ -144,24 +131,16 @@ public class ExportManagerImpl implements ExportManager {
 	public void exportExcelWithPaging(ExportConfigure config) {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report = reportRender.render(reportDefinition, parameters);
-		}
+		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+		Report report=reportRender.render(reportDefinition, parameters);
 		excelProducer.produceWithPaging(report, config.getOutputStream());
 	}
 	@Override
 	public void exportExcel97WithPaging(ExportConfigure config) {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report = reportRender.render(reportDefinition, parameters);
-		}
+		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+		Report report=reportRender.render(reportDefinition, parameters);
 		excel97Producer.produceWithPaging(report, config.getOutputStream());
 	}
 	
@@ -169,12 +148,8 @@ public class ExportManagerImpl implements ExportManager {
 	public void exportExcelWithPagingSheet(ExportConfigure config) {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report = reportRender.render(reportDefinition, parameters);
-		}
+		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+		Report report=reportRender.render(reportDefinition, parameters);
 		excelProducer.produceWithSheet(report, config.getOutputStream());
 	}
 	
@@ -182,12 +157,8 @@ public class ExportManagerImpl implements ExportManager {
 	public void exportExcel97WithPagingSheet(ExportConfigure config) {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
-		String fullName=file+parameters.toString();
-		Report report=CacheUtils.getReport(fullName);
-		if (report == null) {
-			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report = reportRender.render(reportDefinition, parameters);
-		}
+		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
+		Report report=reportRender.render(reportDefinition, parameters);
 		excel97Producer.produceWithSheet(report, config.getOutputStream());
 	}
 	

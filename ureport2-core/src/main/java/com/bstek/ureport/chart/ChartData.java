@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.bstek.ureport.chart;
 
-import java.util.UUID;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.bstek.ureport.cache.CacheUtils;
+import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -32,9 +33,9 @@ public class ChartData {
 	private int width;
 	@JsonIgnore
 	private int height;
-	public ChartData(String json) {
+	public ChartData(String json,Cell cell) {
 		this.json=json;
-		this.id=UUID.randomUUID().toString();
+		this.id=cell.getName();
 	}
 	public String getJson() {
 		return json;
@@ -44,6 +45,13 @@ public class ChartData {
 	}
 	
 	public String retriveBase64Data(){
+		if(base64Data!=null){
+			return base64Data;
+		}
+		ChartData data=CacheUtils.getChartData(id);
+		if(data!=null){
+			return data.retriveBase64Data();
+		}
 		return base64Data;
 	}
 	public int getWidth() {

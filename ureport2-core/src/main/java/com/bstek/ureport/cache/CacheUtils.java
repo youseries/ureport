@@ -16,13 +16,14 @@
 package com.bstek.ureport.cache;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.bstek.ureport.chart.ChartData;
 import com.bstek.ureport.definition.ReportDefinition;
-import com.bstek.ureport.model.Report;
 
 /**
  * @author Jacky.gao
@@ -31,16 +32,34 @@ import com.bstek.ureport.model.Report;
 public class CacheUtils implements ApplicationContextAware{
 	private static ReportCache reportCache;
 	private static ReportDefinitionCache reportDefinitionCache;
+	private static String CHART_DATA_key="_chart_data_";
 	
-	public static Report getReport(String file){
+	@SuppressWarnings("unchecked")
+	public static ChartData getChartData(String chartId){
+		String key=CHART_DATA_key;
 		if(reportCache!=null){
-			return reportCache.getReport(file);
+			Map<String, ChartData> chartDataMap = (Map<String, ChartData>)reportCache.getObject(key);
+			if(chartDataMap!=null){
+				return chartDataMap.get(chartId);				
+			}
 		}
 		return null;
 	}
-	public static void storeReport(String file,Report report){
+	
+	public static void storeChartDataMap(Map<String, ChartData> map){
+		String key=CHART_DATA_key;
+		reportCache.storeObject(key, map);
+	}
+	
+	public static Object getObject(String file){
 		if(reportCache!=null){
-			reportCache.storeReport(file, report);
+			return reportCache.getObject(file);
+		}
+		return null;
+	}
+	public static void storeObject(String file,Object obj){
+		if(reportCache!=null){
+			reportCache.storeObject(file, obj);
 		}
 	}
 	

@@ -24,33 +24,32 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.bstek.ureport.cache.ReportCache;
 import com.bstek.ureport.console.RequestHolder;
-import com.bstek.ureport.model.Report;
 
 /**
  * @author Jacky.gao
  * @since 2017年3月8日
  */
 public class HttpSessionReportCache implements ReportCache {
-	private Map<String,ReportMapObject> sessionReportMap=new HashMap<String,ReportMapObject>();
+	private Map<String,ObjectMap> sessionReportMap=new HashMap<String,ObjectMap>();
 	private boolean disabled;
 	@Override
-	public Report getReport(String file) {
+	public Object getObject(String file) {
 		HttpServletRequest req=RequestHolder.getRequest();
 		if(req==null){
 			return null;
 		}
-		ReportMapObject reportMapObject = getReportMap(req);
-		return reportMapObject.getReport(file);
+		ObjectMap objMap = getObjectMap(req);
+		return objMap.get(file);
 	}
 
 	@Override
-	public void storeReport(String file, Report report) {
+	public void storeObject(String file, Object object) {
 		HttpServletRequest req=RequestHolder.getRequest();
 		if(req==null){
 			return;
 		}
-		ReportMapObject reportMapObject = getReportMap(req);
-		reportMapObject.put(file, report);
+		ObjectMap map = getObjectMap(req);
+		map.put(file, object);
 	}
 	
 	@Override
@@ -62,10 +61,10 @@ public class HttpSessionReportCache implements ReportCache {
 		this.disabled = disabled;
 	}
 
-	private ReportMapObject getReportMap(HttpServletRequest req) {
+	private ObjectMap getObjectMap(HttpServletRequest req) {
 		List<String> expiredList=new ArrayList<String>();
 		for(String key:sessionReportMap.keySet()){
-			ReportMapObject reportObj=sessionReportMap.get(key);
+			ObjectMap reportObj=sessionReportMap.get(key);
 			if(reportObj.isExpired()){
 				expiredList.add(key);
 			}
@@ -74,13 +73,13 @@ public class HttpSessionReportCache implements ReportCache {
 			sessionReportMap.remove(key);
 		}
 		String sessionId=req.getSession().getId();
-		ReportMapObject reportObject=sessionReportMap.get(sessionId);
-		if(reportObject!=null){
-			return reportObject;
+		ObjectMap obj=sessionReportMap.get(sessionId);
+		if(obj!=null){
+			return obj;
 		}else{
-			ReportMapObject reportMapObject=new ReportMapObject();
-			sessionReportMap.put(sessionId, reportMapObject);
-			return reportMapObject;
+			ObjectMap objMap=new ObjectMap();
+			sessionReportMap.put(sessionId, objMap);
+			return objMap;
 		}
 	}
 }

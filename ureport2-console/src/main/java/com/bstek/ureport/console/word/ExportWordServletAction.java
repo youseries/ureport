@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 
 import com.bstek.ureport.build.ReportBuilder;
-import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.console.BaseServletAction;
 import com.bstek.ureport.console.cache.TempObjectCache;
 import com.bstek.ureport.console.exception.ReportDesignException;
@@ -69,17 +68,13 @@ public class ExportWordServletAction extends BaseServletAction {
 		resp.setContentType("application/octet-stream;charset=ISO8859-1");
 		resp.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
 		Map<String, Object> parameters = buildParameters(req);
-		String fullName=file+parameters.toString();
 		OutputStream outputStream=resp.getOutputStream();
 		if(file.equals(PREVIEW_KEY)){
-			Report report=CacheUtils.getReport(fullName);
-			if(report==null){
-				ReportDefinition reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
-				if(reportDefinition==null){
-					throw new ReportDesignException("Report data has expired,can not do export word.");
-				}
-				report=reportBuilder.buildReport(reportDefinition, parameters);	
+			ReportDefinition reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
+			if(reportDefinition==null){
+				throw new ReportDesignException("Report data has expired,can not do export word.");
 			}
+			Report report=reportBuilder.buildReport(reportDefinition, parameters);	
 			wordProducer.produce(report, outputStream);
 		}else{
 			ExportConfigure configure=new ExportConfigureImpl(file,parameters,outputStream);

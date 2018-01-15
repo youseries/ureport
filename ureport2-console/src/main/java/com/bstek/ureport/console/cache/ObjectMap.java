@@ -26,7 +26,7 @@ import java.util.Map.Entry;
  */
 public class ObjectMap {
 	private final int MAX_ITEM=3;
-	private static final int MILLISECOND=1200000;//default expired time is 20 minutes.
+	private static final int MILLISECOND=300000;//default expired time is 5 minutes.
 	private Map<String, Object> map=new LinkedHashMap<String, Object>();
 	private long start;
 	public ObjectMap() {

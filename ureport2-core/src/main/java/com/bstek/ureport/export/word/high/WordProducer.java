@@ -323,27 +323,29 @@ public class WordProducer implements Producer{
 				}
 			}
 			String base64Data=img.getBase64Data();
-			InputStream inputStream=null;
-			try{
-				inputStream=ImageUtils.base64DataToInputStream(base64Data);
-				BufferedImage bufferedImage=ImageIO.read(inputStream);
-				int width=bufferedImage.getWidth();
-				int height=bufferedImage.getHeight();
-				IOUtils.closeQuietly(inputStream);
-				inputStream=ImageUtils.base64DataToInputStream(base64Data);
-				width=UnitUtils.pixelToPoint(width);
-				height=UnitUtils.pixelToPoint(height);
-				if(imageType.equals("jpeg")){
-					run.addPicture(inputStream, XWPFDocument.PICTURE_TYPE_JPEG, "ureport-"+rowNumber+"-"+columnNumber+".jpg", Units.toEMU(width), Units.toEMU(height));					
-				}else if(imageType.equals("png")){
-					run.addPicture(inputStream, XWPFDocument.PICTURE_TYPE_PNG, "ureport-"+rowNumber+"-"+columnNumber+".png", Units.toEMU(width), Units.toEMU(height));					
-				}else if(imageType.equals("gif")){
-					run.addPicture(inputStream, XWPFDocument.PICTURE_TYPE_GIF, "ureport-"+rowNumber+"-"+columnNumber+".gif", Units.toEMU(width), Units.toEMU(height));					
+			if(StringUtils.isNotBlank(base64Data)){
+				InputStream inputStream=null;
+				try{
+					inputStream=ImageUtils.base64DataToInputStream(base64Data);
+					BufferedImage bufferedImage=ImageIO.read(inputStream);
+					int width=bufferedImage.getWidth();
+					int height=bufferedImage.getHeight();
+					IOUtils.closeQuietly(inputStream);
+					inputStream=ImageUtils.base64DataToInputStream(base64Data);
+					width=UnitUtils.pixelToPoint(width);
+					height=UnitUtils.pixelToPoint(height);
+					if(imageType.equals("jpeg")){
+						run.addPicture(inputStream, XWPFDocument.PICTURE_TYPE_JPEG, "ureport-"+rowNumber+"-"+columnNumber+".jpg", Units.toEMU(width), Units.toEMU(height));					
+					}else if(imageType.equals("png")){
+						run.addPicture(inputStream, XWPFDocument.PICTURE_TYPE_PNG, "ureport-"+rowNumber+"-"+columnNumber+".png", Units.toEMU(width), Units.toEMU(height));					
+					}else if(imageType.equals("gif")){
+						run.addPicture(inputStream, XWPFDocument.PICTURE_TYPE_GIF, "ureport-"+rowNumber+"-"+columnNumber+".gif", Units.toEMU(width), Units.toEMU(height));					
+					}
+				}catch(Exception ex){
+					throw new ReportComputeException(ex);
+				}finally{
+					IOUtils.closeQuietly(inputStream);
 				}
-			}catch(Exception ex){
-				throw new ReportComputeException(ex);
-			}finally{
-				IOUtils.closeQuietly(inputStream);
 			}
 		}else if(value instanceof Date){
 			Date date=(Date)value;
