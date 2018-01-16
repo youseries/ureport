@@ -75,10 +75,12 @@ export default class BarChartValueEditor extends CategoryChartValueEditor{
         this.seriesTextEditor.val(dataset.seriesText);
         this.valuePropertySelect.val(dataset.valueProperty);
         this.aggregateSelect.val(dataset.collectType);
-        if(dataset.seriesType==='text'){
+        if(dataset.seriesType==='property'){
             this.propertySeriesRadio.children('input').attr('checked',true);
+            this.propertySeriesRadio.children('input').trigger('click');
         }else{
             this.textSeriesRadio.children('input').attr('checked',true);
+            this.textSeriesRadio.children('input').trigger('click');
         }
         this.formatEditor.val(dataset.format);
 
