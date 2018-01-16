@@ -60,7 +60,9 @@ public class CellExpression extends BaseExpression {
 	}
 	
 	public ExpressionData<?> computePageCells(Cell cell,Cell currentCell,Context context) {
-		List<Row> pageRows=context.getCurrentPageRows();
+		int pageIndex=cell.getRow().getPageIndex();
+		if(pageIndex==0)pageIndex=1;
+		List<Row> pageRows=context.getCurrentPageRows(pageIndex);
 		List<Object> list=new ArrayList<Object>();
 		Map<Row, Map<Column, Cell>> cellMap=context.getReport().getRowColCellMap();
 		List<Column> columns=context.getReport().getColumns();
@@ -81,7 +83,9 @@ public class CellExpression extends BaseExpression {
 	}
 	
 	protected List<Cell> fetchPageCells(Cell cell,Cell currentCell,Context context){
-		List<Row> pageRows=context.getCurrentPageRows();
+		int pageIndex=cell.getRow().getPageIndex();
+		if(pageIndex==0)pageIndex=1;
+		List<Row> pageRows=context.getCurrentPageRows(pageIndex);
 		Map<Row, Map<Column, Cell>> cellMap=context.getReport().getRowColCellMap();
 		List<Column> columns=context.getReport().getColumns();
 		List<Cell> list=new ArrayList<Cell>();

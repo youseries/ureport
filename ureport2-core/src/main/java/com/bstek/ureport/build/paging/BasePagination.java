@@ -49,7 +49,7 @@ public abstract class BasePagination {
 		List<Column> columns=report.getColumns();
 		Context context=report.getContext();
 		context.setPageIndex(pageIndex);
-		context.setCurrentPageRows(rows);
+		context.setCurrentPageRows(pageIndex,rows);
 		Map<Row, Map<Column, Cell>> rowColCellsMap=report.getRowColCellMap();
 		List<Row> reportRows=report.getRows();
 		for(int i=0;i<rows.size();i++){

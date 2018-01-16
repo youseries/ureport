@@ -29,7 +29,9 @@ public class PageRowsFunction extends PageFunction {
 
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
-		return context.getCurrentPageRows().size();
+		int pageIndex=currentCell.getRow().getPageIndex();
+		if(pageIndex==0)pageIndex=1;
+		return context.getCurrentPageRows(pageIndex).size();
 	}
 
 	@Override

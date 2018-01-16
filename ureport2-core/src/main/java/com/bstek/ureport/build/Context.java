@@ -48,7 +48,7 @@ public class Context {
 	private int pageIndex;
 	private int totalPages;
 	private boolean doPaging;
-	private List<Row> currentPageRows;
+	private Map<Integer,List<Row>> currentPageRowsMap=new HashMap<Integer,List<Row>>();
 	private Map<String,Dataset> datasetMap;
 	private ApplicationContext applicationContext;
 	private ReportBuilder reportBuilder;
@@ -289,11 +289,11 @@ public class Context {
 	public void setPageIndex(int pageIndex) {
 		this.pageIndex = pageIndex;
 	}
-	public void setCurrentPageRows(List<Row> currentPageRows) {
-		this.currentPageRows = currentPageRows;
+	public void setCurrentPageRows(int pageIndex,List<Row> currentPageRows) {
+		currentPageRowsMap.put(pageIndex, currentPageRows);
 	}
-	public List<Row> getCurrentPageRows() {
-		return currentPageRows;
+	public List<Row> getCurrentPageRows(int pageIndex) {
+		return currentPageRowsMap.get(pageIndex);
 	}
 	
 	public void addExistPageFunctionCells(Cell cell) {
