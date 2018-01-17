@@ -35,9 +35,7 @@ public abstract class BasePagination {
 	protected void buildSummaryRows(List<Row> summaryRows,List<Page> pages){
 		Page lastPage=pages.get(pages.size()-1);
 		List<Row> lastPageRows=lastPage.getRows();
-		int summaryRowSize=summaryRows.size()-1;
-		for(int i=summaryRowSize;i>-1;i--){
-			Row row=summaryRows.get(i);
+		for(Row row:summaryRows){
 			row.setPageIndex(pages.size());
 			lastPageRows.add(row);
 		}

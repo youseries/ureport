@@ -36,10 +36,9 @@ export default class Context{
     adjustDelRowHeaders(row){
         let targetHeader=null;
         for(let header of this.rowHeaders){
-            if(header.rowNumber>row){
-                header.rowNumber-=1;
-            }else if(header.rowNumber===row){
+            if(header.rowNumber===row){
                 targetHeader=header;
+                break;
             }
         }
         if(targetHeader){
