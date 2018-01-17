@@ -433,7 +433,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				}
 				row.setPageIndex(pageIndex);
 				pageRows.add(row);
-				if((pageRows.size()+footerRows.size()) >= fixRows){
+				if(pageRows.size() >= fixRows){
 					Page newPage=buildPage(pageRows,pageRepeatHeaders,pageRepeatFooters,titleRows,pageIndex,report);
 					pageIndex++;
 					pages.add(newPage);
