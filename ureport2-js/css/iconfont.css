@@ -24,6 +24,8 @@
 
 .ureport-crosstab:before { content: "\e60b"; }
 
+.ureport-subreport:before { content: "\e64f"; }
+
 .ureport-barcode:before { content: "\e6f8"; }
 
 .ureport-underline:before { content: "\e8ab"; }
@@ -59,6 +61,8 @@
 .ureport-bubble:before { content: "\e6b0"; }
 
 .ureport-x-xlsx:before { content: "\e690"; }
+
+.ureport-copy:before { content: "\e62f"; }
 
 .ureport-pie:before { content: "\e602"; }
 
@@ -108,11 +112,15 @@
 
 .ureport-undo:before { content: "\e74a"; }
 
+.ureport-title:before { content: "\e712"; }
+
 .ureport-no-border:before { content: "\e600"; }
 
 .ureport-aligncenter:before { content: "\e888"; }
 
 .ureport-word:before { content: "\e605"; }
+
+.ureport-summary:before { content: "\e749"; }
 
 .ureport-doughnut:before { content: "\e88c"; }
 
@@ -159,4 +167,6 @@
 .ureport-width:before { content: "\e611"; }
 
 .ureport-header-repeat:before { content: "\e696"; }
+
+.ureport-paste:before { content: "\e612"; }
 

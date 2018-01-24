@@ -5,6 +5,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: {
         designer:'./src/index.js',
+        searchform:'./src/form/index.js',
         preview:'./src/preview.js'
     },
     output: {
