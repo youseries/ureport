@@ -116,7 +116,7 @@ export default class UReportDesigner{
     }
 
     buildTools(context){
-        const toolbar=$(`<div class="btn-group ud-toolbar"></div>`);
+        const toolbar=$(`<div class="btn-group ud-toolbar top-toolbar"></div>`);
         this.container.prepend(toolbar);
         this.tools=[];
         this.tools.push(new PreviewTool(context));

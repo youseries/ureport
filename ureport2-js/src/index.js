@@ -24,7 +24,7 @@ $(document).ready(function(){
     let prevTop=0;
     $(window).scroll(function(){
         const top=$(window).scrollTop();
-        const toolbar=$('.ud-toolbar');
+        const toolbar=$('.top-toolbar');
         if(top>0){
             toolbar.css({
                 "position":"absolute",
