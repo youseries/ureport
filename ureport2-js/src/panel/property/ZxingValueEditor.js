@@ -227,7 +227,7 @@ export default class ZxingValueEditor extends BaseValueEditor{
         }else{
             this.expressionEditorGroup.show();
             this.textEditorGroup.hide();
-            this.codeMirror.setValue(cellDef.value.value || '');
+            this.codeMirror.setValue(cellDef.value.expression.expr || '');
             this.expandGroup.show();
         }
         if(cellDef.value.category==='qrcode'){
