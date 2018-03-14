@@ -87,7 +87,11 @@ public class FontBuilder implements ApplicationContextAware{
 		}
 		String fontPath=fontPathMap.get(fontName);
 		if(fontPath==null){
-			return null;
+			fontName="宋体";
+			fontPath=fontPathMap.get(fontName);
+			if(fontPath==null){
+				return null;				
+			}
 		}
 		InputStream inputStream=null;
 		try {
