@@ -17,11 +17,11 @@ package com.bstek.ureport.definition;
 
 import java.awt.Font;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import com.bstek.ureport.Utils;
+import com.bstek.ureport.export.pdf.font.FontBuilder;
 
 
 /**
@@ -192,10 +192,11 @@ public class CellStyle implements Serializable{
 			}else if(italic!=null && italic){
 				fontStyle=Font.ITALIC;							
 			}
-			double size=fontSize * 1.1;
-			BigDecimal bigData=Utils.toBigDecimal(size);
-			int s=bigData.setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
-			this.font=new Font(fontFamily,fontStyle,s);
+			String fontName=fontFamily;
+			if(StringUtils.isBlank(fontName)){
+				fontName="宋体";
+			}
+			this.font=FontBuilder.getAwtFont(fontName, fontStyle, new Float(fontSize));
 		}
 		return this.font;
 	}
