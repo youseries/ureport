@@ -49,7 +49,7 @@ public enum DataType {
 			if(obj instanceof Float){
 				return (Float)obj;
 			}else{
-				return Utils.toBigDecimal(obj).floatValue();
+				return Utils.toBigDecimal(obj).doubleValue();
 			}
 		case Integer:
 			if(obj.toString().equals("")){
