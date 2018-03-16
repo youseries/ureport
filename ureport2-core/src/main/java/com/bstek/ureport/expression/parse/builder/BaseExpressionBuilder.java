@@ -73,18 +73,21 @@ public abstract class BaseExpressionBuilder implements ExpressionBuilder{
 		List<ConditionContext> conditionContextList=conditionsContext.condition();
 		List<JoinContext> joins=conditionsContext.join();
 		BaseCondition condition=null;
+		BaseCondition topCondition=null;
 		int opIndex=0;
 		for(ConditionContext conditionCtx:conditionContextList){
 			if(condition==null){
 				condition=parseCondition(conditionCtx);
+				topCondition=condition;
 			}else{
 				BaseCondition nextCondition=parseCondition(conditionCtx);
 				condition.setNextCondition(nextCondition);
 				condition.setJoin(Join.parse(joins.get(opIndex).getText()));
 				opIndex++;
+				condition=nextCondition;
 			}
 		}
-		return condition;
+		return topCondition;
 	}
 	private BaseCondition parseCondition(ConditionContext context){
 		if(context instanceof ExprConditionContext){
