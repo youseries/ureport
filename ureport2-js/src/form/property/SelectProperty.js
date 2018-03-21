@@ -74,6 +74,26 @@ export default class SelectProperty extends Property{
             valueSelect.append(`<option>${field.name}</option>`);
             targetField=field.name;
         }
+        datasetSelect.change(function () {
+            const dsName=$(this).val();
+            if(!dsName){
+                return;
+            }
+            editor.dataset=dsName;
+            labelSelect.empty();
+            valueSelect.empty();
+            fields=formBuilder.datasetMap.get(dsName);
+            if(!fields)fields=[];
+            for(let field of fields){
+                labelSelect.append(`<option>${field.name}</option>`);
+                valueSelect.append(`<option>${field.name}</option>`);
+                targetField=field.name;
+            }
+            editor.labelField=targetField;
+            editor.valueField=targetField;
+            labelSelect.val(targetField);
+            valueSelect.val(targetField);
+        });
         if(editor.labelField){
             targetField=editor.labelField;
         }else{
