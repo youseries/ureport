@@ -165,6 +165,7 @@ public class DesignerServletAction extends RenderPageServletAction {
 		String file=req.getParameter("file");
 		file=ReportUtils.decodeFileName(file);
 		String content=req.getParameter("content");
+		content=decode(content);
 		ReportProvider targetReportProvider=null;
 		for(ReportProvider provider:reportProviders){
 			if(file.startsWith(provider.getPrefix())){
