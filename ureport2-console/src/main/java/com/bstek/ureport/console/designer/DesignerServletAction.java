@@ -118,6 +118,7 @@ public class DesignerServletAction extends RenderPageServletAction {
 	}
 	public void savePreviewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String content=req.getParameter("content");
+		content=decode(content);
 		InputStream inputStream=IOUtils.toInputStream(content,"utf-8");
 		ReportDefinition reportDef=reportParser.parse(inputStream,"p");
 		reportRender.rebuildReportDefinition(reportDef);
