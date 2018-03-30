@@ -184,10 +184,12 @@ public class HtmlProducer{
 					}
 					hasLink=true;
 					String urlParameter=cell.buildLinkParameters(context);
-					if(linkURL.indexOf("?")==-1){
-						linkURL+="?"+urlParameter;
-					}else{
-						linkURL+="&"+urlParameter;
+					if(StringUtils.isNotBlank(urlParameter)) {
+						if(linkURL.indexOf("?")==-1){
+							linkURL+="?"+urlParameter;
+						}else{
+							linkURL+="&"+urlParameter;
+						}						
 					}
 					String target=cell.getLinkTargetWindow();
 					if(StringUtils.isBlank(target))target="_self";
