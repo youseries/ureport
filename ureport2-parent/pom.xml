@@ -60,6 +60,7 @@
 					<include>**/*.TTF</include>
 					<include>**/*.TTC</include>
 					<include>**/*.woff</include>
+					<include>**/*.woff2</include>
 					<include>**/*.md</include>
 					<include>**/*.template</include>
 				</includes>
