@@ -159,6 +159,7 @@ public class Utils implements ApplicationContextAware{
 	}
 	
 	public static Object getProperty(Object obj,String property){
+		if(obj==null)return null;
 		try{
 			if(obj instanceof Map && property.indexOf(".")==-1){
 				Map<?,?> map=(Map<?,?>)obj;
