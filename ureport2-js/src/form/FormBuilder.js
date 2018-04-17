@@ -5,6 +5,7 @@ import './css/iconfont.css';
 import './css/form.css';
 import './external/jquery-ui.css';
 import './external/bootstrap-datetimepicker.css';
+import '../../node_modules/bootstrap/dist/js/bootstrap.js';
 import Utils from './Utils.js';
 import CanvasContainer from './container/CanvasContainer.js';
 import Toolbar from './Toolbar.js';
