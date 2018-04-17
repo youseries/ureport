@@ -14,7 +14,7 @@
     "email": "jacky.gao@bstek.com",
     "url": "http://www.bstek.com"
   },
-  "license": "Apache-2.0",
+  "license": "The Apache-2.0 License",
   "dependencies": {
     "bootbox": "^4.4.0",
     "bootstrap": "^3.3.7",
@@ -22,31 +22,24 @@
     "chart.js": "^2.6.0",
     "codemirror": "^5.23.0",
     "completer": "^0.1.3",
-    "handsontable": "^0.32.0-beta2",
+    "handsontable": "^2.0.0",
     "jquery": "^3.1.1",
     "jquery-contextmenu": "^2.4.2",
     "node-uuid": "^1.4.7",
     "raphael": "^2.2.7",
-    "save-svg-as-png": "^1.2.0",
+    "save-svg-as-png": "^1.3.2",
     "undo-manager": "^1.0.5"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.8",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "clean-webpack-plugin": "^0.1.14",
-    "css-loader": "^0.26.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
     "expose-loader": "^0.7.1",
     "file-loader": "^0.9.0",
-    "json-loader": "^0.5.7",
-    "redux-devtools": "^3.3.1",
-    "redux-devtools-dock-monitor": "^1.1.1",
-    "redux-devtools-log-monitor": "^1.1.1",
     "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.13.3",
-    "webpack-cleanup-plugin": "^0.4.1"
+    "uglifyjs-webpack-plugin": "^1.2.4",
+    "url-loader": "^0.5.7"
   }
 }

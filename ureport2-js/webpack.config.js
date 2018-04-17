@@ -1,39 +1,40 @@
 /**
- * Created by Jacky.gao on 2016/5/17.
+ * Created by Jacky.Gao on 2018-04-15.
+ * Base on Webpack4
  */
-var webpack = require('webpack');
-module.exports = {
+const path=require('path');
+module.exports={
+    mode:'development',
     entry: {
         designer:'./src/index.js',
         searchform:'./src/form/index.js',
         preview:'./src/preview.js'
     },
-    output: {
-        path: '../ureport2-console/src/main/resources/ureport-asserts/js',
-        filename: '[name].bundle.js'
+    output:{
+        path:path.resolve('../ureport2-console/src/main/resources/ureport-asserts/js'),
+        filename:'[name].bundle.js'
     },
-    module: {
-        loaders: [
+    module:{
+        rules:[
             {
-                test: /\.(jsx|js)?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel',
-                query: {
-                    presets: ['react', 'es2015'],
-                    compact:true
-                }
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
             },
             {
-                test: /\.css$/,
-                loader: "style-loader!css-loader"
+                test:/\.css$/,
+                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
             },
             {
                 test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
-                loader: 'url-loader?limit=1000000&name=[name]-[hash].[ext]'
-            },
-            {
-                test: /\.json$/,
-                loader: 'json-loader'
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000000
+                        }
+                    }
+                ]
             }
         ]
     }

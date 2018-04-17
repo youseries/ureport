@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.bstek.ureport</groupId>
 	<artifactId>ureport2-parent</artifactId>
-	<version>2.0.5</version>
+	<version>2.0.6</version>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -88,6 +88,7 @@
 					<include>**/*.TTF</include>
 					<include>**/*.TTC</include>
 					<include>**/*.woff</include>
+					<include>**/*.woff2</include>
 					<include>**/*.md</include>
 					<include>**/*.template</include>
 				</includes>

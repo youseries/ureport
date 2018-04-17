@@ -4,7 +4,6 @@
 import '../node_modules/jquery-contextmenu/dist/jquery.contextMenu.min.css';
 import '../node_modules/completer/dist/completer.min.css';
 import '../node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/handsontable/dist/handsontable.full.min.css';
 import '../node_modules/codemirror/lib/codemirror.css';
 import '../node_modules/codemirror/addon/hint/show-hint.css';
