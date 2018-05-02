@@ -118,7 +118,7 @@ public class DesignerServletAction extends RenderPageServletAction {
 	}
 	public void savePreviewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String content=req.getParameter("content");
-		content=decode(content);
+		content=decodeContent(content);
 		InputStream inputStream=IOUtils.toInputStream(content,"utf-8");
 		ReportDefinition reportDef=reportParser.parse(inputStream,"p");
 		reportRender.rebuildReportDefinition(reportDef);
@@ -166,7 +166,7 @@ public class DesignerServletAction extends RenderPageServletAction {
 		String file=req.getParameter("file");
 		file=ReportUtils.decodeFileName(file);
 		String content=req.getParameter("content");
-		content=decode(content);
+		content=decodeContent(content);
 		ReportProvider targetReportProvider=null;
 		for(ReportProvider provider:reportProviders){
 			if(file.startsWith(provider.getPrefix())){

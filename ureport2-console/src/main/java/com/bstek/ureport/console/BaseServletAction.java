@@ -52,6 +52,17 @@ public abstract class BaseServletAction implements ServletAction {
 			return value;
 		}
 	}
+	protected String decodeContent(String content){
+		if(content==null){
+			return content;
+		}
+		try{
+			content=URLDecoder.decode(content, "utf-8");
+			return content;
+		}catch(Exception ex){
+			return content;
+		}
+	}
 	
 	protected Map<String, Object> buildParameters(HttpServletRequest req) {
 		Map<String,Object> parameters=new HashMap<String,Object>();

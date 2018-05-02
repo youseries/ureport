@@ -518,7 +518,7 @@ export function tableToXml(context){
         xml+=context.reportDef.searchFormXml;
     }
     xml+=`</ureport>`;
-    xml=encodeURI(xml);
+    xml=encodeURIComponent(xml);
     return xml;
 };
 
