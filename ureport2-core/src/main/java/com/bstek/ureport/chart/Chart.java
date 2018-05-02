@@ -83,7 +83,7 @@ public class Chart {
 		}else{
 			if(withoption && hasYAxes(dataset)){
 				sb.append(",");
-				sb.append("\"scales\":{\"yAxes\":[{\"ticks\":{\"min\":0}}]}");				
+				sb.append("\"scales\":{\"yAxes\":[]}");				
 			}
 		}
 		sb.append("}");
