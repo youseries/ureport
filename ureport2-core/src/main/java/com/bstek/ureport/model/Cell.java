@@ -585,7 +585,8 @@ public class Cell implements ReportCell {
 			}
 		}
 		Font font=cellStyle.getFont();
-		FontMetrics fontMetrics=new JLabel().getFontMetrics(font);
+		JLabel jlabel=new JLabel();
+		FontMetrics fontMetrics=jlabel.getFontMetrics(font);
 		int textWidth=fontMetrics.stringWidth(dataText);
 		
 		double fontSize=cellStyle.getFontSize();
@@ -617,7 +618,8 @@ public class Cell implements ReportCell {
 				continue;
 			}
 			sb.append(text);
-			int width=fontMetrics.stringWidth(sb.toString());
+			
+			int width=fontMetrics.stringWidth(sb.toString())+4;
 			if(width>totalColumnWidth){
 				sb.deleteCharAt(sb.length()-1);
 				totalLineHeight+=singleLineHeight;										
