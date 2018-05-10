@@ -650,7 +650,10 @@ public class Cell implements ReportCell {
 		int dif=totalLineHeight-totalRowHeight;
 		if(dif>0){
 			int rowHeight=row.getHeight();
-			row.setRealHeight(rowHeight+dif);
+			int newRowHeight = rowHeight+dif;
+			if(row.getRealHeight()< newRowHeight){
+				row.setRealHeight(newRowHeight);
+			}
 		}
 	}
 	
