@@ -112,7 +112,7 @@ export default class CustomGroupDialog{
             const conditions=selectionOption.data().conditions;
             let index=0;
             for(let condition of conditions){
-                let text=condition.leftProperty+" "+condition.op+" "+condition.rightExpression;
+                let text=condition.left+" "+condition.op+" "+condition.right;
                 const join=condition.join;
                 if(index>0 && join){
                     text=join+" "+text;
@@ -151,7 +151,7 @@ export default class CustomGroupDialog{
             const conditions=groupItem.conditions;
             const conditionDialog=new ConditionDialog(conditions);
             conditionDialog.show(function(leftProperty,op,rightExpression,join){
-                const c={leftProperty,op,rightExpression,join,id:uuid.v1()};
+                const c={left:leftProperty,op,right:rightExpression,join,id:uuid.v1()};
                 conditions.push(c);
                 let text=leftProperty+" "+op+" "+rightExpression;
                 if(join){
@@ -188,9 +188,9 @@ export default class CustomGroupDialog{
                         break;
                     }
                 }
-                targetCondition.leftProperty=leftProperty;
+                targetCondition.left=leftProperty;
                 targetCondition.op=op;
-                targetCondition.rightExpression=rightExpression;
+                targetCondition.right=rightExpression;
                 targetCondition.join=join;
                 let text=leftProperty+" "+op+" "+rightExpression;
                 if(join){

@@ -176,13 +176,13 @@ export function tableToXml(context){
                     for(let groupItem of groupItems){
                         cellXml+=`<group-item name="${groupItem.name}">`;
                         for(let condition of groupItem.conditions){
-                            cellXml+=`<condition property="${condition.leftProperty}" op="${encode(condition.op)}" id="${condition.id}"`;
+                            cellXml+=`<condition property="${condition.left}" op="${encode(condition.op)}" id="${condition.id}"`;
                             if(condition.join){
                                 cellXml+=` join="${condition.join}">`;
                             }else{
                                 cellXml+=`>`;
                             }
-                            cellXml+=`<value><![CDATA[${condition.rightExpression}]]></value>`;
+                            cellXml+=`<value><![CDATA[${condition.right}]]></value>`;
                             cellXml+=`</condition>`;
                         }
                         cellXml+='</group-item>';
