@@ -176,7 +176,7 @@ export function tableToXml(context){
                     for(let groupItem of groupItems){
                         cellXml+=`<group-item name="${groupItem.name}">`;
                         for(let condition of groupItem.conditions){
-                            cellXml+=`<condition property="${condition.left}" op="${encode(condition.op)}" id="${condition.id}"`;
+                            cellXml+=`<condition property="${condition.left}" op="${encode(condition.operation || condition.op)}" id="${condition.id}"`;
                             if(condition.join){
                                 cellXml+=` join="${condition.join}">`;
                             }else{

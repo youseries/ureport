@@ -102,6 +102,7 @@ public abstract class BaseExpressionBuilder implements ExpressionBuilder{
 			condition.setRight(rightExpr);
 			condition.setRightExpression(ExpressionUtils.parseExpression(rightExpr));
 			condition.setOp(parseOp(ctx.OP()));
+			condition.setOperation(ctx.OP().getText());
 			return condition;
 		}else if(context instanceof CurrentValueConditionContext){
 			CurrentValueConditionContext ctx=(CurrentValueConditionContext)context;
