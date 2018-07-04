@@ -1,7 +1,17 @@
 /*******************************************************************************
- * 本软件作品的著作权、商标权等知识产权属于上海锐道信息技术有限公司（http://www.bstek.com）所有， 
- * 任何单位和个人未经上海锐道信息技术有限公司书面授权，不得以任何目的、任何方式复制、传播本软件作品的任何部分，
- * 否则将视为侵权，上海锐道信息技术有限公司保留依法追究其法律责任的权利。
+ * Copyright 2017 Bstek
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy
+ * of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  ******************************************************************************/
 package com.bstek.ureport.utils;
 
