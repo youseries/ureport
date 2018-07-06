@@ -112,6 +112,7 @@ export default class ScatterChartValueEditor extends CategoryChartValueEditor{
         optionContent.append(group);
         this.initTitleOption(group);
         this.initLegendOption(group);
+        this.initDataLabelsOption(group);
         this.initAnimationsOption(group);
     }
     _initAxisTab(axisContent){

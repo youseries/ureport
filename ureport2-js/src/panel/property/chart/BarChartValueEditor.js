@@ -46,6 +46,7 @@ export default class BarChartValueEditor extends CategoryChartValueEditor{
         optionContent.append(group);
         this.initTitleOption(group);
         this.initLegendOption(group);
+        this.initDataLabelsOption(group);
         this.initAnimationsOption(group);
     }
     _initAxisTab(axisContent){
@@ -103,7 +104,13 @@ export default class BarChartValueEditor extends CategoryChartValueEditor{
         }else{
             this.hideYTitleRadio.trigger('click');
         }
-
+        this.hideDataLabelsRadio.children('input').attr('checked',true);
+        const plugins=chart.plugins || [];
+        for(let plugin of plugins){
+            if(plugin.name==='dataLabels' && plugin.display){
+                this.showDataLabelsRadio.children('input').attr('checked',true);
+            }
+        }
         const options=chart.options || [];
         for(let option of options){
             switch (option.type){

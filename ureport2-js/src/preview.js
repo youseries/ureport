@@ -1,9 +1,8 @@
 /**
  * Created by Jacky.Gao on 2017-03-17.
  */
-import Chart from "chart.js";
 import './form/external/bootstrap-datetimepicker.css';
-import {getParameter,pointToMM,showLoading,hideLoading} from './Utils.js';
+import {pointToMM,showLoading,hideLoading} from './Utils.js';
 import {alert} from './MsgBox.js';
 import PDFPrintDialog from './dialog/PDFPrintDialog.js';
 import defaultI18nJsonData from './i18n/preview.json';
@@ -294,7 +293,12 @@ window._buildChartDatas=function(chartData){
     }
     for(let d of chartData){
         let json=d.json;
-        json=JSON.parse(json);
+        json=JSON.parse(json,function (k, v) {
+            if(v.indexOf && v.indexOf('function') > -1){
+                return eval("(function(){return "+v+" })()")
+            }
+            return v;
+        });
         _buildChart(d.id,json);
     }
 };

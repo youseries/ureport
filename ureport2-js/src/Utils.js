@@ -332,6 +332,10 @@ export function tableToXml(context){
                         cellXml+=`/>`;
                     }
                 }
+                const dataLabels=chart.dataLabels;
+                if(dataLabels){
+                    cellXml+=`<plugin name="data-labels" display="${dataLabels.display}"/>`;
+                }
                 cellXml+=`</chart-value>`;
             }
             const propertyConditions=cellDef.conditionPropertyItems || [];
