@@ -185,20 +185,14 @@ export default class ChartValueEditor{
         this.showDataLabelsRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_datalabels_radio_${this.id}" value="asc">${window.i18n.chart.yes}</label>`);
         displayGroup.append(this.showDataLabelsRadio);
         this.showDataLabelsRadio.children('input').click(function () {
-            const chart=_this.cellDef.value.chart;
-            chart.dataLabels={
-                name:"data-labels",
-                display:true
-            };
+            const dataLabels=_this.getTargetPlugin("data-labels");
+            dataLabels.display=true;
         });
         this.hideDataLabelsRadio=$(`<label class="checkbox-inline" style="padding-left: 2px"><input type="radio" name="__show_datalabels_radio_${this.id}" value="asc" checked>${window.i18n.chart.no}</label>`);
         displayGroup.append(this.hideDataLabelsRadio);
         this.hideDataLabelsRadio.children('input').click(function () {
-            const chart=_this.cellDef.value.chart;
-            chart.dataLabels={
-                name:"data-labels",
-                display:false
-            };
+            const dataLabels=_this.getTargetPlugin("data-labels");
+            dataLabels.display=false;
         });
     }
 
@@ -286,6 +280,26 @@ export default class ChartValueEditor{
         });
         this.titleTextGroup.hide();
         this.titlePositionGroup.hide();
+    }
+
+    getTargetPlugin(name){
+        let plugins=this.cellDef.value.chart.plugins;
+        if(!plugins){
+            plugins=[];
+            this.cellDef.value.chart.plugins=plugins;
+        }
+        let targetPlugin=null;
+        for(let plugin of plugins){
+            if(plugin.name===name){
+                targetPlugin=plugin;
+                break;
+            }
+        }
+        if(!targetPlugin){
+            targetPlugin={name:name,display:false};
+            plugins.push(targetPlugin);
+        }
+        return targetPlugin;
     }
 
     getTargetOption(type){

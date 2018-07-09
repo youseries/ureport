@@ -107,7 +107,7 @@ export default class BarChartValueEditor extends CategoryChartValueEditor{
         this.hideDataLabelsRadio.children('input').attr('checked',true);
         const plugins=chart.plugins || [];
         for(let plugin of plugins){
-            if(plugin.name==='dataLabels' && plugin.display){
+            if(plugin.name==='data-labels' && plugin.display){
                 this.showDataLabelsRadio.children('input').attr('checked',true);
             }
         }
