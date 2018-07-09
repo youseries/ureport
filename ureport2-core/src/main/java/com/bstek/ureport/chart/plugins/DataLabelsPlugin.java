@@ -22,7 +22,7 @@ public class DataLabelsPlugin implements Plugin {
 	private boolean display;
 	@Override
 	public String getName() {
-		return "dataLabels";
+		return "data-labels";
 	}
 	@Override
 	public String toJson(String type) {
