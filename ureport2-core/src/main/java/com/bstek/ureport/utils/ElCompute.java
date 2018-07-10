@@ -45,7 +45,7 @@ public class ElCompute {
 	private Stack<Character> operateStack=new Stack<Character>();
 	public static void main(String[] args) {
 		long start=System.currentTimeMillis();
-		String expr="(2+20)*3-10+\"super man\"";
+		String expr="22/2-(5+(1*2))-2*2";
 		for(int i=0;i<1;i++) {
 			ElCompute el=new ElCompute();
 			Object data=el.doCompute(expr);
@@ -61,32 +61,38 @@ public class ElCompute {
 	}
 	private void init(String expr){
 		StringBuilder dataSb=new StringBuilder();
-		char prevQuote='0';
+		char prevQuote=' ',prevChar=' ';
 		for(int i=0;i<expr.length();i++){
 			char c=expr.charAt(i);
+			if(prevChar=='\\') {
+				dataSb.append(c);
+				continue;
+			}
+			if(prevQuote=='"') {
+				if(c=='"') {
+					prevQuote=' ';
+					dataStack.push(dataSb.toString());
+					dataSb.setLength(0);
+				}else {					
+					dataSb.append(c);
+				}
+				continue;
+			}
 			switch(c){
 			case '+':
-				addDataStack(dataSb);
-				doCalculate(0);
-				operateStack.push(c);
+				doOp(dataSb, c,prevChar);
 				break;
 			case '-':
-				doMinus(dataSb, prevQuote);
+				doOp(dataSb, c,prevChar);
 				break;
 			case '*':
-				addDataStack(dataSb);
-				doCalculate(2);
-				operateStack.push(c);
+				doOp(dataSb, c,prevChar);
 				break;
 			case '/':
-				addDataStack(dataSb);
-				doCalculate(2);
-				operateStack.push(c);
+				doOp(dataSb, c,prevChar);
 				break;
 			case '%':
-				addDataStack(dataSb);
-				doCalculate(2);
-				operateStack.push(c);
+				doOp(dataSb, c,prevChar);
 				break;
 			case '(':
 				operateStack.push(c);
@@ -97,7 +103,7 @@ public class ElCompute {
 				break;
 			case '"':
 				if(prevQuote=='"'){
-					prevQuote='0';
+					prevQuote=' ';
 					dataStack.push(dataSb.toString());
 					dataSb.setLength(0);
 				}else{
@@ -112,6 +118,7 @@ public class ElCompute {
 			default:
 				dataSb.append(c);
 			}
+			prevChar=c;
 		}
 		if(dataSb.length()>0){
 			addDataStack(dataSb);
@@ -119,16 +126,19 @@ public class ElCompute {
 		doCalculate(0);
 	}
 	
-	private void doMinus(StringBuilder dataSb,char prevQuote){
-		if(dataSb.length()==0){
-			dataSb.append('-');
-		}else{
-			addDataStack(dataSb);				
-			doCalculate(0);
-			operateStack.push('-');
+	private void doOp(StringBuilder dataSb,char op,char prevChar) {
+		if(dataSb.length()==0 && prevChar!=')'){
+			dataSb.append(op);
+		} else {
+			addDataStack(dataSb);
+			if(op=='+' || op=='-') {
+				doCalculate(0);
+			}else {
+				doCalculate(2);				
+			}
+			operateStack.push(op);
 		}
 	}
-		
 	
 	private void doCalculate(int current) {
 		if(operateStack.empty()){
@@ -136,6 +146,7 @@ public class ElCompute {
 		}
 		char prevOp=operateStack.peek();
 		if(prevOp=='('){
+			operateStack.pop();
 			return;
 		}
 		if(current==0 || current==1){
@@ -171,7 +182,7 @@ public class ElCompute {
 	private Object calculate(Object left,char op,Object right){
 		if((op=='*' || op=='/' || op=='%' || op=='-')){
 			if(right instanceof String || left instanceof String){
-				throw new RuntimeException(left + " and "+right+" can't do "+op+"!");				
+				return left.toString()+op+right.toString();
 			}
 			BigDecimal b1=(BigDecimal)left;
 			BigDecimal b2=(BigDecimal)right;
