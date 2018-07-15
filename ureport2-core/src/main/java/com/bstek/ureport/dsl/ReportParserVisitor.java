@@ -11,6 +11,12 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface ReportParserVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link ReportParserParser#entry}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEntry(ReportParserParser.EntryContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ReportParserParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -87,6 +93,24 @@ public interface ReportParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitElsePart(ReportParserParser.ElsePartContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ReportParserParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(ReportParserParser.BlockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ReportParserParser#exprBlock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprBlock(ReportParserParser.ExprBlockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ReportParserParser#returnExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnExpr(ReportParserParser.ReturnExprContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ReportParserParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -98,6 +122,12 @@ public interface ReportParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIfCondition(ReportParserParser.IfConditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ReportParserParser#variableAssign}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableAssign(ReportParserParser.VariableAssignContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code simpleJoin}
 	 * labeled alternative in {@link ReportParserParser#item}.
@@ -125,6 +155,12 @@ public interface ReportParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnit(ReportParserParser.UnitContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ReportParserParser#variable}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariable(ReportParserParser.VariableContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ReportParserParser#cellPosition}.
 	 * @param ctx the parse tree

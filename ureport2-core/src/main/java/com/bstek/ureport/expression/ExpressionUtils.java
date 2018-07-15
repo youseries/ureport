@@ -59,6 +59,7 @@ import com.bstek.ureport.expression.parse.builder.NumberExpressionBuilder;
 import com.bstek.ureport.expression.parse.builder.RelativeCellExpressionBuilder;
 import com.bstek.ureport.expression.parse.builder.SetExpressionBuilder;
 import com.bstek.ureport.expression.parse.builder.StringExpressionBuilder;
+import com.bstek.ureport.expression.parse.builder.VariableExpressionBuilder;
 
 /**
  * @author Jacky.gao
@@ -75,6 +76,7 @@ public class ExpressionUtils implements ApplicationContextAware{
 	private static String[] LETTERS={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 	static{
 		expressionBuilders.add(new StringExpressionBuilder());
+		expressionBuilders.add(new VariableExpressionBuilder());
 		expressionBuilders.add(new BooleanExpressionBuilder());
 		expressionBuilders.add(new IntegerExpressionBuilder());
 		expressionBuilders.add(new DatasetExpressionBuilder());
@@ -136,7 +138,7 @@ public class ExpressionUtils implements ApplicationContextAware{
 		ExpressionErrorListener errorListener=new ExpressionErrorListener();
 		parser.addErrorListener(errorListener);
 		exprVisitor=new ExpressionVisitor(expressionBuilders);
-		Expression expression=exprVisitor.visitExpression(parser.expression());
+		Expression expression=exprVisitor.visitEntry(parser.entry());
 		String error=errorListener.getErrorMessage();
 		if(error!=null){
 			throw new ReportParseException("Expression parse error:"+error);

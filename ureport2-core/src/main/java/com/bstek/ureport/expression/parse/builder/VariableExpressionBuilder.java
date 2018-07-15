@@ -13,29 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.ureport.expression.model.expr.ifelse;
+package com.bstek.ureport.expression.parse.builder;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.ExpressionData;
+import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
 import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.ExpressionBlock;
-import com.bstek.ureport.model.Cell;
+import com.bstek.ureport.expression.model.expr.VariableExpression;
 
 /**
  * @author Jacky.gao
- * @since 2017年1月16日
+ * @since 2018年7月15日
  */
-public class ElseExpression extends BaseExpression {
-	private static final long serialVersionUID = 7686136494993309779L;
-	private ExpressionBlock expression;
+public class VariableExpressionBuilder implements ExpressionBuilder {
 	@Override
-	protected ExpressionData<?> compute(Cell cell,Cell currentCell, Context context) {
-		return expression.execute(cell, currentCell,context);
+	public BaseExpression build(UnitContext unitContext) {
+		String text=unitContext.variable().Identifier().getText();
+		VariableExpression varExpr=new VariableExpression(text);
+		return varExpr;
 	}
-	public ExpressionBlock getExpression() {
-		return expression;
-	}
-	public void setExpression(ExpressionBlock expression) {
-		this.expression = expression;
+	@Override
+	public boolean support(UnitContext unitContext) {
+		return unitContext.variable()!=null;
 	}
 }

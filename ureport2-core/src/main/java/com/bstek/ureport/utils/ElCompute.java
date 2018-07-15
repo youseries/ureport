@@ -76,6 +76,7 @@ public class ElCompute {
 				}else {					
 					dataSb.append(c);
 				}
+				prevChar=c;
 				continue;
 			}
 			switch(c){
@@ -127,7 +128,7 @@ public class ElCompute {
 	}
 	
 	private void doOp(StringBuilder dataSb,char op,char prevChar) {
-		if(dataSb.length()==0 && prevChar!=')'){
+		if(dataSb.length()==0 && prevChar!=')' && prevChar!='\"'){
 			dataSb.append(op);
 		} else {
 			addDataStack(dataSb);

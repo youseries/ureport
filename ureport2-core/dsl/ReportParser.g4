@@ -1,9 +1,13 @@
 grammar ReportParser;
 import ReportLexer;
 
+entry :	expression+ EOF;
+
 expression : exprComposite
 		   | ifExpr
 		   | caseExpr
+		   | returnExpr
+		   | variableAssign
 		   ;
 
 exprComposite : expr 										#singleExprComposite
@@ -12,23 +16,36 @@ exprComposite : expr 										#singleExprComposite
 			  | exprComposite Operator exprComposite		#complexExprComposite
 			  ;
 
-ternaryExpr : ifCondition (join ifCondition)* '?' expr ':' expr ; 
+ternaryExpr : ifCondition (join ifCondition)* '?' block ':' block ; 
+
+
 
 caseExpr : 'case' '{' casePart (',' casePart)* '}' ;
 
-casePart : ifCondition (join ifCondition)* ':'? 'return'? expr ;
+casePart : ifCondition (join ifCondition)* ':'? block ;
 
 ifExpr: ifPart elseIfPart* elsePart? ;
 
-ifPart : 'if' '(' ifCondition (join ifCondition)* ')' '{' 'return'? expr ';'? '}';
+ifPart : 'if' '(' ifCondition (join ifCondition)* ')' '{' block '}';
 
-elseIfPart : 'else' 'if' '(' ifCondition (join ifCondition)* ')' '{' 'return'? expr ';'? '}' ;
+elseIfPart : 'else' 'if' '(' ifCondition (join ifCondition)* ')' '{' block '}' ;
 
-elsePart : 'else' '{' 'return'? expr ';'? '}' ;
+elsePart : 'else' '{' block '}' ;
+
+block : exprBlock* returnExpr? ;
+
+exprBlock : variableAssign
+		 | ifExpr
+		 | caseExpr
+		 ;
+
+returnExpr : 'return'? expr ';'?;
 
 expr : item (Operator item)* ;
 
 ifCondition : expr OP expr ;
+     
+variableAssign : 'var'? variable '=' item ';'?;
 
 item : unit (Operator unit)*							#simpleJoin
 	 | LeftParen item RightParen						#singleParenJoin
@@ -43,12 +60,15 @@ unit : dataset
 	 | currentCellValue
 	 | currentCellData
 	 | cell
+	 | variable
 	 | INTEGER
 	 | BOOLEAN
 	 | STRING
 	 | NUMBER
 	 | NULL
 	 ;
+
+variable : Identifier ;
 
 cellPosition : '&'Cell ;//表示单元格位置
 

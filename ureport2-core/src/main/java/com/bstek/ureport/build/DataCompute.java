@@ -57,6 +57,7 @@ public class DataCompute {
 	}
 
 	public static List<BindData> buildCellData(Cell cell,Context context) {
+		context.resetVariableMap();
 		Value value = cell.getValue();
 		ValueCompute valueCompute=valueComputesMap.get(value.getType().name());
 		if(valueCompute!=null){

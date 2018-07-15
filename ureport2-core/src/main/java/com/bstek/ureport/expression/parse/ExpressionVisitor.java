@@ -21,11 +21,14 @@ import java.util.List;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import com.bstek.ureport.dsl.ReportParserBaseVisitor;
+import com.bstek.ureport.dsl.ReportParserParser.BlockContext;
 import com.bstek.ureport.dsl.ReportParserParser.CaseExprContext;
 import com.bstek.ureport.dsl.ReportParserParser.CasePartContext;
 import com.bstek.ureport.dsl.ReportParserParser.ComplexExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.ElseIfPartContext;
 import com.bstek.ureport.dsl.ReportParserParser.ElsePartContext;
+import com.bstek.ureport.dsl.ReportParserParser.EntryContext;
+import com.bstek.ureport.dsl.ReportParserParser.ExprBlockContext;
 import com.bstek.ureport.dsl.ReportParserParser.ExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.ExprContext;
 import com.bstek.ureport.dsl.ReportParserParser.ExpressionContext;
@@ -36,20 +39,25 @@ import com.bstek.ureport.dsl.ReportParserParser.ItemContext;
 import com.bstek.ureport.dsl.ReportParserParser.JoinContext;
 import com.bstek.ureport.dsl.ReportParserParser.ParenExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.ParenJoinContext;
+import com.bstek.ureport.dsl.ReportParserParser.ReturnExprContext;
 import com.bstek.ureport.dsl.ReportParserParser.SimpleJoinContext;
 import com.bstek.ureport.dsl.ReportParserParser.SingleExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.SingleParenJoinContext;
 import com.bstek.ureport.dsl.ReportParserParser.TernaryExprCompositeContext;
 import com.bstek.ureport.dsl.ReportParserParser.TernaryExprContext;
 import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
+import com.bstek.ureport.dsl.ReportParserParser.VariableAssignContext;
+import com.bstek.ureport.dsl.ReportParserParser.VariableContext;
 import com.bstek.ureport.exception.ReportParseException;
 import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.expression.model.Op;
 import com.bstek.ureport.expression.model.Operator;
 import com.bstek.ureport.expression.model.condition.Join;
 import com.bstek.ureport.expression.model.expr.BaseExpression;
+import com.bstek.ureport.expression.model.expr.ExpressionBlock;
 import com.bstek.ureport.expression.model.expr.JoinExpression;
 import com.bstek.ureport.expression.model.expr.ParenExpression;
+import com.bstek.ureport.expression.model.expr.VariableAssignExpression;
 import com.bstek.ureport.expression.model.expr.ifelse.ElseExpression;
 import com.bstek.ureport.expression.model.expr.ifelse.ElseIfExpression;
 import com.bstek.ureport.expression.model.expr.ifelse.ExpressionCondition;
@@ -66,70 +74,51 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 	public ExpressionVisitor(List<ExpressionBuilder> expressionBuilders) {
 		this.expressionBuilders=expressionBuilders;
 	}
+	
+	@Override
+	public Expression visitEntry(EntryContext ctx) {
+		StringBuilder sb=new StringBuilder();
+		List<ExpressionContext> exprs=ctx.expression();
+		List<Expression> list=new ArrayList<Expression>();
+		for(ExpressionContext exprContext:exprs){
+			sb.append(exprContext.getText());
+			Expression expr=visitExpression(exprContext);
+			list.add(expr);
+		}
+		ExpressionBlock block=new ExpressionBlock();
+		block.setExpressionList(list);
+		block.setExpr(sb.toString());
+		return block;
+	}
+	
 	@Override
 	public Expression visitExpression(ExpressionContext ctx) {
 		ExprCompositeContext exprCompositeContext=ctx.exprComposite();
 		IfExprContext ifExprContext=ctx.ifExpr();
 		CaseExprContext caseExprContext=ctx.caseExpr();
+		VariableAssignContext assignCtx=ctx.variableAssign();
+		ReturnExprContext returnCtx=ctx.returnExpr();
 		if(exprCompositeContext!=null){
 			return parseExprComposite(exprCompositeContext);
 		}else if(ifExprContext!=null){
-			IfExpression expr=new IfExpression();
-			expr.setExpr(ctx.getText());
-			IfPartContext ifPartContext=ifExprContext.ifPart();
-			List<IfConditionContext> ifConditionContexts=ifPartContext.ifCondition();
-			List<JoinContext> joinContexts=ifPartContext.join();
-			expr.setConditionList(parseCondtionList(ifConditionContexts,joinContexts));
-			ExprContext ec=ifPartContext.expr();
-			Expression expression=parseExpr(ec);
-			expr.setExpression(expression);
-			
-			List<ElseIfPartContext> elseIfPartContexts=ifExprContext.elseIfPart();
-			if(elseIfPartContexts!=null && elseIfPartContexts.size()>0){
-				List<ElseIfExpression> elseIfExpressionList=new ArrayList<ElseIfExpression>();
-				for(ElseIfPartContext elseIfContext:elseIfPartContexts){
-					ifConditionContexts=elseIfContext.ifCondition();
-					joinContexts=elseIfContext.join();
-					ElseIfExpression elseIfExpr=new ElseIfExpression();
-					elseIfExpr.setConditionList(parseCondtionList(ifConditionContexts,joinContexts));
-					ec=elseIfContext.expr();
-					elseIfExpr.setExpr(elseIfContext.getText());
-					elseIfExpr.setExpression(parseExpr(ec));
-					elseIfExpressionList.add(elseIfExpr);
-				}
-				expr.setElseIfExpressions(elseIfExpressionList);
-			}
-			
-			ElsePartContext elsePartContext=ifExprContext.elsePart();
-			if(elsePartContext!=null){
-				ec=elsePartContext.expr();
-				ElseExpression elseExpression=new ElseExpression();
-				elseExpression.setExpr(elsePartContext.getText());
-				elseExpression.setExpression(parseExpr(ec));
-				expr.setElseExpression(elseExpression);
-			}
+			IfExpression expr = parseIfExprContext(ifExprContext);
 			return expr;
 		}else if(caseExprContext!=null){
-			IfExpression expr=new IfExpression();
-			expr.setExpr(ctx.getText());
-			List<ElseIfExpression> elseIfExpressionList=new ArrayList<ElseIfExpression>();
-			expr.setElseIfExpressions(elseIfExpressionList);
-			List<CasePartContext> casePartContexts=caseExprContext.casePart();
-			for(CasePartContext casePartContext:casePartContexts){
-				List<IfConditionContext> ifConditionContexts=casePartContext.ifCondition();
-				List<JoinContext> joinContexts=casePartContext.join();
-				ElseIfExpression elseIfExpr=new ElseIfExpression();
-				elseIfExpr.setConditionList(parseCondtionList(ifConditionContexts,joinContexts));
-				elseIfExpr.setExpr(casePartContext.getText());
-				ExprContext ec=casePartContext.expr();
-				elseIfExpr.setExpression(parseExpr(ec));
-				elseIfExpressionList.add(elseIfExpr);
-			}
+			IfExpression expr = parseCaseExprContext(caseExprContext);
 			return expr;
+		}else if(assignCtx!=null){
+			VariableAssignExpression expr=new VariableAssignExpression();
+			expr.setExpr(assignCtx.getText());
+			expr.setVariable(assignCtx.variable().Identifier().getText());
+			expr.setExpression(parseItemContext(assignCtx.item()));
+			return expr;
+		}else if(returnCtx!=null){
+			return visitExpr(returnCtx.expr());
 		}else{
-			throw new ReportParseException("Expression ["+ctx.getText()+"] is invalid.");
+			throw new ReportParseException("Expression ["+ctx.getText()+"] is invalid.");			
 		}
 	}
+
 	private Expression parseExprComposite(ExprCompositeContext exprCompositeContext) {
 		if(exprCompositeContext instanceof SingleExprCompositeContext){
 			SingleExprCompositeContext singleExprCompositeContext=(SingleExprCompositeContext)exprCompositeContext;
@@ -145,11 +134,12 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 			List<IfConditionContext> ifConditionContexts=ternaryExprContext.ifCondition();
 			IfExpression expr=new IfExpression();
 			expr.setConditionList(parseCondtionList(ifConditionContexts, ternaryExprContext.join()));
-			ExprContext firstExprContext=ternaryExprContext.expr(0);
-			ExprContext secondExprContext=ternaryExprContext.expr(1);
-			expr.setExpression(parseExpr(firstExprContext));
+			BlockContext firstBlockContext=ternaryExprContext.block(0);
+			expr.setExpression(parseBlock(firstBlockContext));
+			
+			BlockContext secondBlockContext=ternaryExprContext.block(1);
 			ElseExpression elseExpr=new ElseExpression();
-			elseExpr.setExpression(parseExpr(secondExprContext));
+			elseExpr.setExpression(parseBlock(secondBlockContext));
 			expr.setElseExpression(elseExpr);
 			return expr;
 		}else if(exprCompositeContext instanceof ComplexExprCompositeContext){
@@ -172,6 +162,105 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 			throw new ReportParseException("Unknow context :"+exprCompositeContext);
 		}
 	}
+	
+	private ExpressionBlock parseExpressionBlock(List<ExprBlockContext> contexts){
+		StringBuilder sb=new StringBuilder();
+		List<Expression> expressionList=new ArrayList<Expression>();
+		for(ExprBlockContext ctx:contexts){
+			sb.append(ctx.getText());
+			VariableAssignContext assignContext=ctx.variableAssign();
+			if(assignContext!=null){
+				VariableContext varCtx=assignContext.variable();
+				String variableName=varCtx.Identifier().getText();
+				VariableAssignExpression assignExpr=new VariableAssignExpression();
+				assignExpr.setExpr(assignContext.getText());
+				assignExpr.setVariable(variableName);
+				ItemContext itemCtx=assignContext.item();
+				BaseExpression itemExpr=parseItemContext(itemCtx);
+				assignExpr.setExpression(itemExpr);
+				expressionList.add(assignExpr);
+			}
+			IfExprContext ifCtx=ctx.ifExpr();
+			if(ifCtx!=null){
+				IfExpression ifExpr=parseIfExprContext(ifCtx);
+				expressionList.add(ifExpr);
+			}
+			CaseExprContext caseCtx=ctx.caseExpr();
+			if(caseCtx!=null){
+				IfExpression caseExpr = parseCaseExprContext(caseCtx);
+				expressionList.add(caseExpr);
+			}
+		}
+		ExpressionBlock blockExpr=new ExpressionBlock();
+		blockExpr.setExpressionList(expressionList);
+		blockExpr.setExpr(sb.toString());
+		return blockExpr;
+	}
+	
+	private IfExpression parseIfExprContext(IfExprContext ifExprContext) {
+		IfExpression expr=new IfExpression();
+		expr.setExpr(ifExprContext.getText());
+		IfPartContext ifPartContext=ifExprContext.ifPart();
+		List<IfConditionContext> ifConditionContexts=ifPartContext.ifCondition();
+		List<JoinContext> joinContexts=ifPartContext.join();
+		expr.setConditionList(parseCondtionList(ifConditionContexts,joinContexts));
+		ExpressionBlock blockExpr=parseBlock(ifPartContext.block());
+		expr.setExpression(blockExpr);
+		List<ElseIfPartContext> elseIfPartContexts=ifExprContext.elseIfPart();
+		if(elseIfPartContexts!=null && elseIfPartContexts.size()>0){
+			List<ElseIfExpression> elseIfExpressionList=new ArrayList<ElseIfExpression>();
+			for(ElseIfPartContext elseIfContext:elseIfPartContexts){
+				ifConditionContexts=elseIfContext.ifCondition();
+				joinContexts=elseIfContext.join();
+				ElseIfExpression elseIfExpr=new ElseIfExpression();
+				elseIfExpr.setConditionList(parseCondtionList(ifConditionContexts,joinContexts));
+				elseIfExpr.setExpression(parseBlock(elseIfContext.block()));
+				elseIfExpressionList.add(elseIfExpr);
+			}
+			expr.setElseIfExpressions(elseIfExpressionList);
+		}
+		
+		ElsePartContext elsePartContext=ifExprContext.elsePart();
+		if(elsePartContext!=null){
+			ElseExpression elseExpression=new ElseExpression();
+			elseExpression.setExpression(parseBlock(elsePartContext.block()));
+			expr.setElseExpression(elseExpression);
+		}
+		return expr;
+	}
+	
+	private ExpressionBlock parseBlock(BlockContext blockCtx){
+		List<ExprBlockContext> exprBlockCtxs=blockCtx.exprBlock();
+		ReturnExprContext returnCtx=blockCtx.returnExpr();
+		ExpressionBlock block=null;
+		if(exprBlockCtxs!=null){
+			block=parseExpressionBlock(exprBlockCtxs);
+		}
+		if(returnCtx!=null){
+			if(block==null)block=new ExpressionBlock();
+			block.setReturnExpression(visitExpr(returnCtx.expr()));
+		}
+		return block;
+	}
+	
+	private IfExpression parseCaseExprContext(CaseExprContext caseExprContext) {
+		IfExpression expr=new IfExpression();
+		List<ElseIfExpression> elseIfExpressionList=new ArrayList<ElseIfExpression>();
+		expr.setElseIfExpressions(elseIfExpressionList);
+		List<CasePartContext> casePartContexts=caseExprContext.casePart();
+		for(CasePartContext casePartContext:casePartContexts){
+			List<IfConditionContext> ifConditionContexts=casePartContext.ifCondition();
+			List<JoinContext> joinContexts=casePartContext.join();
+			ElseIfExpression elseIfExpr=new ElseIfExpression();
+			elseIfExpr.setConditionList(parseCondtionList(ifConditionContexts,joinContexts));
+			elseIfExpr.setExpr(casePartContext.getText());
+			ExpressionBlock blockExpr=parseBlock(casePartContext.block());
+			elseIfExpr.setExpression(blockExpr);
+			elseIfExpressionList.add(elseIfExpr);
+		}
+		return expr;
+	}
+
 	
 	private Expression parseExpr(ExprContext exprContext) {
 		List<BaseExpression> expressions=new ArrayList<BaseExpression>();

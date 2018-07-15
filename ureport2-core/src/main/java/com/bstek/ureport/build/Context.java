@@ -48,6 +48,7 @@ public class Context {
 	private int pageIndex;
 	private int totalPages;
 	private boolean doPaging;
+	private Map<String,Object> variableMap=new HashMap<String,Object>();
 	private Map<Integer,List<Row>> currentPageRowsMap=new HashMap<Integer,List<Row>>();
 	private Map<String,Dataset> datasetMap;
 	private ApplicationContext applicationContext;
@@ -313,5 +314,16 @@ public class Context {
 	
 	public Cell getRootCell() {
 		return rootCell;
+	}
+	
+	public void putVariable(String key,Object value){
+		variableMap.put(key, value);
+	}
+	
+	public void resetVariableMap(){
+		variableMap.clear();
+	}
+	public Object getVariable(String key){
+		return variableMap.get(key);
 	}
 }
