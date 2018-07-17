@@ -45,7 +45,7 @@ public class ElCompute {
 	private Stack<Character> operateStack=new Stack<Character>();
 	public static void main(String[] args) {
 		long start=System.currentTimeMillis();
-		String expr="22/2-(5+(1*2))-2*2";
+		String expr="22/2*2-(5+(1*2))-2*2";
 		for(int i=0;i<1;i++) {
 			ElCompute el=new ElCompute();
 			Object data=el.doCompute(expr);
@@ -66,6 +66,7 @@ public class ElCompute {
 			char c=expr.charAt(i);
 			if(prevChar=='\\') {
 				dataSb.append(c);
+				prevChar=c;
 				continue;
 			}
 			if(prevQuote=='"') {
