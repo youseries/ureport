@@ -343,6 +343,7 @@ public class Cell implements ReportCell {
 			}
 			if(StringUtils.isNotBlank(item.getNewValue())){
 				this.data=item.getNewValue();
+				this.formatData=item.getNewValue();
 			}
 			if(StringUtils.isNotBlank(item.getLinkUrl())){
 				linkUrl=item.getLinkUrl();
