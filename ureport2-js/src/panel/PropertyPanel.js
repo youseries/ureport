@@ -52,7 +52,7 @@ export default class PropertyPanel{
         this.chartEditorMap.set('horizontalBar',new HorizontalBarChartValueEditor(this.panel,this.context));
         this.chartEditorMap.set('area',new AreaChartValueEditor(this.panel,this.context));
         this.chartEditorMap.set('radar',new RadarChartValueEditor(this.panel,this.context));
-        this.chartEditorMap.set('polar',new PolarChartValueEditor(this.panel,this.context));
+        this.chartEditorMap.set('polarArea',new PolarChartValueEditor(this.panel,this.context));
         this.chartEditorMap.set('scatter',new ScatterChartValueEditor(this.panel,this.context));
         this.chartEditorMap.set('bubble',new BubbleChartValueEditor(this.panel,this.context));
         this.chartEditorMap.set('doughnut',new DoughnutChartValueEditor(this.panel,this.context));

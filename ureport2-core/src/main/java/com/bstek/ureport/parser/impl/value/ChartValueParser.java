@@ -181,7 +181,7 @@ public class ChartValueParser extends ValueParser {
 		}else if(type.equals("pie")){
 			PieDataset ds=new PieDataset();
 			dataset=ds;
-		}else if(type.equals("polar")){
+		}else if(type.equals("polarArea")){
 			PolarDataset ds=new PolarDataset();
 			dataset=ds;
 		}else if(type.equals("radar")){

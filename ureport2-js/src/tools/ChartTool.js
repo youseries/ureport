@@ -88,7 +88,7 @@ export default class ChartTool extends Tool{
             </li>`);
         ul.append(polar);
         polar.click(function(){
-            _this._doClick('polar');
+            _this._doClick('polarArea');
         });
         const scatter=$(`<li>
                 <a href="###">

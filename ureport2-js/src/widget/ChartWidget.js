@@ -220,7 +220,7 @@ export default class ChartWidget{
                     }]
                 };
                 break;
-            case 'polar':
+            case 'polarArea':
                 chartType='polarArea';
                 data={
                     labels: ["类型1", "类型2", "类型3", "类型4"],
