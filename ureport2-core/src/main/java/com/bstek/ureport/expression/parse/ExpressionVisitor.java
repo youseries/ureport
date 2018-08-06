@@ -113,7 +113,7 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 			expr.setExpression(parseItemContext(assignCtx.item()));
 			return expr;
 		}else if(returnCtx!=null){
-			return visitExpr(returnCtx.expr());
+			return parseExpr(returnCtx.expr());
 		}else{
 			throw new ReportParseException("Expression ["+ctx.getText()+"] is invalid.");			
 		}
@@ -238,7 +238,7 @@ public class ExpressionVisitor extends ReportParserBaseVisitor<Expression>{
 		}
 		if(returnCtx!=null){
 			if(block==null)block=new ExpressionBlock();
-			block.setReturnExpression(visitExpr(returnCtx.expr()));
+			block.setReturnExpression(parseExpr(returnCtx.expr()));
 		}
 		return block;
 	}
