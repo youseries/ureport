@@ -126,6 +126,7 @@ export default class PropertyConditionDialog{
                 item.conditions=[];
             }
             const conditions=item.conditions;
+            let i=0;
             for(let condition of conditions){
                 if(!condition.id){
                     condition.id=uuid.v1();
@@ -135,12 +136,13 @@ export default class PropertyConditionDialog{
                 if(!condition.left || condition.left===''){
                     text=`${window.i18n.dialog.propCondition.currentValue} `+op+" "+(condition.right || condition.expr);
                 }
-                if(condition.join){
+                if(condition.join && i>0){
                     text=condition.join+' '+text;
                 }
                 const newOption=$(`<option>${text}</option>`);
                 newOption.data(condition);
                 _this.conditionList.append(newOption);
+                i++;
                 setDirty();
             }
         });

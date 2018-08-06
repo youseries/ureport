@@ -542,6 +542,7 @@ function getSpan(hot,row,col){
 function buildConditions(conditions){
     let cellXml='';
     if(conditions){
+        const size=conditions.length;
         for(let condition of conditions){
             if(!condition.type || condition.type==='property'){
                 if(condition.left){
@@ -550,7 +551,7 @@ function buildConditions(conditions){
                     cellXml+=`<condition op="${encode(condition.operation)}" id="${condition.id}"`;
                 }
                 cellXml+=` type="${condition.type}"`;
-                if(condition.join){
+                if(condition.join && size>1){
                     cellXml+=` join="${condition.join}">`;
                 }else{
                     cellXml+=`>`;
@@ -558,7 +559,7 @@ function buildConditions(conditions){
                 cellXml+=`<value><![CDATA[${condition.right}]]></value>`;
             }else{
                 cellXml+=`<condition type="${condition.type}" op="${encode(condition.operation)}" id="${condition.id}"`;
-                if(condition.join){
+                if(condition.join && size>1){
                     cellXml+=` join="${condition.join}">`;
                 }else{
                     cellXml+=`>`;
