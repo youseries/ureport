@@ -14,6 +14,19 @@ module.exports={
         path:path.resolve('../ureport2-console/src/main/resources/ureport-asserts/js'),
         filename:'[name].bundle.js'
     },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    // 抽离第三方插件
+                    test: /handsontable|codemirror/,
+                    chunks: 'initial',
+                    name: 'common',
+                    priority: 10
+                }
+            }
+        }
+    },
     module:{
         rules:[
             {
