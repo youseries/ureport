@@ -16,8 +16,6 @@
 package com.bstek.ureport.build.cell.down;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,12 +80,14 @@ public class DownDuplicate {
 			return;
 		}
 		Report report=context.getReport();
+		/*		
 		Collections.sort(newRowList, new Comparator<Row>() {
 			@Override
 			public int compare(Row o1, Row o2) {
 				return o1.getTempRowNumber()-o2.getTempRowNumber();
 			}
 		});
+		*/
 		report.insertRows(minRowNumber, newRowList);
 	}
 	public void reset(){
