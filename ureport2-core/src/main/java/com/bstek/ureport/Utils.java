@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.bstek.ureport.provider.report.ReportProvider;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -46,6 +47,7 @@ public class Utils implements ApplicationContextAware{
 	private static ApplicationContext applicationContext;
 	private static Collection<BuildinDatasource> buildinDatasources;
 	private static Collection<ImageProvider> imageProviders;
+	private static Collection<ReportProvider> reportProviders;
 	private static boolean debug;
 	
 	public static boolean isDebug() {
@@ -70,7 +72,10 @@ public class Utils implements ApplicationContextAware{
 		return imageProviders;
 	}
 
-	
+	public static Collection<ReportProvider> getReportProviders() {
+		return reportProviders;
+	}
+
 	public static Connection getBuildinConnection(String name){
 		for(BuildinDatasource datasource:buildinDatasources){
 			if(name.equals(datasource.name())){
@@ -223,5 +228,7 @@ public class Utils implements ApplicationContextAware{
 		buildinDatasources.addAll(applicationContext.getBeansOfType(BuildinDatasource.class).values());
 		imageProviders=new ArrayList<ImageProvider>();
 		imageProviders.addAll(applicationContext.getBeansOfType(ImageProvider.class).values());
+		reportProviders=new ArrayList<ReportProvider>();
+		reportProviders.addAll(applicationContext.getBeansOfType(ReportProvider.class).values());
 	}
 }
