@@ -596,7 +596,7 @@ public class Cell implements ReportCell {
 			lineHeight=cellStyle.getLineHeight();
 		}
 		fontSize=fontSize*lineHeight;
-		int singleLineHeight=UnitUtils.pointToPixel(fontSize);//fontMetrics.getHeight();
+		int singleLineHeight=UnitUtils.pointToPixel(fontSize)-2;//fontMetrics.getHeight();
 		if(textWidth<=totalColumnWidth){
 			return;
 		}
