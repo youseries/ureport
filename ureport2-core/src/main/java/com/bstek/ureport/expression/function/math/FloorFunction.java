@@ -47,7 +47,7 @@ public class FloorFunction extends MathFunction {
 			}
 		}
 		data.setScale(pos, BigDecimal.ROUND_FLOOR);
-		return Math.ceil(data.doubleValue());
+		return Math.floor(data.doubleValue());
 	}
 
 	@Override
