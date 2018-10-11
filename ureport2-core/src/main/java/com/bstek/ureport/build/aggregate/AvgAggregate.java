@@ -113,6 +113,7 @@ public class AvgAggregate extends Aggregate {
 			condition=expr.getCondition();
 		}
 		BigDecimal result=new BigDecimal(0);
+		int size=0;
 		for(Object obj:list){
 			if(condition!=null){
 				boolean ok=condition.filter(cell, cell, obj, context);
@@ -125,8 +126,8 @@ public class AvgAggregate extends Aggregate {
 				continue;
 			}
 			result=result.add(Utils.toBigDecimal(value));
+			size++;
 		}
-		int size=list.size();
 		result=result.divide(new BigDecimal(size),8,BigDecimal.ROUND_HALF_UP);
 		return result;
 	}
