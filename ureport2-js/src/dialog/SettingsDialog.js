@@ -286,6 +286,17 @@ export default class SettingsDialog{
             }
             setDirty();
         });
+
+        const bgExportGroup=$(`<div class="form-group"><label>${window.i18n.dialog.setting.bgExport}</label></div>`);
+        pageTab.append(bgExportGroup);
+        this.bgExportEditor=$(`<input type="checkbox" class="form-check-input"  style="display: inline-block;"/>`);
+        bgExportGroup.append(this.bgExportEditor);
+
+        this.bgExportEditor.change(function(){
+            let value=$(this).prop("checked");
+            _this.paper.bgImageExport=value;
+            setDirty();
+        });
     }
     initHeaderFootSetting(headerFooterTab){
         const _this=this;
@@ -524,6 +535,7 @@ export default class SettingsDialog{
         this.htmlReportAlignSelect.val(this.paper.htmlReportAlign);
         this.htmlIntervalEditor.val(this.paper.htmlIntervalRefreshValue);
         this.bgImageEditor.val(this.paper.bgImage || '');
+        this.bgExportEditor.prop("checked",this.paper.bgImageExport);
         this.pageWidthEditor.val(pointToMM(this.paper.width));
         this.pageHeightEditor.val(pointToMM(this.paper.height));
         this.pageSelect.trigger('change');
