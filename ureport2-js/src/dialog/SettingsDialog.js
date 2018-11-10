@@ -282,7 +282,13 @@ export default class SettingsDialog{
             if(value===''){
                 $('.ht_master').css('background','transparent');
             }else{
-                $('.ht_master').css('background',`url(${value}) 50px 26px no-repeat`);
+                var contextPath = '';
+                if (value.indexOf('http') != 0) {
+                    var pathName = document.location.pathname;
+                    var index = pathName.substr(1).indexOf("/");
+                    var contextPath = pathName.substr(0, index + 1);
+                }
+                $('.ht_master').css('background',`url(`+contextPath+`${value}) 50px 26px no-repeat`);
             }
             setDirty();
         });
