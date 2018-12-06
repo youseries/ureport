@@ -78,6 +78,7 @@ public class PdfProducer implements Producer {
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 			PageHeaderFooterEvent headerFooterEvent = new PageHeaderFooterEvent(report);
 			writer.setPageEvent(headerFooterEvent);
+			com.itextpdf.text.Image tImgCover = null;
 			document.open();
 			// *******************开始
 			if(StringUtils.isNotBlank(report.getPaper().getBgImage())){
@@ -89,11 +90,11 @@ public class PdfProducer implements Producer {
 						imageUrl = request.getScheme() + "://" 
 								+ request.getServerName() + ":" + request.getServerPort()+ request.getContextPath() + imageUrl;
 					}
-					com.itextpdf.text.Image tImgCover = com.itextpdf.text.Image.getInstance(new URL(imageUrl));
+					tImgCover = com.itextpdf.text.Image.getInstance(new URL(imageUrl));
 					/* 设置图片的位置 */
 					tImgCover.setAbsolutePosition(0, 0);
 					/* 设置图片的大小 */
-					//tImgCover.scaleAbsolute(595, 842);
+					tImgCover.scaleAbsolute(pageSize);
 					document.add(tImgCover); // 加载图片
 				}
 			}
@@ -186,6 +187,9 @@ public class PdfProducer implements Producer {
 						}
 					}
 					document.add(table);
+					if(StringUtils.isNotBlank(report.getPaper().getBgImage())&&tImgCover!=null){
+						document.add(tImgCover);
+					}
 					document.newPage();
 				}
 
@@ -218,6 +222,9 @@ public class PdfProducer implements Producer {
 						}
 					}
 					document.add(table);
+					if(StringUtils.isNotBlank(report.getPaper().getBgImage())&&tImgCover!=null){
+						document.add(tImgCover);
+					}
 					document.newPage();
 				}
 			}
