@@ -37,7 +37,7 @@ public class CellObjectExpression extends BaseExpression {
 	@Override
 	protected ExpressionData<?> compute(Cell cell, Cell currentCell,Context context) {
 		while(!context.isCellPocessed(cell.getName())){
-			context.getReportBuilder().buildCell(context, null);
+			context.getReportBuilder().buildCellExactly(context, cell.getName());
 		}
 		if(StringUtils.isNotBlank(property)){
 			Object obj=Utils.getProperty(cell, property);

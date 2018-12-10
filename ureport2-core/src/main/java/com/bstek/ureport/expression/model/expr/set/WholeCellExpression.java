@@ -42,7 +42,7 @@ public class WholeCellExpression extends CellExpression{
 	@Override
 	protected ExpressionData<?> compute(Cell cell, Cell currentCell,Context context) {
 		while(!context.isCellPocessed(cellName)){
-			context.getReportBuilder().buildCell(context, null);
+			context.getReportBuilder().buildCellExactly(context, cellName);
 		}
 		List<Cell> cells=context.getReport().getCellsMap().get(cellName);
 		List<Object> list=new ArrayList<Object>();
