@@ -36,6 +36,9 @@ export default class FontSettingDialog{
         fonts.push("仿宋");
         fonts.push("黑体");
         fonts.push("楷体");
+        fonts.push("华文楷体");
+        fonts.push("隶书");
+        fonts.push("华文隶书");
         fonts.push("微软雅黑");
         fonts.push("Arial");
         fonts.push("Impact");

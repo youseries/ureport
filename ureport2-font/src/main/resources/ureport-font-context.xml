@@ -13,4 +13,7 @@
 	<bean id="ureport.songTiFontRegister" class="com.bstek.ureport.font.songti.SongTiFontRegister"></bean>
 	<bean id="ureport.timesNewRomanFontRegister" class="com.bstek.ureport.font.timesnewroman.TimesNewRomanFontRegister"></bean>
 	<bean id="ureport.yaheiFontRegister" class="com.bstek.ureport.font.yahei.YaheiFontRegister"></bean>
+	<bean id="ureport.huawenkaitiRegister" class="com.bstek.ureport.font.huawenkaiti.HuaWenKaiTiRegister"></bean>
+	<bean id="ureport.huawenlishuRegister" class="com.bstek.ureport.font.huawenlishu.HuaWenLiShuRegister"></bean>
+	<bean id="ureport.lishuRegister" class="com.bstek.ureport.font.lishu.LiShuRegister"></bean>
 </beans>
