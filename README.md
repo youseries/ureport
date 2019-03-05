@@ -30,9 +30,9 @@ Firstly, we need to create a standard Maven project \(create a project with Ecli
 
 Within the above dependence information, \[version\] indicates the specific version No. of the ureport2-console package. We can search the keyword  “ureport2-c onsole” at [http://search.maven.org/](http://search.maven.org/) to check the specific version No. of the package. The latest source code can be downloaded from [https://github.com/youseries/ureport](https://github.com/youseries/ureport).
 
-It shall be noted that only the latest release version can be found at [http://search.maven.org/](http://search.maven.org/). If you need the latest snapshot, you can search at [https://oss.so](https://oss.so) natype.org/. Pursuant to regulations on sonatype, only the official version can be published on [http://search.maven.org/](http://search.maven.org/), i.e. the central repository of mave, and the snapshot version only exists in [https://oss.sonatype.org/](https://oss.sonatype.org/). If we want to apply the latest snapshot at [https://oss.sonatype.org/](https://oss.sonatype.org/), we need to add repository information in pom.xml, to tell Maven to download the package of snapshot version there. The repository information is listed below:
+It shall be noted that only the latest release version can be found at [http://search.maven.org/](http://search.maven.org/). If you need the latest snapshot, you can search at <https://oss.sonatype.org/>. Pursuant to regulations on sonatype, only the official version can be published on [http://search.maven.org/](http://search.maven.org/), i.e. the central repository of mave, and the snapshot version only exists in [https://oss.sonatype.org/](https://oss.sonatype.org/). If we want to apply the latest snapshot at [https://oss.sonatype.org/](https://oss.sonatype.org/), we need to add repository information in pom.xml, to tell Maven to download the package of snapshot version there. The repository information is listed below:
 
-```
+```xml
 <repository>
     <id>sonatype</id>
     <url>https://oss.sonatype.org/content/groups/public/</url>
@@ -41,7 +41,7 @@ It shall be noted that only the latest release version can be found at [http://s
 
 Then, we need to configure the servlet that will be used by UReport2. Open the web.xml file in the project and add the following servlet configuration:
 
-```
+```xml
 <servlet>
     <servlet-name>ureportServlet</servlet-name>
     <servlet-class>com.bstek.ureport.console.UReportServlet</servlet-class>
@@ -56,7 +56,7 @@ In the servlet configuratin, the url-pattern shall keep the fixed value of “/u
 
 As UReport2 is built based on the framework of spring, the last step of configuration shall be loading the spring configuration file of UReport2 in the project. Several ways are available to load the file, including opening web.xml, adding the listener provided by spring and directly loading the spring configuration file provided by UReport2, as shown below:
 
-```
+```xml
 <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 </listener>
@@ -68,7 +68,7 @@ As UReport2 is built based on the framework of spring, the last step of configur
 
 If spring is not used in your project, you can apply the above configuration and directly load the spring configuration file provided by UReport2. If spring is used in your project or in other modules of the project, you can import the spring configuration file provided by UReport2 to the existing spring configuration file. The configuration is shown below:
 
-```
+```xml
 <import  resource="classpath:ureport-console-context.xml"  />
 ```
 
