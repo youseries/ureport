@@ -82,6 +82,10 @@ public class PaperParser implements Parser<Paper> {
 			paper.setHtmlIntervalRefreshValue(Integer.valueOf(htmlIntervalRefreshValue));
 		}
 		paper.setBgImage(element.attributeValue("bg-image"));
+		String bgImageExport=element.attributeValue("bg-image-export");
+		if(StringUtils.isNotBlank(bgImageExport)){
+			paper.setBgImageExport(Boolean.valueOf(bgImageExport));
+		}
 		return paper;
 	}
 }

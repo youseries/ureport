@@ -282,8 +282,25 @@ export default class SettingsDialog{
             if(value===''){
                 $('.ht_master').css('background','transparent');
             }else{
-                $('.ht_master').css('background',`url(${value}) 50px 26px no-repeat`);
+                var contextPath = '';
+                if (value.indexOf('http') != 0) {
+                    var pathName = document.location.pathname;
+                    var index = pathName.substr(1).indexOf("/");
+                    var contextPath = pathName.substr(0, index + 1);
+                }
+                $('.ht_master').css('background',`url(`+contextPath+`${value}) 50px 26px no-repeat`);
             }
+            setDirty();
+        });
+
+        const bgExportGroup=$(`<div class="form-group"><label>${window.i18n.dialog.setting.bgExport}</label></div>`);
+        pageTab.append(bgExportGroup);
+        this.bgExportEditor=$(`<input type="checkbox" class="form-check-input"  style="display: inline-block;"/>`);
+        bgExportGroup.append(this.bgExportEditor);
+
+        this.bgExportEditor.change(function(){
+            let value=$(this).prop("checked");
+            _this.paper.bgImageExport=value;
             setDirty();
         });
     }
@@ -524,6 +541,7 @@ export default class SettingsDialog{
         this.htmlReportAlignSelect.val(this.paper.htmlReportAlign);
         this.htmlIntervalEditor.val(this.paper.htmlIntervalRefreshValue);
         this.bgImageEditor.val(this.paper.bgImage || '');
+        this.bgExportEditor.prop("checked",this.paper.bgImageExport);
         this.pageWidthEditor.val(pointToMM(this.paper.width));
         this.pageHeightEditor.val(pointToMM(this.paper.height));
         this.pageSelect.trigger('change');

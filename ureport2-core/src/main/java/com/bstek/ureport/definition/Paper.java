@@ -35,6 +35,7 @@ public class Paper implements Serializable{
 	private Orientation orientation;
 	private HtmlReportAlign htmlReportAlign=HtmlReportAlign.left;
 	private String bgImage;
+	private boolean bgImageExport;
 	private boolean columnEnabled;
 	private int columnCount=2;
 	private int columnMargin=5;
@@ -113,6 +114,14 @@ public class Paper implements Serializable{
 
 	public boolean isColumnEnabled() {
 		return columnEnabled;
+	}
+
+	public boolean isBgImageExport() {
+		return bgImageExport;
+	}
+
+	public void setBgImageExport(boolean bgImageExport) {
+		this.bgImageExport = bgImageExport;
 	}
 
 	public void setColumnEnabled(boolean columnEnabled) {
