@@ -15,13 +15,13 @@
  ******************************************************************************/
 package com.bstek.ureport;
 
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
  * @author Jacky.gao
  * @since 2016年5月25日
  */
-public class UReportPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
+public class UReportPropertyPlaceholderConfigurer extends PropertySourcesPlaceholderConfigurer {
 	public UReportPropertyPlaceholderConfigurer() {
 		setIgnoreUnresolvablePlaceholders(true);
 		setOrder(100);
