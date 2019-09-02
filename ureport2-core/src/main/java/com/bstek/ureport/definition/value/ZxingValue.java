@@ -33,7 +33,8 @@ public class ZxingValue implements Value {
 	private boolean codeDisplay;
 	@Override
 	public String getValue() {
-		return text;
+		// 2019年1月23日 修复表达式时无法获取value数据
+		return source == Source.expression ? expr : text;
 	}
 
 	@Override
