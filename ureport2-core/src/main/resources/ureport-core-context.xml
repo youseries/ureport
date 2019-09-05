@@ -9,10 +9,7 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true"></property>
 	</bean>
 	
-	<bean id="ureport.propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:ureport.properties"></property>
-		<property name="ignoreUnresolvablePlaceholders" value="true"></property>
-	</bean>
+	<context:property-placeholder location="classpath:ureport.properties" ignore-unresolvable="true"/>
 	
 	<bean id="ureport.exportManager" class="com.bstek.ureport.export.ExportManagerImpl">
 		<property name="reportRender" ref="ureport.reportRender"></property>
