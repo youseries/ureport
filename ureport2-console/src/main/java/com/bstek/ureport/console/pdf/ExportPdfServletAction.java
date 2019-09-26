@@ -69,7 +69,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 		if(StringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
-		OutputStream outputStream=resp.getOutputStream();
+		OutputStream outputStream=null;
 		try {
 			String fileName=req.getParameter("_n");
 			fileName=buildDownloadFileName(file, fileName, ".pdf");
@@ -81,6 +81,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 				resp.setContentType("application/octet-stream;charset=ISO8859-1");
 				resp.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
 			}
+			outputStream=resp.getOutputStream();
 			Map<String, Object> parameters = buildParameters(req);
 			if(file.equals(PREVIEW_KEY)){
 				ReportDefinition reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
