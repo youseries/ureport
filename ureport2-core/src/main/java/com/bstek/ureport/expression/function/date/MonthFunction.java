@@ -32,7 +32,7 @@ public class MonthFunction extends CalendarFunction {
 	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
 		Calendar c = buildCalendar(dataList);
 		int month=c.get(Calendar.MONTH)+1;
-		return month+1;
+		return month;
 	}
 
 	@Override
