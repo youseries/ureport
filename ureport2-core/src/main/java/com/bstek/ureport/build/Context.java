@@ -266,6 +266,10 @@ public class Context {
 		}
 		return targetCellsList;
 	}
+
+	public List<Cell> getUnprocessedCells(String cellName){
+		return unprocessedCellsMap.remove(cellName);
+	}
 	
 	public Object evalExpr(String expression){
 		return new ElCompute().doCompute(expression);

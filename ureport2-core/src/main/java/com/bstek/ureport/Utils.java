@@ -82,7 +82,7 @@ public class Utils implements ApplicationContextAware{
 	
 	public static List<Cell> fetchTargetCells(Cell cell,Context context,String cellName){
 		while(!context.isCellPocessed(cellName)){
-			context.getReportBuilder().buildCell(context, null);
+			context.getReportBuilder().buildCellExactly(context, cellName);
 		}
 		List<Cell> leftCells=fetchCellsByLeftParent(context,cell, cellName);
 		List<Cell> topCells=fetchCellsByTopParent(context,cell, cellName);

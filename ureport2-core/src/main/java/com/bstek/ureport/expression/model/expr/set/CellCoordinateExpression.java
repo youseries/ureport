@@ -66,7 +66,7 @@ public class CellCoordinateExpression extends CellExpression {
 	@Override
 	protected ExpressionData<?> compute(Cell cell,Cell currentCell, Context context) {
 		while(!context.isCellPocessed(cellName)){
-			context.getReportBuilder().buildCell(context, null);
+			context.getReportBuilder().buildCellExactly(context, cellName);
 		}
 		List<Cell> leftCellList = buildLeftCells(cell, context);
 		List<Cell> topCellList=buildTopCells(cell, context);
@@ -121,7 +121,7 @@ public class CellCoordinateExpression extends CellExpression {
 		for(CellCoordinate coordinate:leftCoordinates){
 			String name=coordinate.getCellName();
 			while(!context.isCellPocessed(name)){
-				context.getReportBuilder().buildCell(context, null);
+				context.getReportBuilder().buildCellExactly(context, name);
 			}
 			if(targetLeftCell==null){
 				if(coordinate.getCoordinateType().equals(CoordinateType.relative)){
@@ -207,7 +207,7 @@ public class CellCoordinateExpression extends CellExpression {
 		for(CellCoordinate coordinate:topCoordinates){
 			String name=coordinate.getCellName();
 			while(!context.isCellPocessed(name)){
-				context.getReportBuilder().buildCell(context, null);
+				context.getReportBuilder().buildCellExactly(context, name);
 			}
 			if(cellList==null){
 				if(coordinate.getCoordinateType().equals(CoordinateType.relative)){

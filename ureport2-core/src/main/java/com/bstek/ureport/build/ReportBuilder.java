@@ -116,7 +116,21 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 			}
 		}
 	}
-	
+
+	public void buildCellExactly(Context context, String cellName) {
+		List<Cell> cells = context.getUnprocessedCells(cellName);
+		Cell cell = cells.get(0);
+		Cell leftParent = cell.getLeftParentCell();
+		Cell topParent = cell.getTopParentCell();
+		if (leftParent != null && !leftParent.isProcessed()) {
+			buildCellExactly(context, leftParent.getName());
+		}
+		if (topParent != null && !topParent.isProcessed()) {
+			buildCellExactly(context, topParent.getName());
+		}
+		buildCell(context, cells);
+	}
+
 	private Map<String,Dataset> buildDatasets(ReportDefinition reportDefinition,Map<String,Object> parameters,ApplicationContext applicationContext){
 		Map<String,Dataset> datasetMap=new HashMap<String,Dataset>();
 		List<DatasourceDefinition> datasources=reportDefinition.getDatasources();
