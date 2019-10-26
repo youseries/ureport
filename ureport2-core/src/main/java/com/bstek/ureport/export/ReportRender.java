@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.bstek.ureport.Utils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -42,10 +43,9 @@ import com.bstek.ureport.provider.report.ReportProvider;
  * @author Jacky.gao
  * @since 2016年12月4日
  */
-public class ReportRender implements ApplicationContextAware{
+public class ReportRender {
 	private ReportParser reportParser;
 	private ReportBuilder reportBuilder;
-	private Collection<ReportProvider> reportProviders;
 	private DownCellbuilder downCellParentbuilder=new DownCellbuilder();
 	private RightCellbuilder rightCellParentbuilder=new RightCellbuilder();
 	public Report render(String file,Map<String,Object> parameters){
@@ -102,7 +102,7 @@ public class ReportRender implements ApplicationContextAware{
 	
 	private InputStream buildReportFile(String file){
 		InputStream inputStream=null;
-		for(ReportProvider provider:reportProviders){
+		for(ReportProvider provider:Utils.getReportProviders()){
 			if(file.startsWith(provider.getPrefix())){
 				inputStream=provider.loadReport(file);
 			}
@@ -137,8 +137,5 @@ public class ReportRender implements ApplicationContextAware{
 	public void setReportBuilder(ReportBuilder reportBuilder) {
 		this.reportBuilder = reportBuilder;
 	}
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		reportProviders=applicationContext.getBeansOfType(ReportProvider.class).values();
-	}
+
 }
