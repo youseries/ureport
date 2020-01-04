@@ -154,7 +154,7 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			        			cell.setCellType(CellType.STRING);
 			        		}else if(obj instanceof Number){
 			        			BigDecimal bigDecimal=Utils.toBigDecimal(obj);
-			        			cell.setCellValue(bigDecimal.floatValue());
+			        			cell.setCellValue(bigDecimal.doubleValue());
 			        			cell.setCellType(CellType.NUMERIC);
 			        		}else if(obj instanceof Boolean){
 			        			cell.setCellValue((Boolean)obj);
