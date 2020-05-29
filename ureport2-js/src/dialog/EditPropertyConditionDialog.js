@@ -92,6 +92,8 @@ export default class EditPropertyConditionDialog{
             <option value="!=">${window.i18n.dialog.editPropCondition.notEquals}</option>
             <option value="in">${window.i18n.dialog.editPropCondition.in}</option>
             <option value="like">${window.i18n.dialog.editPropCondition.like}</option>
+            <option value="leftlike">${window.i18n.dialog.condition.leftlike}</option>
+            <option value="rightlike">${window.i18n.dialog.condition.rightlike}</option>
         </select>`);
         operatorGroup.append(this.operatorSelect);
         body.append(operatorGroup);

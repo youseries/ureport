@@ -794,6 +794,8 @@
 					<enumeration value="NotEquals"></enumeration>
 					<enumeration value="In"></enumeration>
 					<enumeration value="Like"></enumeration>
+					<enumeration value="LeftLike"></enumeration>
+					<enumeration value="RigthLike"></enumeration>
 				</restriction>
 			</simpleType>
 		</attribute>

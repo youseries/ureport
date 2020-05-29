@@ -15,28 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.expression;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
-import com.bstek.ureport.build.assertor.Assertor;
-import com.bstek.ureport.build.assertor.EqualsAssertor;
-import com.bstek.ureport.build.assertor.EqualsGreatThenAssertor;
-import com.bstek.ureport.build.assertor.EqualsLessThenAssertor;
-import com.bstek.ureport.build.assertor.GreatThenAssertor;
-import com.bstek.ureport.build.assertor.InAssertor;
-import com.bstek.ureport.build.assertor.LessThenAssertor;
-import com.bstek.ureport.build.assertor.LikeAssertor;
-import com.bstek.ureport.build.assertor.NotEqualsAssertor;
-import com.bstek.ureport.build.assertor.NotInAssertor;
+import com.bstek.ureport.build.assertor.*;
 import com.bstek.ureport.dsl.ReportParserLexer;
 import com.bstek.ureport.dsl.ReportParserParser;
 import com.bstek.ureport.exception.ReportParseException;
@@ -45,21 +24,14 @@ import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.expression.model.Op;
 import com.bstek.ureport.expression.parse.ExpressionErrorListener;
 import com.bstek.ureport.expression.parse.ExpressionVisitor;
-import com.bstek.ureport.expression.parse.builder.BooleanExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.CellObjectExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.CellPositionExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.CurrentCellDataExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.CurrentCellValueExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.DatasetExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.ExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.FunctionExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.IntegerExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.NullExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.NumberExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.RelativeCellExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.SetExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.StringExpressionBuilder;
-import com.bstek.ureport.expression.parse.builder.VariableExpressionBuilder;
+import com.bstek.ureport.expression.parse.builder.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+import java.util.*;
 
 /**
  * @author Jacky.gao
@@ -99,6 +71,8 @@ public class ExpressionUtils implements ApplicationContextAware{
 		assertorsMap.put(Op.In, new InAssertor());
 		assertorsMap.put(Op.NotIn, new NotInAssertor());
 		assertorsMap.put(Op.Like, new LikeAssertor());
+		assertorsMap.put(Op.LeftLike, new LeftLikeAssertor());
+		assertorsMap.put(Op.RigthLike, new RightLikeAssertor());
 		
 		for(int i=0;i<LETTERS.length;i++){
 			cellNameList.add(LETTERS[i]);

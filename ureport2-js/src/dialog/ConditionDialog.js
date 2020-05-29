@@ -49,6 +49,8 @@ export default class ConditionDialog{
             <option value="!=">${window.i18n.dialog.condition.notEquals}</option>
             <option value="in">${window.i18n.dialog.condition.in}</option>
             <option value="like">${window.i18n.dialog.condition.like}</option>
+            <option value="leftlike">${window.i18n.dialog.condition.leftlike}</option>
+            <option value="rightlike">${window.i18n.dialog.condition.rightlike}</option>
         </select>`);
         operatorGroup.append(this.operatorSelect);
         body.append(operatorGroup);

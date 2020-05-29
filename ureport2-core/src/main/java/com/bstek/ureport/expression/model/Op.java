@@ -22,7 +22,7 @@ import com.bstek.ureport.exception.ReportParseException;
  * @since 2016年11月22日
  */
 public enum Op {
-	GreatThen,EqualsGreatThen,LessThen,EqualsLessThen,Equals,NotEquals,In,NotIn,Like;
+	GreatThen,EqualsGreatThen,LessThen,EqualsLessThen,Equals,NotEquals,In,NotIn,Like,LeftLike,RigthLike;
 	public static Op parse(String op){
 		op=op.trim();
 		if(op.equals(">")){
@@ -43,6 +43,10 @@ public enum Op {
 			return NotIn;
 		}else if(op.equals("like")){
 			return Like;
+		}else if(op.equals("leftlike")){
+			return LeftLike;
+		}else if(op.equals("rightlike")){
+			return RigthLike;
 		}
 		throw new ReportParseException("Unknow op :"+op);
 	}
@@ -67,6 +71,10 @@ public enum Op {
 			return " not in ";
 		case Like:
 			return " like ";
+		case LeftLike:
+			return " leftlike ";
+		case RigthLike:
+			return " rightlike ";
 		}
 		return super.toString();
 	}
