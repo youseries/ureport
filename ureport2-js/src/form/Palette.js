@@ -10,6 +10,7 @@ import TextComponent from './component/TextComponent.js';
 import RadioComponent from './component/RadioComponent.js';
 import CheckboxComponent from './component/CheckboxComponent.js';
 import SelectComponent from './component/SelectComponent.js';
+import SelectMultipleComponent from './component/SelectMultipleComponent.js';
 import SubmitButtonComponent from './component/SubmitButtonComponent.js';
 import ResetButtonComponent from './component/ResetButtonComponent.js';
 import DatetimeComponent from './component/DatetimeComponent.js';
@@ -60,6 +61,10 @@ export default class Palette{
         this.addComponent(new SelectComponent({
             icon:"form form-dropdown",
             label:"单选列表"
+        }));
+        this.addComponent(new SelectMultipleComponent({
+            icon:"form form-dropdown",
+            label:"多选列表"
         }));
         this.addComponent(new SubmitButtonComponent({
             icon:"form form-submit",

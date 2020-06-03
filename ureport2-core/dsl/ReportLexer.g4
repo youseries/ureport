@@ -21,6 +21,9 @@ OP : '>'
    | 'like'
    | 'leftlike'
    | 'rightlike'
+   | 'notlike'
+   | 'notleftlike'
+   | 'notrightlike'
    ;
 
    

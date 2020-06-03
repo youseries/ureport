@@ -73,6 +73,9 @@ public class ExpressionUtils implements ApplicationContextAware{
 		assertorsMap.put(Op.Like, new LikeAssertor());
 		assertorsMap.put(Op.LeftLike, new LeftLikeAssertor());
 		assertorsMap.put(Op.RigthLike, new RightLikeAssertor());
+		assertorsMap.put(Op.NotLike, new NotLikeAssertor());
+		assertorsMap.put(Op.NotLeftLike, new NotLeftLikeAssertor());
+		assertorsMap.put(Op.NotRigthLike, new NotRightLikeAssertor());
 		
 		for(int i=0;i<LETTERS.length;i++){
 			cellNameList.add(LETTERS[i]);
