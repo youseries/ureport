@@ -22,7 +22,7 @@ import com.bstek.ureport.exception.ReportParseException;
  * @since 2016年11月22日
  */
 public enum Op {
-	GreatThen,EqualsGreatThen,LessThen,EqualsLessThen,Equals,NotEquals,In,NotIn,Like;
+	GreatThen,EqualsGreatThen,LessThen,EqualsLessThen,Equals,NotEquals,In,NotIn,Like,LeftLike,RigthLike,NotLike,NotLeftLike,NotRigthLike;
 	public static Op parse(String op){
 		op=op.trim();
 		if(op.equals(">")){
@@ -43,30 +43,50 @@ public enum Op {
 			return NotIn;
 		}else if(op.equals("like")){
 			return Like;
+		}else if(op.equals("leftlike")){
+			return LeftLike;
+		}else if(op.equals("rightlike")){
+			return RigthLike;
+		}else if(op.equals("notlike")){
+			return NotLike;
+		}else if(op.equals("notleftlike")){
+			return NotLeftLike;
+		}else if(op.equals("notrightlike")){
+			return NotRigthLike;
 		}
 		throw new ReportParseException("Unknow op :"+op);
 	}
 	@Override
 	public String toString() {
 		switch(this){
-		case GreatThen:
-			return ">";
-		case EqualsGreatThen:
-			return ">=";
-		case LessThen:
-			return "<";
-		case EqualsLessThen:
-			return "<=";
-		case Equals:
-			return "==";
-		case NotEquals:
-			return "!=";
-		case In:
-			return " in ";
-		case NotIn:
-			return " not in ";
-		case Like:
-			return " like ";
+			case GreatThen:
+				return ">";
+			case EqualsGreatThen:
+				return ">=";
+			case LessThen:
+				return "<";
+			case EqualsLessThen:
+				return "<=";
+			case Equals:
+				return "==";
+			case NotEquals:
+				return "!=";
+			case In:
+				return " in ";
+			case NotIn:
+				return " not in ";
+			case Like:
+				return " like ";
+			case LeftLike:
+				return " leftlike ";
+			case RigthLike:
+				return " rightlike ";
+			case NotLike:
+				return " like ";
+			case NotLeftLike:
+				return " notleftlike ";
+			case NotRigthLike:
+				return " notrightlike ";
 		}
 		return super.toString();
 	}

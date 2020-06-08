@@ -21,6 +21,7 @@
 			<element name="input-radio" type="tns:input-radio" maxOccurs="unbounded" minOccurs="0"></element>
 			<element name="input-checkbox" type="tns:input-checkbox" maxOccurs="unbounded" minOccurs="0"></element>
 			<element name="input-select" type="tns:input-select" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-selectmultiple" type="tns:input-selectmultiple" maxOccurs="unbounded" minOccurs="0"></element>
 			<element name="button-submit" type="tns:button-submit" maxOccurs="1" minOccurs="1"></element>
 			<element name="button-reset" type="tns:button-reset" maxOccurs="1" minOccurs="0"></element>
 			<element name="grid" type="tns:grid" maxOccurs="unbounded" minOccurs="0"></element>
@@ -35,6 +36,7 @@
 			<element name="input-radio" type="tns:input-radio" maxOccurs="unbounded" minOccurs="0"></element>
 			<element name="input-checkbox" type="tns:input-checkbox" maxOccurs="unbounded" minOccurs="0"></element>
 			<element name="input-select" type="tns:input-select" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="input-selectmultiple" type="tns:input-selectmultiple" maxOccurs="unbounded" minOccurs="0"></element>
 			<element name="button-submit" type="tns:button-submit" maxOccurs="1" minOccurs="1"></element>
 			<element name="button-reset" type="tns:button-reset" maxOccurs="1" minOccurs="0"></element>
 			<element name="grid" type="tns:grid" maxOccurs="unbounded" minOccurs="0"></element>		
@@ -118,6 +120,17 @@
 	</complexType>
 	
 	<complexType name="input-select">
+		<complexContent>
+			<extension base="tns:input">
+				<sequence>
+					<element name="option" type="tns:input-option" maxOccurs="unbounded" minOccurs="1"></element>
+				</sequence>
+				<attribute name="useDataset" type="boolean"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="input-selectmultiple">
 		<complexContent>
 			<extension base="tns:input">
 				<sequence>
@@ -794,6 +807,11 @@
 					<enumeration value="NotEquals"></enumeration>
 					<enumeration value="In"></enumeration>
 					<enumeration value="Like"></enumeration>
+					<enumeration value="LeftLike"></enumeration>
+					<enumeration value="RigthLike"></enumeration>
+					<enumeration value="NotLike"></enumeration>
+					<enumeration value="NotLeftLike"></enumeration>
+					<enumeration value="NotRigthLike"></enumeration>
 				</restriction>
 			</simpleType>
 		</attribute>

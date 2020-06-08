@@ -19,6 +19,11 @@ OP : '>'
    | 'not in'
    | 'not  in'
    | 'like'
+   | 'leftlike'
+   | 'rightlike'
+   | 'notlike'
+   | 'notleftlike'
+   | 'notrightlike'
    ;
 
    
