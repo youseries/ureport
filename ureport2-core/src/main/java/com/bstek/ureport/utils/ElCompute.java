@@ -46,6 +46,7 @@ public class ElCompute {
 	public static void main(String[] args) {
 		long start=System.currentTimeMillis();
 		String expr="22/2*2-(5+(1*2))-2*2";
+		expr="-1*1.1E10*0.1"
 		for(int i=0;i<1;i++) {
 			ElCompute el=new ElCompute();
 			Object data=el.doCompute(expr);
@@ -77,6 +78,11 @@ public class ElCompute {
 				}else {					
 					dataSb.append(c);
 				}
+				prevChar=c;
+				continue;
+			}
+			if ('E' == prevChar) {
+				dataSb.append(c);
 				prevChar=c;
 				continue;
 			}
