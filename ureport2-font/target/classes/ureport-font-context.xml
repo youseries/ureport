@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	">
+	<bean id="ureport.arialFontRegister" class="com.bstek.ureport.font.arial.ArialFontRegister"></bean>
+	<bean id="ureport.comicSansMSFontRegister" class="com.bstek.ureport.font.comicsansms.ComicSansMSFontRegister"></bean>
+	<bean id="ureport.courierNewFontRegister" class="com.bstek.ureport.font.couriernew.CourierNewFontRegister"></bean>
+	<bean id="ureport.fangSongFontRegister" class="com.bstek.ureport.font.fangsong.FangSongFontRegister"></bean>
+	<bean id="ureport.heiTiFontRegister" class="com.bstek.ureport.font.heiti.HeiTiFontRegister"></bean>
+	<bean id="ureport.kaiTiFontRegister" class="com.bstek.ureport.font.kaiti.KaiTiFontRegister"></bean>
+	<bean id="ureport.songTiFontRegister" class="com.bstek.ureport.font.songti.SongTiFontRegister"></bean>
+	<bean id="ureport.timesNewRomanFontRegister" class="com.bstek.ureport.font.timesnewroman.TimesNewRomanFontRegister"></bean>
+	<bean id="ureport.yaheiFontRegister" class="com.bstek.ureport.font.yahei.YaheiFontRegister"></bean>
+</beans>
